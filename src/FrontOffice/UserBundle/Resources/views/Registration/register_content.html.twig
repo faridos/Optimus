@@ -1,0 +1,45 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<form role="form" id="msform" style="bottom: 140px; text-align: center;" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST">
+    <!-- progressbar -->
+    <ul id="progressbar">
+        <li class="active">Identification</li>
+        <li class="">Informations personnelles</li>
+        <li class="">Informations supplimentaires</li>
+    </ul>
+    {{ form_errors(form) }}
+    {{ form_widget(form._token) }}
+    <!-- fieldsets -->
+    <fieldset style="transform: scale(1); opacity: 1; display: block;">
+        <h2 class="fs-title" style="font-weight: bold">Créer votre compte Optimus</h2>
+
+        {{ form_widget(form.username, {'attr' : {'name' : 'pseudo','placeholder' : 'Nom utilisateur'} }) }}
+        {{ form_widget(form.email, {'attr' : {'placeholder' : 'Adresse éléctronique'} }) }}
+        {{ form_widget(form.plainPassword.first, {'attr' : {'placeholder' : 'Mot de passe'} }) }}
+        {{ form_widget(form.plainPassword.second, {'attr' : {'placeholder' : 'Confirmer votre mot de passe'} }) }}
+        <input type="button" name="next" class="next action-button" value="Suivant">
+    </fieldset>
+    <fieldset style="display: none; left: 50%; opacity: 0; transform: scale(1);">
+        <h2 class="fs-title" style="font-weight: bold">Informations prsonnelles</h2>
+{{ form_widget(form.profil, {'attr' : {'class' : 'btn btn-round btn-default', 'style' : 'width:100%', } }) }}
+       <br><br>
+
+        {{ form_widget(form.nom, {'attr' : {'placeholder' : 'Nom de famille'} }) }}
+        {{ form_widget(form.prenom, {'attr' : {'placeholder' : 'Prénom'} }) }}
+        {{ form_widget(form.tel, {'attr' : {'placeholder' : 'Numéro téléphone'} }) }}
+        {{ form_widget(form.dateNaissance, {'attr' : {'class' : 'btn btn-round btn-default', 'style' : 'width:100%', } }) }}
+        <input type="button" name="previous" class="previous action-button" value="Précédent">
+        <input type="button" name="next" class="next action-button" value="Suivant">
+    </fieldset>
+    <fieldset style="display: none; left: 50%; opacity: 0;">
+        <h2 class="fs-title" style="font-weight: bold">Informations supplimentaires</h2>
+
+        {{ form_widget(form.sexe, {'attr' : {'class' : 'btn btn-round btn-default', 'style' : 'width:100%', } }) }}
+        <br><br>
+        {{ form_widget(form.adresse, {'attr' : {'placeholder' : 'Adresse'} }) }}
+        {{ form_widget(form.file,  {'attr': {'type': 'file','name':'','class':'btn btn-default btn-file'}}) }}
+        <input type="button" name="previous" class="previous action-button" value="Précédent">
+        <input type="submit" name="submit" class="action-button" value="Confirmer">
+
+    </fieldset>
+
+</form>

@@ -1,0 +1,12 @@
+front_office_user:
+    resource: "@FrontOfficeUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+back_office_admin:
+    resource: "@BackOfficeAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+front_office_optimus:
+    resource: "@FrontOfficeOptimusBundle/Resources/config/routing.yml"
+    prefix:   /
+

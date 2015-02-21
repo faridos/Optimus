@@ -1,0 +1,5 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+user_index:
+    path:     /
+    defaults: { _controller: FrontOfficeUserBundle:User:index }

@@ -1,0 +1,92 @@
+{% extends "::base.html.twig" %}
+{% block navigation %}
+    <div class="home-header map">
+        <div class="home-logo osLight"><a href="index.html" ><img src="{{ asset('template/images/logo.png') }}"></a> </div>
+        <a href="#" class="home-navHandler visible-xs"><span class="fa fa-bars"></span></a>
+        <div class="home-nav active">
+            <ul> 
+                {% block nav %}
+               
+                {% endblock %}
+                
+                <li>
+                    <div class="buttonsWrapper pb20">
+                        <a href="#" class="btn btn-icon btn-round btn-facebook">
+                            <span class="fa fa-facebook"></span>
+                        </a> 
+                        <a href="#" class="btn btn-icon btn-round btn-twitter">
+                            <span class="fa fa-twitter"></span></a>
+                        <a href="#" class="btn btn-icon btn-round btn-google">
+                            <span class="fa fa-google-plus"></span></a> 
+                        <a href="#" class="btn btn-icon btn-round btn-pinterest">
+                            <span class="fa fa-instagram"></span></a>
+                    </div>
+                </li><li style="margin-top:8px">
+                    <div class="ops" style="top:5px">
+                        <a class="btn btn-icon btn-round btn-o btn-blue btn-xs" href="#"><span>fr</span></a>
+                        <a href="#" class="btn btn-icon btn-round btn-o btn-red btn-xs"><span>en</span></a>
+                    </div>
+                </li>         
+            </ul>
+        </div>
+    </div> 
+{% endblock %}
+{% block body %}
+
+{% endblock %}
+{% block footer %}
+    <div class="home-footer" style="">
+        <div class="home-wrapper">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                    <div class="osLight footer-header">Optimus</div>
+                    <ul class="footer-nav pb20">
+                        <li><a href="#">Lien 1</a></li>
+                        <li><a href="#">Lien 2</a></li>
+                        <li><a href="#">Lien 3</a></li>
+                        <li><a href="#">Lien 4</a></li>
+                        <li><a href="#">Lien 5</a></li>
+                        <li><a href="#">Lien 6</a></li>
+                        <li><a href="#">Lien 7</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                    <div class="osLight footer-header">Liens Utlies</div>
+                    <ul class="footer-nav pb20">
+                        <li><a href="#">Lien 8</a></li>
+                        <li><a href="#">Lien 9</a></li>
+                        <li><a href="#">Lien 10</a></li>
+                        <li><a href="#">Lien 11</a></li>
+                        <li><a href="#">Lien 12</a></li>
+                        <li><a href="#">Lien 13</a></li>
+                        <li><a href="#">Lien 14</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <div class="osLight footer-header">Nous Rejoindre</div>
+                    <ul class="footer-nav pb20">
+                        <li class="footer-phone"><span class="fa fa-phone"></span>+33 123 456 789</li>
+                        <li class="footer-address osLight">
+                            <p>Rue numéro 1234</p>
+                            <p>Paris</p>
+                            <p>France</p>
+                        </li>
+                        <li><a href="#" class="btn btn-sm btn-icon btn-round btn-o btn-white"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-sm btn-icon btn-round btn-o btn-white"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-sm btn-icon btn-round btn-o btn-white"><span class="fa fa-google-plus"></span></a> <a href="#" class="btn btn-sm btn-icon btn-round btn-o btn-white"><span class="fa fa-instagram"></span></a> </li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <div class="osLight footer-header">Abonnez-vous à notre newsletter</div>
+                    <form role="form">
+                        <div class="form-group">
+                            <input style="border-radius:25px" type="email" class="form-control" placeholder="Adresse email">
+                        </div>
+                        <div class="form-group">
+                            <a href="#" style="border-radius:25px" class="btn btn-green btn-block">S'abonner</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">Optimus  &copy; 2015, By Abweb</div>
+        </div>
+    </div>
+{% endblock %}

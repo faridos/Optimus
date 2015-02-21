@@ -1,0 +1,9 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    
+     {{ render(controller('FrontOfficeUserBundle:User:accueil')) }}
+    
+{% else %}
+    
+     {% include "FrontOfficeUserBundle:User:index.html.twig" %}
+     
+{% endif %}

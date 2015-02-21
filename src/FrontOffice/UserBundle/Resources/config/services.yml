@@ -1,0 +1,15 @@
+parameters:
+#    front_office_user.example.class: FrontOffice\UserBundle\Example
+
+services:
+    FrontOffice_user_registration.form.type:
+          class: FrontOffice\UserBundle\Form\Type\RegistrationFormType
+          tags:
+              - { name: form.type, alias: frontoffice_user_registration }
+          arguments: [%fos_user.model.user.class%]
+    
+    fos_user.registration_listener:
+        class: FrontOffice\UserBundle\EventListener\RegistrationListener
+        arguments: []
+        tags:
+            - { name: kernel.event_subscriber }         

@@ -1,0 +1,34 @@
+{% extends "FrontOfficeUserBundle::layout.html.twig" %}
+{% block nav %}
+    <li>
+        <form class="form-inline"  action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.generateCsrfToken('authenticate')}}" />
+            <div class="form-group">
+                <label class="sr-only" for="email">Email address</label>
+                <input type="text" name="_username" value="" required="required" class="form-control round" id="email" placeholder="Adresse éléctronique" autocomplete="on" >
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="password">Mot de passe</label>
+                <input type="password" name="_password" required="required" class="form-control round" id="password" placeholder="Mot de passe" >
+            </div>
+            <input type="submit" name="submit" class="btn btn-round btn-o btn-green" value="Connexion">
+        </form>
+    </li>
+    <li><a href="{{ path("fos_user_registration_register") }}" class="btn btn-round btn-o btn-green" data-target="#signup">Inscription</a></li>
+    {% endblock %}   
+    {% block body %}
+    <div id="home-map"></div>
+    <div class="search-panel">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <img src="{{ asset('template/images/marker-green.png') }}">"&gt;
+            </div>
+            <div class="form-group">
+                <input style="border-radius:25px" type="text" class="form-control" id="city" placeholder="Entrer ici votre région" autocomplete="on" size="60">
+            </div>
+            <div class="form-group">
+                <a href="#" class="btn btn-round btn-green btn-m">Ma position actuelle</a></div>
+        </form>
+    </div>
+
+{% endblock %}
