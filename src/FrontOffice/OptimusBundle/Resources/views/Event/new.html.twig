@@ -1,0 +1,162 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Event creation</h1>
+
+    <form action="{{ path("add_event") }}" method="post" class="form-horizontal0 form-groups-bordered">
+                                    <br>
+                                    {{ form_errors(form) }}
+
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <div class="col-md-2 marge_haut">
+                                                <label class="control-label">Titre</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                {{ form_widget(form.titre) }}
+                                                {{ form_errors(form.titre) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-2 marge_haut">
+                                                <label class="control-label">Type</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                {{ form_widget(form.type) }}
+                                                {{ form_errors(form.type) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-md-6">
+                                            <div class="col-md-2 marge_haut">
+                                                <label class="control-label">Frais</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">€</span>
+
+                                                    {{ form_widget(form.frais) }}
+                                                    {{ form_errors(form.frais) }}
+                                                </div>
+                                            </div>  
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-4 marge_haut">
+                                                <label class="control-label">Nombre de places</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                {{ form_widget(form.nbrPlaces) }}
+                                                {{ form_errors(form.nbrPlaces) }}
+                                            </div>
+                                        </div>
+                                    </div>  
+
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <div class="col-md-4 marge_haut">
+                                                <label class="control-label">Date de début</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                {{ form_widget(form.dateDebut) }}
+                                                {{ form_errors(form.dateDebut) }}
+                                            </div>
+                                        </div>
+                                         
+                                        <div class="col-md-6">
+                                            <div class="col-md-4 marge_haut">
+                                                <label class="control-label">Date de clôture</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                {{ form_widget(form.dateFin) }}
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                             <div class="form-group">
+                                        <div class="col-md-6">
+                                            <div class="col-md-3 marge_haut">
+                                                <label class="control-label">Description</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                {{ form_widget(form.description) }}
+                                                {{ form_errors(form.description) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-2 marge_haut">
+                                                <label class="control-label">URL</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                {{ form_widget(form.url) }}
+                                                {{ form_errors(form.url) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <p class="text-info"><i class="entypo-info-circled"></i>Naviguer dans la carte, Cliquer pour  choisir votre  lieu de l'évènement</p><br>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2 marge_haut">
+                                                    <label class="control-label">Lieu</label>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    {{ form_widget(form.lieu , { 'id': 'lieu' }) }}
+                                                    {{ form_errors(form.lieu) }}
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-2 marge_haut">
+                                                    <label class="control-label">Latitude</label>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    {{ form_widget(form.lat, { 'id': 'lat_id' }) }}
+                                                    {{ form_errors(form.lat) }}
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-2 marge_haut">
+                                                    <label class="control-label">Longitude</label>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    {{ form_widget(form.lng, { 'id': 'lng_id' }) }}
+                                                    {{ form_errors(form.lng) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="panel panel-invert" data-collapsed="0" style="zoom: 1; position: static;">
+                                            <div  id="normal" style="height: 300px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-5">
+                                        <br>
+                                        <button type="submit" class="btn btn-success"><i class="entypo-check"></i>Enregistrer</button>
+                                        <button type="reset" class="btn btn-danger">annuler</button>
+                                    </div>
+                                      
+                                    {{ form_widget(form._token) }}
+                                    {{ form_rest(form) }}
+                                </form>
+                          
+
+
+        <ul class="record_actions">
+    <li>
+      
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

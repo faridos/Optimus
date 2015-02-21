@@ -1,1 +1,7 @@
-
+front_office_optimus_controller:
+    resource: "@FrontOfficeOptimusBundle/Controller"
+    type:  annotation
+    prefix:   /
+add_event:
+    path:     /events/add
+    defaults: { _controller: FrontOfficeOptimusBundle:Event:add}

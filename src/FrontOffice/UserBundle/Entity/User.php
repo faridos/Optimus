@@ -103,11 +103,16 @@ class User extends BaseUser {
      * @ORM\Column(name="lng", type="float", nullable=true)
      */
     private $lng;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Event", mappedBy="createur", cascade={"persist","remove"})
      */
     protected $evenements;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Participation", mappedBy="participant", cascade={"persist","remove"})
+     */
+    protected $participations;
 
     public function getId() {
         return $this->id;
