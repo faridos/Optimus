@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: @FrontOfficeUserBundle/Resources/config/services.yml }
+    - { resource: @FrontOfficeOptimusBundle/Resources/config/services.yml }
 
 framework:
     #esi:             ~

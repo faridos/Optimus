@@ -9,7 +9,8 @@ use FrontOffice\OptimusBundle\Entity\Event;
 use FrontOffice\OptimusBundle\Form\EventType;
 use FrontOffice\OptimusBundle\Entity\Participation;
 use FrontOffice\OptimusBundle\Entity\HistoryEvent;
-
+use FrontOffice\OptimusBundle\Event\HistoryEventEvent;
+use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 use Doctrine\Common\Collections\ArrayCollection;
 use \DateTime;
 
@@ -37,15 +38,15 @@ class EventController extends Controller {
             if ($form->isValid()) {
                 $em->persist($event);
                 $em->flush();
+               
                 //add notification
                 //add prticipation
                 // add History 
-                $history = new HistoryEvent();
-                $history->setAction("Ajout");
-                $history->setEvent($event);
-                $history->setUser($user);
-                $em->persist($history);
-                $em->flush();
+                $eventhistory = new HistoryEventEvent($user,$event);
+                
+                $dispatcher =$this->get('event_dispatcher');
+                
+                $dispatcher->dispatch( FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER  , $eventhistory);
                 
             }
         }
