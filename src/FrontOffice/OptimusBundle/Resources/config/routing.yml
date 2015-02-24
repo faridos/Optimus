@@ -5,3 +5,6 @@ front_office_optimus_controller:
 add_event:
     path:     /events/add
     defaults: { _controller: FrontOfficeOptimusBundle:Event:add}
+add_club:
+    path:     /club/add
+    defaults: { _controller: FrontOfficeOptimusBundle:Club:ajouterClub }

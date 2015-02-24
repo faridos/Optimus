@@ -1,6 +1,7 @@
 <?php
 
 namespace FrontOffice\UserBundle\Controller;
+
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,17 +12,17 @@ use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use FrontOffice\OptimusBundle\Entity\Notification;
+use FrontOffice\UserBundle\Event\UserRegisterEvent;
+use FrontOffice\UserBundle\FrontOfficeUserEvents;
 use \DateTime;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 
-class RegistrationController extends BaseController
-{
-    public function registerAction(Request $request)
-    {
+class RegistrationController extends BaseController {
+
+    public function registerAction(Request $request) {
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
@@ -33,9 +34,7 @@ class RegistrationController extends BaseController
         $user->setEnabled(true);
         $user->setType_notification('All');
         $user->setCreatedAt(new DateTime());
-        
 
-        
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 
@@ -51,26 +50,13 @@ class RegistrationController extends BaseController
         if ($form->isValid()) {
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-
             $userManager->updateUser($user);
-         
-                  
-            
-       
-//           if ($user->getProfil() == "E")
-//        {
-//            $em = $this->getDoctrine()->getEntityManager();
-//            $notification = new Notification();
-//            $notification->setEntraineur($user);
-//            $notification->setDatenotification(new DateTime());
-//            $notification->setType('add');
-//            $notification->setNotificateur($user->getId());
-//            $em->persist($notification);
-//            $em->flush();
-//        }
-//       
-        
-       
+
+            if ($user->getProfil() == "E") {
+                $usernotif = new UserRegisterEvent($user);
+                $dispatcher = $this->get('event_dispatcher');
+                $dispatcher->dispatch(FrontOfficeUserEvents::AFTER_ENTRAINEUR_REGISTER, $usernotif);
+            }
             if (null === $response = $event->getResponse()) {
                 $url = $this->generateUrl('fos_user_registration_confirmed');
                 $response = new RedirectResponse($url);
@@ -82,8 +68,8 @@ class RegistrationController extends BaseController
         }
 
         return $this->render('FOSUserBundle:Registration:register.html.twig', array(
-            'form' => $form->createView(),
+                    'form' => $form->createView(),
         ));
-}
+    }
 
 }

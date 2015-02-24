@@ -1,13 +1,32 @@
 parameters:
-#    front_office_optimus.example.class: FrontOffice\OptimusBundle\Example
+
 
 services:
+    
+     front_office_optimus.twig.optimus_extension:
+        class: FrontOffice\OptimusBundle\Twig\Extension\OptimusExtension
+        arguments:
+            em: "@doctrine.orm.entity_manager"
+            container: "@service_container"
+            service: "@security.context"
+        tags:
+            - { name: twig.extension }    
+            
      kernel.listener.onCreateHistoryEvent:
         class: FrontOffice\OptimusBundle\EventListener\HistoryListener
         arguments:
             em: "@doctrine.orm.entity_manager"
         tags:
             - { name: kernel.event_listener, event: front_event.after_event_register, method: onCreateHistoryEvent }
-#    front_office_optimus.example:
-#        class: %front_office_optimus.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+            - { name: kernel.event_listener, event: front_event.after_event_register, method: onCreateNotificationEvent }
+            - { name: kernel.event_listener, event: front_event.after_event_register, method: onCreateParticipationEvent }
+            
+     kernel.listener.onCreateNotificationClub:
+        class: FrontOffice\OptimusBundle\EventListener\ClubListner
+        arguments:
+            em: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: front_event.after_club_register, method: onCreateNotificationClub }
+            - { name: kernel.event_listener, event: front_event.after_club_register, method: onCreateHistoryClub }  
+            
+               

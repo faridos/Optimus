@@ -3,20 +3,19 @@
 namespace FrontOffice\OptimusBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-
 use FrontOffice\UserBundle\Entity\User;
+use FrontOffice\OptimusBundle\Entity\Club;
 
-class HistoryEventEvent extends Event {
-
-    protected $event;
+class HistoryClubEvent extends Event {
+    protected $club;
     protected $user;
 
-    public function __construct(User $user, \FrontOffice\OptimusBundle\Entity\Event $event) {
-        $this->event = $event;
+    public function __construct(User $user, Club $club) {
+        $this->club = $club;
         $this->user = $user;
     }
-    public function getEvent() {
-        return $this->event;
+    public function getClub() {
+        return $this->club;
     }
 
     public function getUser() {

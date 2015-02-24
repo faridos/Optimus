@@ -10,11 +10,13 @@ use FrontOffice\OptimusBundle\Form\EventType;
 use FrontOffice\OptimusBundle\Entity\Participation;
 use FrontOffice\OptimusBundle\Entity\HistoryEvent;
 use FrontOffice\OptimusBundle\Event\HistoryEventEvent;
+use FrontOffice\OptimusBundle\Event\ParticipationEventEvent;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 use Doctrine\Common\Collections\ArrayCollection;
 use \DateTime;
 
 class EventController extends Controller {
+
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array('active' => 1));
@@ -22,11 +24,12 @@ class EventController extends Controller {
         //$x=$em->getRepository("FrontOfficeOptimusBundle:Event")->get_distance_m(48.856667,2.350987, 45.767299, 4.834329);
         return $this->render('FrontOfficeOptimusBundle:Event:index.html.twig', array('events' => $events));
     }
+
     public function addAction() {
         $em = $this->getDoctrine()->getManager();
-         //$x=$em->getRepository("FrontOfficeOptimusBundle:Event")->get_distance_m(48.856667,2.350987, 45.767299, 4.834329);
+        //$x=$em->getRepository("FrontOfficeOptimusBundle:Event")->get_distance_m(48.856667,2.350987, 45.767299, 4.834329);
         $user = $this->container->get('security.context')->getToken()->getUser();
-       
+
         $event = new Event;
         $event->setCreateur($user);
         $event->setDateModification(null);
@@ -38,19 +41,13 @@ class EventController extends Controller {
             if ($form->isValid()) {
                 $em->persist($event);
                 $em->flush();
-               
-                //add notification
-                //add prticipation
-                // add History 
-                $eventhistory = new HistoryEventEvent($user,$event);
-                
-                $dispatcher =$this->get('event_dispatcher');
-                
-                $dispatcher->dispatch( FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER  , $eventhistory);
-                
+                //add notification + add prticipation + add History
+                $eventhistory = new HistoryEventEvent($user, $event);
+                $dispatcher = $this->get('event_dispatcher');
+                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
             }
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:new.html.twig', array('form' => $form->createView(),'user' => $user));
+        return $this->render('FrontOfficeOptimusBundle:Event:new.html.twig', array('form' => $form->createView(), 'user' => $user));
     }
 
     public function showInfoAction($id) {
@@ -74,46 +71,46 @@ class EventController extends Controller {
                     $em->flush();
                 }
             }
-             if ($notificationupdate) {
-                 $participation = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getParicipationNotification($user->getId(), $event[0]->getId(),$notificationupdate->getDatenotification());
-                 if($participation)
-                 {
-                $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notificationupdate));
-                if (empty($notificationSeen)) {
-                    $NotificationSeen = new NotificationSeen();
-                    $NotificationSeen->setNotifications($notificationupdate);
-                    $NotificationSeen->setUsers($user);
-                    $em->persist($NotificationSeen);
-                    $em->flush();
+            if ($notificationupdate) {
+                $participation = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getParicipationNotification($user->getId(), $event[0]->getId(), $notificationupdate->getDatenotification());
+                if ($participation) {
+                    $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notificationupdate));
+                    if (empty($notificationSeen)) {
+                        $NotificationSeen = new NotificationSeen();
+                        $NotificationSeen->setNotifications($notificationupdate);
+                        $NotificationSeen->setUsers($user);
+                        $em->persist($NotificationSeen);
+                        $em->flush();
+                    }
                 }
-             }
             }
             if ($notificationdelete) {
-                 $participation = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getParicipationNotification($user->getId(), $event[0]->getId(),$notificationdelete->getDatenotification());
-                 if($participation)
-                 {
-                $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notificationdelete));
-                if (empty($notificationSeen)) {
-                    $NotificationSeen = new NotificationSeen();
-                    $NotificationSeen->setNotifications($notificationdelete);
-                    $NotificationSeen->setUsers($user);
-                    $em->persist($NotificationSeen);
-                    $em->flush();
+                $participation = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getParicipationNotification($user->getId(), $event[0]->getId(), $notificationdelete->getDatenotification());
+                if ($participation) {
+                    $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notificationdelete));
+                    if (empty($notificationSeen)) {
+                        $NotificationSeen = new NotificationSeen();
+                        $NotificationSeen->setNotifications($notificationdelete);
+                        $NotificationSeen->setUsers($user);
+                        $em->persist($NotificationSeen);
+                        $em->flush();
+                    }
                 }
-            }}
-            
+            }
         }
         $nb_participants = count($em->getRepository("FrontOfficeOptimusBundle:Participation")->findBy(array("event" => $event)));
         return $this->render('FrontOfficeOptimusBundle:Event:showInfo.html.twig', array('entity' => $event[0],
                     'nb_participants' => $nb_participants,
                     'user' => $user));
-}
+    }
+
     public function showMurAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
         return $this->render('FrontOfficeOptimusBundle:Event:showMur.html.twig', array('entity' => $event, 'UsersInvitations' => @$UsersInvitations, 'Invitations' => @$Invitations, 'friends' => @$Friends, 'user' => @$user, 'count' => @$count));
     }
+
     public function showPhotosAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
@@ -122,6 +119,7 @@ class EventController extends Controller {
         $nb_participants = count($em->getRepository("FrontOfficeOptimusBundle:Participation")->findBy(array("event" => $event)));
         return $this->render('FrontOfficeOptimusBundle:Event:showPhotos.html.twig', array('albums' => $albums, 'entity' => $event, 'nb_participants' => $nb_participants, 'UsersInvitations' => @$UsersInvitations, 'Invitations' => @$Invitations, 'friends' => @$Friends, 'user' => @$user, 'count' => @$count));
     }
+
     public function showParticipantsAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
@@ -130,6 +128,7 @@ class EventController extends Controller {
         $nb_participants = count($em->getRepository("FrontOfficeOptimusBundle:Participation")->findBy(array("event" => $event)));
         return $this->render('FrontOfficeOptimusBundle:Event:showParticipants.html.twig', array('entity' => $event, 'participants' => $participants, 'nb_participants' => $nb_participants, 'UsersInvitations' => @$UsersInvitations, 'Invitations' => @$Invitations, 'friends' => @$Friends, 'user' => @$user, 'count' => @$count));
     }
+
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
@@ -143,11 +142,13 @@ class EventController extends Controller {
                     'edit_form' => $editForm->createView(),
         ));
     }
+
     private function createEditForm(Event $entity) {
         $form = $this->createForm(new EventType(), $entity
         );
         return $form;
     }
+
     public function updateAction(Request $request, $id) {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
@@ -183,6 +184,7 @@ class EventController extends Controller {
                     'edit_form' => $editForm->createView(),
         ));
     }
+
     public function deleteAction($id) {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
@@ -210,6 +212,7 @@ class EventController extends Controller {
         $em->flush();
         return $this->redirect($this->generateUrl('user_schow', array('id' => $user->getId())));
     }
+
     public function annulerAction($id) {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
@@ -227,9 +230,10 @@ class EventController extends Controller {
         }
         return $this->render('FrontOfficeOptimusBundle:Event:annuler.html.twig');
     }
-    public function competitionsAction(){
+
+    public function competitionsAction() {
         $em = $this->getDoctrine()->getManager();
-        $competition=$em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findBy(array('nom' => 'compétition'));
+        $competition = $em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findBy(array('nom' => 'compétition'));
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array('type' => $competition[0], 'active' => 1));
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         //les particpiations d'utilisateur courant
@@ -240,29 +244,28 @@ class EventController extends Controller {
         //return page twig avec variables
         $count = (count($Invitations));
         return $this->render('FrontOfficeOptimusBundle:Event:competitions.html.twig', array(
-            'count' => $count,
-            'events' => $events,
-            'user'=>$user,
-            'UsersInvitations' => $UsersInvitations,
-            'Invitations' => $Invitations,
-            'participations' => $user_participations));
+                    'count' => $count,
+                    'events' => $events,
+                    'user' => $user,
+                    'UsersInvitations' => $UsersInvitations,
+                    'Invitations' => $Invitations,
+                    'participations' => $user_participations));
     }
-    
-    public function CoordonneEventAction($lng,$lat){
+
+    public function CoordonneEventAction($lng, $lat) {
         $em = $this->getDoctrine()->getEntityManager();
         $events = new ArrayCollection();
-        
-           $events = $em->getRepository('FrontOfficeOptimusBundle:Event')->EventLoad(new DateTime(),$lng,$lat);
-             if (!$events) {
-                throw $this->createNotFoundException('Unable to find Event entity.');
-            }
-        
+
+        $events = $em->getRepository('FrontOfficeOptimusBundle:Event')->EventLoad(new DateTime(), $lng, $lat);
+        if (!$events) {
+            throw $this->createNotFoundException('Unable to find Event entity.');
+        }
+
         $response = new Response();
         $tabevents = json_encode($events);
         $response->headers->set('Content-Type', 'application/json');
         $response->setContent($tabevents);
         return $response;
-        
     }
-    
+
 }

@@ -12,4 +12,14 @@ services:
         class: FrontOffice\UserBundle\EventListener\RegistrationListener
         arguments: []
         tags:
-            - { name: kernel.event_subscriber }         
+            - { name: kernel.event_subscriber }      
+            
+    kernel.listener.onCreateUserNotification:
+        class: FrontOffice\UserBundle\EventListener\RegisterEntraineurListner
+        arguments:
+            em: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: front_event.after_entraineur_register, method: onCreateUserNotification }       
+            
+            
+     

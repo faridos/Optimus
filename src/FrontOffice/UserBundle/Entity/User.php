@@ -114,6 +114,21 @@ class User extends BaseUser {
      */
     protected $participations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Notification", mappedBy="entraineur", cascade={"persist","remove"})
+     */
+    protected $notification_entraineur;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\NotificationSeen", mappedBy="users")
+     * */
+    protected $notificationseen;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Club", mappedBy="createur")
+     * */
+    protected $clubs;
+
     public function getId() {
         return $this->id;
     }

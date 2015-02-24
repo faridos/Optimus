@@ -133,6 +133,11 @@ class Event {
      */
     protected $active;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Notification", mappedBy="event", cascade={"persist","remove"})
+     */
+    protected $notification_event;
+
     public function __construct() {
         $this->dateCreation = new \Datetime();
         $this->setDescription("Pas de description");
