@@ -53,9 +53,7 @@ class ClubController extends Controller {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($club);
                 $em->flush();
-                //add notification lors de creation d'un nouveau club
-                //add member club lors de creation d'un nouveau club
-                // add History 
+               
                 $clubevent = new HistoryClubEvent($user, $club);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);

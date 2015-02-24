@@ -22,7 +22,7 @@ services:
             - { name: kernel.event_listener, event: front_event.after_event_register, method: onCreateParticipationEvent }
             
      kernel.listener.onCreateNotificationClub:
-        class: FrontOffice\OptimusBundle\EventListener\ClubListner
+        class: FrontOffice\OptimusBundle\EventListener\ClubListener
         arguments:
             em: "@doctrine.orm.entity_manager"
         tags:
