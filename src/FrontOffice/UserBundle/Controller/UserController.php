@@ -1,7 +1,6 @@
 <?php
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 
 namespace FrontOffice\UserBundle\Controller;
 
@@ -57,7 +56,7 @@ class UserController extends Controller {
     public function getProfileUserAction($id) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
-            throw new AccessDeniedException('Accès limité aux Entraîneurs.');
+            throw new AccessDeniedException('.');
         }
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');

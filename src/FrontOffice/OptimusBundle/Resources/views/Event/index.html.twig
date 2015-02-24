@@ -25,9 +25,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for entity in events %}
             <tr>
-                <td><a href="{{ path('event_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+               
                 <td>{{ entity.titre }}</td>
                 <td>{{ entity.lieu }}</td>
                 <td>{% if entity.dateCreation %}{{ entity.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
@@ -43,14 +43,7 @@
                 <td>{{ entity.status }}</td>
                 <td>{{ entity.active }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('event_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('event_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                
                 </td>
             </tr>
         {% endfor %}
@@ -59,9 +52,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('event_new') }}">
-                Create a new entry
-            </a>
+           
         </li>
     </ul>
     {% endblock %}
