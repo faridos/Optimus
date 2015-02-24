@@ -23,5 +23,5 @@ class HistoryEventEvent extends Event {
         return $this->user;
     }
 
-        //put your code here
+        
 }
