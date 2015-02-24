@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/FrontOfficeOptimusEvent.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Event.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Repository/NotificationSeenRepository.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/EventListener/HistoryListener.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Repository/NotificationRepository.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Event/new.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Entity/User.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/RegistrationController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/EventListener/ClubListener.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Event/HistoryEventEvent.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Form/ClubType.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/config/services.yml</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Twig/Extension/OptimusExtension.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/NotificationSeen.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/config/services.yml</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Event/UserRegisterEvent.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/FrontOfficeUserBundle.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Notification.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/show_content.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/UserController.php</file>
+            <file>file:/C:/wamp/www/Optimus/app/Resources/views/baseA.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/config/routing.yml</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/add.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Club.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/FrontOfficeUserEvents.php</file>
+            <file>file:/C:/wamp/www/Optimus/web/template/js/jquery.slimscroll.min.js</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Event/HistoryClubEvent.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/layout.html.twig</file>
+        </group>
+    </open-files>
+</project-private>

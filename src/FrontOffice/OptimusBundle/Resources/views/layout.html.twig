@@ -7,7 +7,7 @@
 
 {% block navigation %}
     <div id="header" style="box-shadow:0px 1px 20px rgba(0, 0, 0, 0.3)">
-        <div class="home-logo osLight" style="margin:12px 0px 0 15px;"><a href="index.html"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
+        <div class="home-logo osLight" style="margin:12px 0px 0 15px;"><a href="{{ path('index') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
         <a href="#" class="navHandler" style="padding-top:18px;font-size:18px;color:#c02100"><span class="fa fa-list-ul"></span></a>
         <div class="search"><form action="" class="search-form" name="formsearch">
                 <input type="hidden" name="kwtype" value="0">
@@ -51,7 +51,7 @@
                     <div class="mobAvatarName">{{ app.user.nom }} {{ app.user.prenom }}</div>
                 </div>
                 <ul>
-                    <li><a href="profile.html"><span class="glyphicon glyphicon-user"></span>Profile</a></li><li><a href="#"><span class="fa fa-users"></span>Mes clubs</a></li><li><a href="profile.html"><span class="fa fa-trophy"></span>Mes évenements</a></li>
+                    <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user"></span>Profile</a></li><li><a href="#"><span class="fa fa-users"></span>Mes clubs</a></li><li><a href="profile.html"><span class="fa fa-trophy"></span>Mes évenements</a></li>
                     <li><a href="#"><span class="icon-settings"></span>Settings</a></li><li><a href="#"><span class="glyphicon glyphicon-globe"></span>Historique</a></li>
                     <li class="divider"></li>
                     <li><a href="{{ path('fos_user_security_logout') }}"><span class="icon-power"></span>Deconnexion</a></li>
