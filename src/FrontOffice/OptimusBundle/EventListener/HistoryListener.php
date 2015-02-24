@@ -25,25 +25,13 @@ class HistoryListener {
 
         $history = new HistoryEvent();
 
-        $history->setAction("Ajout");
+        $history->setAction($event->getAction());
 
         $history->setEvent($event->getEvent());
 
         $history->setUser($event->getUser());
 
         $em->persist($history);
-        $em->flush();
-    }
-
-    public function onCreateParticipationEvent(HistoryEventEvent $event) {
-
-        $em = $this->em;
-
-        $participation = new Participation();
-        $participation->setEvent($event->getEvent());
-        $participation->setParticipant($event->getUser());
-        $participation->setDatePaticipation(new DateTime());
-        $em->persist($participation);
         $em->flush();
     }
 
@@ -54,11 +42,10 @@ class HistoryListener {
         $notification = new Notification();
         $notification->setEvent($event->getEvent());
         $notification->setDatenotification(new DateTime());
-        $notification->setType('add');
+        $notification->setType($event->getAction());
         $notification->setNotificateur($event->getUser()->getId());
         $em->persist($notification);
         $em->flush();
-        die('ee');
     }
 
     //put your code here

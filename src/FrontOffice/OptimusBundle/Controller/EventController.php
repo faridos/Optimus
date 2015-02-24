@@ -10,7 +10,7 @@ use FrontOffice\OptimusBundle\Form\EventType;
 use FrontOffice\OptimusBundle\Entity\Participation;
 use FrontOffice\OptimusBundle\Entity\HistoryEvent;
 use FrontOffice\OptimusBundle\Event\HistoryEventEvent;
-use FrontOffice\OptimusBundle\Event\ParticipationEventEvent;
+use FrontOffice\OptimusBundle\Event\ParticipationEvent;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -44,14 +44,12 @@ class EventController extends Controller {
      * 
      *
      * @Route("/ajouter", name="add-event")
-     * @Method("GET")
+     * @Method("GET|POST")
      * @Template()
      */
     public function addAction() {
         $em = $this->getDoctrine()->getManager();
-        //$x=$em->getRepository("FrontOfficeOptimusBundle:Event")->get_distance_m(48.856667,2.350987, 45.767299, 4.834329);
         $user = $this->container->get('security.context')->getToken()->getUser();
-
         $event = new Event;
         $event->setCreateur($user);
         $event->setDateModification(null);
@@ -64,9 +62,12 @@ class EventController extends Controller {
                 $em->persist($event);
                 $em->flush();
                 //add notification + add prticipation + add History
-                $eventhistory = new HistoryEventEvent($user, $event);
+                $action = 'add';
+                $eventhistory = new HistoryEventEvent($user, $event, $action);
+                $eventparticipation = new ParticipationEvent($user, $event);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+                $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
             }
         }
         return $this->render('FrontOfficeOptimusBundle:Event:new.html.twig', array('form' => $form->createView(), 'user' => $user));
@@ -83,7 +84,7 @@ class EventController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
-        if (!$entity) {
+        if (!$entity || $entity->getActive()==0 ) {
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
         $editForm = $this->createForm(new EventType(), $entity);
@@ -92,6 +93,11 @@ class EventController extends Controller {
             $entity->setDateModification(new DateTime());
             $em->flush();
             //add notification
+            $action = 'update';
+            $eventhistory = new HistoryEventEvent($user, $entity, $action);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+
             return $this->redirect($this->generateUrl('events', array('id' => $id)));
         }
         return $this->render('FrontOfficeOptimusBundle:Event:edit.html.twig', array(
@@ -112,14 +118,16 @@ class EventController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
-        if (!$entity) {
+        if (!$entity || $entity->getActive()==0) {
             throw $this->createNotFoundException('Unable to find Club entity.');
         }
         $entity->setActive(false);
         $em->persist($entity);
         $em->flush();
-        //add notification delete
-
+        $action = 'delete';
+        $eventhistory = new HistoryEventEvent($user, $entity, $action);
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         return $this->redirect($this->generateUrl('events'));
     }
 

@@ -3,6 +3,3 @@ front_office_optimus_controller:
     type:  annotation
     prefix:   /
 
-add_club:
-    path:     /club/add
-    defaults: { _controller: FrontOfficeOptimusBundle:Club:ajouterClub }

@@ -3,256 +3,164 @@
 
 {% block body %}
     <div id="wrapper">
-            <div id="mapView" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
-		
-<div id="content" class="mob-max" style="height: 356px;">
-                
-                <div class="col-lg-12"><div class="row mb20">
-                        
+        <div id="mapView" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
 
-                        
+        <div id="content" class="mob-max" style="height: 356px;">
+
+            <div class="col-lg-12"><div class="row mb20">
+
+
+
+                </div>
+                {% for event in events %}
+                <div class="col-lg-12">
+                    <div class="notificationsWidget">
+
+                        <div class="singleTop whiteBg">
+                            <div class="notificationsWidget">
+
+                                <div class="notification">
+                                    <div class="time green">
+                                        <div class="timeBody hidden-xs">Nom d'évenement</div>
+                                        <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
+                                        <div class="indicator"><span class="fa fa-circle-o"></span></div>
+                                        <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
+                                    </div>
+                                    <div class="notifyContent">
+                                        <div class="notifyBody">
+                                            <img class="avatar pull-left" src="images/avatar-3.png" alt="avatar">
+                                            <div class="notify pull-left">
+                                                <div class="name">Créateur<span class="label label-green visible-xs">Nom d'évenement</span></div>
+                                                <div class="info">
+                                                    <div class="address">Lieu</div>
+                                                    <div class="title">Date début :10-01-2015</div><div class="title">Date de fin :10-03-2015</div>
+
+                                                    <div class="title">Prix: 200 $</div>
+                                                    <div class="title">Déscription: texte</div>
+                                                </div><div class="buttonsWrapper pb20">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest"><span class="fa fa-pinterest"></span></a><a class="btn btn-round btn-success" href="#" data-toggle="button" style="
+                                                        background-color: #c02100;
+                                                        border-color: #ccc;
+                                                                                                                                                                                                        ">
+                                                        <span class="fa fa-trophy state"></span> <span class="state">Participer</span>
+                                                        <span class="fa fa-trophy state-active"></span> <span class="state-active">Annuler la participation</span>
+                                                    </a></div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="commentsWidget">
+
+                                <div class="comment">
+                                    <div class="commentAvatar">
+                                        <img class="avatar" src="images/avatar-3.png" alt="avatar">
+                                        <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
+                                    </div>
+                                    <div class="commentContent">
+                                        <div class="commentName">Foulen ben foulen</div><div class="commentTime" style="
+                                                                                             margin-left: 10px;
+                                                                                             "><span class="icon-clock"></span> 1 day ago</div><br>
+                                        <div class="commentBody">celui la est un evenement trop génial , merci pour le partager!</div>
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="comment">
+                                    <div class="commentAvatar">
+                                        <img class="avatar" src="images/avatar-3.png" alt="avatar">
+                                        <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
+                                    </div>
+                                    <div class="commentContent">
+                                        <div class="commentName">Foulen ben foulen</div><div class="commentTime" style="
+                                                                                             margin-left: 10px;
+                                                                                             "><span class="icon-clock"></span> 1 day ago</div><br>
+                                        <div class="commentBody">celui la est un evenement trop génial , merci pour le partager!</div>
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="commentsWidgetForm">
+                                    <div class="cfAvatar">
+                                        <img class="avatar" src="images/avatar-1.png" alt="avatar">
+                                    </div>
+                                    <form class="commentsForm">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Write a comment...">
+                                            <span class="input-group-btn"><a class="btn btn-green">Post</a></span>
+                                        </div>
+                                    </form>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
                     </div>
-                            <div class="col-lg-12">
-                            <div class="notificationsWidget">
-                                
-                                <div class="singleTop whiteBg">
-                           <div class="notificationsWidget">
-                                
-                                <div class="notification">
-                                    <div class="time green">
-                                        <div class="timeBody hidden-xs">Nom d'évenement</div>
-                                        <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
-                                        <div class="indicator"><span class="fa fa-circle-o"></span></div>
-                                        <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
-                                    </div>
-                                    <div class="notifyContent">
-                                        <div class="notifyBody">
-                                            <img class="avatar pull-left" src="images/avatar-3.png" alt="avatar">
-                                            <div class="notify pull-left">
-                                            <div class="name">Créateur<span class="label label-green visible-xs">Nom d'évenement</span></div>
-                                                <div class="info">
-                                            <div class="address">Lieu</div>
-                                            <div class="title">Date début :10-01-2015</div><div class="title">Date de fin :10-03-2015</div>
-                                            
-<div class="title">Prix: 200 $</div>
-<div class="title">Déscription: texte</div>
-                                        </div><div class="buttonsWrapper pb20">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest"><span class="fa fa-pinterest"></span></a><a class="btn btn-round btn-success" href="#" data-toggle="button" style="
-    background-color: #c02100;
-      border-color: #ccc;
-">
-                                <span class="fa fa-trophy state"></span> <span class="state">Participer</span>
-                                <span class="fa fa-trophy state-active"></span> <span class="state-active">Annuler la participation</span>
-                            </a></div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                
-                                
-                                
-                                
-                            </div>
-                    <div class="commentsWidget">
-                                
-                                <div class="comment">
-                                    <div class="commentAvatar">
-                                        <img class="avatar" src="images/avatar-3.png" alt="avatar">
-                                        <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
-                                    </div>
-                                    <div class="commentContent">
-                                        <div class="commentName">Foulen ben foulen</div><div class="commentTime" style="
-    margin-left: 10px;
-"><span class="icon-clock"></span> 1 day ago</div><br>
-                                        <div class="commentBody">celui la est un evenement trop génial , merci pour le partager!</div>
-                                        
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                
-                                <div class="comment">
-                                    <div class="commentAvatar">
-                                        <img class="avatar" src="images/avatar-3.png" alt="avatar">
-                                        <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
-                                    </div>
-                                    <div class="commentContent">
-                                        <div class="commentName">Foulen ben foulen</div><div class="commentTime" style="
-    margin-left: 10px;
-"><span class="icon-clock"></span> 1 day ago</div><br>
-                                        <div class="commentBody">celui la est un evenement trop génial , merci pour le partager!</div>
-                                        
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="commentsWidgetForm">
-                                    <div class="cfAvatar">
-                                        <img class="avatar" src="images/avatar-1.png" alt="avatar">
-                                    </div>
-                                    <form class="commentsForm">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Write a comment...">
-                                            <span class="input-group-btn"><a class="btn btn-green">Post</a></span>
-                                        </div>
-                                    </form>
-                                    <div class="clearfix"></div>
-                                </div>
-                                
-                            </div>
                 </div>
-                                
-                                
-                                
-                                
-                            </div>
-                        </div>
-<div class="col-lg-12">
-                            <div class="notificationsWidget">
-                                
-                                <div class="singleTop whiteBg">
-                           <div class="notificationsWidget">
-                                
-                                <div class="notification">
-                                    <div class="time green">
-                                        <div class="timeBody hidden-xs">Nom d'évenement</div>
-                                        <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
-                                        <div class="indicator"><span class="fa fa-circle-o"></span></div>
-                                        <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
-                                    </div>
-                                    <div class="notifyContent">
-                                        <div class="notifyBody">
-                                            <img class="avatar pull-left" src="images/avatar-3.png" alt="avatar">
-                                            <div class="notify pull-left">
-                                            <div class="name">Créateur<span class="label label-green visible-xs">Nom d'évenement</span></div>
-                                                <div class="info">
-                                            <div class="address">Lieu</div>
-                                            <div class="title">Date début :10-01-2015</div><div class="title">Date de fin :10-03-2015</div>
-                                            
-<div class="title">Prix: 200 $</div>
-<div class="title">Déscription: texte</div>
-                                        </div><div class="buttonsWrapper pb20">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest"><span class="fa fa-pinterest"></span></a><a class="btn btn-round btn-success" href="#" data-toggle="button" style="
-    background-color: #c02100;
-      border-color: #ccc;
-">
-                                <span class="fa fa-trophy state"></span> <span class="state">Participer</span>
-                                <span class="fa fa-trophy state-active"></span> <span class="state-active">Annuler la participation</span>
-                            </a></div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                
-                                
-                                
-                                
-                            </div>
-                    <div class="commentsWidget">
-                                
-                                <div class="comment">
-                                    <div class="commentAvatar">
-                                        <img class="avatar" src="images/avatar-3.png" alt="avatar">
-                                        <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
-                                    </div>
-                                    <div class="commentContent">
-                                        <div class="commentName">Foulen ben foulen</div><div class="commentTime" style="
-    margin-left: 10px;
-"><span class="icon-clock"></span> 1 day ago</div><br>
-                                        <div class="commentBody">celui la est un evenement trop génial , merci pour le partager!</div>
-                                        
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                
-                                <div class="comment">
-                                    <div class="commentAvatar">
-                                        <img class="avatar" src="images/avatar-3.png" alt="avatar">
-                                        <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
-                                    </div>
-                                    <div class="commentContent">
-                                        <div class="commentName">Foulen ben foulen</div><div class="commentTime" style="
-    margin-left: 10px;
-"><span class="icon-clock"></span> 1 day ago</div><br>
-                                        <div class="commentBody">celui la est un evenement trop génial , merci pour le partager!</div>
-                                        
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="commentsWidgetForm">
-                                    <div class="cfAvatar">
-                                        <img class="avatar" src="images/avatar-1.png" alt="avatar">
-                                    </div>
-                                    <form class="commentsForm">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Write a comment...">
-                                            <span class="input-group-btn"><a class="btn btn-green">Post</a></span>
-                                        </div>
-                                    </form>
-                                    <div class="clearfix"></div>
-                                </div>
-                                
-                            </div>
-                </div>
-                                
-                                
-                                
-                                
-                            </div>
-                        </div>
-                        </div>
+                    {% endfor %}
             </div>
-
- <!--- baniere publicitaire ****************************************************  -->
-			<div class="puboptimus">
-             <img src="{{ asset('template/images/banniere-pub.jpg') }}" class="banoptimus">
-           
-            </div>
-			    <!--- fin baniere publicitaire ****************************************************  --> 
-            <div class="clearfix"></div>
         </div>
-    
-       <div class="row" id="descu" style="display:none;">
-                <div class="col-lg-3  navbar-fixed-bottom">
-                    <div class="well well-sm " style="background:white;height:300px;z-index:111111;">
-                            <div class="affiche_nom" style="height:30px;">
-                                   <b class="pull-left affiche_personne"></b>
-                                   <i id="close" class="glyphicon glyphicon-remove pull-right"></i>
-                            </div>
-                            <div class="affichage">
-                                    <div class="well well-sm" style="height:200px;">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
-                                            </div>
-                                             <div class="col-md-10" style="background:white;">
-                                                <p>
-                                                    Bonjour , comment vas-tu? ça fait un bail que je t'ai pas vu !
-                                                </p>
-                                            </div>
 
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-md-2 pull-right">
-                                                <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
-                                            </div>
-                                             <div class="col-md-10 pull-left" style="background:white;">
-                                                <p>
-                                                   bjr, ça va mon frere tout va bien ... quoi de neuf chez toi?
-                                                </p>
-                                            </div>
+        <!--- baniere publicitaire ****************************************************  -->
+        <div class="puboptimus">
+            <img src="{{ asset('template/images/banniere-pub.jpg') }}" class="banoptimus">
 
-                                        </div>
-                                        <hr>
-                                    </div>
+        </div>
+        <!--- fin baniere publicitaire ****************************************************  --> 
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="row" id="descu" style="display:none;">
+        <div class="col-lg-3  navbar-fixed-bottom">
+            <div class="well well-sm " style="background:white;height:300px;z-index:111111;">
+                <div class="affiche_nom" style="height:30px;">
+                    <b class="pull-left affiche_personne"></b>
+                    <i id="close" class="glyphicon glyphicon-remove pull-right"></i>
+                </div>
+                <div class="affichage">
+                    <div class="well well-sm" style="height:200px;">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
                             </div>
-                            <form action="" method="post">
-                                <input type="text" class="form-control input-sm">
-                            </form>
+                            <div class="col-md-10" style="background:white;">
+                                <p>
+                                    Bonjour , comment vas-tu? ça fait un bail que je t'ai pas vu !
+                                </p>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-2 pull-right">
+                                <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
+                            </div>
+                            <div class="col-md-10 pull-left" style="background:white;">
+                                <p>
+                                    bjr, ça va mon frere tout va bien ... quoi de neuf chez toi?
+                                </p>
+                            </div>
+
+                        </div>
+                        <hr>
                     </div>
                 </div>
-           </div>
+                <form action="" method="post">
+                    <input type="text" class="form-control input-sm">
+                </form>
+            </div>
+        </div>
+    </div>
 
-<!-- Header -->
+    <!-- Header -->
 {% endblock %} 

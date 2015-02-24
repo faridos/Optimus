@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace FrontOffice\UserBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -28,7 +26,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  * @Route("/")
  */
 class UserController extends Controller {
-    
+
     /**
      * 
      *
@@ -42,8 +40,11 @@ class UserController extends Controller {
     }
 
     public function accueilAction() {
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array('active' => 1));
 
-        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig');
+        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user,'events' => $events));
     }
 
     /**
@@ -61,7 +62,7 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user'=>$user));
+        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user));
     }
 
 }

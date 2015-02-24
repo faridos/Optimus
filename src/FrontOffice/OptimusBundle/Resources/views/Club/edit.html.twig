@@ -3,14 +3,113 @@
 {% block body -%}
     <h1>Club edit</h1>
 
-    {{ form(edit_form) }}
+    <form action="{{ path("club_update", {'id' : entity.id}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal0 form-groups-bordered">
+                        <br>
+                        {{ form_errors(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('club') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="col-md-2 marge_haut">
+                                    <label class="control-label">Nom</label>
+                                </div>
+                                <div class="col-md-8">
+                                    {{ form_widget(form.nom) }}
+                                </div>
+                            </div>
+                          
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="col-md-4 marge_haut">
+                                    <label class="control-label">Date de crÃ©ation</label>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form_widget(form.dateCreation) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-2 marge_haut">
+                                    <label class="control-label">Discipline</label>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form_widget(form.discpline) }}
+                                </div>
+                            </div>
+                        </div>  
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="col-md-2 marge_haut">
+                                    <label class="control-label">Adresse</label>
+                                </div>
+                                <div class="col-md-8">
+                                    {{ form_widget(form.adresse, { 'id': 'adresse' } ) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-2 marge_haut">
+                                    <label class="control-label">Lien</label>
+                                </div>
+                                <div class="col-md-8">
+                                    {{ form_widget(form.lienWeb) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <p class="text-info"><i class="entypo-info-circled"></i>Naviguer dans la carte, Cliquer pour  choisir votre  lieu du club</p><br>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 marge_haut">
+                                        <label class="control-label">Frais d'abonnement</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">â‚¬</span>
+
+                                            {{ form_widget(form.fraisAdhesion) }}
+
+                                        </div>
+                                    </div>  
+
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-2 marge_haut">
+                                        <label class="control-label">Latitude</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        {{ form_widget(form.lat, { 'id': 'lat_id' }) }}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-2 marge_haut">
+                                        <label class="control-label">Longitude</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        {{ form_widget(form.lng, { 'id': 'lng_id' }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-invert" data-collapsed="0" style="zoom: 1; position: static;">
+                                    <div  id="normal" style="height: 300px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-5">
+                            <br>
+                            <button type="submit" class="btn btn-success"><i class="entypo-check"></i>Enregistrer</button>
+                            <button type="reset" class="btn btn-danger">annuler</button>
+                        </div>
+                        {{ form_widget(form._token) }}
+
+                    </form>
 {% endblock %}

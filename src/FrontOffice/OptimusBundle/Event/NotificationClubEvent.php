@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\Event;
 use FrontOffice\UserBundle\Entity\User;
 use FrontOffice\OptimusBundle\Entity\Club;
 
-class HistoryClubEvent extends Event {
+class NotificationClubEvent extends Event {
     protected $club;
     protected $user;
     protected $action;

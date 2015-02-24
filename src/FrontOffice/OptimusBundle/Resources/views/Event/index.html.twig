@@ -43,7 +43,9 @@
                 <td>{{ entity.status }}</td>
                 <td>{{ entity.active }}</td>
                 <td>
-                
+                <li>
+                        <a href="{{ path('add_participation', { 'id': entity.id }) }}">participer</a>
+                    </li>
                 </td>
             </tr>
         {% endfor %}
