@@ -1,0 +1,15 @@
+{% spaceless %}
+    <div class="rating">
+        {% for i in maxValue..1 %}
+            {% set style = '' %}
+            {% if i <= rate %}
+                {% set style = 'full' %}
+            {% else %}
+                {% set style = rate|isHalfStar(i) ? 'half' %}
+            {% endif %}
+            <b class="star {{ style }}" style="font-size: 25px;">☆</b>
+        {% endfor %}
+    </div>
+    <br/>
+    <span>{{rating.rate}}/5 ({{rating.numVotes}} votes)</span>
+{% endspaceless %}

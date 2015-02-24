@@ -1,0 +1,18 @@
+{% spaceless %}
+    <span>
+        <div class="rating">
+            {% for i in maxValue..1 %}
+                {% set style = '' %}
+                {% if i <= rating.rate %}
+                    {% set style = 'full' %}
+                {% else %}
+                    {% set style = rating.rate|isHalfStar(i) ? 'half' %}
+                {% endif %}
+                {% set params = params|merge({'id' : rating.id, 'value' : i}) %}
+                <a href="{{ url('dcs_rating_add_vote', params) }}" class="star {{ style }}" style="font-size: 25px;">☆</a>
+            {% endfor %}
+        </div>
+    </span>
+        <br/>
+    <span>{{rating.rate}}/5 ({{rating.numVotes}} votes)</span>
+{% endspaceless %}
