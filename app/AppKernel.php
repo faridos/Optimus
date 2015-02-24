@@ -21,6 +21,9 @@ class AppKernel extends Kernel
             new FrontOffice\UserBundle\FrontOfficeUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
+            new FrontOffice\RatingBundle\FrontOfficeRatingBundle(),
+            new DCS\RatingBundle\DCSRatingBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

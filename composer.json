@@ -21,7 +21,9 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "misd/phone-number-bundle": "1.1.*@dev",
-        "sly/relation-bundle": "dev-master"
+        "sly/relation-bundle": "dev-master",
+        "damianociarla/rating-bundle": "~1.2",
+        "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
     "scripts": {
         "post-install-cmd": [
