@@ -4,40 +4,46 @@
     <p>{{ 'profile.show.username'|trans }}:   {{ app.user.prenom }} {{ app.user.nom }}</p>
     <p>{{ 'profile.show.email'|trans }}: {{ app.user.email }}</p>
     {% if app.user.id != user.id %}
-                            {% if app.user | relation_exists('friendship', user ) %}
-                                {% set pendingInvitations = pendingInvitation(user,user1)%}
-                                {% if pendingInvitations is empty %}
-                                                                  
-                                    <button type="submit" class="btn btn-blue">
-                                        Demande envoyée
-                                    </button> 
-                                {% endif %}
-                            {% else %}
+        {% if app.user | relation_exists('friendship', user ) %}
+            {% set pendingInvitations = pendingInvitation(user,user1)%}
+                {% if pendingInvitations is empty %}
+                    <form action="{{ path('delete_relation', { 'id': user.id}) }}" method="post">
+                        <button type="submit" class="btn btn-blue ">
+                            Retirer
+                        </button>
+                    </form>
+                {% else %}                    
+                    <button type="submit" class="btn btn-blue">
+                        Demande envoyée
+                    </button> 
+                {% endif %}
 
-                                <form action="{{ path('add_relation', { 'id': user.id}) }}" method="post">
-                                    <button type="submit" class="btn btn-blue btn-icon icon-left">
-                                        Ajouter
-                                        <i class="entypo-plus"></i>
-                                    </button>
-                                </form>
+                {% else %}
 
-                            {% endif %}
+                    <form action="{{ path('add_relation', { 'id': user.id}) }}" method="post">
+                        <button type="submit" class="btn btn-blue btn-icon icon-left">
+                            Ajouter
+                            <i class="entypo-plus"></i>
+                        </button>
+                    </form>
+
+                    {% endif %}
                         {% endif %}
                             {% set friends = getFriends(user.id) %}
-                        
-                            <!-- panel body -->
+
+                                <!-- panel body -->
 
 
-                                        {% for friend in friends %}
-                                            <div class="col-xs-4 col-sm-3 col-lg-4 block-section">
-                                              
+                                {% for friend in friends %}
+                                    <div class="col-xs-4 col-sm-3 col-lg-4 block-section">
 
-                                                   {{ friend.prenom }} {{ friend.nom }}
-                                                {#<img src="{{ asset( app.user.getWebPath ) }}" />#}
-                                            </div>
-                                            
-                                        {% endfor %}
-                                        {{  friends|length }}
-                                    
-                
-</div>
+
+                                        {{ friend.prenom }} {{ friend.nom }}
+                                        {#<img src="{{ asset( app.user.getWebPath ) }}" />#}
+                                    </div>
+
+                                {% endfor %}
+                                {{  friends|length }}
+
+
+                            </div>

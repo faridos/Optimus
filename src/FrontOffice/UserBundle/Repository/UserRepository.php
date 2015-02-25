@@ -25,31 +25,22 @@ class UserRepository extends EntityRepository {
         return $qb->getQuery()->getResult();
     }
 
-    public function getUsersInvitations($id) {
-//         //Retourne les users des invitations
-//        $em = $this->getEntityManager();
-//        $qb = $em->createQueryBuilder('u');
-//        $qb->select('u')
-//           ->from('FrontOffice\UserBundle\Entity\User', 'u')
-//           ->where('u.id = :id')
-//           ->setParameter('id', $id);
-//        return $qb->getQuery()->getResult();
-    }
+   
 
     public function getInvitations($id) {
-//        // Retourne les invitations
-//        $em = $this->getEntityManager();
-//        $qb = $em->createQueryBuilder();
-//        $qb->select(array('r'))
-//           ->addSelect('u.username','u.nom','u.prenom','r.object1Id','r.id','r.createdAt')
-//           ->from('Sly\RelationBundle\Entity\Relation', 'r')
-//          ->Join('FrontOffice\UserBundle\Entity\User', 'u')
-//           ->where('r.object1Id = u.id')                
-//           ->andWhere('r.object2Id = :id')
-//          
-//           ->andWhere('r.confirmed = 0')
-//           ->setParameter('id', $id);
-//        return $qb->getQuery() ->getArrayResult();
+        // Retourne les invitations
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select(array('r'))
+           ->addSelect('u.username','u.nom','u.prenom','r.object1Id','r.id','r.createdAt')
+           ->from('Sly\RelationBundle\Entity\Relation', 'r')
+          ->Join('FrontOffice\UserBundle\Entity\User', 'u')
+           ->where('r.object1Id = u.id')                
+           ->andWhere('r.object2Id = :id')
+          
+           ->andWhere('r.confirmed = 0')
+           ->setParameter('id', $id);
+        return $qb->getQuery() ->getArrayResult();
     }
 
     public function getpendingInvitations($id, $idu) {

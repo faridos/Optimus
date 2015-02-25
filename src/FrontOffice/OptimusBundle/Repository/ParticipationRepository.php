@@ -25,5 +25,21 @@ class ParticipationRepository extends EntityRepository {
                 ->setParameter('id', $id);
         return $qb->getResult();
     }
+    public function getParicipationEventNotification($id,$date) 
+   {
+       $em = $this->getEntityManager();
+        $qb = $em->createQuery("select p, e, u "
+                . "  from FrontOfficeOptimusBundle:Participation p "
+                . "LEFT JOIN p.event e "
+                . "LEFT JOIN p.participant u "
+               
+                . "where  e.id = :id and p.datePaticipation < :date"
+               
+                )
+      
+          ->setParameter('date', $date->format('Y-m-d H:i:s'))
+           ->setParameter('id', $id);
+        return $qb->getResult();
+   }
 
 }
