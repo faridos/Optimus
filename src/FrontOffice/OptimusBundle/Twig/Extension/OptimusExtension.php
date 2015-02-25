@@ -19,14 +19,21 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('getNombreNotification', array($this, 'getNombreNotification')),
             new \Twig_SimpleFunction('pendingInvitation', array($this, 'pendingInvitation')),
             new \Twig_SimpleFunction('getFriends', array($this, 'getFriends')),
+            new \Twig_SimpleFunction('getUser', array($this, 'getUser')),
         );
     }
+
+    public function getUser($id) {
+        return $notificateur = $this->em->getRepository('FrontOfficeUserBundle:User')->find($id);
+    }
+
     public function getFriends($id) {
-       $Friends = $this->em->getRepository('FrontOfficeUserBundle:User')->getFrinds($id);
+        $Friends = $this->em->getRepository('FrontOfficeUserBundle:User')->getFrinds($id);
 //        $entities2 = $this->em->getRepository('FrontOfficeUserBundle:User')->getLeftFrinds($id);
 //        $Friends = array_merge($entities1, $entities2);
         return $Friends;
     }
+
     public function pendingInvitation($user, $user1) {
         $pendingInvitations = $this->em->getRepository('FrontOfficeUserBundle:User')->getpendingInvitations($user->getId(), $user1->getId());
         return $pendingInvitations;
