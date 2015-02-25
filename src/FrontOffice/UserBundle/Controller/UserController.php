@@ -98,7 +98,7 @@ class UserController extends Controller {
         $user1 = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $Invitations = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $id,'object2Id' => $user1->getId()));
+        $Invitations = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $id, 'object2Id' => $user1->getId()));
         $Invitations->setConfirmed(true);
         $em->persist($Invitations);
         $em->flush();
