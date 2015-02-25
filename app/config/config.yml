@@ -97,3 +97,10 @@ dcs_rating:
     model:
         rating: FrontOffice\RatingBundle\Entity\Rating
         vote: FrontOffice\RatingBundle\Entity\Vote
+        
+sly_relation:
+    relations:
+        friendship:
+            entity1: FrontOffice\UserBundle\Entity\User
+            entity2: FrontOffice\UserBundle\Entity\User
+            bidirectional: true

@@ -1,17 +1,15 @@
-$(function(){
-  $('.open').click(function(){
+(function($){
+  $('.definedname').click(function(){
   	$('#descu').show();
   	$('.affiche_personne').html($(this).text());
-  	
-    
-   
-    
+ 
   });
-  });
-  $(function(){
+  })(jQuery);
+  
+  (function($){
   $('#close').click(function(){
     $('#descu').hide(0);
    
     
   });
-  });
+  })(jQuery);

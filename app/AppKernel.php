@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new FrontOffice\RatingBundle\FrontOfficeRatingBundle(),
             new DCS\RatingBundle\DCSRatingBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Sly\RelationBundle\SlyRelationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

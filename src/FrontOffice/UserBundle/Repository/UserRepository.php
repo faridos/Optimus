@@ -12,35 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository {
 
-   
-
-    public function getRightFrinds($id) {
-//        $em = $this->getEntityManager();
-//        $qb = $em->createQueryBuilder('u');
-//        $qb->select('u')
-//                
-//           ->from('FrontOffice\UserBundle\Entity\User', 'u')
-//           ->Join('Sly\RelationBundle\Entity\Relation', 'r')
-//           ->where('r.object2Id = u.id')
-//         //  ->orWhere('r.object2Id = :id')
-//           ->andWhere('r.object1Id = :id')
-//           ->andWhere('r.confirmed = 1')
-//           ->setParameter('id', $id);
-//        return $qb->getQuery() ->getResult();
-    }
-
-    public function getLeftFrinds($id) {
-//        $em = $this->getEntityManager();
-//         $qb = $em->createQueryBuilder('u');
-//        $qb->select('u')
-//           ->from('FrontOffice\UserBundle\Entity\User', 'u')
-//           ->Join('Sly\RelationBundle\Entity\Relation', 'r')
-//           ->where('r.object1Id = u.id')
-//         //  ->orWhere('r.object2Id = :id')
-//           ->andWhere('r.object2Id = :id')
-//           ->andWhere('r.confirmed = 1')
-//           ->setParameter('id', $id);
-//        return $qb->getQuery() ->getResult();
+    public function getFrinds($id) {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('u');
+        $qb->select('u')
+                ->from('FrontOffice\UserBundle\Entity\User', 'u')
+                ->Join('Sly\RelationBundle\Entity\Relation', 'r')
+                ->where('r.object2Id = u.id and r.object1Id = :id')
+                ->orWhere('r.object1Id = u.id and r.object2Id = :id')
+                ->andWhere('r.confirmed = 1')
+                ->setParameter('id', $id);
+        return $qb->getQuery()->getResult();
     }
 
     public function getUsersInvitations($id) {
@@ -71,21 +53,18 @@ class UserRepository extends EntityRepository {
     }
 
     public function getpendingInvitations($id, $idu) {
-//        // Retourne les invitations
-//        $em = $this->getEntityManager();
-//        $qb = $em->createQueryBuilder();
-//        $qb->select('r.name','r.object1Id','r.object2Id','r.confirmed')
-//           
-//           ->from('Sly\RelationBundle\Entity\Relation', 'r')
-//          
-//           ->where('r.object2Id = :id')                
-//           ->andWhere('r.object1Id = :idu')
-//          
-//           ->andWhere('r.confirmed = 0')
-//           ->setParameter('id', $id)
-//            ->setParameter('idu', $idu);
-//           
-//        return $qb->getQuery() ->getArrayResult();
+        // Retourne les invitations
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('r.name', 'r.object1Id', 'r.object2Id', 'r.confirmed')
+                ->from('Sly\RelationBundle\Entity\Relation', 'r')
+                ->where('r.object2Id = :id')
+                ->andWhere('r.object1Id = :idu')
+                ->andWhere('r.confirmed = 0')
+                ->setParameter('id', $id)
+                ->setParameter('idu', $idu);
+
+        return $qb->getQuery()->getArrayResult();
     }
 
     public function getUsers() {

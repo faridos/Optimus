@@ -771,7 +771,7 @@ a.notifySettings {
     padding: 3px;
 }
 .notify {
-    width: 233px;
+    width: 220px;
     margin-left: 5px;
 }
 .notifyName {
@@ -1237,7 +1237,7 @@ a.userHandler .counter {
     color: #fff;
 }
 .leftUserWraper {
-    background-color: #213837;
+    background-color: #c02100;
     position: absolute;
     left: 0;
     bottom: 0;

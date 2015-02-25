@@ -44,7 +44,7 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array('active' => 1));
 
-        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user,'events' => $events));
+        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $events));
     }
 
     /**
@@ -59,10 +59,76 @@ class UserController extends Controller {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
+        $user1 = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user));
+        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1));
+    }
+
+    /**
+     * 
+     *
+     * @Route("profil={id}/inviter", name="add_relation")
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function addFriendAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user2 = $userManager->findUserByUsername($user->getUsername());
+        $relation = $this->container->get('sly_relation');
+        $relation->relationShip('friendship', $user1, $user2);
+        if (false === $relation->exists()) {
+            $relation->create();
+        }
+        return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));
+    }
+
+    /**
+     * 
+     *
+     * @Route("profil={id}/accepter", name="accept_relation")
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function acceptAction($id) {
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $Invitations = $em->getRepository('SlyRelationBundle:Relation')->find($id);
+        $Invitations->setConfirmed(true);
+        $em->persist($Invitations);
+        $em->flush();
+        return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));
+    }
+
+    /**
+     * 
+     *
+     * @Route("profil={id}/retirer", name="delete_relation")
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function deleteFriendAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
+        $user = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user2 = $userManager->findUserByUsername($user->getUsername());
+        $relationLeft = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $user1->getId(), 'object2Id' => $user2->getId()));
+        $relationRight = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $user2->getId(), 'object2Id' => $user1->getId()));
+        if ($relationLeft) {
+            $em->remove($relationLeft);
+            $em->flush();
+        }
+        if ($relationRight) {
+            $em->remove($relationRight);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));
     }
 
 }
