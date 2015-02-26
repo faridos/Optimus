@@ -12,38 +12,26 @@
                             Retirer
                         </button>
                     </form>
-                {% else %}                    
+                {% elseif pendingInvitations[0].object2Id == user.id %}    
+
                     <button type="submit" class="btn btn-blue">
                         Demande envoyée
                     </button> 
                 {% endif %}
-
                 {% else %}
-
                     <form action="{{ path('add_relation', { 'id': user.id}) }}" method="post">
                         <button type="submit" class="btn btn-blue btn-icon icon-left">
                             Ajouter
                             <i class="entypo-plus"></i>
                         </button>
                     </form>
-
                     {% endif %}
                         {% endif %}
                             {% set friends = getFriends(user.id) %}
-
-                                <!-- panel body -->
-
-
                                 {% for friend in friends %}
                                     <div class="col-xs-4 col-sm-3 col-lg-4 block-section">
-
-
                                         {{ friend.prenom }} {{ friend.nom }}
                                         {#<img src="{{ asset( app.user.getWebPath ) }}" />#}
                                     </div>
-
                                 {% endfor %}
-                               
-
-
                             </div>
