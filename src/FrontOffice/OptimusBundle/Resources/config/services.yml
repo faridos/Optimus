@@ -42,4 +42,10 @@ services:
             - { name: kernel.event_listener, event: front_event.notification_club, method: onCreateNotificationClub }
            
             
-                         
+     kernel.listener.onCreateNotificationSeen:
+        class: FrontOffice\OptimusBundle\EventListener\NotificationSeenListner
+        arguments:
+            em: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: front_event.notification_seen_user, method: onCreateNotificationSeen }
+                               
