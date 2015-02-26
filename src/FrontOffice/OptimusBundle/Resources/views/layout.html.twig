@@ -238,6 +238,7 @@
 
                                         </div>
                                         <div class="ops">
+                                           
                                             <a href="{{ path('accept_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
                                             <a href="{{ path('delete_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
                                         </div>
@@ -245,6 +246,7 @@
                                     </div>
 
                                 </li>
+                                
                                 {% endfor %}
                             </ul>
                             <a href="#" class="notifyAll">Afficher tout</a>

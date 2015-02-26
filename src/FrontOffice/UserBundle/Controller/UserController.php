@@ -18,6 +18,8 @@ use FrontOffice\UserBundle\Form\UserPhotoType;
 use FrontOffice\UserBundle\Form\UserNameType;
 use FrontOffice\UserBundle\Form\UserEmailType;
 use Symfony\Component\Validator\Constraints\DateTime;
+use FrontOffice\OptimusBundle\Event\NotificationSeenEvent;
+use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -39,6 +41,13 @@ class UserController extends Controller {
         return $this->render('FrontOfficeUserBundle:User:redirect.html.twig');
     }
 
+    /**
+     * 
+     *
+     * @Route("", name="accueil")
+     * @Method("GET")
+     * @Template()
+     */
     public function accueilAction() {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
@@ -63,6 +72,16 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
+        $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('entraineur' => $user));
+        if ($notification) {
+            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
+            if (empty($notificationSeen)) {
+           
+                $notifevent = new NotificationSeenEvent($user, $notification);
+                $dispatcher = $this->get('event_dispatcher');
+                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
+            }
+        }
         return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1));
     }
 
@@ -102,7 +121,7 @@ class UserController extends Controller {
         $Invitations->setConfirmed(true);
         $em->persist($Invitations);
         $em->flush();
-        return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));
+        return $this->redirect($this->generateUrl('accueil'));
     }
 
     /**
