@@ -25,14 +25,14 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * User controller.
  *
- * @Route("/")
+ * @Route("")
  */
 class UserController extends Controller {
 
     /**
      * 
      *
-     * @Route("", name="index")
+     * @Route("", name="index_optumis")
      * @Method("GET")
      * @Template()
      */
@@ -44,7 +44,7 @@ class UserController extends Controller {
     /**
      * 
      *
-     * @Route("", name="accueil")
+     * @Route("/", name="accueil")
      * @Method("GET")
      * @Template()
      */

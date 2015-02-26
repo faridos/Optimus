@@ -7,7 +7,7 @@
 
 {% block navigation %}
     <div id="header" style="box-shadow:0px 1px 20px rgba(0, 0, 0, 0.3)">
-        <div class="home-logo osLight" style="margin:12px 0px 0 15px;"><a href="{{ path('index') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
+        <div class="home-logo osLight" style="margin:12px 0px 0 15px;"><a href="{{ path('index_optumis') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
         <a href="#" class="navHandler" style="padding-top:18px;font-size:18px;color:#c02100"><span class="fa fa-list-ul"></span></a>
         <div class="search"><form action="" class="search-form" name="formsearch">
                 <input type="hidden" name="kwtype" value="0">
@@ -239,7 +239,7 @@
                                         </div>
                                         <div class="ops">
                                            
-                                            <a href="{{ path('accept_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
+                                            <a id="accept_invitation" href="{{ path('accept_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
                                             <a href="{{ path('delete_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
                                         </div>
                                         <div class="clearfix"></div>
@@ -288,7 +288,7 @@
 
                                                                 </ul> 
                                                             </li>
-                                                            <li><a href="{{ path('add_club') }}"><span class="navIcon fa fa-users"></span><span class="navLabel">Club</span></a></li>
+                                                            <li><a   href="{{ path('add_club') }}"><span class="navIcon fa fa-users"></span><span class="navLabel">Club</span></a></li>
                                                             <li><a href="{{ path('add-event') }}"><span class="navIcon fa fa-trophy"></span><span class="navLabel">Evenement</span></a></li>
 
 
@@ -385,4 +385,9 @@
 
                                                     {% block javascripts %}
                                                         <script src="{{ asset('template/js/plugin.js') }}" type="text/javascript" ></script>
+                                                        <script>
+                                                            $.('#accept_invitation').click(function(e){
+                                                                
+                                                            })
+                                                            </script>
                                                     {% endblock %}
