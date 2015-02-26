@@ -43,17 +43,17 @@ class UserRepository extends EntityRepository {
         return $qb->getQuery() ->getArrayResult();
     }
 
-    public function getpendingInvitations($id, $idu) {
+    public function getpendingInvitations($idother, $idcurrent) {
         // Retourne les invitations
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
         $qb->select('r.name', 'r.object1Id', 'r.object2Id', 'r.confirmed')
                 ->from('Sly\RelationBundle\Entity\Relation', 'r')
-                ->where('r.object2Id = :id')
-                ->andWhere('r.object1Id = :idu')
+                ->where('r.object1Id = :id')
+                ->andWhere('r.object2Id = :idc')
                 ->andWhere('r.confirmed = 0')
-                ->setParameter('id', $id)
-                ->setParameter('idu', $idu);
+                ->setParameter('id', $idother)
+                ->setParameter('idc', $idcurrent);
 
         return $qb->getQuery()->getArrayResult();
     }
