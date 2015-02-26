@@ -28,7 +28,7 @@ class RegisterEntraineurListner {
         $notification->setNotificateur($event->getUser()->getId());
         $em->persist($notification);
         $em->flush();
-        die('ee');
+     
     }
 
     //put your code here
