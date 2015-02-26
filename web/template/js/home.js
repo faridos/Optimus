@@ -116,7 +116,7 @@ var pos;
         pixelOffset: new google.maps.Size(-101, -285),
         zIndex: null,
         boxStyle: {
-            background: "url('template/images/infobox-bg.png') no-repeat",
+            background: "url('../template/images/infobox-bg.png') no-repeat",
             opacity: 1,
             width: "202px",
             height: "245px"
@@ -134,13 +134,13 @@ var pos;
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map,
-                icon: new google.maps.MarkerImage('template/images/marker-green.png'),
+                icon: new google.maps.MarkerImage('../template/images/marker-green.png'),
                 draggable: false,
                 animation: google.maps.Animation.DROP,
             });
             var infoboxContent = '<div class="infoW">' +
                                     '<div class="propImg">' +
-                                        '<img src="template/images/prop/' + prop.image + '">' +
+                                        '<img src="../template/images/prop/' + prop.image + '">' +
                                         '<div class="propBg">' +
                                             '<div class="propPrice">' + prop.price + '</div>' +
                                             '<div class="propType">' + prop.type + '</div>' +
@@ -207,7 +207,7 @@ var pos;
                         var newMarker = new google.maps.Marker({
                             position: pos,
                             map: map,
-                            icon: new google.maps.MarkerImage('template/images/marker-position.png'),
+                            icon: new google.maps.MarkerImage('../template/images/marker-position.png'),
                             draggable: true,
                             animation: google.maps.Animation.DROP,
                         });
