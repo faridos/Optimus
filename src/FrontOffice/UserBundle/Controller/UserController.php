@@ -51,7 +51,9 @@ class UserController extends Controller {
     public function accueilAction() {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
-        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array('active' => 1));
+        $lng = $user->getLng();
+        $lat = $user->getLat();
+        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventLoad(new \Datetime(), $lng, $lat);
 
         return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $events));
     }
@@ -76,7 +78,7 @@ class UserController extends Controller {
         if ($notification) {
             $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
             if (empty($notificationSeen)) {
-           
+
                 $notifevent = new NotificationSeenEvent($user, $notification);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
@@ -109,7 +111,7 @@ class UserController extends Controller {
     /**
      * 
      *
-     * @Route("profil={id}/accepter", name="accept_relation")
+     * @Route("invitation={id}/accepter", name="accept_relation", options={"expose"=true})
      * @Method("GET|POST")
      * @Template()
      */
@@ -117,11 +119,11 @@ class UserController extends Controller {
         $user1 = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $Invitations = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $id, 'object2Id' => $user1->getId()));
+        $Invitations = $em->getRepository('SlyRelationBundle:Relation')->find($id);
         $Invitations->setConfirmed(true);
         $em->persist($Invitations);
         $em->flush();
-        return $this->redirect($this->generateUrl('accueil'));
+        return true;
     }
 
     /**

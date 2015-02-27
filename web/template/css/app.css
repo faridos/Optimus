@@ -1238,7 +1238,7 @@ a.userHandler .counter {
 }
 .leftUserWraper {
     background-color: #c02100;
-    position: absolute;
+    position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -3408,6 +3408,11 @@ h1.pageTitle {
 .commentsWidget {
     display: block;
     margin-bottom: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 150px;
+    overflow-wrap: break-word;
+    background-color:#fff;
 }
 .commentsWidget h5 {
     padding-bottom: 5px;
@@ -5657,4 +5662,8 @@ blockquote {
     .featured.carousel .carousel-inner .item .carousel-caption .caption-subtitle {
         font-size: 11px;
     }
+}
+.loader{
+    bottom: 0px;
+    text-align: center;
 }

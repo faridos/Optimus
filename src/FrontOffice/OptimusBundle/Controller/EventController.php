@@ -36,7 +36,7 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array('active' => 1));
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
-        //$x=$em->getRepository("FrontOfficeOptimusBundle:Event")->get_distance_m(48.856667,2.350987, 45.767299, 4.834329);
+//$x=$em->getRepository("FrontOfficeOptimusBundle:Event")->get_distance_m(48.856667,2.350987, 45.767299, 4.834329);
         return $this->render('FrontOfficeOptimusBundle:Event:index.html.twig', array('events' => $events));
     }
 
@@ -61,7 +61,7 @@ class EventController extends Controller {
             if ($form->isValid()) {
                 $em->persist($event);
                 $em->flush();
-                //add notification + add prticipation + add History
+//add notification + add prticipation + add History
                 $action = 'add';
                 $eventhistory = new HistoryEventEvent($user, $event, $action);
                 $eventparticipation = new ParticipationEvent($user, $event);
@@ -84,7 +84,7 @@ class EventController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
-        if (!$entity || $entity->getActive()==0 ) {
+        if (!$entity || $entity->getActive() == 0) {
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
         $editForm = $this->createForm(new EventType(), $entity);
@@ -92,7 +92,7 @@ class EventController extends Controller {
         if ($editForm->isValid()) {
             $entity->setDateModification(new DateTime());
             $em->flush();
-            //add notification
+//add notification
             $action = 'update';
             $eventhistory = new HistoryEventEvent($user, $entity, $action);
             $dispatcher = $this->get('event_dispatcher');
@@ -118,7 +118,7 @@ class EventController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
-        if (!$entity || $entity->getActive()==0) {
+        if (!$entity || $entity->getActive() == 0) {
             throw $this->createNotFoundException('Unable to find Club entity.');
         }
         $entity->setActive(false);
@@ -129,6 +129,28 @@ class EventController extends Controller {
         $dispatcher = $this->get('event_dispatcher');
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         return $this->redirect($this->generateUrl('events'));
+    }
+
+    /**
+     * 
+     *
+     * @Route("events/{lng}/{lat}/{last_id}", name="event_ajax", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function getEventLoadAjax($lng, $lat, $last_id) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $events = new ArrayCollection();
+        $events = $em->getRepository('FrontOfficeOptimusBundle:Event')->getEventLoadAjax(new DateTime(), $lng, $lat, $last_id);
+        if (!$events) {
+            throw $this->createNotFoundException('Unable to find Event entity.');
+        }
+
+        $response = new Response();
+        $tabevents = json_encode($events);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($tabevents);
+        return $response;
     }
 
 }

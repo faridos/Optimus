@@ -1,0 +1,1 @@
+fos.Router.setData({"base_url":"","routes":{"accept_relation":{"tokens":[["text","\/accepter"],["variable","=","[^\/]++","id"],["text","\/profil"]],"defaults":[],"requirements":{"_method":"GET|POST"},"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});
