@@ -28,6 +28,8 @@ class RegistrationFormType extends BaseType {
                     'second_options' => array('label' => 'form.password_confirmation', 'attr' => array('class' => 'form-control')),
                     'invalid_message' => 'fos_user.password.mismatch',
                 ))
+                ->add('lat', 'number', array('attr' => array('class' => 'form-control')))
+                ->add('lng', 'number', array('attr' => array('class' => 'form-control')))
         ;
     }
 

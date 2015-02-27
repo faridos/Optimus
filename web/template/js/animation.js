@@ -38,6 +38,8 @@ $(".next").click(function(){
 		//this comes from the custom easing plugin
 		easing: 'easeInOutBack'
 	});
+        $("#fos_user_registration_form_lat").val(pos.k);
+        $("#fos_user_registration_form_lng").val(pos.D);
 });
 
 $(".previous").click(function(){

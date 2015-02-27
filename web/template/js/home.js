@@ -1,6 +1,7 @@
+var pos;
 (function($) {
     "use strict";
-var pos;
+
     var options = {
             zoom : 14,
             mapTypeId : 'Styled',
@@ -8,7 +9,7 @@ var pos;
             mapTypeControlOptions : {
                 mapTypeIds : [ 'Styled' ]
             },
-            scrollwheel: false
+            scrollwheel: true
         };
     var styles = [{
         stylers : [ {
