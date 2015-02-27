@@ -9,7 +9,7 @@ var pos;
             mapTypeControlOptions : {
                 mapTypeIds : [ 'Styled' ]
             },
-            scrollwheel: false
+            scrollwheel: true
         };
     var styles = [{
         stylers : [ {

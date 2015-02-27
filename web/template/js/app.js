@@ -1,9 +1,10 @@
+var pos;
 (function($) {
     "use strict";
 
     // Custom options for map
     var options = {
-            zoom : 14,
+            zoom : 12,
             mapTypeId : 'Styled',
             disableDefaultUI: true,
             mapTypeControlOptions : {
@@ -42,143 +43,73 @@
 
     // json for properties markers on map
     var props = [{
-        title : 'Evenement',
-        image : '1-1-thmb.png',
-        type : 'Crée par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.696047,
-            lng : -73.997159
-        },
-        markerIcon : "marker-green.png"
-    }, {
-      title : 'Evenement',
-        image : '1-1-thmb.png',
-        type : 'Crée par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.688042,
-            lng : -73.996472
-        },
-        markerIcon : "marker-green.png"
-    }, {
-        title : 'Evenement',
-        image : '1-1-thmb.png',
-        type : 'Crée par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.702620,
-            lng : -73.989682
-        },
-        markerIcon : "marker-green.png"
-    }, {
-       title : 'Evenement',
-        image : '1-1-thmb.png',
-        type : 'Crée par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.694355,
-            lng : -73.985229
-        },
-        markerIcon : "marker-green.png"
-    }, {
-    title : 'Evenement',
-        image : '1-1-thmb.png',
-        type : 'Crée par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.686838,
-            lng : -73.990078
-        },
-        markerIcon : "marker-green.png"
-    }, {
      title : 'Evenement',
         image : '1-1-thmb.png',
-        type : 'Crée par',
+        type : 'CrÃ©e par',
         price : 'Prix',
         address : 'Adresse',
         bedrooms : '3',
         bathrooms : '2',
         area : '3430 Sq Ft',
         position : {
-            lat : 40.703686,
-            lng : -73.982910
+            lat : 36.759682099999996,
+            lng : 10.281168999999954
         },
         markerIcon : "marker-green.png"
     }, {
        title : 'Evenement',
         image : '1-1-thmb.png',
-        type : 'Crée par',
+        type : 'CrÃ©e par',
         price : 'Prix',
         address : 'Adresse',
         bedrooms : '3',
         bathrooms : '2',
         area : '3430 Sq Ft',
         position : {
-            lat : 40.702189,
-            lng : -73.995098
+            lat : 36.803682099999996,
+            lng : 10.189168999999954
         },
         markerIcon : "marker-green.png"
     }, {
         title : 'Evenement',
         image : '1-1-thmb.png',
-        type : 'Crée par',
+        type : 'CrÃ©e par',
         price : 'Prix',
         address : 'Adresse',
         bedrooms : '3',
         bathrooms : '2',
         area : '3430 Sq Ft',
         position : {
-            lat : 40.687417,
-            lng : -73.982653
+            lat : 36.859682099999996,
+            lng : 10.281168999999954
         },
         markerIcon : "marker-green.png"
     }, {
        title : 'Evenement',
         image : '1-1-thmb.png',
-        type : 'Crée par',
+        type : 'CrÃ©e par',
         price : 'Prix',
         address : 'Adresse',
         bedrooms : '3',
         bathrooms : '2',
         area : '3430 Sq Ft',
         position : {
-            lat : 40.694120,
-            lng : -73.974413
+            lat : 36.829682099999996,
+            lng : 10.21168999999954
         },
         markerIcon : "marker-green.png"
     }, {
        title : 'Evenement',
         image : '1-1-thmb.png',
-        type : 'Crée par',
+        type : 'CrÃ©e par',
         price : 'Prix',
         address : 'Adresse',
         bedrooms : '3',
         bathrooms : '2',
         area : '3430 Sq Ft',
         position : {
-            lat : 40.682665,
-            lng : -74.000934
+            lat : 36.809683099999996,
+            lng : 10.181568999999954
         },
         markerIcon : "marker-green.png"
     }];
@@ -190,7 +121,7 @@
         pixelOffset: new google.maps.Size(-101, -285),
         zIndex: null,
         boxStyle: {
-            background: "url('images/infobox-bg.png') no-repeat",
+            background: "url('../template/images/infobox-bg.png') no-repeat",
             opacity: 1,
             width: "202px",
             height: "245px"
@@ -210,7 +141,7 @@
                 position: latlng,
                 map: map,
                 icon: new google.maps.MarkerImage( 
-                    'images/' + prop.markerIcon,
+                    '../template/images/' + prop.markerIcon,
                     null,
                     null,
                     null,
@@ -221,7 +152,7 @@
             });
             var infoboxContent = '<div class="infoW">' +
                                     '<div class="propImg">' +
-                                        '<img src="images/prop/' + prop.image + '">' +
+                                        '<img src="../template/images/prop/' + prop.image + '">' +
                                         '<div class="propBg">' +
                                             '<div class="propPrice">' + prop.price + '</div>' +
                                             '<div class="propType">' + prop.type + '</div>' +
@@ -351,15 +282,15 @@
         });
 
         map.mapTypes.set('Styled', styledMapType);
-        map.setCenter(new google.maps.LatLng(40.6984237,-73.9890044));
-        map.setZoom(14);
+       
+        map.setZoom(12);
 
         if ($('#address').length > 0) {
             newMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(40.6984237,-73.9890044),
                 map: map,
                 icon: new google.maps.MarkerImage( 
-                    'images/marker-new.png',
+                    '../template/images/marker-new.png',
                     null,
                     null,
                     // new google.maps.Point(0,0),
@@ -379,6 +310,30 @@
         }
 
         addMarkers(props, map);
+        
+        if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                         pos = new google.maps.LatLng(position.coords.latitude,
+                                position.coords.longitude);
+
+
+
+                        var newMarker = new google.maps.Marker({
+                            position: pos,
+                            map: map,
+                            icon: new google.maps.MarkerImage('../template/images/marker-position.png'),
+                            draggable: true,
+                            animation: google.maps.Animation.DROP,
+                        });
+
+                        map.setCenter(pos);
+                        
+                    }, function () {
+                        handleNoGeolocation(true);
+                    });
+                } else {
+                    handleNoGeolocation(false);
+                }
     }, 300);
 
     if(!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch)) {
