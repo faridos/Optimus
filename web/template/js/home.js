@@ -1,6 +1,7 @@
+var pos;
 (function($) {
     "use strict";
-var pos;
+
     var options = {
             zoom : 14,
             mapTypeId : 'Styled',

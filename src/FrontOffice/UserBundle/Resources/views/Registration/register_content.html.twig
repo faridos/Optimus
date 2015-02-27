@@ -37,8 +37,8 @@
         <br><br>
         {{ form_widget(form.adresse, {'attr' : {'placeholder' : 'Adresse'} }) }}
         {{ form_widget(form.file,  {'attr': {'type': 'file','name':'','class':'btn btn-default btn-file'}}) }}
-        {{ form_widget(form.lat, {'attr' : {'placeholder' : 'lat', 'display':'none', 'visibility':'hidden'} }) }}
-        {{ form_widget(form.lng, {'attr' : {'placeholder' : 'lng'} }) }}
+        {{ form_widget(form.lat, {'attr' : {'class':'cacher'} }) }}
+        {{ form_widget(form.lng, {'attr' : {'class':'cacher'} }) }}
         <input type="button" name="previous" class="previous action-button" value="Précédent">
         <input type="submit" name="submit" class="action-button" value="Confirmer">
 
