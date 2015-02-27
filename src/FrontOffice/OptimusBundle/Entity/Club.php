@@ -1,4 +1,5 @@
 <?php
+
 namespace FrontOffice\OptimusBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -6,16 +7,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 
-
-
 /**
  * Club
  * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Repository\ClubRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="club")
  */
-class Club
-{
+class Club {
+
     /**
      * @var integer
      *
@@ -36,6 +35,7 @@ class Club
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $path;
+
     /**
      * @Assert\File(maxSize="6000000")
      */
@@ -61,36 +61,33 @@ class Club
      * @ORM\Column(name="Adresse", type="string", length=255)
      */
     private $adresse;
-    
-     /**
+
+    /**
      * @var float
      *
      * @ORM\Column(name="lat", type="float", nullable=true)
      */
     private $lat;
-    
+
     /**
      * @var float
      *
      * @ORM\Column(name="lng", type="float", nullable=true)
      */
     private $lng;
+
     /**
      * @var string
      *
      * @ORM\Column(name="Lien_Web", type="string", length=255)
      */
-
-    
-    
-
     private $lienWeb;
-    
+
     /**
      * @var boolean $activer
      * @ORM\Column(name="activation", type="boolean", nullable=false)
      */
-   protected $active; 
+    protected $active;
 
     /**
      * @var float
@@ -98,28 +95,31 @@ class Club
      * @ORM\Column(name="Frais_adhesion", type="float")
      */
     private $fraisAdhesion;
-   /**
+
+    /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="clubs")
      * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
-     **/
-   
-   protected $createur;
-   
+     * */
+    protected $createur;
+
     /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="club", cascade={"persist","remove"})
      */
     protected $notification_club;
-    
-  
-    public function __construct()
-    {
-        
-     
-//        $this->dateCreation = new \DateTime();
-        
 
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Comment", mappedBy="club" )
+     *
+     */
+    protected $clubcomments;
+
+    public function __construct() {
+
+        $this->clubcomments = new ArrayCollection();
+//        $this->dateCreation = new \DateTime();
         // your own logic
     }
+
     public function getActive() {
         return $this->active;
     }
@@ -128,23 +128,21 @@ class Club
         $this->active = $active;
     }
 
-    
-   public function getCreateur() {
-       return $this->createur;
-   }
+    public function getCreateur() {
+        return $this->createur;
+    }
 
-   public function setCreateur($createur) {
+    public function setCreateur($createur) {
 //       $createur=11;
-       $this->createur = $createur;
-   }
+        $this->createur = $createur;
+    }
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -154,8 +152,7 @@ class Club
      * @param string $nom
      * @return Club
      */
-    public function setNom($nom)
-    {
+    public function setNom($nom) {
         $this->nom = $nom;
 
         return $this;
@@ -166,13 +163,13 @@ class Club
      *
      * @return string 
      */
-    public function getNom()
-    {
+    public function getNom() {
         return $this->nom;
     }
 
-     protected $clubs;
-     public function getPath() {
+    protected $clubs;
+
+    public function getPath() {
         return $this->path;
     }
 
@@ -184,18 +181,17 @@ class Club
         $this->path = $path;
     }
 
-    public function setFile(UploadedFile $file = null)
-{
-    $this->file = $file;
-    // check if we have an old image path
-    if (isset($this->path)) {
-        // store the old name to delete after the update
-        $this->temp = $this->path;
-        $this->path = null;
-    } else {
-        $this->path = 'initial';
+    public function setFile(UploadedFile $file = null) {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
     }
-}
 
     /**
      * Set dateCreation
@@ -203,8 +199,7 @@ class Club
      * @param \DateTime $dateCreation
      * @return Club
      */
-    public function setDateCreation($dateCreation)
-    {
+    public function setDateCreation($dateCreation) {
         $this->dateCreation = $dateCreation;
 
         return $this;
@@ -215,8 +210,7 @@ class Club
      *
      * @return \DateTime 
      */
-    public function getDateCreation()
-    {
+    public function getDateCreation() {
         return $this->dateCreation;
     }
 
@@ -226,8 +220,7 @@ class Club
      * @param string $discpline
      * @return Club
      */
-    public function setDiscpline($discpline)
-    {
+    public function setDiscpline($discpline) {
         $this->discpline = $discpline;
 
         return $this;
@@ -238,8 +231,7 @@ class Club
      *
      * @return string 
      */
-    public function getDiscpline()
-    {
+    public function getDiscpline() {
         return $this->discpline;
     }
 
@@ -249,8 +241,7 @@ class Club
      * @param string $adresse
      * @return Club
      */
-    public function setAdresse($adresse)
-    {
+    public function setAdresse($adresse) {
         $this->adresse = $adresse;
 
         return $this;
@@ -261,8 +252,7 @@ class Club
      *
      * @return string 
      */
-    public function getAdresse()
-    {
+    public function getAdresse() {
         return $this->adresse;
     }
 
@@ -272,8 +262,7 @@ class Club
      * @param string $lienWeb
      * @return Club
      */
-    public function setLienWeb($lienWeb)
-    {
+    public function setLienWeb($lienWeb) {
         $this->lienWeb = $lienWeb;
 
         return $this;
@@ -284,8 +273,7 @@ class Club
      *
      * @return string 
      */
-    public function getLienWeb()
-    {
+    public function getLienWeb() {
         return $this->lienWeb;
     }
 
@@ -295,8 +283,7 @@ class Club
      * @param float $fraisAdhesion
      * @return Club
      */
-    public function setFraisAdhesion($fraisAdhesion)
-    {
+    public function setFraisAdhesion($fraisAdhesion) {
         $this->fraisAdhesion = $fraisAdhesion;
 
         return $this;
@@ -307,18 +294,17 @@ class Club
      *
      * @return float 
      */
-    public function getFraisAdhesion()
-    {
+    public function getFraisAdhesion() {
         return $this->fraisAdhesion;
     }
-     /**
+
+    /**
      * Set lat
      *
      * @param float $lat
      * @return Club
      */
-    public function setLat($lat)
-    {
+    public function setLat($lat) {
         $this->lat = $lat;
 
         return $this;
@@ -329,8 +315,7 @@ class Club
      *
      * @return float 
      */
-    public function getLat()
-    {
+    public function getLat() {
         return $this->lat;
     }
 
@@ -340,8 +325,7 @@ class Club
      * @param float $lng
      * @return Club
      */
-    public function setLng($lng)
-    {
+    public function setLng($lng) {
         $this->lng = $lng;
 
         return $this;
@@ -352,50 +336,43 @@ class Club
      *
      * @return float 
      */
-    public function getLng()
-    {
+    public function getLng() {
         return $this->lng;
     }
 
-    
-
-     public function __toString()
-    {
+    public function __toString() {
         return (string) $this->getNom();
     }
-       public function getAbsolutePath()
-    {
-        return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
+
+    public function getAbsolutePath() {
+        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
     }
 
-    public function getWebPath()
-    {
-        return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
+    public function getWebPath() {
+        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
     }
 
-    protected function getUploadRootDir()
-    {
+    protected function getUploadRootDir() {
         // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
-    protected function getUploadDir()
-    {
+    protected function getUploadDir() {
         // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
         // le document/image dans la vue.
-        return 'upload/club/'.$this->getId();
+        return 'upload/club/' . $this->getId();
     }
+
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function preUpload()
-    {
+    public function preUpload() {
         $this->tempFile = $this->getWebPath();
-        $this->oldFile  = $this->getPath();
+        $this->oldFile = $this->getPath();
         if (null !== $this->file) {
             // faites ce que vous voulez pour générer un nom unique
-            $this->path = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
+            $this->path = sha1(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
         }
     }
 
@@ -403,8 +380,7 @@ class Club
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
-    public function upload()
-    {
+    public function upload() {
         if (null === $this->file) {
             return;
         }
@@ -421,14 +397,40 @@ class Club
     /**
      * @ORM\PostRemove()
      */
-    public function removeUpload()
-    {
+    public function removeUpload() {
         if ($file = $this->getAbsolutePath()) {
             unlink($file);
         }
     }
-    
-    
-     
-   
+
+    /**
+     * Remove clubcomments
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Comment $comment
+     */
+    public function addClubcomments(Comment $comment) {
+        $this->clubcomments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Add clubcomments
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Comment $comment
+     * @return Club
+     */
+    public function removeClubcomments(Comment $comment) {
+        $this->clubcomments->removeElement($comment);
+    }
+
+    /**
+     * Get eventcomments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClubcomments() {
+        return $this->clubcomments;
+    }
+
 }

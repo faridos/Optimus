@@ -137,9 +137,16 @@ class Event {
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Notification", mappedBy="event", cascade={"persist","remove"})
      */
     protected $notification_event;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Comment", mappedBy="event" )
+     *
+     */
+     protected $eventcomments;
 
     public function __construct() {
         $this->dateCreation = new \Datetime();
+        $this->eventcomments = new ArrayCollection();
         $this->setDescription("Pas de description");
     }
 
@@ -492,4 +499,36 @@ class Event {
         return (string) $this->getId();
     }
 
+    /**
+     * Add eventcomments
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Comment $eventcomments
+     * @return Event
+     */
+    public function addEventcomment(\FrontOffice\OptimusBundle\Entity\Comment $eventcomments)
+    {
+        $this->eventcomments[] = $eventcomments;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventcomments
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Comment $eventcomments
+     */
+    public function removeEventcomment(\FrontOffice\OptimusBundle\Entity\Comment $eventcomments)
+    {
+        $this->eventcomments->removeElement($eventcomments);
+    }
+
+    /**
+     * Get eventcomments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEventcomments()
+    {
+        return $this->eventcomments;
+    }
 }
