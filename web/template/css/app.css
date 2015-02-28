@@ -5666,4 +5666,5 @@ blockquote {
 .loader{
     bottom: 0px;
     text-align: center;
+    display: none;
 }

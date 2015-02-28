@@ -113,7 +113,7 @@ class UserController extends Controller {
      *
      * @Route("invitation={id}/accepter", name="accept_relation", options={"expose"=true})
      * @Method("GET|POST")
-     * @Template()
+     * 
      */
     public function acceptAction($id) {
         $user1 = $this->container->get('security.context')->getToken()->getUser();
@@ -123,7 +123,9 @@ class UserController extends Controller {
         $Invitations->setConfirmed(true);
         $em->persist($Invitations);
         $em->flush();
-        return true;
+        $response = new Response();
+       
+        return $response;
     }
 
     /**
@@ -150,6 +152,24 @@ class UserController extends Controller {
             $em->flush();
         }
         return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));
+    }
+
+    /**
+     * 
+     *
+     * @Route("profil={id}/invitation", name="invitation", options={"expose"=true})
+     * @Method("GET")
+     * 
+     */
+    public function getInvitations($id) {
+        $em = $this->getDoctrine()->getManager();
+        $invitations = $em->getRepository('FrontOfficeUserBundle:User')->getInvitations($id);
+        
+        $response = new Response();
+        $invitationJson = json_encode($invitations);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($invitationJson);
+        return $response;
     }
 
 }

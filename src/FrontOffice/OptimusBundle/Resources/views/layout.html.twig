@@ -224,7 +224,7 @@
                                                                 {% for invitation in Invitations %}  
 
                                                                     {% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
-                                                                        <li>
+                                                                        <li class="invitation" id="{{ invitation.id }}">
                                                                             <div class="userWidget-2" style="margin-bottom:1px">
                                                                                 <div class="avatar">
                                                                                     <a href="{{ path('show_profil', { 'id': invitation.object1Id}) }}"><img alt="avatar" src="{{ asset(UsersInvitations.WebPath) }}" style="
@@ -241,6 +241,7 @@
 
                                                                                     <a id="accept_invitation" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
                                                                                     <a id="delete_invitation" href="{{ path('delete_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
+                                                                                    <div class="loader"> <img src="{{asset('template/images/ajax-loader3.gif') }}"></div>
                                                                                 </div>
                                                                                 <div class="clearfix"></div>
                                                                             </div>
@@ -405,14 +406,26 @@
                                                                         <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
                                                                         <script>
                                                                             $('#accept_invitation').click(function() {
+                                                                                // $('.loader').show();
+                                                                                var id = $('.invitation').attr('id');
+                                                                                var id1 ={{ app.user.id }};
+                                                                                        $.ajax({
+                                                                                            url: Routing.generate('accept_relation', {'id': id}),
+                                                                                            success: function() {
 
+
+                                                                                            }
+                                                                                        });
                                                                                 $.ajax({
-                                                                                    url: Routing.generate('accept_relation', {'id': 4}),
-                                                                                    type: "POST",
+                                                                                    url: Routing.generate('invitation', {'id': id1}),
+                                                                                    type: 'GET',
                                                                                     success: function() {
 
+                                                                                        alert('rr');
                                                                                     }
                                                                                 });
+
+
                                                                             });
                                                                         </script>
                                                                         {% block javascriptfils %}
