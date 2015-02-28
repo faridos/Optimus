@@ -37,8 +37,13 @@ class UserController extends Controller {
      * @Template()
      */
     public function indexAction() {
+       
+         
+        $em = $this->getDoctrine()->getManager();
+      
+        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findAll();
 
-        return $this->render('FrontOfficeUserBundle:User:redirect.html.twig');
+        return $this->render('FrontOfficeUserBundle:User:redirect.html.twig', array('events' => $events));
     }
 
     /**
