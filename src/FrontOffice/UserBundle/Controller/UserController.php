@@ -118,13 +118,15 @@ class UserController extends Controller {
     public function acceptAction($id) {
         $user1 = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
-
         $Invitations = $em->getRepository('SlyRelationBundle:Relation')->find($id);
         $Invitations->setConfirmed(true);
         $em->persist($Invitations);
         $em->flush();
+        $invitations = $em->getRepository('FrontOfficeUserBundle:User')->getInvitations($user1->getId());
         $response = new Response();
-       
+        $invitationJson = json_encode($invitations);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($invitationJson);
         return $response;
     }
 
@@ -163,13 +165,6 @@ class UserController extends Controller {
      */
     public function getInvitations($id) {
         $em = $this->getDoctrine()->getManager();
-        $invitations = $em->getRepository('FrontOfficeUserBundle:User')->getInvitations($id);
-        
-        $response = new Response();
-        $invitationJson = json_encode($invitations);
-        $response->headers->set('Content-Type', 'application/json');
-        $response->setContent($invitationJson);
-        return $response;
     }
 
 }
