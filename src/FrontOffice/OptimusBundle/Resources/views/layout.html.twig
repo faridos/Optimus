@@ -209,9 +209,9 @@
                                                 </div>
                                                 <div class="headerNotifyWraper">
                                                     {% set Invitations = getInvitations(app.user.id) %}
-                                                        <a href="#" class="headerNotify dropdown-toggle" id="nb_invitation" data-toggle="dropdown">
+                                                        <a href="#"  class="headerNotify dropdown-toggle" id="nb_invitation" data-toggle="dropdown">
                                                             <span class="notifyIcon icon-users"></span>
-                                                            {% for invitation in Invitations %}  <span class="counter"  >{{ Invitations|length  }}</span>{% endfor %}
+                                                            {% for invitation in Invitations %}  <span class="counter" id="nombre_invitation"  >{{ Invitations|length  }}</span>{% endfor %}
                                                         </a>
                                                         <div class="dropdown-menu pull-right notifyMenu" role="menu" style="width:380px">
 
@@ -414,12 +414,19 @@
                                                                                         $.ajax({
                                                                                             url: Routing.generate('accept_relation', {'id': id}),
                                                                                             success: function(data) {
-                                                                                                for (var i in data)
+                                                                                                if (data.length > 0)
                                                                                                 {
-                                                                                                    var invitation = data[i];
-                                                                                                    console.log(invitation);
-                                                                                                    $('#nb_invitation').empty().append("<span class=\"notifyIcon icon-users\"></span><span class=\"counter\">" + data.length + "</span>");
-                                                                                                    $('#id_invitation').empty().append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+                                                                                                    for (var i in data)
+                                                                                                    {
+                                                                                                        var invitation = data[i];
+                                                                                                        $('#nb_invitation').empty().append("<span class=\"notifyIcon icon-users\"></span><span class=\"counter\">" + data.length + "</span>");
+                                                                                                        $('#id_invitation').empty().append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+                                                                                                    }
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    $('#nombre_invitation').hide();
+                                                                                                    $('#id_invitation').empty();
                                                                                                 }
                                                                                             }
                                                                                         });

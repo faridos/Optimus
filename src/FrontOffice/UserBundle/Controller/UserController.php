@@ -123,9 +123,9 @@ class UserController extends Controller {
     public function acceptAction($id) {
         $user1 = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
-        $Invitations = $em->getRepository('SlyRelationBundle:Relation')->find($id);
-        $Invitations->setConfirmed(true);
-        $em->persist($Invitations);
+        $Invitation = $em->getRepository('SlyRelationBundle:Relation')->find($id);
+        $Invitation->setConfirmed(true);
+        $em->persist($Invitation);
         $em->flush();
         $invitations = $em->getRepository('FrontOfficeUserBundle:User')->getInvitations($user1->getId());
         $response = new Response();
