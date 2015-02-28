@@ -209,9 +209,9 @@
                                                 </div>
                                                 <div class="headerNotifyWraper">
                                                     {% set Invitations = getInvitations(app.user.id) %}
-                                                        <a href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
+                                                        <a href="#" class="headerNotify dropdown-toggle" id="nb_invitation" data-toggle="dropdown">
                                                             <span class="notifyIcon icon-users"></span>
-                                                            {% for invitation in Invitations %}  <span class="counter">{{ Invitations|length  }}</span>{% endfor %}
+                                                            {% for invitation in Invitations %}  <span class="counter"  >{{ Invitations|length  }}</span>{% endfor %}
                                                         </a>
                                                         <div class="dropdown-menu pull-right notifyMenu" role="menu" style="width:380px">
 
@@ -220,7 +220,7 @@
                                                                 <a href="#" class="notifySettings icon-settings"></a>
                                                                 <div class="clearfix"></div>
                                                             </div>
-                                                            <ul class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
+                                                            <ul id="id_invitation" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
                                                                 {% for invitation in Invitations %}  
 
                                                                     {% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
@@ -407,23 +407,23 @@
                                                                         <script>
                                                                             $('#accept_invitation').click(function() {
                                                                                 // $('.loader').show();
+
                                                                                 var id = $('.invitation').attr('id');
-                                                                                var id1 ={{ app.user.id }};
+
+                                                                                var id1 ={{ app.user.id }} ;
                                                                                         $.ajax({
                                                                                             url: Routing.generate('accept_relation', {'id': id}),
-                                                                                            success: function() {
-
-
+                                                                                            success: function(data) {
+                                                                                                for (var i in data)
+                                                                                                {
+                                                                                                    var invitation = data[i];
+                                                                                                    console.log(invitation);
+                                                                                                    $('#nb_invitation').empty().append("<span class=\"notifyIcon icon-users\"></span><span class=\"counter\">" + data.length + "</span>");
+                                                                                                    $('#id_invitation').empty().append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+                                                                                                }
                                                                                             }
                                                                                         });
-                                                                                $.ajax({
-                                                                                    url: Routing.generate('invitation', {'id': id1}),
-                                                                                    type: 'GET',
-                                                                                    success: function() {
 
-                                                                                        alert('rr');
-                                                                                    }
-                                                                                });
 
 
                                                                             });
