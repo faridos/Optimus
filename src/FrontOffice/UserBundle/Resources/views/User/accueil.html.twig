@@ -12,14 +12,14 @@
                                 <div class="notificationsWidget">
                                     <div class="notification">
                                         <div class="time green">
-                                            <div class="timeBody hidden-xs">{{ event.titre }}</div>
+                                           <a href="{{ path('show_event', { 'id' : event.id }) }}" class="timeBody hidden-xs">{{ event.titre }}</a>
                                             <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
                                             <div class="indicator"><span class="fa fa-circle-o"></span></div>
                                             <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
                                         </div>
                                         <div class="notifyContent">
                                             <div class="notifyBody">
-                                                <img class="avatar pull-left" src="{{ asset(event.createur.WebPath)}}" alt="avatar">
+                                                <a href="{{ path('show_profil', {'id' : event.createur.id}) }}"> <img class="avatar pull-left" src="{{ asset(event.createur.WebPath)}}" alt="avatar"></a>
                                                 <div class="notify pull-left">
                                                     <div class="name">{{ event.createur.prenom }} {{ event.createur.nom }}<span class="label label-green visible-xs">Nom d'évenement</span></div>
                                                     <div class="info">

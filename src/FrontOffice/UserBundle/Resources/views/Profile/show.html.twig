@@ -1,5 +1,9 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
-
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block  stylesheetsfils %}
+{% endblock %}
 {% block body %}
-{% include "FOSUserBundle:Profile:show_content.html.twig" %}
+
+{% endblock %}
+{% block javascriptfils %}
+    <script src="{{ asset('template/js/plugin.js') }}" type="text/javascript" ></script>
 {% endblock %}

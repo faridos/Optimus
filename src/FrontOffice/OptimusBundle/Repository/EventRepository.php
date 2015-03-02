@@ -42,5 +42,5 @@ class EventRepository extends EntityRepository {
 
         return $events = $query->getArrayResult();
     }
-
+     
 }

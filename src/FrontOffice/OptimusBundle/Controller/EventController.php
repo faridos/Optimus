@@ -43,6 +43,28 @@ class EventController extends Controller {
     /**
      * 
      *
+     * @Route("={id}/info", name="show_event")
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function showInfoAction($id) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
+//        if (is_object($user)) {
+        if ($event->getActive() == false) {
+            throw $this->createNotFoundException('Event Annulé.');
+        }
+        return $this->render('FrontOfficeOptimusBundle:Event:show.html.twig', array('entity' => $event));
+    }
+
+    /**
+     * 
+     *
      * @Route("/ajouter", name="add-event")
      * @Method("GET|POST")
      * @Template()
