@@ -80,23 +80,23 @@
                         
 var markers = [];
 
-                                                                var infobox = new InfoBox({
-                                                                disableAutoPan: false,
-                                                                        maxWidth: 202,
-                                                                        pixelOffset: new google.maps.Size( - 101, - 285),
-                                                                        zIndex: null,
-                                                                        boxStyle: {
-                                                                        background: "url('template/images/infobox-bg.png') no-repeat",
-                                                                                opacity: 1,
-                                                                                width: "202px",
-                                                                                height: "245px"
-                                                                        },
-                                                                        closeBoxMargin: "28px 26px 0px 0px",
-                                                                        closeBoxURL: "",
-                                                                        infoBoxClearance: new google.maps.Size(1, 1),
-                                                                        pane: "floatPane",
-                                                                        enableEventPropagation: false
-                                                                });
+    var infobox = new InfoBox({
+    disableAutoPan: false,
+            maxWidth: 202,
+            pixelOffset: new google.maps.Size( - 101, - 285),
+            zIndex: null,
+            boxStyle: {
+            background: "url('template/images/infobox-bg.png') no-repeat",
+                    opacity: 1,
+                    width: "202px",
+                    height: "245px"
+            },
+            closeBoxMargin: "28px 26px 0px 0px",
+            closeBoxURL: "",
+            infoBoxClearance: new google.maps.Size(1, 1),
+            pane: "floatPane",
+            enableEventPropagation: false
+    });
           var addMarkers = function(map) {
 
         {% for event in events %}
@@ -112,7 +112,7 @@ var markers = [];
                             title: "Cliquez pour voir aperçu"
                             });
                                     
-                            var contenuInfoBulle = '<div class="infoW">' +
+                            var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
                             '<div class="propImg">' +
                             '<img src="template/images/prop/1-1-thmb.png">' +
                             '<div class="propBg">' +
@@ -140,7 +140,7 @@ var markers = [];
                                     
                             google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
 
-                                infobox.setContent(contenuInfoBulle);
+                                infobox.setContent(contenuInfoBulle_{{ event.id}});
                                 infobox.open(map, marker_{{ event.id}});
                             });
                             $(document).on('click', '.closeInfo', function() {

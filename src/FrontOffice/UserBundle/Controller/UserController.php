@@ -42,8 +42,9 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
       
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findAll();
+        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime());
 
-        return $this->render('FrontOfficeUserBundle:User:redirect.html.twig', array('events' => $events));
+        return $this->render('FrontOfficeUserBundle:User:redirect.html.twig', array('events' => $eventsMap));
     }
 
     /**
@@ -59,8 +60,8 @@ class UserController extends Controller {
         $lng = $user->getLng();
         $lat = $user->getLat();
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventLoad(new \Datetime(), $lng, $lat);
-
-        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $events));
+        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime());
+        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $events, 'eventsMap' => $eventsMap));
     }
 
     /**

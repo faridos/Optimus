@@ -25,6 +25,17 @@ class EventRepository extends EntityRepository {
 
         return $events = $query->getResult();
     }
+    
+    public function getEventsMap($date) {
+
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT event, u "
+                        . "FROM FrontOfficeOptimusBundle:Event event LEFT JOIN event.createur u"
+                        . " where event.active = 1 and event.dateFin > :date"
+                )->setParameter('date', $date);
+
+        return $events = $query->getResult();
+    }
 
     
     public function getEventLoadAjax($date, $lng, $lat, $last_id) {
