@@ -89,7 +89,8 @@ class UserController extends Controller {
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
-        return $this->render('FrontOfficeOptimusBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1));
+        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getEventUserParticipant($id,new \Datetime());
+        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1,'participations' => $participation));
     }
 
     /**
@@ -164,12 +165,41 @@ class UserController extends Controller {
     /**
      * 
      *
-     * @Route("profil={id}/invitation", name="invitation", options={"expose"=true})
+     * @Route("profil={id}/clubs", name="club_user", options={"expose"=true})
      * @Method("GET")
-     * 
+     * @Template()
      */
-    public function getInvitations($id) {
+    public function getClubUserAction($id) {
+         $em = $this->getDoctrine()->getManager();
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $id));
+         return $this->render('FrontOfficeUserBundle:Profile:clubs_user.html.twig', array('user' => $user));
+    }
+    /**
+     * 
+     *
+     * @Route("profil={id}/albums", name="albums_user", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function getAlbumsUserAction($id) {
+         $em = $this->getDoctrine()->getManager();
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $id));
+          return $this->render('FrontOfficeUserBundle:Profile:albums_user.html.twig', array('user' => $user));
+    }
+    /**
+     * 
+     *
+     * @Route("profil={id}/palmares", name="palmares_user", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function getPalmaresUserAction($id) {
         $em = $this->getDoctrine()->getManager();
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $id));
+        return $this->render('FrontOfficeUserBundle:Profile:palmares_user.html.twig', array('user' => $user));
     }
 
 }

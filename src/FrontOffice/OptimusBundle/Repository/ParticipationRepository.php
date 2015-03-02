@@ -41,5 +41,18 @@ class ParticipationRepository extends EntityRepository {
            ->setParameter('id', $id);
         return $qb->getResult();
    }
+   public function getEventUserParticipant($id,$date)
+   {
+       $em = $this->getEntityManager();
+        $qb = $em->createQuery("select p, e, u "
+                . "  from FrontOfficeOptimusBundle:Participation p "
+                . "LEFT JOIN p.event e "
+                . "LEFT JOIN p.participant u "
+                . "where  u.id = :id and e.active = 1 and e.dateFin > :date"
+                )
+          ->setParameter('date', $date->format('Y-m-d H:i:s'))
+           ->setParameter('id', $id);
+        return $qb->getResult();
+   }
 
 }
