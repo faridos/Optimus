@@ -181,8 +181,7 @@ var pos;
         });
     }
 
-    var map;
-
+ var map;
     setTimeout(function() {
         $('body').removeClass('notransition');
 
