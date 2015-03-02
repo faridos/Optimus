@@ -89,7 +89,7 @@ class UserController extends Controller {
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
-        return $this->render('FrontOfficeOptimusBundle:Page:index.html.twig', array('user' => $user, 'user1' => $user1));
+        return $this->render('FrontOfficeOptimusBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1));
     }
 
     /**

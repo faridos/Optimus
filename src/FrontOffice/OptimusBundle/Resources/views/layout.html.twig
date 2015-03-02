@@ -1,36 +1,35 @@
 {% extends "::baseA.html.twig" %}
 {% block stylesheets %}
-    <link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
+  
     <link href="{{ asset('template/css/jquery-ui.css') }}" rel="stylesheet">
-    <link href="{{ asset('template/css/datepicker.css') }}" rel="stylesheet">
-    {% block  stylesheetsfils %}
-    {% endblock %}
+   <link href="{{ asset('template/css/jquery.lightbox.css') }}" type="text/css" rel="stylesheet" />
+
 {% endblock %} 
 
 {% block navigation %}
     <div id="header" style="box-shadow:0px 1px 20px rgba(0, 0, 0, 0.3)">
         <div class="home-logo osLight" style="margin:12px 0px 0 15px;"><a href="{{ path('index_optumis') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
         <a href="#" class="navHandler" style="padding-top:18px;font-size:18px;color:#c02100"><span class="fa fa-list-ul"></span></a>
-         <div class="search"><form action="" class="search-form" name="formsearch">
-<input type="hidden" name="kwtype" value="0">
-<input class="search-optimus" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." style="
-    text-indent:20px;
-    border-radius: 25px;      
-    height: 37px;      
-    border: 1.5px solid #C02100;      
-    width: 510px;      
-    margin: 12px -2px 0 5px;
+        <div class="search"><form action="" class="search-form" name="formsearch">
+                <input type="hidden" name="kwtype" value="0">
+                <input class="search-optimus" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." style="
+                       text-indent:20px;
+                       border-radius: 25px;      
+                       height: 37px;      
+                       border: 1.5px solid #C02100;      
+                       width: 510px;      
+                       margin: 12px -2px 0 5px;
 
-">
-<a href="#" data-toggle="modal" data-target="#signin" style="margin-left: -22px;">
-<span class="notifyIcon fa fa-sort-down" style="color:#c02100"></span></a>
-<button type="submit" class="btn btn-sm btn-green" style="border-radius: 25px;
-    height: 37px;
-margin-left: 18px;"><span class="icon-magnifier"></span></button>
-</form>
-                
-                
-          </div>
+                       ">
+                <a href="#" data-toggle="modal" data-target="#signin" style="margin-left: -22px;">
+                    <span class="notifyIcon fa fa-sort-down" style="color:#c02100"></span></a>
+                <button type="submit" class="btn btn-sm btn-green" style="border-radius: 25px;
+                        height: 37px;
+                        margin-left: 18px;"><span class="icon-magnifier"></span></button>
+            </form>
+
+
+        </div>
         <div class="headerUserWraper">
             <a href="#" class="userHandler dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span></a>
             <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
@@ -395,6 +394,45 @@ margin-left: 18px;"><span class="icon-magnifier"></span></button>
 
                                                                                 </form>
                                                                             </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row" id="descu" style="display:none;">
+                                                                    <div class="col-lg-3  navbar-fixed-bottom">
+                                                                        <div class="well well-sm " style="background:white;height:300px;z-index:111111;">
+                                                                            <div class="affiche_nom" style="height:30px;">
+                                                                                <b class="pull-left affiche_personne"></b>
+                                                                                <i id="close" class="glyphicon glyphicon-remove pull-right"></i>
+                                                                            </div>
+                                                                            <div class="affichage">
+                                                                                <div class="well well-sm" style="height:200px;">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-2">
+                                                                                            <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
+                                                                                        </div>
+                                                                                        <div class="col-md-10" style="background:white;">
+                                                                                            <p>
+                                                                                                Bonjour , comment vas-tu? ça fait un bail que je t'ai pas vu !
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-2 pull-right">
+                                                                                            <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
+                                                                                        </div>
+                                                                                        <div class="col-md-10 pull-left" style="background:white;">
+                                                                                            <p>
+                                                                                                bjr, ça va mon frere tout va bien ... quoi de neuf chez toi?
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                </div>
+                                                                            </div>
+                                                                            <form action="" method="post">
+                                                                                <input type="text" class="form-control input-sm">
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
