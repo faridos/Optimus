@@ -81,24 +81,6 @@
 
     var markers = [];
 
-    var infobox = new InfoBox({
-        disableAutoPan: false,
-        maxWidth: 202,
-        pixelOffset: new google.maps.Size(-101, -285),
-        zIndex: null,
-        boxStyle: {
-            background: "url('template/images/infobox-bg.png') no-repeat",
-            opacity: 1,
-            width: "202px",
-            height: "245px"
-        },
-        closeBoxMargin: "28px 26px 0px 0px",
-        closeBoxURL: "",
-        infoBoxClearance: new google.maps.Size(1, 1),
-        pane: "floatPane",
-        enableEventPropagation: false
-    });
-
  var map;
     setTimeout(function() {
         $('body').removeClass('notransition');
