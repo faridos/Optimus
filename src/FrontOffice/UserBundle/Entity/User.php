@@ -128,6 +128,7 @@ class User extends BaseUser {
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Club", mappedBy="createur")
      * */
     protected $clubs;
+    
 
     public function getId() {
         return $this->id;
@@ -248,7 +249,9 @@ class User extends BaseUser {
     public function setLng($lng) {
         $this->lng = $lng;
     }
+   
 
+    
     public function __construct() {
         parent::__construct();
     }

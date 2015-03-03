@@ -273,7 +273,7 @@
                                                                                 height: 607px;
                                                                                 background-color:#fff;
                                                                                 ">
-                                                                                {% set friends = getFriends(user.id) %}
+                                                                                {% set friends = getFriends(app.user.id) %}
                                                                                     {% for friend in friends %}
 
                                                                                         <li class="definedname"><a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
