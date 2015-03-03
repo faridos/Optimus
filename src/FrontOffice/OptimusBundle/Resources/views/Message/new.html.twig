@@ -1,0 +1,31 @@
+<form action="{{ path('message_send', { 'id' : 5}) }}"{{ form_enctype(form) }} method="post" >
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="contactLabel">Optimus Message</h4>
+        </div>
+
+        <div class="modal-body">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                    <label type="text" placeholder="Nom et Prénom" class="form-control">Envoyer Message à <b>{{ user.prenom }} {{ user.prenom }}</b></label>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                    {{ form_widget(form.content) }}
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Fermer</a>
+            {{ form_widget(form._token) }}
+            <input type="submit" value="Envoyer message" class="btn btn-round btn-green">
+        </div>
+
+    </div>
+</form>
+
+
+

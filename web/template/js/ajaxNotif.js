@@ -39,7 +39,7 @@ $('#add_relation').click(function() {
     $.ajax({
         url: Routing.generate('add_relation', {'id': id}),
         success: function() {
-           $('#add_relation').empty().append("<a><span class=\"state\">En attente</span></a>")        
+           $('#replace-enattente').empty().append("<a><span class=\"state\" style=\"color:#fff\">En attente</span></a>") ;       
        }
     });
 });
