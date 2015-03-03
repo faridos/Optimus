@@ -31,8 +31,9 @@
                                     <span class="fa fa-star"></span>
                                     <span class="fa fa-star-o"></span></div>
                             </div>
+                              <div  class="buttonsWrapper" id="{{ user.id }}" style="margin-left:195px">
                             {% if app.user.id != user.id %}
-                                <div class="buttonsWrapper" style="margin-left:195px">
+                              
                                     {% if app.user | relation_exists('friendship', user ) %}
                                         {% set pendingInvitations = pendingInvitation(user,user1)%}
                                             {% if pendingInvitations is empty %}
@@ -46,16 +47,18 @@
                                                         <li><a href="#">Signaler</a></li>
                                                     </ul>
                                                 </div>
+                                                
                                             {% elseif pendingInvitations[0].object2Id == user.id %} 
-                                                <a class="btn btn-green btn-round btn-success" href="#"  style=" border-color: #c02100;">
+                                                
+                                                <a id="enattente" class="btn btn-green btn-round btn-success" href="#"  style=" border-color: #c02100;">
                                                     <span style="color:#fff" class="fa icon-user-follow state-active"></span> 
-                                                    <span class="state-active" style="color:#fff">En attente</span>
+                                                    <span class="state" style="color:#fff">En attente</span>
                                                 </a>
                                             {% endif %}
                                             {% else %}
-                                                <a id ="add_relation "class="btn btn-green btn-round btn-success" href="#"  style=" border-color: #c02100;">
+                                                <a id ="add_relation" class="btn btn-green btn-round btn-success"  href="#"  style=" border-color: #c02100;">
                                                     <span style="color:#fff" class="fa icon-user-follow state"></span> 
-                                                    <span id="{{ user.id }}"class="state add" style="color:#fff">Ajouter</span>
+                                                    <span  class="state"  style="color:#fff">Ajouter</span>
                                                 </a>
                                                
                                                 {% endif %}
@@ -64,6 +67,7 @@
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div>
+                                                    
                                                 <div class="userWidget-2" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
                                                     <div class="avatar">
                                                     </div>

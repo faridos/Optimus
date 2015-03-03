@@ -35,7 +35,7 @@ class UserRepository extends EntityRepository {
            ->addSelect('u.username','u.nom','u.prenom', 'u.path', 'r.object1Id','r.id','r.createdAt')
            ->from('Sly\RelationBundle\Entity\Relation', 'r')
           ->Join('FrontOffice\UserBundle\Entity\User', 'u')
-           ->where('r.confirmed = 0 and r.confirmed=0 and r.object1Id = u.id and r.object2Id = :id ')                
+           ->where('r.confirmed = 0 and r.object1Id = u.id and r.object2Id = :id ')                
          
            ->setParameter('id', $id);
         return $qb->getQuery() ->getArrayResult();
@@ -47,12 +47,9 @@ class UserRepository extends EntityRepository {
         $qb = $em->createQueryBuilder();
         $qb->select('r.name', 'r.object1Id', 'r.object2Id', 'r.confirmed')
                 ->from('Sly\RelationBundle\Entity\Relation', 'r')
-                ->where('r.object1Id = :id')
-                ->andWhere('r.object2Id = :idc')
-                ->andWhere('r.confirmed = 0')
+                ->where('r.confirmed = 0 and r.object1Id = :idc and r.object2Id = :id' )
                 ->setParameter('id', $idother)
                 ->setParameter('idc', $idcurrent);
-
         return $qb->getQuery()->getArrayResult();
     }
 

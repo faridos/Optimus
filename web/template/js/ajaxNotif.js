@@ -34,6 +34,12 @@ $('#show_notification').click(function() {
 });
 $('#add_relation').click(function() {
 // $('.loader').show();
- console.log('okkk ');
-   
+   var id = $('.buttonsWrapper').attr('id');
+   console.log(id);
+    $.ajax({
+        url: Routing.generate('add_relation', {'id': id}),
+        success: function() {
+           $('#add_relation').empty().append("<a><span class=\"state\">En attente</span></a>")        
+       }
+    });
 });
