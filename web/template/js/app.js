@@ -2,7 +2,195 @@ var pos;
 (function($) {
     "use strict";
 
+    // Custom options for map
+    var options = {
+            zoom : 12,
+            mapTypeId : 'Styled',
+            disableDefaultUI: true,
+            mapTypeControlOptions : {
+                mapTypeIds : [ 'Styled' ]
+            }
+        };
+    var styles = [{
+        stylers : [ {
+            hue : "#cccccc"
+        }, {
+            saturation : -100
+        }]
+    }, {
+        featureType : "road",
+        elementType : "geometry",
+        stylers : [ {
+            lightness : 100
+        }, {
+            visibility : "simplified"
+        }]
+    }, {
+        featureType : "road",
+        elementType : "labels",
+        stylers : [ {
+            visibility : "on"
+        }]
+    }, {
+        featureType: "poi",
+        stylers: [ {
+            visibility: "off"
+        }]
+    }];
 
+    var newMarker = null;
+    var markers = [];
+
+    // json for properties markers on map
+    var props = [{
+     title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'CrÃ©e par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 36.759682099999996,
+            lng : 10.281168999999954
+        },
+        markerIcon : "marker-green.png"
+    }, {
+       title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'CrÃ©e par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 36.803682099999996,
+            lng : 10.189168999999954
+        },
+        markerIcon : "marker-green.png"
+    }, {
+        title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'CrÃ©e par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 36.859682099999996,
+            lng : 10.281168999999954
+        },
+        markerIcon : "marker-green.png"
+    }, {
+       title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'CrÃ©e par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 36.829682099999996,
+            lng : 10.21168999999954
+        },
+        markerIcon : "marker-green.png"
+    }, {
+       title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'CrÃ©e par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 36.809683099999996,
+            lng : 10.181568999999954
+        },
+        markerIcon : "marker-green.png"
+    }];
+
+    // custom infowindow object
+    var infobox = new InfoBox({
+        disableAutoPan: false,
+        maxWidth: 202,
+        pixelOffset: new google.maps.Size(-101, -285),
+        zIndex: null,
+        boxStyle: {
+            background: "url('../template/images/infobox-bg.png') no-repeat",
+            opacity: 1,
+            width: "202px",
+            height: "245px"
+        },
+        closeBoxMargin: "28px 26px 0px 0px",
+        closeBoxURL: "",
+        infoBoxClearance: new google.maps.Size(1, 1),
+        pane: "floatPane",
+        enableEventPropagation: false
+    });
+
+    // function that adds the markers on map
+    var addMarkers = function(props, map) {
+        $.each(props, function(i,prop) {
+            var latlng = new google.maps.LatLng(prop.position.lat,prop.position.lng);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                icon: new google.maps.MarkerImage( 
+                    '../template/images/' + prop.markerIcon,
+                    null,
+                    null,
+                    null,
+                    new google.maps.Size(36, 36)
+                ),
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+            });
+            var infoboxContent = '<div class="infoW">' +
+                                    '<div class="propImg">' +
+                                        '<img src="../template/images/prop/' + prop.image + '">' +
+                                        '<div class="propBg">' +
+                                            '<div class="propPrice">' + prop.price + '</div>' +
+                                            '<div class="propType">' + prop.type + '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="paWrapper">' +
+                                        '<div class="propTitle">' + prop.title + '</div>' +
+                                        '<div class="propAddress">' + prop.address + '</div>' +
+                                    '</div>' +
+                                    '<div class="propRating">' +
+                                        '<span class="fa fa-star"></span>' +
+                                        '<span class="fa fa-star"></span>' +
+                                        '<span class="fa fa-star"></span>' +
+                                        '<span class="fa fa-star"></span>' +
+                                        '<span class="fa fa-star-o"></span>' +
+                                    '</div>' +
+                                 
+                                    '<div class="clearfix"></div>' +
+                                    '<div class="infoButtons">' +
+                                        '<a class="btn btn-sm btn-round btn-gray btn-o closeInfo">Fermer</a>' +
+                                        '<a href="#" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
+                                    '</div>' +
+                                 '</div>';
+
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    infobox.setContent(infoboxContent);
+                    infobox.open(map, marker);
+                }
+            })(marker, i));
+
+            $(document).on('click', '.closeInfo', function() {
+                infobox.open(null,null);
+            });
+
+            markers.push(marker);
+        });
+    }
 
     var map;
     var windowHeight;
@@ -11,16 +199,142 @@ var pos;
     var contentWidth;
     var isDevice = true;
 
-  
+    // calculations for elements that changes size on window resize
+    var windowResizeHandler = function() {
+        windowHeight = window.innerHeight;
+        windowWidth = $(window).width();
+        contentHeight = windowHeight - $('#header').height();
+        contentWidth = $('#content').width();
 
-   
+        $('#leftSide').height(contentHeight);
+        $('.closeLeftSide').height(contentHeight);
+        $('#wrapper').height(contentHeight);
+        $('#mapView').height(contentHeight);
+        $('#content').height(contentHeight);
+        setTimeout(function() {
+            $('.commentsFormWrapper').width(contentWidth);
+        }, 300);
+
+        if (map) {
+            google.maps.event.trigger(map, 'resize');
+        }
+
+        // Add custom scrollbar for left side navigation
+        if(windowWidth > 767) {
+            $('.bigNav').slimScroll({
+                height : contentHeight - $('.leftUserWraper').height()
+            });
+        } else {
+            $('.bigNav').slimScroll({
+                height : contentHeight
+            });
+        }
+        if($('.bigNav').parent('.slimScrollDiv').size() > 0) {
+            $('.bigNav').parent().replaceWith($('.bigNav'));
+            if(windowWidth > 767) {
+                $('.bigNav').slimScroll({
+                    height : contentHeight - $('.leftUserWraper').height()
+                });
+            } else {
+                $('.bigNav').slimScroll({
+                    height : contentHeight
+                });
+            }
+        }
+
+        // reposition of prices and area reange sliders tooltip
+        var priceSliderRangeLeft = parseInt($('.priceSlider .ui-slider-range').css('left'));
+        var priceSliderRangeWidth = $('.priceSlider .ui-slider-range').width();
+        var priceSliderLeft = priceSliderRangeLeft + ( priceSliderRangeWidth / 2 ) - ( $('.priceSlider .sliderTooltip').width() / 2 );
+        $('.priceSlider .sliderTooltip').css('left', priceSliderLeft);
+
+        var areaSliderRangeLeft = parseInt($('.areaSlider .ui-slider-range').css('left'));
+        var areaSliderRangeWidth = $('.areaSlider .ui-slider-range').width();
+        var areaSliderLeft = areaSliderRangeLeft + ( areaSliderRangeWidth / 2 ) - ( $('.areaSlider .sliderTooltip').width() / 2 );
+        $('.areaSlider .sliderTooltip').css('left', areaSliderLeft);
+    }
+
+    var repositionTooltip = function( e, ui ){
+        var div = $(ui.handle).data("bs.tooltip").$tip[0];
+        var pos = $.extend({}, $(ui.handle).offset(), { 
+                        width: $(ui.handle).get(0).offsetWidth,
+                        height: $(ui.handle).get(0).offsetHeight
+                    });
+        var actualWidth = div.offsetWidth;
+
+        var tp = {left: pos.left + pos.width / 2 - actualWidth / 2}
+        $(div).offset(tp);
+
+        $(div).find(".tooltip-inner").text( ui.value );
+    }
 
     windowResizeHandler();
     $(window).resize(function() {
         windowResizeHandler();
     });
 
+    setTimeout(function() {
+        $('body').removeClass('notransition');
 
+        map = new google.maps.Map(document.getElementById('mapView'), options);
+        var styledMapType = new google.maps.StyledMapType(styles, {
+            name : 'Styled'
+        });
+
+        map.mapTypes.set('Styled', styledMapType);
+       
+        map.setZoom(12);
+
+        if ($('#address').length > 0) {
+            newMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(40.6984237,-73.9890044),
+                map: map,
+                icon: new google.maps.MarkerImage( 
+                    '../template/images/marker-new.png',
+                    null,
+                    null,
+                    // new google.maps.Point(0,0),
+                    null,
+                    new google.maps.Size(36, 36)
+                ),
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+            });
+
+            google.maps.event.addListener(newMarker, "mouseup", function(event) {
+                var latitude = this.position.lat();
+                var longitude = this.position.lng();
+                $('#latitude').text(this.position.lat());
+                $('#longitude').text(this.position.lng());
+            });
+        }
+
+        addMarkers(props, map);
+        
+        if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                         pos = new google.maps.LatLng(position.coords.latitude,
+                                position.coords.longitude);
+
+
+
+                        var newMarker = new google.maps.Marker({
+                            position: pos,
+                            map: map,
+                            icon: new google.maps.MarkerImage('../template/images/marker-position.png'),
+                            draggable: true,
+                            animation: google.maps.Animation.DROP,
+                        });
+
+                        map.setCenter(pos);
+                        
+                    }, function () {
+                        handleNoGeolocation(true);
+                    });
+                } else {
+                    handleNoGeolocation(false);
+                }
+    }, 300);
 
     if(!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch)) {
         $('body').addClass('no-touch');
