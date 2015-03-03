@@ -124,7 +124,18 @@
     "use strict";
     // Custom options for map
    
-  
+  $.ajax({
+                                    url:    Routing.generate('user_coordonne', { lng: pos.D, lat: pos.k }),
+                                            type: 'POST',
+                                            data: null,
+                                            contentType: "application/json; charset=ISO-8859-4",
+                                            beforeSend: function () {
+                                            },
+                                            success: function () {
+                                            },
+                                            error: function () {
+                                            }
+                                    });
 
      var infobox = new InfoBox({
     disableAutoPan: false,
@@ -192,7 +203,7 @@
                             $(document).on('click', '.closeInfo', function() {
                                 infobox.open(null, null);
                             });
-              {% endfor %}
+        {% endfor %}
    
 
 

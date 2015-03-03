@@ -206,5 +206,27 @@ class UserController extends Controller {
         $user = $userManager->findUserBy(array('id' => $id));
         return $this->render('FrontOfficeUserBundle:Profile:palmares_user.html.twig', array('user' => $user));
     }
+    
+    
+    /**
+     * 
+     *
+     * @Route("/coordonne={lng}/{lat}", name="user_coordonne", options={"expose"=true})
+     * @Method("GET|POST")
+     * 
+     */
+    public function CoordonneAction($lng,$lat){ 
+      $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+  
+            $user->setLng($lng);
+            $user->setLat($lat);
+            
+            $em->persist($user);
+            $em->flush();
+
+                return $response = new Response();    
+         
+            }
 
 }

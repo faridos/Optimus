@@ -1,5 +1,5 @@
 {% spaceless %}
-    <div class="rating">
+    <div class="dcs-rating-container">
         {% for i in maxValue..1 %}
             {% set style = '' %}
             {% if i <= rate %}
@@ -7,9 +7,7 @@
             {% else %}
                 {% set style = rate|isHalfStar(i) ? 'half' %}
             {% endif %}
-            <b class="star {{ style }}" style="font-size: 25px;">☆</b>
+            <span class="star {{ style }}">☆</span>
         {% endfor %}
     </div>
-    <br/>
-    <span>{{rating.rate}}/5 ({{rating.numVotes}} votes)</span>
 {% endspaceless %}
