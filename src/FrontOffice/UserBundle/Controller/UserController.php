@@ -97,9 +97,9 @@ class UserController extends Controller {
     /**
      * 
      *
-     * @Route("profil={id}/inviter", name="add_relation")
+     * @Route("profil={id}/inviter", name="add_relation", options={"expose"=true})
      * @Method("GET|POST")
-     * @Template()
+     * 
      */
     public function addFriendAction($id) {
         $em = $this->getDoctrine()->getManager();
@@ -112,7 +112,11 @@ class UserController extends Controller {
         if (false === $relation->exists()) {
             $relation->create();
         }
-        return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));
+        $response = new Response();
+        $relationJson = json_encode($relation);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($relationJson);
+        return $response;
     }
 
     /**

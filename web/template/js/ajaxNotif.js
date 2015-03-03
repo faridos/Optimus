@@ -32,3 +32,8 @@ $('#show_notification').click(function() {
         }
     });
 });
+$('#add_relation').click(function() {
+// $('.loader').show();
+ console.log('okkk ');
+   
+});
