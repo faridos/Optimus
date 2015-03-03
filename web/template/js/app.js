@@ -1,13 +1,49 @@
-var pos;
+        var pos;
+        var map;
 (function($) {
     "use strict";
+    // Custom options for map
+   
+    var options = {
+            zoom : 12,
+            mapTypeId : 'Styled',
+            disableDefaultUI: true,
+            mapTypeControlOptions : {
+                mapTypeIds : [ 'Styled' ]
+            }
+        };
+    var styles = [{
+        stylers : [ {
+            hue : "#cccccc"
+        }, {
+            saturation : -100
+        }]
+    }, {
+        featureType : "road",
+        elementType : "geometry",
+        stylers : [ {
+            lightness : 100
+        }, {
+            visibility : "simplified"
+        }]
+    }, {
+        featureType : "road",
+        elementType : "labels",
+        stylers : [ {
+            visibility : "on"
+        }]
+    }, {
+        featureType: "poi",
+        stylers: [ {
+            visibility: "off"
+        }]
+    }];
 
- 
+    var newMarker = null;
+    var markers = [];
 
 
- 
 
-    var map;
     var windowHeight;
     var windowWidth;
     var contentHeight;
@@ -95,36 +131,13 @@ var pos;
         var styledMapType = new google.maps.StyledMapType(styles, {
             name : 'Styled'
         });
-
         map.mapTypes.set('Styled', styledMapType);
        
         map.setZoom(12);
 
-        if ($('#address').length > 0) {
-            newMarker = new google.maps.Marker({
-                position: new google.maps.LatLng(40.6984237,-73.9890044),
-                map: map,
-                icon: new google.maps.MarkerImage( 
-                    '../template/images/marker-new.png',
-                    null,
-                    null,
-                    // new google.maps.Point(0,0),
-                    null,
-                    new google.maps.Size(36, 36)
-                ),
-                draggable: true,
-                animation: google.maps.Animation.DROP,
-            });
+      
 
-            google.maps.event.addListener(newMarker, "mouseup", function(event) {
-                var latitude = this.position.lat();
-                var longitude = this.position.lng();
-                $('#latitude').text(this.position.lat());
-                $('#longitude').text(this.position.lng());
-            });
-        }
-
-        addMarkers(props, map);
+       
         
         if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
@@ -205,18 +218,22 @@ var pos;
 
     // functionality for map manipulation icon on mobile devices
     $('.mapHandler').click(function() {
+        
         if ($('#mapView').hasClass('mob-min') || 
             $('#mapView').hasClass('mob-max') || 
             $('#content').hasClass('mob-min') || 
             $('#content').hasClass('mob-max')) {
-                $('#mapView').toggleClass('mob-max');
-                $('#content').toggleClass('mob-min');
+        
+                $('#mapView').toggleClass('mob-min');
+                $('#content').toggleClass('mob-max');
         } else {
+            
             $('#mapView').toggleClass('min');
             $('#content').toggleClass('max');
         }
 
         setTimeout(function() {
+           
             var priceSliderRangeLeft = parseInt($('.priceSlider .ui-slider-range').css('left'));
             var priceSliderRangeWidth = $('.priceSlider .ui-slider-range').width();
             var priceSliderLeft = priceSliderRangeLeft + ( priceSliderRangeWidth / 2 ) - ( $('.priceSlider .sliderTooltip').width() / 2 );
@@ -252,6 +269,7 @@ var pos;
 
     // functionality for custom dropdown select list
     $('.dropdown-select li a').click(function() {
+   
         if (!($(this).parent().hasClass('disabled'))) {
             $(this).prev().prop("checked", true);
             $(this).parent().siblings().removeClass('active');
