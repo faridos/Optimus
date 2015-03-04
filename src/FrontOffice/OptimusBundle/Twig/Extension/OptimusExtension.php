@@ -23,9 +23,13 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('getUsersInvitations', array($this, 'getUsersInvitations')),
             new \Twig_SimpleFunction('getInvitations', array($this, 'getInvitations')),
             new \Twig_SimpleFunction('getParicipationEventNotification', array($this, 'getParicipationEventNotification')),
+            new \Twig_SimpleFunction('getNonSeenMessage', array($this, 'getNonSeenMessage')),
         );
     }
-
+    public function getNonSeenMessage($id)
+    {
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Message')->NonseenMsg($id);
+    }
     public function getUsersInvitations($id) {
         return $this->em->getRepository('FrontOfficeUserBundle:User')->find($id);
     }

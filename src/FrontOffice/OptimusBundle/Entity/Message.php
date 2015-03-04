@@ -217,6 +217,21 @@ class Message
     {
         return $this->is_seen;
     }
+    public function getDuréeMsg() {
+        $date = new \DateTime();
+        $diff = $date->diff($this->msgTime);
+        $durée = "";
+        if ($diff->d >= 1):
+            $durée = "il y'a " . $diff->d . " days";
+        elseif ($diff->h >= 1):
+            $durée = "il y'a " . $diff->h . " heur";
+        elseif ($diff->i > 1):
+            $durée = "il y'a " . $diff->i . " min";
+        else:
+            $durée = "Just Now";
+        endif;
+        return $durée;
+    }
     
 //         public function __toString()
 //    {
