@@ -59,8 +59,19 @@ $('#envoyerMessage').click(function()
         },
         success: function() {
             $('#messageEch').hide();
-            $('#messageEnvoyer').show();
+            
+            $('#messageEnvoyer').show().delay(3000).fadeOut();;
+            $('textarea').val('');
+            
         }
     });
+
+});
+
+$('#btn-fermer-message').click(function() {
+    $('#messageEch').hide();
+    $('#messageEnvoyer').hide();
+    $('textarea').val('');
+
 
 });
