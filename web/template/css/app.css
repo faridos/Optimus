@@ -5678,3 +5678,9 @@ blockquote {
     text-align: center;
     display: none;
 }
+.dcs-rating-container {
+    direction: rtl;
+    overflow: hidden;
+    display: inline-block;
+    unicode-bidi: bidi-override;
+}
