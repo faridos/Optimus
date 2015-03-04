@@ -63,8 +63,8 @@
                                                     </a>
                                                 </div>
                                                 {% endif %}
-                                                    <a href="#contactAgent" data-toggle="modal" class="btn btn-green btn-round">
-                                                        <span class="fa fa-envelope-o"></span> Envoyer Message</a>
+                                                    <a id='envoiemessage' href="#contactAgent" data-toggle="modal" class="btn btn-green btn-round">
+                                                        <span  class="fa fa-envelope-o"></span> Envoyer Message</a>
                                                         {% endif %}
                                                     </div>
                                                     <div class="clearfix"></div>
@@ -140,8 +140,8 @@
                                                     <div class="row">
                                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
                                                             <label  class="idReciever" id="{{ user.id }}" type="text" placeholder="Nom et Prénom" >Envoyer Message à <b>{{ user.prenom }} {{ user.prenom }}</b></label>
-                                                            <label  id="messageEch" style=" display: none;">Envoie echoué</label>
-                                                            <label  id="messageEnvoyer" style=" display: none;">votre message a bien été  envoyer</label>
+                                                            <label  id="messageEch" class="messageEch">Envoie echoué</label>
+                                                            <label  id="messageEnvoyer" class="messageEnvoyer">Envoie effectué</label>
                                                         </div>
 
                                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
@@ -152,7 +152,7 @@
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
-                                                <a href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Fermer</a>
+                                                <a id="btn-fermer-message" type="reset" href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Fermer</a>
                                                 <a id="envoyerMessage" href="#" class="btn btn-round btn-green">Envoyer message</a>
                                             </div>
                                         </div>
@@ -161,19 +161,9 @@
                                 {% endblock %}
                                     {% block javascriptfils %}
                                         <script>
-                                            $('#envoyerMessage').click(function()
-                                            {
-                                                var id = $('.idReciever').attr('id');
-                                                var txt = $('#txt-message').val();
-
-                                                $.ajax({
-                                                    url: Routing.generate('message_send', {'id': id, 'content': txt}),
-                                                    success: function() {
-
-                                                        $('#messageEnvoyer').show();
-                                                    }
-                                                });
-
+                                            $('#btn-fermer-message').click(function(){
+                                                $('#envoiemessage').load();
+                                                alert('ok');
                                             });
-                                        </script>
+                                            </script>
                                     {% endblock %}

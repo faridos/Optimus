@@ -1,3 +1,4 @@
+//accept Invitation
 $('#accept_invitation').click(function() {
 // $('.loader').show();
     var id = $('.invitation').attr('id');
@@ -21,25 +22,45 @@ $('#accept_invitation').click(function() {
         }
     });
 });
-
+//notification IsSeen
 $('#show_notification').click(function() {
 // $('.loader').show();
     var id = $('.notification').attr('id');
     $.ajax({
         url: Routing.generate('save_notification', {'id': id}),
         success: function() {
-           
+
         }
     });
 });
+// envoyer invitation
 $('#add_relation').click(function() {
 // $('.loader').show();
-   var id = $('.buttonsWrapper').attr('id');
-   console.log(id);
+    var id = $('.buttonsWrapper').attr('id');
+    console.log(id);
     $.ajax({
         url: Routing.generate('add_relation', {'id': id}),
         success: function() {
-           $('#replace-enattente').empty().append("<a><span class=\"state\" style=\"color:#fff\">En attente</span></a>") ;       
-       }
+            $('#replace-enattente').empty().append("<a><span class=\"state\" style=\"color:#fff\">En attente</span></a>");
+        }
     });
+});
+//envoyer message
+$('#envoyerMessage').click(function()
+{
+    var id = $('.idReciever').attr('id');
+    var txt = $('#txt-message').val();
+
+    $.ajax({
+        url: Routing.generate('message_send', {'id': id, 'content': txt}),
+        error: function() {
+            $('#messageEch').show();
+            $('#messageEnvoyer').hide();
+        },
+        success: function() {
+            $('#messageEch').hide();
+            $('#messageEnvoyer').show();
+        }
+    });
+
 });
