@@ -67,7 +67,7 @@ class UserController extends Controller {
     /**
      * 
      *
-     * @Route("profil={id}", name="show_profil")
+     * @Route("profil={id}", name="show_profil", options={"expose"=true})
      * @Method("GET")
      * @Template()
      */

@@ -199,5 +199,20 @@ class Comment
         return $this->club;
     }
 
+     public function getDureeComment() {
+        $date = new \DateTime();
+        $diff = $date->diff($this->createdat);
+        $durée = "";
+        if ($diff->d >= 1):
+            $durée = "il y'a " . $diff->d . " jours";
+        elseif ($diff->h >= 1):
+            $durée = "il y'a " . $diff->h . " heur";
+        elseif ($diff->i > 1):
+            $durée = "il y'a " . $diff->i . " min";
+        else:
+            $durée = "Maintenant";
+        endif;
+        return $durée;
+    }
    
 }

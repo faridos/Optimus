@@ -21,7 +21,8 @@ class EventRepository extends EntityRepository {
                         . " ORDER BY event.dateDebut DESC "
                 )->setParameter('date', $date)
                 ->setParameter('lng', $lng)
-                ->setParameter('lat', $lat);
+                ->setParameter('lat', $lat)
+                ->setMaxResults(4);
 
         return $events = $query->getResult();
     }
@@ -48,7 +49,7 @@ class EventRepository extends EntityRepository {
                 )->setParameter('date', $date)
                 ->setParameter('lng', $lng)
                 ->setParameter('lat', $lat)
-                ->setMaxResults(5)
+                ->setMaxResults(1)
                 ->setFirstResult($last_id);
 
         return $events = $query->getArrayResult();

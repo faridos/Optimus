@@ -44,7 +44,7 @@ class EventController extends Controller {
     /**
      * 
      *
-     * @Route("={id}/info", name="show_event")
+     * @Route("={id}/info", name="show_event", options={"expose"=true})
      * @Method("GET|POST")
      * @Template()
      */
@@ -157,12 +157,15 @@ class EventController extends Controller {
     /**
      * 
      *
-     * @Route("events/{lng}/{lat}/{last_id}", name="event_ajax", options={"expose"=true})
+     * @Route("load/{last_id}", name="event_ajax", options={"expose"=true})
      * @Method("GET|POST")
-     * @Template()
+     * 
      */
-    public function getEventLoadAjax($lng, $lat, $last_id) {
+    public function getEventLoadAjax($last_id) {
         $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $lng = $user->getLng();
+        $lat = $user->getLat();
         $events = new ArrayCollection();
         $events = $em->getRepository('FrontOfficeOptimusBundle:Event')->getEventLoadAjax(new DateTime(), $lng, $lat, $last_id);
         if (!$events) {
