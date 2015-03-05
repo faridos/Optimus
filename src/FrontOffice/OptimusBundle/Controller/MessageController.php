@@ -40,7 +40,7 @@ class MessageController extends Controller {
      *
      * @Route("/{id}/send/{content}", name="message_send", options={"expose"=true})
      * @Method("GET|POST")
-     * @Template("FrontOfficeOptimusBundle:Message:new.html.twig")
+     * 
      */
     public function createAction($id, $content, Request $request) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
@@ -48,10 +48,10 @@ class MessageController extends Controller {
             throw new AccessDeniedException('.');
         }
         $sender = $this->container->get('security.context')->getToken()->getUser();
-        $userManager = $this->container->get('fos_user.user_manager');
-        $reciever = $userManager->findUserBy(array('id' => $id));
+      //  $userManager = $this->container->get('fos_user.user_manager');
+        //$reciever = $userManager->findUserBy(array('id' => $id));
         $message = new Message();
-        $message->setReciever($reciever);
+        $message->setReciever($id);
         $message->setSender($sender);
         $message->setIsSeen(false);
         $message->setMsgTime(new \DateTime());
@@ -259,12 +259,7 @@ class MessageController extends Controller {
         $message->setIsSeen(true);
         $em->persist($message);
         $em->flush();
-        
-        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->NonseenMsgAjax($user1->getId());
-        $response = new Response();
-        $messageJson = json_encode($messages);
-        $response->headers->set('Content-Type', 'application/json');
-        $response->setContent($messageJson);
+        $response = new Response($id);
         return $response;
     }
 

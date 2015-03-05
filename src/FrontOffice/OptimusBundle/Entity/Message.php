@@ -29,9 +29,11 @@ class Message
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User")
      */
     protected $sender;
-     /**
-     * @var reciever
-     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User")
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="reciever", type="integer")
+     * 
      */
     protected $reciever;
     /**
@@ -139,19 +141,10 @@ class Message
     {
         return $this->sender;
     }
-
-    /**
-     * Set reciever
-     *
-     * @param \FrontOffice\UserBundle\Entity\User $reciever
-     * @return Message
-     */
-    public function setReciever(\FrontOffice\UserBundle\Entity\User $reciever = null)
-    {
+    public function setReciever($reciever) {
         $this->reciever = $reciever;
-
-        return $this;
     }
+
 
     /**
      * Get reciever
