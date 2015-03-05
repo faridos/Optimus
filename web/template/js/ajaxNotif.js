@@ -75,3 +75,16 @@ $('#btn-fermer-message').click(function() {
 
 
 });
+
+$('#seenMsg').click(function() {
+// $('.loader').show();
+    var id = $('.message').attr('id');
+    $.ajax({
+        url: Routing.generate('message_seen', {'id': id}),
+        
+        success: function() {
+             console.log('ok');
+           
+        }
+    });
+});

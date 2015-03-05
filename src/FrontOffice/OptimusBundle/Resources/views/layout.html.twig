@@ -151,10 +151,10 @@
                                                 </div>
                                                 <div class="headerNotifyWraper">
                                                     {% set messages = getNonSeenMessage(app.user.id) %}
-                                                    <a href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
+                                                    <a id="nb_message" href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
                                                         <span class="notifyIcon fa fa-envelope-o"></span>
                                                         {% for message in messages %}
-                                                            <span class="counter">{{ messages|length }}</span>
+                                                            <span class="counter" id="nombre_message">{{ messages|length }}</span>
                                                         {% endfor %}
                                                     </a>
                                                     <div class="dropdown-menu pull-right notifyMenu" role="menu">
@@ -163,10 +163,10 @@
                                                             <a href="#" class="notifySettings icon-settings"></a>
                                                             <div class="clearfix"></div>
                                                         </div>
-                                                        <ul class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
+                                                        <ul id="id_message" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
                                                           {% for message in messages %}
-                                                            <li>
-                                                                <a href="#">
+                                                            <li class="message" id="{{ message.id }}">
+                                                                <a id ="seenMsg" href="#">
                                                                     <img class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" alt="avatar">
                                                                     <div class="pulse border-grey"></div>
                                                                     <div class="notify pull-left">

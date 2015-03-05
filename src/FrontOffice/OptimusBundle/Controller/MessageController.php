@@ -244,5 +244,28 @@ class MessageController extends Controller {
                         ->getForm()
         ;
     }
+    /**
+     * Creates a new Message entity.
+     *
+     * @Route("/{id}/seen", name="message_seen", options={"expose"=true})
+     * @Method("GET|POST")
+     * 
+     */
+    public function seenMsgAction($id)
+    {
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
+        $message->setIsSeen(true);
+        $em->persist($message);
+        $em->flush();
+        
+        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->NonseenMsgAjax($user1->getId());
+        $response = new Response();
+        $messageJson = json_encode($messages);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($messageJson);
+        return $response;
+    }
 
 }
