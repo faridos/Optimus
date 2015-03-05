@@ -40,7 +40,7 @@ class MessageController extends Controller {
      *
      * @Route("/{id}/send/{content}", name="message_send", options={"expose"=true})
      * @Method("GET|POST")
-     * @Template("FrontOfficeOptimusBundle:Message:new.html.twig")
+     * 
      */
     public function createAction($id, $content, Request $request) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
@@ -48,10 +48,10 @@ class MessageController extends Controller {
             throw new AccessDeniedException('.');
         }
         $sender = $this->container->get('security.context')->getToken()->getUser();
-        $userManager = $this->container->get('fos_user.user_manager');
-        $reciever = $userManager->findUserBy(array('id' => $id));
+      //  $userManager = $this->container->get('fos_user.user_manager');
+        //$reciever = $userManager->findUserBy(array('id' => $id));
         $message = new Message();
-        $message->setReciever($reciever);
+        $message->setReciever($id);
         $message->setSender($sender);
         $message->setIsSeen(false);
         $message->setMsgTime(new \DateTime());
@@ -243,6 +243,24 @@ class MessageController extends Controller {
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm()
         ;
+    }
+    /**
+     * Creates a new Message entity.
+     *
+     * @Route("/{id}/seen", name="message_seen", options={"expose"=true})
+     * @Method("GET|POST")
+     * 
+     */
+    public function seenMsgAction($id)
+    {
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
+        $message->setIsSeen(true);
+        $em->persist($message);
+        $em->flush();
+        $response = new Response($id);
+        return $response;
     }
 
 }

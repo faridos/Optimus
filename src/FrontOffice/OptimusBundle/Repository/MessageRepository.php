@@ -12,19 +12,25 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository {
 
-//    public function NonseenMsg($idprofil) {
-//        $em = $this->getEntityManager();
-//        $qb = $em->createQueryBuilder();
-//
-//        $qb->select('m')
-//                ->from('FrontOffice\OptimusBundle\Entity\Message', 'm')
-//                ->where('m.reciever = :idprofil')
-//                ->andWhere('m.is_seen = 0')
-//                ->setParameter('idprofil', $idprofil);
-//
-//        return $qb->getQuery()
-//                        ->getResult();
-//    }
+    public function NonseenMsg($id) {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT m, u FROM FrontOfficeOptimusBundle:Message m"
+                        . " LEFT JOIN m.sender u where m.is_seen = 0 and m.reciever = :id"
+                        . " ORDER BY m.msgTime DESC ")
+                ->setParameter('id', $id);
+        return  $query->getResult();
+    }
+
+    public function NonseenMsgAjax($id) {
+          $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT m, u FROM FrontOfficeOptimusBundle:Message m"
+                        . " LEFT JOIN m.sender u where m.is_seen = 0 and m.reciever = :id"
+                        . " ORDER BY m.msgTime DESC ")
+                ->setParameter('id', $id);
+        return  $query->getArrayResult();
+        
+    }
+
 //
 //    public function findMsgDestinataires($idprofil) {
 //        $em = $this->getEntityManager();
@@ -72,5 +78,4 @@ class MessageRepository extends EntityRepository {
 //                )->setParameter('id', $idconvers)
 //                ->getResult();
 //    }
-
 }

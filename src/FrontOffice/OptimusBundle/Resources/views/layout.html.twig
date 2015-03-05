@@ -31,8 +31,8 @@
 
 
         </div>
-       
-        
+
+
         <div class="headerUserWraper">
             <a href="#" class="userHandler dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span></a>
             <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
@@ -42,9 +42,9 @@
                     <div class="cardRating" style="color:#eab134">
                         <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'U'~app.user.id} %}</div>
                     </div>
-                    
-                    
-                    
+
+
+
                 </div>
                 <div class="clearfix"></div>
             </a>
@@ -150,276 +150,280 @@
                                                     </div>
                                                 </div>
                                                 <div class="headerNotifyWraper">
-                                                    <a href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
-                                                        <span class="notifyIcon fa fa-envelope-o"></span>
-                                                        <span class="counter">5</span>
-                                                    </a>
-                                                    <div class="dropdown-menu pull-right notifyMenu" role="menu">
-                                                        <div class="notifyHeader">
-                                                            <span>Messages</span>
-                                                            <a href="#" class="notifySettings icon-settings"></a>
-                                                            <div class="clearfix"></div>
-                                                        </div>
-                                                        <ul class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
-                                                            <li>
-                                                                <a href="#">
-                                                                    <img class="avatar pull-left" src="images/avatar-1.png" alt="avatar">
-                                                                    <div class="pulse border-grey"></div>
-                                                                    <div class="notify pull-left">
-                                                                        <div class="notifyName" style="font-weight: bold"> Essid </div><div class="texte">barcha t3ab ya m3allem</div>
-                                                                        <div class="notifyTime">5 minutes ago</div>
-                                                                    </div>
-                                                                    <div class="clearfix"></div>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <img class="avatar pull-left" src="images/avatar-1.png" alt="avatar">
-                                                                    <div class="pulse border-grey"></div>
-                                                                    <div class="notify pull-left">
-                                                                        <div class="notifyName" style="font-weight: bold"> Essid </div><div class="texte">barcha t3ab ya m3allem</div>
-                                                                        <div class="notifyTime">5 minutes ago</div>
-                                                                    </div>
-                                                                    <div class="clearfix"></div>
-                                                                </a>
-                                                            </li>
-
-                                                            <li>
-                                                                <a href="#">
-                                                                    <img class="avatar pull-left" src="images/avatar-1.png" alt="avatar">
-                                                                    <div class="pulse border-grey"></div>
-                                                                    <div class="notify pull-left">
-                                                                        <div class="notifyName" style="font-weight: bold"> Essid </div><div class="texte">barcha t3ab ya m3allem</div>
-                                                                        <div class="notifyTime">5 minutes ago</div>
-                                                                    </div>
-                                                                    <div class="clearfix"></div>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <img class="avatar pull-left" src="images/avatar-1.png" alt="avatar">
-                                                                    <div class="pulse border-grey"></div>
-                                                                    <div class="notify pull-left">
-                                                                        <div class="notifyName" style="font-weight: bold"> Essid </div><div class="texte">barcha t3ab ya m3allem</div>
-                                                                        <div class="notifyTime">5 minutes ago</div>
-                                                                    </div>
-                                                                    <div class="clearfix"></div>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <a href="#" class="notifyAll">Afficher tous les messages</a>
-                                                    </div>
-                                                </div>
-                                                <div class="headerNotifyWraper">
-                                                    {% set Invitations = getInvitations(app.user.id) %}
-                                                        <a href="#"  class="headerNotify dropdown-toggle" id="nb_invitation" data-toggle="dropdown">
-                                                            <span class="notifyIcon icon-users"></span>
-                                                            {% for invitation in Invitations %}  <span class="counter" id="nombre_invitation"  >{{ Invitations|length  }}</span>{% endfor %}
+                                                    {% set messages = getNonSeenMessage(app.user.id) %}
+                                                        <a id="nb_message" href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
+                                                            <span class="notifyIcon fa fa-envelope-o"></span>
+                                                            {% if  messages is not empty %}
+                                                                <span class="counter" id="nombre_message"><span id="samir">{{ messages|length }}</span></span>
+                                                                {% endif %}
                                                         </a>
-                                                        <div class="dropdown-menu pull-right notifyMenu" role="menu" style="width:380px">
-
+                                                        <div class="dropdown-menu pull-right notifyMenu" role="menu">
                                                             <div class="notifyHeader">
-                                                                <span>Demandes d'ajout</span>
+                                                                <span>Messages</span>
                                                                 <a href="#" class="notifySettings icon-settings"></a>
                                                                 <div class="clearfix"></div>
                                                             </div>
-                                                            <ul id="id_invitation" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
-                                                                {% for invitation in Invitations %}  
-
-                                                                    {% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
-                                                                        <li class="invitation" id="{{ invitation.id }}">
-                                                                            <div class="userWidget-2" style="margin-bottom:1px">
-                                                                                <div class="avatar">
-                                                                                    <a href="{{ path('show_profil', { 'id': invitation.object1Id}) }}"><img alt="avatar" src="{{ asset(UsersInvitations.WebPath) }}" style="
-                                                                                                                                                            border-radius: 40px;
-                                                                                                                                                            width: 60px;
-                                                                                                                                                            height: 60px;"></a>
-                                                                                </div>
-                                                                                <div class="info">
-                                                                                    <div class="notifyName" style="line-height:40px"><a href="#" style="color:#c02100"><strong>{{ invitation.username}}</strong></a></div>
-
-
-                                                                                </div>
-                                                                                <div class="ops">
-
-                                                                                    <a id="accept_invitation" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
-                                                                                    <a id="delete_invitation" href="{{ path('delete_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
-                                                                                    <div class="loader"> <img src="{{asset('template/images/ajax-loader3.gif') }}"></div>
+                                                            <ul id="id_message" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
+                                                                {% for message in messages %}
+                                                                    {% set sender = getUser(message.sender) %}
+                                                                        <li class="message{{message.id}}" id="{{ message.id }}">
+                                                                            <a id ="seenMsg_{{message.id}}" href="#">
+                                                                                <img  class="avatar pull-left" src="{{ asset(sender.WebPath) }}" alt="avatar">
+                                                                                <div class="pulse border-grey"></div>
+                                                                                <div id="{{ sender.id }}" class="notify pull-left  ">
+                                                                                    <div class="notifyName" style="font-weight: bold"> {{ sender.prenom }}  {{ sender.prenom }}</div><div class="texte">{{ message.content }}</div>
+                                                                                    <div class="notifyTime">{{ message.getDuréeMsg() }}</div>
                                                                                 </div>
                                                                                 <div class="clearfix"></div>
-                                                                            </div>
-
+                                                                            </a>
                                                                         </li>
-
                                                                         {% endfor %}
                                                                         </ul>
-                                                                        <a href="#" class="notifyAll">Afficher tout</a>
+                                                                        <a href="#" class="notifyAll">Afficher tous les messages</a>
                                                                     </div>
                                                                 </div>
-                                                                <a href="#" class="mapHandler"><span class="icon-map"></span></a>
-                                                                <div class="clearfix"></div>
-                                                            </div>
-                                                            <div id="leftSide" style="height: 355px;">
-                                                                <nav class="leftNav scrollable">
-                                                                    <div class="search">
-                                                                        <span class="searchIcon icon-magnifier"></span>
-                                                                        <input type="text" placeholder="Recherche Optimus...">
-                                                                    </div>
-                                                                    <ul><li class="hasSub">
-                                                                            <a href="#"><span class="navIcon fa fa-comment"></span><span class="navLabel">Tchat</span><span class="fa fa-angle-left arrowRight"></span></a>
-                                                                            <ul class="dropdown-menu scrollbar" role="menu" style="
-                                                                                direction: rtl; 
-                                                                                overflow-x: hidden;
-                                                                                overflow-y: auto;
-                                                                                overflow-wrap: break-word;
-                                                                                height: 607px;
-                                                                                background-color:#fff;
-                                                                                ">
-                                                                                {% set friends = getFriends(app.user.id) %}
-                                                                                    {% for friend in friends %}
+                                                                <div class="headerNotifyWraper">
+                                                                    {% set Invitations = getInvitations(app.user.id) %}
+                                                                        <a href="#"  class="headerNotify dropdown-toggle" id="nb_invitation" data-toggle="dropdown">
+                                                                            <span class="notifyIcon icon-users"></span>
+                                                                            {% for invitation in Invitations %}  <span class="counter" id="nombre_invitation"  >{{ Invitations|length  }}</span>{% endfor %}
+                                                                        </a>
+                                                                        <div class="dropdown-menu pull-right notifyMenu" role="menu" style="width:380px">
 
-                                                                                        <li class="definedname"><a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
-                                                                                                <img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
-                                                                                                <div class="userTop pull-left">
-                                                                                                    <span class="headerUserName open">{{ friend.prenom }} {{ friend.nom }}</span> 
+                                                                            <div class="notifyHeader">
+                                                                                <span>Demandes d'ajout</span>
+                                                                                <a href="#" class="notifySettings icon-settings"></a>
+                                                                                <div class="clearfix"></div>
+                                                                            </div>
+                                                                            <ul id="id_invitation" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
+                                                                                {% for invitation in Invitations %}  
+
+                                                                                    {% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
+                                                                                        <li class="invitation" id="{{ invitation.id }}">
+                                                                                            <div class="userWidget-2" style="margin-bottom:1px">
+                                                                                                <div class="avatar">
+                                                                                                    <a href="{{ path('show_profil', { 'id': invitation.object1Id}) }}"><img alt="avatar" src="{{ asset(UsersInvitations.WebPath) }}" style="
+                                                                                                                                                                            border-radius: 40px;
+                                                                                                                                                                            width: 60px;
+                                                                                                                                                                            height: 60px;"></a>
+                                                                                                </div>
+                                                                                                <div class="info">
+                                                                                                    <div class="notifyName" style="line-height:40px"><a href="#" style="color:#c02100"><strong>{{ invitation.username}}</strong></a></div>
+
+
+                                                                                                </div>
+                                                                                                <div class="ops">
+
+                                                                                                    <a id="accept_invitation" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
+                                                                                                    <a id="delete_invitation" href="{{ path('delete_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
+                                                                                                    <div class="loader"> <img src="{{asset('template/images/ajax-loader3.gif') }}"></div>
                                                                                                 </div>
                                                                                                 <div class="clearfix"></div>
-                                                                                            </a></li>
+                                                                                            </div>
 
-                                                                                    {% endfor %}
+                                                                                        </li>
 
-                                                                                    <li class="divider"></li>
-
-                                                                                </ul> 
-                                                                            </li>
-                                                                            <li>
-                                                                                <a   href="{{ path('add_club') }}">
-                                                                                    <span class="navIcon fa fa-users"></span>
-                                                                                    <span class="navLabel">Club</span>
-                                                                                </a>
-                                                                            </li>
-                                                                            <li class="divider"></li>
-                                                                            <li>
-                                                                                <a href="{{ path('add-event') }}">
-                                                                                    <span class="navIcon fa fa-trophy"></span>
-                                                                                    <span class="navLabel">Evenement</span>
-                                                                                </a>
-                                                                            </li>
-                                                                            <br>
-                                                                            <li class="agendx">	
-                                                                                <div class="leftUserWraper dropup">
-                                                                                    <a href="#">
-                                                                                        <span class="navIcon fa fa-calendar"></span>
-                                                                                        <span class="navLabel">Calendrier</span>
-                                                                                    </a>
+                                                                                        {% endfor %}
+                                                                                        </ul>
+                                                                                        <a href="#" class="notifyAll">Afficher tout</a>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </li>	
-                                                                        </ul>
-                                                                    </nav>
-                                                                    <!-- agenda**************************************************** -->
-
-
-
-
-                                                                    <!--fin agenda**************************************************** -->
-
-                                                                </div>
-                                                                <div class="closeLeftSide"></div>
-                                                                <div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog modal-md">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title" id="signinLabel">Recherche Optimus</h4>
+                                                                                <a href="#" class="mapHandler"><span class="icon-map"></span></a>
+                                                                                <div class="clearfix"></div>
                                                                             </div>
-                                                                            <div class="modal-body">
-                                                                                <form role="form">
-                                                                                    <div class="form-group">
-                                                                                        <input type="text" placeholder=" Nom d'évenement" class="search-optimus">
+                                                                            <div id="leftSide" style="height: 355px;">
+                                                                                <nav class="leftNav scrollable">
+                                                                                    <div class="search">
+                                                                                        <span class="searchIcon icon-magnifier"></span>
+                                                                                        <input type="text" placeholder="Recherche Optimus...">
+                                                                                    </div>
+                                                                                    <ul><li class="hasSub">
+                                                                                            <a href="#"><span class="navIcon fa fa-comment"></span><span class="navLabel">Tchat</span><span class="fa fa-angle-left arrowRight"></span></a>
+                                                                                            <ul class="dropdown-menu scrollbar" role="menu" style="
+                                                                                                direction: rtl; 
+                                                                                                overflow-x: hidden;
+                                                                                                overflow-y: auto;
+                                                                                                overflow-wrap: break-word;
+                                                                                                height: 607px;
+                                                                                                background-color:#fff;
+                                                                                                ">
+                                                                                                {% set friends = getFriends(app.user.id) %}
+                                                                                                    {% for friend in friends %}
 
-                                                                                        <input type="hidden" name="kwtype" value="0">
-                                                                                        <input class="search-optimus" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." style="text-indent:20px;border-radius: 25px;height: 44px; border: 1.5px solid #C02100;width: 98%;margin: 12px -2px 0 5px;">
-                                                                                        <a href="#" style="margin-left: -62px;">
-                                                                                            <span ><select id="selectoption" style="
-                                                                                                           border: 0;">
-                                                                                                    <option selected="" disabled=""></option>
-                                                                                                    <option autocomplete="on">Tous</option>
-                                                                                                    <option>Amis</option>
-                                                                                                </select></span></a>
-                                                                                        <select id="date" name="date" class="search-optimus">
-                                                                                            <option value="1" selected="" disabled="">Date</option>
-                                                                                            <option value="e1">Aujourd'hui</option>
-                                                                                            <option value="e2">Cette semaine</option>
-                                                                                            <option value="e3">Ce mois</option>
-                                                                                            <option value="e4">Cette année</option>
-                                                                                        </select><br><select id="events" name="events" class="search-optimus">
-                                                                                            <option value="1" selected="" disabled="">Type d'évenement</option>
-                                                                                            <option value="e1">évenement1</option>
-                                                                                            <option value="e2">évenement2</option>
-                                                                                            <option value="e3">évenement3</option>
-                                                                                            <option value="e4">évenement4</option>
-                                                                                            <option value="e5">évenement5</option>
-                                                                                            <option value="e6">évenement6</option>
-                                                                                            <option value="e7">évenement7</option>
-                                                                                            <option value="e8">évenement8</option>
-                                                                                        </select> 
-                                                                                        <input style="border-radius:25px" type="text" class="search-optimus" id="city" placeholder="Entrer ici votre région" autocomplete="off" size="60">
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <div class="btn-group-justified">
-                                                                                            <a href="#" class="btn btn-round btn-green btn-m"><span class="icon-magnifier"></span></a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row" id="descu" style="display:none;">
-                                                                    <div class="col-lg-3  navbar-fixed-bottom">
-                                                                        <div class="well well-sm " style="background:white;height:300px;z-index:111111;">
-                                                                            <div class="affiche_nom" style="height:30px;">
-                                                                                <b class="pull-left affiche_personne"></b>
-                                                                                <i id="close" class="glyphicon glyphicon-remove pull-right"></i>
-                                                                            </div>
-                                                                            <div class="affichage">
-                                                                                <div class="well well-sm" style="height:200px;">
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-2">
-                                                                                            <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
-                                                                                        </div>
-                                                                                        <div class="col-md-10" style="background:white;">
-                                                                                            <p>
-                                                                                                Bonjour , comment vas-tu? ça fait un bail que je t'ai pas vu !
-                                                                                            </p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr>
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-2 pull-right">
-                                                                                            <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
-                                                                                        </div>
-                                                                                        <div class="col-md-10 pull-left" style="background:white;">
-                                                                                            <p>
-                                                                                                bjr, ça va mon frere tout va bien ... quoi de neuf chez toi?
-                                                                                            </p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr>
+                                                                                                        <li class="definedname"><a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+                                                                                                                <img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
+                                                                                                                <div class="userTop pull-left">
+                                                                                                                    <span class="headerUserName open">{{ friend.prenom }} {{ friend.nom }}</span> 
+                                                                                                                </div>
+                                                                                                                <div class="clearfix"></div>
+                                                                                                            </a></li>
+
+                                                                                                    {% endfor %}
+
+                                                                                                    <li class="divider"></li>
+
+                                                                                                </ul> 
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a   href="{{ path('add_club') }}">
+                                                                                                    <span class="navIcon fa fa-users"></span>
+                                                                                                    <span class="navLabel">Club</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="divider"></li>
+                                                                                            <li>
+                                                                                                <a href="{{ path('add-event') }}">
+                                                                                                    <span class="navIcon fa fa-trophy"></span>
+                                                                                                    <span class="navLabel">Evenement</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <br>
+                                                                                            <li class="agendx">	
+                                                                                                <div class="leftUserWraper dropup">
+                                                                                                    <a href="#">
+                                                                                                        <span class="navIcon fa fa-calendar"></span>
+                                                                                                        <span class="navLabel">Calendrier</span>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </li>	
+                                                                                        </ul>
+                                                                                    </nav>
+                                                                                    <!-- agenda**************************************************** -->
+
+
+
+
+                                                                                    <!--fin agenda**************************************************** -->
+
                                                                                 </div>
-                                                                            </div>
-                                                                            <form action="" method="post">
-                                                                                <input type="text" class="form-control input-sm">
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                {% endblock %}
+                                                                                <div class="closeLeftSide"></div>
+                                                                                <div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
+                                                                                    <div class="modal-dialog modal-md">
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <h4 class="modal-title" id="signinLabel">Recherche Optimus</h4>
+                                                                                            </div>
+                                                                                            <div class="modal-body">
+                                                                                                <form role="form">
+                                                                                                    <div class="form-group">
+                                                                                                        <input type="text" placeholder=" Nom d'évenement" class="search-optimus">
 
-                                                                    {% block javascripts %}
-                                                                        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-                                                                        <script src="{{ asset('template/js/plugin.js') }}" type="text/javascript" ></script>
-                                                                        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-                                                                        <script src="{{ asset('template/js/ajaxNotif.js') }}" type="text/javascript"></script>
-                                                                        {% block javascriptfils %}
-                                                                        {% endblock %}
-                                                                    {% endblock %}
+                                                                                                        <input type="hidden" name="kwtype" value="0">
+                                                                                                        <input class="search-optimus" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." style="text-indent:20px;border-radius: 25px;height: 44px; border: 1.5px solid #C02100;width: 98%;margin: 12px -2px 0 5px;">
+                                                                                                        <a href="#" style="margin-left: -62px;">
+                                                                                                            <span ><select id="selectoption" style="
+                                                                                                                           border: 0;">
+                                                                                                                    <option selected="" disabled=""></option>
+                                                                                                                    <option autocomplete="on">Tous</option>
+                                                                                                                    <option>Amis</option>
+                                                                                                                </select></span></a>
+                                                                                                        <select id="date" name="date" class="search-optimus">
+                                                                                                            <option value="1" selected="" disabled="">Date</option>
+                                                                                                            <option value="e1">Aujourd'hui</option>
+                                                                                                            <option value="e2">Cette semaine</option>
+                                                                                                            <option value="e3">Ce mois</option>
+                                                                                                            <option value="e4">Cette année</option>
+                                                                                                        </select><br><select id="events" name="events" class="search-optimus">
+                                                                                                            <option value="1" selected="" disabled="">Type d'évenement</option>
+                                                                                                            <option value="e1">évenement1</option>
+                                                                                                            <option value="e2">évenement2</option>
+                                                                                                            <option value="e3">évenement3</option>
+                                                                                                            <option value="e4">évenement4</option>
+                                                                                                            <option value="e5">évenement5</option>
+                                                                                                            <option value="e6">évenement6</option>
+                                                                                                            <option value="e7">évenement7</option>
+                                                                                                            <option value="e8">évenement8</option>
+                                                                                                        </select> 
+                                                                                                        <input style="border-radius:25px" type="text" class="search-optimus" id="city" placeholder="Entrer ici votre région" autocomplete="off" size="60">
+                                                                                                    </div>
+                                                                                                    <div class="form-group">
+                                                                                                        <div class="btn-group-justified">
+                                                                                                            <a href="#" class="btn btn-round btn-green btn-m"><span class="icon-magnifier"></span></a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </form>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row" id="descu" style="display:none;">
+                                                                                    <div class="col-lg-3  navbar-fixed-bottom">
+                                                                                        <div class="well well-sm " style="background:white;height:300px;z-index:111111;">
+                                                                                            <div class="affiche_nom" style="height:30px;">
+                                                                                                <b class="pull-left affiche_personne"></b>
+                                                                                                <i id="close" class="glyphicon glyphicon-remove pull-right"></i>
+                                                                                            </div>
+                                                                                            <div class="affichage">
+                                                                                                <div class="well well-sm" style="height:200px;">
+                                                                                                    <div class="row">
+                                                                                                        <div class="col-md-2">
+                                                                                                            <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
+                                                                                                        </div>
+                                                                                                        <div class="col-md-10" style="background:white;">
+                                                                                                            <p>
+                                                                                                                Bonjour , comment vas-tu? ça fait un bail que je t'ai pas vu !
+                                                                                                            </p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <hr>
+                                                                                                    <div class="row">
+                                                                                                        <div class="col-md-2 pull-right">
+                                                                                                            <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
+                                                                                                        </div>
+                                                                                                        <div class="col-md-10 pull-left" style="background:white;">
+                                                                                                            <p>
+                                                                                                                bjr, ça va mon frere tout va bien ... quoi de neuf chez toi?
+                                                                                                            </p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <hr>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <form action="" method="post">
+                                                                                                <input type="text" class="form-control input-sm">
+                                                                                            </form>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                {% endblock %}
+
+                                                                                    {% block javascripts %}
+                                                                                        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                                                                                        <script src="{{ asset('template/js/plugin.js') }}" type="text/javascript" ></script>
+                                                                                        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+                                                                                        <script src="{{ asset('template/js/ajaxNotif.js') }}" type="text/javascript"></script>
+                                                                                        <script>
+                                                                                            {% set messages = getNonSeenMessage(app.user.id) %}
+                                                                                                {% for message in messages %}
+                                                                                                    $('.message{{message.id}}').click(function() {
+
+
+// $('.loader').show();                                                                                  
+                                                                                                        var id = $('#{{message.id}}').attr('id');
+                                                                                                        $.ajax({
+                                                                                                            url: Routing.generate('message_seen', {'id': id}),
+                                                                                                            success: function(data) {
+
+
+                                                                                                                var nb = parseInt($('#samir').text());
+                                                                                                                var nouveauNb = nb - 1;
+
+                                                                                                                if (nouveauNb > 0)
+                                                                                                                {
+                                                                                                                    $('#samir').replaceWith(nouveauNb);
+                                                                                                                }
+                                                                                                                else
+                                                                                                                {
+                                                                                                                    $('#nombre_message').hide();
+                                                                                                                }
+                                                                                                                $('.message' + data).empty();
+                                                                                                                // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+
+                                                                                                            }
+                                                                                                        });
+                                                                                                    });
+                                                                                                {% endfor %}
+                                                                                            </script>
+                                                                                            {% block javascriptfils %}
+                                                                                            {% endblock %}
+                                                                                            {% endblock %}

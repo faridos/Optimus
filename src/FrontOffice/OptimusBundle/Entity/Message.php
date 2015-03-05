@@ -29,9 +29,11 @@ class Message
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User")
      */
     protected $sender;
-     /**
-     * @var reciever
-     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User")
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="reciever", type="integer")
+     * 
      */
     protected $reciever;
     /**
@@ -139,19 +141,10 @@ class Message
     {
         return $this->sender;
     }
-
-    /**
-     * Set reciever
-     *
-     * @param \FrontOffice\UserBundle\Entity\User $reciever
-     * @return Message
-     */
-    public function setReciever(\FrontOffice\UserBundle\Entity\User $reciever = null)
-    {
+    public function setReciever($reciever) {
         $this->reciever = $reciever;
-
-        return $this;
     }
+
 
     /**
      * Get reciever
@@ -216,6 +209,21 @@ class Message
     public function getIsSeen()
     {
         return $this->is_seen;
+    }
+    public function getDuréeMsg() {
+        $date = new \DateTime();
+        $diff = $date->diff($this->msgTime);
+        $durée = "";
+        if ($diff->d >= 1):
+            $durée = "il y'a " . $diff->d . " days";
+        elseif ($diff->h >= 1):
+            $durée = "il y'a " . $diff->h . " heur";
+        elseif ($diff->i > 1):
+            $durée = "il y'a " . $diff->i . " min";
+        else:
+            $durée = "Just Now";
+        endif;
+        return $durée;
     }
     
 //         public function __toString()

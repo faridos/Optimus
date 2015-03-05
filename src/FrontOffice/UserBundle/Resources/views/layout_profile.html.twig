@@ -107,13 +107,8 @@
                                                                     <a href="{{ path('show_profil', { 'id': friend.id}) }}" class="btn avatar" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
                                                                         <img src="{{ asset(friend.getWebPath) }}" alt="avatar" ></a>
                                                                 </div>
-
-                                                            {% endfor %}   
-
-
-
+                                                           {% endfor %}   
                                                         </ul>
-
                                                         <div class="clearfix"></div>
                                                     </div>
                                                 </div>
@@ -137,7 +132,7 @@
                                                 <form class="contactForm">
                                                     <div class="row">
                                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                                                            <label  class="idReciever" id="{{ user.id }}" type="text" placeholder="Nom et Prénom" >Envoyer Message à <b>{{ user.prenom }} {{ user.prenom }}</b></label>
+                                                            <label  class="idReciever" id="{{ user.id }}" type="text" placeholder="Nom et Prénom" >Envoyer Message à <b>{{ user.prenom }} {{ user.nom }}</b></label>
                                                             <label  id="messageEch" class="messageEch">Envoie echoué</label>
                                                             <label  id="messageEnvoyer" class="messageEnvoyer">Envoie effectué</label>
                                                         </div>
@@ -158,10 +153,5 @@
                                 </div>
                                 {% endblock %}
                                     {% block javascriptfils %}
-                                        <script>
-                                            $('#btn-fermer-message').click(function(){
-                                                $('#envoiemessage').load();
-                                                alert('ok');
-                                            });
-                                            </script>
+                                        
                                     {% endblock %}

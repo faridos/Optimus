@@ -2,6 +2,7 @@
 $('#accept_invitation').click(function() {
 // $('.loader').show();
     var id = $('.invitation').attr('id');
+    
     $.ajax({
         url: Routing.generate('accept_relation', {'id': id}),
         success: function(data) {
@@ -29,7 +30,6 @@ $('#show_notification').click(function() {
     $.ajax({
         url: Routing.generate('save_notification', {'id': id}),
         success: function() {
-
         }
     });
 });
@@ -49,6 +49,7 @@ $('#add_relation').click(function() {
 $('#envoyerMessage').click(function()
 {
     var id = $('.idReciever').attr('id');
+    console.log(id);
     var txt = $('#txt-message').val();
 
     $.ajax({
@@ -59,8 +60,19 @@ $('#envoyerMessage').click(function()
         },
         success: function() {
             $('#messageEch').hide();
-            $('#messageEnvoyer').show();
+
+            $('#messageEnvoyer').show().delay(3000).fadeOut();
+            ;
+            $('textarea').val('');
         }
     });
 
 });
+
+$('#btn-fermer-message').click(function() {
+    $('#messageEch').hide();
+    $('#messageEnvoyer').hide();
+    $('textarea').val('');
+});
+
+
