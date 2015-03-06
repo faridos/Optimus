@@ -260,7 +260,7 @@ $('.loader').hide();
         var last_id_{{event.id}} = 5;
         $("#content_msg_{{event.id}}").scroll(function() {
             if ($("#content_msg_{{event.id}}").scrollTop() == $("#content2_msg_{{event.id}}").height() - $("#content_msg_{{event.id}}").height() && load == false && last_id_{{event.id}} <{{event.eventcomments|length}}){
-                
+                alert("je suis touche");
             load = true;
             $('#loader_{{event.id}}').show();
             $.ajax({
