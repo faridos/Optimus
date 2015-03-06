@@ -110,13 +110,13 @@
 
 #iLightbox .iLightbox-close {
     position: absolute;
-    display: block;
-    top: 20px;
+    display: inline-table;
+    top: 10px;
     right: 0px;
     width: 54px;
     height: 54px;
     background: url(../images/ilightbox-icons/close.png) center no-repeat;
-    background-size: 28px auto;
+    background-size: 20px auto;
     z-index: 1011;
     border-bottom-left-radius: 5px;
     filter: alpha(opacity(40));

@@ -1,11 +1,9 @@
-        var pos;
-        var map;
 (function($) {
     "use strict";
+
     // Custom options for map
-   
     var options = {
-            zoom : 12,
+            zoom : 14,
             mapTypeId : 'Styled',
             disableDefaultUI: true,
             mapTypeControlOptions : {
@@ -42,8 +40,228 @@
     var newMarker = null;
     var markers = [];
 
+    // json for properties markers on map
+    var props = [{
+        title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.696047,
+            lng : -73.997159
+        },
+        markerIcon : "marker-green.png"
+    }, {
+      title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.688042,
+            lng : -73.996472
+        },
+        markerIcon : "marker-green.png"
+    }, {
+        title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.702620,
+            lng : -73.989682
+        },
+        markerIcon : "marker-green.png"
+    }, {
+       title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.694355,
+            lng : -73.985229
+        },
+        markerIcon : "marker-green.png"
+    }, {
+    title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.686838,
+            lng : -73.990078
+        },
+        markerIcon : "marker-green.png"
+    }, {
+     title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.703686,
+            lng : -73.982910
+        },
+        markerIcon : "marker-green.png"
+    }, {
+       title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.702189,
+            lng : -73.995098
+        },
+        markerIcon : "marker-green.png"
+    }, {
+        title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.687417,
+            lng : -73.982653
+        },
+        markerIcon : "marker-green.png"
+    }, {
+       title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.694120,
+            lng : -73.974413
+        },
+        markerIcon : "marker-green.png"
+    }, {
+       title : 'Evenement',
+        image : '1-1-thmb.png',
+        type : 'Crée par',
+        price : 'Prix',
+        address : 'Adresse',
+        bedrooms : '3',
+        bathrooms : '2',
+        area : '3430 Sq Ft',
+        position : {
+            lat : 40.682665,
+            lng : -74.000934
+        },
+        markerIcon : "marker-green.png"
+    }];
 
+    // custom infowindow object
+    var infobox = new InfoBox({
+        disableAutoPan: false,
+        maxWidth: 202,
+        pixelOffset: new google.maps.Size(-101, -285),
+        zIndex: null,
+        boxStyle: {
+            background: "url('images/infobox-bg.png') no-repeat",
+            opacity: 1,
+            width: "202px",
+            height: "245px"
+        },
+        closeBoxMargin: "28px 26px 0px 0px",
+        closeBoxURL: "",
+        infoBoxClearance: new google.maps.Size(1, 1),
+        pane: "floatPane",
+        enableEventPropagation: false
+    });
 
+    // function that adds the markers on map
+    var addMarkers = function(props, map) {
+        $.each(props, function(i,prop) {
+            var latlng = new google.maps.LatLng(prop.position.lat,prop.position.lng);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                icon: new google.maps.MarkerImage( 
+                    'images/' + prop.markerIcon,
+                    null,
+                    null,
+                    null,
+                    new google.maps.Size(36, 36)
+                ),
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+            });
+            var infoboxContent = '<div class="infoW">' +
+                                    '<div class="propImg">' +
+                                        '<img src="images/prop/' + prop.image + '">' +
+                                        '<div class="propBg">' +
+                                            '<div class="propPrice">' + prop.price + '</div>' +
+                                            '<div class="propType">' + prop.type + '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="paWrapper">' +
+                                        '<div class="propTitle">' + prop.title + '</div>' +
+                                        '<div class="propAddress">' + prop.address + '</div>' +
+                                    '</div>' +
+                                    '<div class="propRating">' +
+                                        '<span class="fa fa-star"></span>' +
+                                        '<span class="fa fa-star"></span>' +
+                                        '<span class="fa fa-star"></span>' +
+                                        '<span class="fa fa-star"></span>' +
+                                        '<span class="fa fa-star-o"></span>' +
+                                    '</div>' +
+                                 
+                                    '<div class="clearfix"></div>' +
+                                    '<div class="infoButtons">' +
+                                        '<a class="btn btn-sm btn-round btn-gray btn-o closeInfo">Fermer</a>' +
+                                        '<a href="#" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
+                                    '</div>' +
+                                 '</div>';
+
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    infobox.setContent(infoboxContent);
+                    infobox.open(map, marker);
+                }
+            })(marker, i));
+
+            $(document).on('click', '.closeInfo', function() {
+                infobox.open(null,null);
+            });
+
+            markers.push(marker);
+        });
+    }
+
+    var map;
     var windowHeight;
     var windowWidth;
     var contentHeight;
@@ -131,37 +349,36 @@
         var styledMapType = new google.maps.StyledMapType(styles, {
             name : 'Styled'
         });
+
         map.mapTypes.set('Styled', styledMapType);
-       
-        map.setZoom(12);
+        map.setCenter(new google.maps.LatLng(40.6984237,-73.9890044));
+        map.setZoom(14);
 
-      
+        if ($('#address').length > 0) {
+            newMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(40.6984237,-73.9890044),
+                map: map,
+                icon: new google.maps.MarkerImage( 
+                    'images/marker-new.png',
+                    null,
+                    null,
+                    // new google.maps.Point(0,0),
+                    null,
+                    new google.maps.Size(36, 36)
+                ),
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+            });
 
-       
-        
-        if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function (position) {
-                         pos = new google.maps.LatLng(position.coords.latitude,
-                                position.coords.longitude);
+            google.maps.event.addListener(newMarker, "mouseup", function(event) {
+                var latitude = this.position.lat();
+                var longitude = this.position.lng();
+                $('#latitude').text(this.position.lat());
+                $('#longitude').text(this.position.lng());
+            });
+        }
 
-
-
-                        var newMarker = new google.maps.Marker({
-                            position: pos,
-                            map: map,
-                            icon: new google.maps.MarkerImage('../template/images/marker-position.png'),
-                            draggable: true,
-                            animation: google.maps.Animation.DROP,
-                        });
-
-                        map.setCenter(pos);
-                        
-                    }, function () {
-                        handleNoGeolocation(true);
-                    });
-                } else {
-                    handleNoGeolocation(false);
-                }
+        addMarkers(props, map);
     }, 300);
 
     if(!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch)) {
@@ -218,22 +435,18 @@
 
     // functionality for map manipulation icon on mobile devices
     $('.mapHandler').click(function() {
-        
         if ($('#mapView').hasClass('mob-min') || 
             $('#mapView').hasClass('mob-max') || 
             $('#content').hasClass('mob-min') || 
             $('#content').hasClass('mob-max')) {
-        
-                $('#mapView').toggleClass('mob-min');
-                $('#content').toggleClass('mob-max');
+                $('#mapView').toggleClass('mob-max');
+                $('#content').toggleClass('mob-min');
         } else {
-            
             $('#mapView').toggleClass('min');
             $('#content').toggleClass('max');
         }
 
         setTimeout(function() {
-           
             var priceSliderRangeLeft = parseInt($('.priceSlider .ui-slider-range').css('left'));
             var priceSliderRangeWidth = $('.priceSlider .ui-slider-range').width();
             var priceSliderLeft = priceSliderRangeLeft + ( priceSliderRangeWidth / 2 ) - ( $('.priceSlider .sliderTooltip').width() / 2 );
@@ -269,7 +482,6 @@
 
     // functionality for custom dropdown select list
     $('.dropdown-select li a').click(function() {
-   
         if (!($(this).parent().hasClass('disabled'))) {
             $(this).prev().prop("checked", true);
             $(this).parent().siblings().removeClass('active');

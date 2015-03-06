@@ -1,9 +1,8 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 
 {% block body %}
-    <div id="wrapper" style="height: 420px;">
-
-        <div id="content" class="" style="height: 421px;">
+    <div id="wrapper" >
+        <div id="content" class="" >
             {% block content %}
 
             {% endblock %}
@@ -25,9 +24,9 @@
                             </div>
                             <div class="title" style="margin-left:195px">{% if user.profil == 'E' %}Entraineur{% endif %}{% if user.profil == 'S' %}Sportif{% endif %}</div>
                             <div class="address" style="margin-left:195px">
-                                 <div class="cardRating" style="color:#eab134"> 
-                        <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'U'~user.id} %}</div>
-                    </div>
+                                <div class="cardRating" style="color:#eab134"> 
+                                    <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'U'~user.id} %}</div>
+                                </div>
                             </div>
                             <div  class="buttonsWrapper" id="{{ user.id }}" style="margin-left:195px">
                                 {% if app.user.id != user.id %}
@@ -107,7 +106,7 @@
                                                                     <a href="{{ path('show_profil', { 'id': friend.id}) }}" class="btn avatar" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
                                                                         <img src="{{ asset(friend.getWebPath) }}" alt="avatar" ></a>
                                                                 </div>
-                                                           {% endfor %}   
+                                                            {% endfor %}   
                                                         </ul>
                                                         <div class="clearfix"></div>
                                                     </div>
@@ -152,6 +151,4 @@
                                     </div>
                                 </div>
                                 {% endblock %}
-                                    {% block javascriptfils %}
-                                        
-                                    {% endblock %}
+                                   

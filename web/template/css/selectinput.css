@@ -1,0 +1,111 @@
+
+body {
+  margin: 0;
+  font: normal 12px Arial, Verdana, sans-serif;
+}
+
+select,
+input,
+textarea {	
+	-moz-appearance: ;
+	-webkit-appearance: ;	
+}
+
+input::-ms-clear { display: none; }
+
+/* Custom input */
+.input {
+  outline: 0;
+  border: 1px solid #D9D0D9;
+  border-radius: 2px;
+  font: normal 1em/1.16667em Arial, Verdana, sans-serif;
+  height: 2.25em;
+  padding: 3px 1px 0px 22px;
+  margin: 0;
+}
+.input:focus {
+  border-color: #4285f4;
+  -webkit-transition: border-color 0.4s;
+  -moz-transition: border-color 0.4s;
+  -o-transition: border-color 0.4s;
+  -ms-transition: border-color 0.4s;
+  transition: border-color 0.4s;
+}
+.input.input-error {
+  border-color: #4285f4;
+  -webkit-transition: border-color 0.4s;
+  -moz-transition: border-color 0.4s;
+  -o-transition: border-color 0.4s;
+  -ms-transition: border-color 0.4s;
+  transition: border-color 0.4s;
+}
+
+/* Select default */
+.select select {
+  height:44px;
+  width: 100%;
+  margin: 0;
+  font: normal 1em Arial, Verdana, sans-serif;
+  border: 1px solid #c02100;
+  border-radius: 2px;
+  padding: 0.41667em 1.41667em 0.41667em 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: transparent  ;
+  text-indent: 0.01px;
+  /* Removes default arrow from firefox */
+  text-overflow: ellipsis;
+  /* Removes default arrow from firefox */
+  text-overflow: '';
+  /* Removes default arrow from firefox */
+  white-space: nowrap;
+  border-radius:25px;
+}
+.select select::-ms-expand {
+  display: none;
+}
+.select select:hover {
+  background-position-y: -18px;
+}
+.select select:focus {
+  border-color: #4285f4;
+  outline: none;
+  border-bottom-color: transparent;
+  box-shadow: 0px 1px 0 0 #4285f4;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.select select option {
+  background: #FFFFFF;
+}
+
+/* Input select */ 
+.input-select {
+  margin: 10px 0px 0px 2px;
+  position: relative;
+  width: 99%;
+  height: 44px;
+  padding-right: 1.58333em;
+}
+.input-select .input {
+  display: block;
+  height: 42px;
+  line-height: 20px;
+  width: 100%;
+  position: relative;
+  top: 1px;
+  left: 3px;
+  z-index: 1;
+  box-sizing: border-box;
+  border: none;
+  border-radius:25px;
+}
+.input-select .input:focus + .select select {
+  border: 1px solid #4285f4;
+}
+.input-select .select {
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+}

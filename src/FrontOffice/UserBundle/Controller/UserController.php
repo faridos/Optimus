@@ -196,6 +196,19 @@ class UserController extends Controller {
     /**
      * 
      *
+     * @Route("profil={id}/photos", name="photos_user", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function getPhotosUserAction($id) {
+         $em = $this->getDoctrine()->getManager();
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $id));
+          return $this->render('FrontOfficeUserBundle:Profile:photos_user.html.twig', array('user' => $user));
+    }
+    /**
+     * 
+     *
      * @Route("profil={id}/palmares", name="palmares_user", options={"expose"=true})
      * @Method("GET")
      * @Template()
