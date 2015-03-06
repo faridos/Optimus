@@ -11,9 +11,20 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class ClubRepository extends EntityRepository {
-
    
-    
+    public function getClubsMember($id) {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('c');
+        $qb->select('c')
+                ->from('FrontOffice\OptimusBundle\Entity\Club', 'c')
+                ->innerJoin('FrontOffice\OptimusBundle\Entity\Member', 'm')
+                ->where('m.clubad = c.id')
+                ->andWhere('c.active = 1')
+                ->andWhere('m.member = :id')
+                ->andWhere('m.confirmed = 1')
+                ->setParameter('id', $id);
+        return $qb->getQuery()->getResult();
+    }
      
 
 }

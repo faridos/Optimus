@@ -145,10 +145,17 @@ class User extends BaseUser {
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Album", mappedBy="user")
      * */
     protected $albums;
+
     /**
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Reward", mappedBy="user")
-     * */
+     * 
+     */
     protected $reward;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Member", mappedBy="member")
+     * */
+    protected $adherent;
 
     public function getId() {
         return $this->id;
