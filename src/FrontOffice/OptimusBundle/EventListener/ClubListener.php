@@ -28,7 +28,7 @@ class ClubListener {
         $history->setUser($event->getUser());
         $em->persist($history);
         $em->flush();
-       die('hhh');
+       
     }
 
     //put your code here

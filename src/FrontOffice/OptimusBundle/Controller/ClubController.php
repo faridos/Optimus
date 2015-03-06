@@ -66,7 +66,10 @@ class ClubController extends Controller {
                 $clubevent = new HistoryClubEvent($user, $club, $action);
                 $clubnotification = new NotificationClubEvent($user, $club, $action);
                 $dispatcher = $this->get('event_dispatcher');
+              
+              
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+               
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
             }
         }
