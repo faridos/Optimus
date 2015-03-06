@@ -1,26 +1,16 @@
 {% extends "::baseA.html.twig" %}
 
 {% block navigation %}
-    <div id="header" style="box-shadow:0px 1px 20px rgba(0, 0, 0, 0.3)">
-        <div class="home-logo osLight" style="margin:12px 0px 0 15px;"><a href="{{ path('index_optumis') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
-        <a href="#" class="navHandler" style="padding-top:18px;font-size:18px;color:#c02100"><span class="fa fa-list-ul"></span></a>
+    <div id="header">
+        <div class="home-logo osLight" ><a href="{{ path('index_optumis') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
+        <a href="#" class="navHandler" ><span class="fa fa-navicon"></span></a>
         <div class="search">
             <form action="" class="search-form" name="formsearch">
                 <input type="hidden" name="kwtype" value="0">
-                <input class="search-optimus" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." style="
-                       text-indent:20px;
-                       border-radius: 25px;      
-                       height: 37px;      
-                       border: 1.5px solid #C02100;      
-                       width: 510px;      
-                       margin: 12px -2px 0 5px;
-
-                       ">
-                <a href="#" data-toggle="modal" data-target="#signin" style="margin-left: -22px;">
-                    <span class="notifyIcon fa fa-sort-down" style="color:#c02100"></span></a>
-                <button type="submit" class="btn btn-sm btn-green" style="border-radius: 25px;
-                        height: 37px;
-                        margin-left: 18px;"><span class="icon-magnifier"></span></button>
+                <input class="search-optimuss" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." >
+                <a href="#" data-toggle="modal" data-target="#signin" class="trianguilus">
+                    <span class="notifyIcon fa fa-sort-down" ></span></a>
+                <button type="submit" class="btn btn-sm btn-round btn-green butsearchus"><span class="icon-magnifier"></span></button>
             </form>
 
 
@@ -31,9 +21,9 @@
             <a href="#" class="userHandler dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span></a>
             <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
                 <img class="avatar headerAvatar pull-left" src="{{ asset( app.user.getWebPath ) }}" alt="avatar">
-                <div class="userTop pull-left" style="margin:13px 0 0 7px">
+                <div class="userTop pull-left" >
                     <span class="headerUserName">{{ app.user.nom }} {{ app.user.prenom }}</span> <span class="fa fa-angle-down"></span>
-                    <div class="cardRating" style="color:#eab134">
+                    <div class="cardRating">
                         <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'U'~app.user.id} %}</div>
                     </div>
 
@@ -282,13 +272,6 @@
                                                                                             </li>	
                                                                                         </ul>
                                                                                     </nav>
-                                                                                    <!-- agenda**************************************************** -->
-
-
-
-
-                                                                                    <!--fin agenda**************************************************** -->
-
                                                                                 </div>
                                                                                 <div class="closeLeftSide"></div>
                                                                                 <div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
@@ -299,24 +282,33 @@
                                                                                             </div>
                                                                                             <div class="modal-body">
                                                                                                 <form role="form">
+
+
+
+
                                                                                                     <div class="form-group">
                                                                                                         <input type="text" placeholder=" Nom d'évenement" class="search-optimus">
 
-                                                                                                        <input type="hidden" name="kwtype" value="0">
-                                                                                                        <input class="search-optimus" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." style="text-indent:20px;border-radius: 25px;height: 44px; border: 1.5px solid #C02100;width: 98%;margin: 12px -2px 0 5px;">
-                                                                                                        <a href="#" style="margin-left: -62px;">
-                                                                                                            <span ><select id="selectoption" style="
-                                                                                                                           border: 0;">
-                                                                                                                    <option selected="" disabled=""></option>
-                                                                                                                    <option autocomplete="on">Tous</option>
-                                                                                                                    <option>Amis</option>
-                                                                                                                </select></span></a>
+                                                                                                        <div class="input-select">
+                                                                                                            <input type="text" tabindex="1" id="input-test" class="input" placeholder="Ecrire votre créateur ou bien sélectionner"/>
+                                                                                                            <div class="select">
+                                                                                                                <select tabindex="-1" id="select-test">
+                                                                                                                    <option value="0" selected="" disabled=""></option>
+                                                                                                                    <option value="1">Tous</option>
+                                                                                                                    <option value="2">Amis</option>
+
+                                                                                                                </select>
+                                                                                                            </div>
+                                                                                                        </div>
+
+
                                                                                                         <select id="date" name="date" class="search-optimus">
                                                                                                             <option value="1" selected="" disabled="">Date</option>
                                                                                                             <option value="e1">Aujourd'hui</option>
                                                                                                             <option value="e2">Cette semaine</option>
                                                                                                             <option value="e3">Ce mois</option>
                                                                                                             <option value="e4">Cette année</option>
+
                                                                                                         </select><br><select id="events" name="events" class="search-optimus">
                                                                                                             <option value="1" selected="" disabled="">Type d'évenement</option>
                                                                                                             <option value="e1">évenement1</option>
@@ -327,14 +319,18 @@
                                                                                                             <option value="e6">évenement6</option>
                                                                                                             <option value="e7">évenement7</option>
                                                                                                             <option value="e8">évenement8</option>
-                                                                                                        </select> 
+                                                                                                        </select>
+
                                                                                                         <input style="border-radius:25px" type="text" class="search-optimus" id="city" placeholder="Entrer ici votre région" autocomplete="off" size="60">
                                                                                                     </div>
+
+
                                                                                                     <div class="form-group">
                                                                                                         <div class="btn-group-justified">
                                                                                                             <a href="#" class="btn btn-round btn-green btn-m"><span class="icon-magnifier"></span></a>
                                                                                                         </div>
                                                                                                     </div>
+
                                                                                                 </form>
                                                                                             </div>
                                                                                         </div>
@@ -418,5 +414,5 @@
                                                                                                     });
                                                                                                 {% endfor %}
                                                                                             </script>
-                                                                                            
+
                                                                                             {% endblock %}

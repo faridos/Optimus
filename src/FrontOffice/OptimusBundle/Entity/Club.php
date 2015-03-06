@@ -113,6 +113,11 @@ class Club {
      */
     protected $clubcomments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Member", mappedBy="clubad")
+     * */
+    protected $adherents;
+
     public function __construct() {
 
         $this->clubcomments = new ArrayCollection();
