@@ -179,9 +179,27 @@
   content: "\f004";
 }
 .fa-star:before {
+  font-size: 1.3em;
+  content: "\f005";
+}
+.fa-star2:before {
+  font-size: 1.3em;
+  content: "\f005";
+}
+.fa-star2:hover {
+  font-size: 1.5em;
   content: "\f005";
 }
 .fa-star-o:before {
+  font-size: 1.3em;
+  content: "\f006";
+}
+.fa-star-o2:before {
+  font-size: 1.3em;
+  content: "\f006";
+}
+.fa-star-o2:hover {
+  font-size: 1.5em;
   content: "\f006";
 }
 .fa-user:before {
@@ -566,6 +584,7 @@
   content: "\f089";
 }
 .fa-heart-o:before {
+    font-size: 1.3em;
   content: "\f08a";
 }
 .fa-sign-out:before {

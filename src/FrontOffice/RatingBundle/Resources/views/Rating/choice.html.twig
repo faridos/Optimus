@@ -3,7 +3,7 @@
         {% for i in maxValue..1 %}
             {% set style = 'fa fa-star-o2' %}
             {% if i <= rating.rate %}
-                {% set style = 'fa fa-star' %}
+                {% set style = 'fa fa-star2' %}
             {% elseif rating.rate|isHalfStar(i) %}
                 {% set style = 'fa fa-star-half-o' %}
             {% endif %}

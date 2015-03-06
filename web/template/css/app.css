@@ -5947,3 +5947,14 @@ blockquote {
         font-size: 11px;
     }
 }
+.loader{
+        bottom: 0px;
+        text-align: center;
+        display: none;
+    }
+    .dcs-rating-container {
+        direction: rtl;
+        overflow: hidden;
+        display: inline-block;
+        unicode-bidi: bidi-override;
+    }
