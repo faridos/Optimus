@@ -161,22 +161,22 @@ class EventController extends Controller {
      * @Method("GET|POST")
      * 
      */
-    public function getEventLoadAjax($last_id) {
-        $em = $this->getDoctrine()->getEntityManager();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $lng = $user->getLng();
-        $lat = $user->getLat();
-        $events = new ArrayCollection();
-        $events = $em->getRepository('FrontOfficeOptimusBundle:Event')->getEventLoadAjax(new DateTime(), $lng, $lat, $last_id);
-        if (!$events) {
-            throw $this->createNotFoundException('Unable to find Event entity.');
-        }
-
-        $response = new Response();
-        $tabevents = json_encode($events);
-        $response->headers->set('Content-Type', 'application/json');
-        $response->setContent($tabevents);
-        return $response;
-    }
+//    public function getEventLoadAjax($last_id) {
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $user = $this->container->get('security.context')->getToken()->getUser();
+//        $lng = $user->getLng();
+//        $lat = $user->getLat();
+//        $events = new ArrayCollection();
+//        $events = $em->getRepository('FrontOfficeOptimusBundle:Event')->getEventLoadAjax(new DateTime(), $lng, $lat, $last_id);
+//        if (!$events) {
+//            throw $this->createNotFoundException('Unable to find Event entity.');
+//        }
+//
+//        $response = new Response();
+//        $tabevents = json_encode($events);
+//        $response->headers->set('Content-Type', 'application/json');
+//        $response->setContent($tabevents);
+//        return $response;
+//    }
 
 }

@@ -59,38 +59,32 @@
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
-                                <ul id="content_msg_{{event.id}}" class="commentsWidget scrollbar" > 
+                                <ul id="content_msg_{{event.id}}" class="commentsWidget scrollbar">
+                                    <div id="content2_msg_{{event.id}}" class="raw">
+                                    {%for key, comment in event.eventcomments|reverse %}
+                                        {% if key < 5 %}
                                     <div class="comment">
                                         <div class="commentAvatar">
-                                            <img class="avatar" src="images/avatar-3.png" alt="avatar">
+                                            <img class="avatar" src="{{ asset(comment.commenteur.WebPath)}}" alt="avatar">
                                             <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
                                         </div>
                                         <div class="commentContent">
-                                            <div class="commentName">Foulen ben foulen</div><div class="commentTime" style="
-                                                                                                 margin-left: 10px;
-                                                                                                 "><span class="icon-clock"></span> 1 day ago</div><br>
-                                            <div class="commentBody">celui la est un evenement trop génial , merci pour le partager!</div>
+                                            <div class="commentName">{{ comment.commenteur.prenom }} {{ comment.commenteur.nom }}</div>
+                                            <div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> {{ comment.getDureeComment()}}</div><br>
+                                            <div class="commentBody">{{ comment.Commentaire}}</div>
 
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
-                                    <div class="comment">
-                                        <div class="commentAvatar">
-                                            <img class="avatar" src="images/avatar-3.png" alt="avatar">
-                                            <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
-                                        </div>
-                                        <div class="commentContent">
-                                            <div class="commentName">Foulen ben foulen</div><div class="commentTime" style="
-                                                                                                 margin-left: 10px;
-                                                                                                 "><span class="icon-clock"></span> 1 day ago</div><br>
-                                            <div class="commentBody">celui la est un evenement trop génial , merci pour le partager!</div>
-                                        </div>
-                                        <div class="clearfix"></div>
+                                            {% endif %}
+                                    {% endfor %}
                                     </div>
+                                    <div class="loader" id="loader_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></div>
                                 </ul>
+                                                                 
                                 <div class="commentsWidgetForm">
                                     <div class="cfAvatar">
-                                        <img class="avatar" src="images/avatar-1.png" alt="avatar">
+                                        <img class="avatar" src="{{asset(app.user.WebPath)}}" alt="avatar">
                                     </div>
                                     <form class="commentsForm">
                                         <div class="input-group">
@@ -105,7 +99,7 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="loader"> <img src="{{asset('template/images/ajax-loader(2).gif') }}"></div>
+            <!-- <div class="loader"> <img src="{{asset('template/images/ajax-loader(2).gif') }}"></div> -->
         </div>
         <!--- baniere publicitaire ****************************************************  -->
         <div class="puboptimus">
@@ -122,7 +116,10 @@
 
         (function($) {
         "use strict";
-                var load = false;
+        
+        
+        
+        {# var load = false;
                 var last_id = 2;
                 $("#content").scroll(function() {
         if ($("#content").scrollTop() == $("#content2").height() - $("#content").height() && load == false && last_id < {{events|length}}){
@@ -217,7 +214,7 @@ $('.loader').hide();
                         }
                 });
         }
-        }); 
+        }); #}
         
         
         {% for event in events %}
@@ -236,7 +233,7 @@ $('.loader').hide();
                     '<div class="commentArrow"><span class="fa fa-caret-left"></span></div>' +
                     '</div>' +
                     '<div class="commentContent">' +
-                    '<div class="commentName">{{app.user.nom}} {{app.user.prenom}}</div>' +
+                    '<div class="commentName">{{app.user.prenom}} {{app.user.nom}}</div>' +
                     '<div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> Maintenant </div>' +
                     '<br>' +
                     '<div class="commentBody">' + comment + '</div>' +
@@ -259,6 +256,51 @@ $('.loader').hide();
                     });
             });              
 
+            var load = false;
+        var last_id_{{event.id}} = 5;
+        $("#content_msg_{{event.id}}").scroll(function() {
+            if ($("#content_msg_{{event.id}}").scrollTop() == $("#content2_msg_{{event.id}}").height() - $("#content_msg_{{event.id}}").height() && load == false && last_id_{{event.id}} <{{event.eventcomments|length}}){
+                
+            load = true;
+            $('#loader_{{event.id}}').show();
+            $.ajax({
+                        url: Routing.generate('commentsEventPlus', { ide: {{event.id}} , last_id: last_id_{{event.id}} }),
+                                type: 'GET',
+
+                                beforeSend: function () {
+                                    console.log("debut");
+                                },
+                                success: function (data) {
+                                last_id_{{event.id}} += 5;
+                                        for (var i in data) {
+                                var comment = data[i];
+                                 console.log(comment);
+                                var photo = "/Optimus/web/upload/profil/"+ comment.commenteur.id+"/"+comment.commenteur.path;
+                                       
+                                        $("#content2_msg_{{event.id}}").append('<div class="comment">' +
+                    '<div class="commentAvatar">' +
+                    '<img class="avatar" src="'+photo+'" alt="avatar">' +
+                    '<div class="commentArrow"><span class="fa fa-caret-left"></span></div>' +
+                    '</div>' +
+                    '<div class="commentContent">' +
+                    '<div class="commentName">'+ comment.commenteur.prenom + comment.commenteur.nom +'</div>' +
+                    '<div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> Maintenant </div>' +
+                    '<br>' +
+                    '<div class="commentBody">' + comment.Commentaire + '</div>' +
+                    '</div>' +
+                    '<div class="clearfix"></div>' +
+                    '</div>');
+                                load = false;
+                                $('#loader_{{event.id}}').hide();        
+                                }
+
+                                },
+                                error: function () {
+                                   $('#loader_{{event.id}}').hide();
+                                }
+                        });
+        }
+        });
         {% endfor %}
 
 

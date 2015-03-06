@@ -35,17 +35,17 @@ class CommentRepository extends EntityRepository {
 //        return $clubs = $query->getArrayResult();
 //    }
 //
-//    public function CommentsEventLoad($ide, $last_id) {
-//
-//        $em = $this->getEntityManager();
-//        $query = $em->createQuery("SELECT comment, u "
-//                        . "FROM FrontOfficeOptimusBundle:Comment comment LEFT JOIN comment.commenteur u"
-//                        . " where comment.event = :id"
-//                        . " ORDER BY comment.createdat DESC"
-//                )->setParameter('id', $ide)
-//                ->setMaxResults(5)
-//                ->setFirstResult($last_id);
-//        return $clubs = $query->getArrayResult();
-//    }
+    public function CommentsEventLoad($ide, $last_id) {
+
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT comment, u "
+                        . "FROM FrontOfficeOptimusBundle:Comment comment LEFT JOIN comment.commenteur u"
+                        . " where comment.event = :id"
+                        . " ORDER BY comment.createdat DESC"
+                )->setParameter('id', $ide)
+                ->setMaxResults(5)
+                ->setFirstResult($last_id);
+        return $events = $query->getArrayResult();
+    }
 
 }

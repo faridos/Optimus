@@ -55,5 +55,28 @@ public function ajaxCommenteventAction(Request $request, $eventid) {
         
         return $response = new Response();
     }
+    
+    /**
+     * 
+     *
+     * @Route("/event={ide}/commentsplus={last_id}", name="commentsEventPlus", options={"expose"=true})
+     * @Method("GET")
+     * 
+     */
+    public function listCommentsEventPlusAction($ide,$last_id, Request $request) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $comments = new ArrayCollection();
+        if ($request->isXmlHttpRequest()) {
+           $comments = $em->getRepository('FrontOfficeOptimusBundle:Comment')->CommentsEventLoad($ide,$last_id);
+             if (!$comments) {
+                throw $this->createNotFoundException('Unable to find Comment entity.');
+            }
+        }
+        $response = new Response();
+        $tabcomments = json_encode($comments);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($tabcomments);
+        return $response;
+    }
 
 }

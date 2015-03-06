@@ -21,8 +21,7 @@ class EventRepository extends EntityRepository {
                         . " ORDER BY event.dateDebut DESC "
                 )->setParameter('date', $date)
                 ->setParameter('lng', $lng)
-                ->setParameter('lat', $lat)
-                ->setMaxResults(4);
+                ->setParameter('lat', $lat);
 
         return $events = $query->getResult();
     }
@@ -39,20 +38,20 @@ class EventRepository extends EntityRepository {
     }
 
     
-    public function getEventLoadAjax($date, $lng, $lat, $last_id) {
-
-        $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT event, u "
-                        . "FROM FrontOfficeOptimusBundle:Event event LEFT JOIN event.createur u"
-                        . " where event.active = 1 and event.dateFin > :date and event.lng BETWEEN :lng-0.1 AND :lng+0.1 and event.lat BETWEEN :lat-0.1 AND :lat+0.1"
-                        . " ORDER BY event.dateDebut DESC "
-                )->setParameter('date', $date)
-                ->setParameter('lng', $lng)
-                ->setParameter('lat', $lat)
-                ->setMaxResults(1)
-                ->setFirstResult($last_id);
-
-        return $events = $query->getArrayResult();
-    }
+//    public function getEventLoadAjax($date, $lng, $lat, $last_id) {
+//
+//        $em = $this->getEntityManager();
+//        $query = $em->createQuery("SELECT event, u "
+//                        . "FROM FrontOfficeOptimusBundle:Event event LEFT JOIN event.createur u"
+//                        . " where event.active = 1 and event.dateFin > :date and event.lng BETWEEN :lng-0.1 AND :lng+0.1 and event.lat BETWEEN :lat-0.1 AND :lat+0.1"
+//                        . " ORDER BY event.dateDebut DESC "
+//                )->setParameter('date', $date)
+//                ->setParameter('lng', $lng)
+//                ->setParameter('lat', $lat)
+//                ->setMaxResults(1)
+//                ->setFirstResult($last_id);
+//
+//        return $events = $query->getArrayResult();
+//    }
      
 }
