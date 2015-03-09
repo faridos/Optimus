@@ -39,7 +39,7 @@
                         {% for club in clubs %}
                             <div class="userWidget-2 col-xs-12" >
                                 <div class="tooltipsContainer avatar imagus">
-                                    <a href="#" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ club.nom }}"><img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
+                                    <a href="{{ path('show_club', {'id': club.id }) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ club.nom }}"><img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="info">

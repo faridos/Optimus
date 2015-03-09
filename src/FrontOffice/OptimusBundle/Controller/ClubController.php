@@ -81,27 +81,16 @@ class ClubController extends Controller {
      * @Method("GET")
      * @Template()
      */
-    public function getProfileUserAction($id) {
+    public function showClubAction($id) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
         $user1 = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
-        $userManager = $this->container->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(array('id' => $id));
-        $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('entraineur' => $user));
-        if ($notification) {
-            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
-            if (empty($notificationSeen)) {
-
-                $notifevent = new NotificationSeenEvent($user, $notification);
-                $dispatcher = $this->get('event_dispatcher');
-                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
-            }
-        }
-        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getEventUserParticipant($id,new \Datetime());
-        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1,'participations' => $participation));
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+       
+        return $this->render('FrontOfficeOptimusBundle:Club:show_club.html.twig', array('club' => $club, 'user1' => $user1));
     }
 
     /**
