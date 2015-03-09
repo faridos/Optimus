@@ -61,6 +61,12 @@ class Club {
      * @ORM\Column(name="Adresse", type="string", length=255)
      */
     private $adresse;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
 
     /**
      * @var float
@@ -120,12 +126,43 @@ class Club {
 
     public function __construct() {
 
-        //$this->clubcomments = new ArrayCollection();
+        $this->clubcomments = new ArrayCollection();
 //        $this->dateCreation = new \DateTime();
         // your own logic
     }
+    public function getDescription() {
+        return $this->description;
+    }
 
-    public function getActive() {
+    public function getNotification_club() {
+        return $this->notification_club;
+    }
+
+    public function getAdherents() {
+        return $this->adherents;
+    }
+
+    public function getClubs() {
+        return $this->clubs;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+
+    public function setNotification_club($notification_club) {
+        $this->notification_club = $notification_club;
+    }
+
+    public function setAdherents($adherents) {
+        $this->adherents = $adherents;
+    }
+
+    public function setClubs($clubs) {
+        $this->clubs = $clubs;
+    }
+
+        public function getActive() {
         return $this->active;
     }
 

@@ -420,10 +420,11 @@ overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 150
 }
 
 ul.notifyList.scrollbar {
-
-
-
-overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;
+overflow-x: hidden;
+overflow-y: auto;
+overflow-wrap: break-word;
+max-height: 250px;
+background-color:#fff;
 }
 
 
@@ -3458,7 +3459,7 @@ h1.pageTitle {
     
     margin-bottom: 20px;
     text-decoration: none;
-    overflow: hidden;
+   
     border-radius: 3px;
     position: relative;
 }
@@ -5037,7 +5038,7 @@ margin-top:-14px;
 
 }
 
-.userWidget-1 .address.starsus{clubufus
+.userWidget-1 .address.starsus{
 margin-left: 150px;
     font-size: 18px;
 }

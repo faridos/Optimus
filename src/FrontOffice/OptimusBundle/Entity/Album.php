@@ -32,6 +32,20 @@ class Album
      * @ORM\JoinColumn(name="club_id", referencedColumnName="id")
      **/
    
+   protected $club;
+   
+    /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="album")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     **/
+   
+   protected $event;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
     private $nom;
     /**
      * @var \DateTime
@@ -74,8 +88,15 @@ class Album
         public function getNom() {
         return $this->nom;
     }
+    public function getUser() {
+        return $this->user;
+    }
 
-    public function getCreatedate() {
+    public function setUser($user) {
+        $this->user = $user;
+    }
+
+        public function getCreatedate() {
         return $this->createdate;
     }
 
@@ -99,25 +120,22 @@ class Album
         $this->createdate = $createdate;
     }
 
-    public function setUpdatedate(\DateTime $updatedate) {
-        $this->updatedate = $updatedate;
-    }
+   
 
     public function setPrivacy($privacy) {
         $this->privacy = $privacy;
     }
-    public function getUtilisateur() {
-        return $this->utilisateur;
-    }
+    
 
     public function getClub() {
         return $this->club;
     }
 
-    public function setUtilisateur($utilisateur) {
-        $this->utilisateur = $utilisateur;
+    public function setUpdatedate(\DateTime $updatedate) {
+        $this->updatedate = $updatedate;
     }
 
+    
     public function setClub($club) {
         $this->club = $club;
     }
