@@ -34,27 +34,31 @@
                 <div class="tab-content">
                     <ul class="tab-pane fade active in scrollbar" id="events" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 87%;background-color:#fff;">
                         {% for participation in participations %}
-                            <div class="userWidget-2" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
-                                <div class="tooltipsContainer avatar"style="height:110px;width:130px;margin-top:-15px">
-                                    <a href="{{ path('show_profil', { 'id': participation.participant.id }) }}" class="btn btn-round avatar" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{  participation.participant.prenom }} {{  participation.participant.nom }}">
-                                        <img src="{{  asset(participation.participant.WebPath) }}" alt="avatar"  style="width:100px;height:100px">
-                                    </a>
+                            <div class="userWidget-2 col-md-12" >
+                                <div class="tooltipsContainer avatar imagus">
+                                    <a href="{{ path('show_profil', { 'id': participation.participant.id }) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{  participation.participant.prenom }} {{  participation.participant.nom }}">
+                                        <img src="{{  asset(participation.participant.WebPath) }}" alt="avatar" ></a>
                                 </div>
-                                <div class="info">
-                                    <a href="{{ path('show_event', { 'id' : participation.event.id }) }}" class="name">{{ participation.event.titre }}</a>
-                                    <div class="title">Lieu de l'évenement : <span class="address">{{ participation.event.lieu }}</span></div>
-                                </div>
-                                <div class="info" style="float:right;margin-right:90px">
-                                    <div class="title">Date de début : <span class="address">{{ participation.event.dateDebut|date('Y-m-d H:i:s') }}</span></div>
-                                    <div class="title">Date de fin : <span class="address">{{ participation.event.dateFin|date('Y-m-d H:i:s') }}</span></div>
-                                    <div class="title">Nombre de places : <span class="address">{{ participation.event.nbrPlaces }}</span></div>
-                                </div>
-                                
+                                <div class="col-md-4">
+                                    <div class="info">
+                                        <a href="{{ path('show_event', { 'id' : participation.event.id }) }}"> <div class="name">{{ participation.event.titre }}</div></a>
+                                        <div class="title">Lieu de l'évenement: <span class="address">{{ participation.event.lieu }}</span></div>
+
+                                    </div></div>
+                                <div class="col-md-5">
+                                    <div class="info" >
+
+                                        <div class="title">Date de début : <span class="address">{{ participation.event.dateDebut|date('Y-m-d H:i:s') }}</span></div>
+                                        <div class="title">Date de fin : <span class="address">{{ participation.event.dateFin|date('Y-m-d H:i:s') }}</span></div>
+                                        <div class="title">Nombre de places : <span class="address">{{ participation.event.nbrPlaces }}</span></div>
+                                    </div></div>
+
                                 <div class="clearfix"></div>
-                                {% if participation.event.createur == app.user%}
-                                <div style="margin: 0 20px 20px 0;"><a href="{{ path('show_event', { 'id' : participation.event.id }) }}" class="notifySettings icon-settings"></a></div>
+                                 {% if participation.event.createur == app.user%}
+                                    admin
                                 {% endif %}
                             </div>
+                         
                         {% endfor %}
                     </ul>
                 </div>

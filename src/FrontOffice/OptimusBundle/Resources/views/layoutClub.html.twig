@@ -1,0 +1,99 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+
+{% block body %}
+    <div id="wrapper" >
+        <div id="content" class="" >
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+        <div id="content" class="mob-max" style="overflow: hidden;height: 100%;">
+            <div class="singleTop whiteBg eventcolor" style="height:100%">
+                <div class="row mb20">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pb20">
+
+                        <div class="userWidget-1">
+                            <div class="avatar">
+                                <img src="{{ asset(club.WebPath) }}" alt="avatar" class="clubufus">
+                                <div class="ops">
+                                    <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
+                                    <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
+                                </div>
+                                <div class="name osLight fontus">Nom Club</div>
+                            </div>
+                            <div class="address starsus"><div class="cardRating">
+                                    <span class="fa fa-star "></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star-o"></span></div>
+                            </div>
+                            <div class="title clubumus">Proprietaire :<span class="address detaillus">Foulén ben foulén</span></div>
+
+                            <div class="row clubumus">
+                                <div class="col-md-6 pb20">
+
+                                    <div class="pc-about osLight">
+                                        <a class="btn btn-green btn-round eventus" href="#" >
+                                            <span class="fa icon-action-redo "></span> <span >Rejoindre</span>
+
+                                        </a></div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="pc-title osLight">
+
+                                        <div class="buttonsWrapper pb20 buttonleftus">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="userWidget-2" >
+                            <div class="avatar">
+
+                            </div>
+                            <div class="info">
+                                <div class="row">
+                                    <div class="col-md-6 pb20">
+
+                                        <div class="pc-about osLight"><div class="title eventus">Déscription :<span class="address detaillus">Foulén ben foulén ben faltén el fouléni 3adham ALLAH ajrah wa ad5alah fassi7a jannatih</span></div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="pc-title osLight"><div class="title eventus">Téléphone: <span class="address "> 06 23 25 58</span></div>
+                                            <div class="title eventus">Email : <span class="address ">foulen@email.com </span></div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+                <div id="mapView" class="eventmap" style="width:110%"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div><div class="clearfix"></div>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+{% endblock %}
+
+
