@@ -30,7 +30,6 @@ class NotificationClubListener {
         $notification->setNotificateur($event->getUser()->getId());
         $em->persist($notification);
         $em->flush();
-        die('okko');
     }
     public function onCreateMemberClub(NotificationClubEvent $event) {
 

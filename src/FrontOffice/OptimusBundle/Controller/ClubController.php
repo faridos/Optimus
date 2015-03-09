@@ -28,15 +28,16 @@ use FrontOffice\OptimusBundle\Event\HistoryClubEvent;
 use FrontOffice\OptimusBundle\Event\NotificationClubEvent;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 
+
 /**
  * Club controller.
  *
  * @Route("/")
  */
 class ClubController extends Controller {
-
+    
     /**
-     * Edits an existing Club entity.
+     * 
      *
      * @Route("club/ajouter", name="add_club")
 
@@ -58,24 +59,49 @@ class ClubController extends Controller {
         if ($req->getMethod() == 'POST') {
             $form->bind($req);
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($club);
                 $em->flush();
-
-                $action = 'add';
-                $clubevent = new HistoryClubEvent($user, $club, $action);
-                $clubnotification = new NotificationClubEvent($user, $club, $action);
-                $dispatcher = $this->get('event_dispatcher');
-              
-              
-                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-               
-                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
+                  var_dump($club);die();
+//                $action = 'add';
+//                $clubevent = new HistoryClubEvent($user, $club, $action);
+//                $clubnotification = new NotificationClubEvent($user, $club, $action);
+//                $dispatcher = $this->get('event_dispatcher');
+//                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+//                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
             }
         }
         return array(
             'form' => $form->createView(),
             'user' => $user);
+    }
+    /**
+     * 
+     *
+     * @Route("club={id}", name="show_club", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function getProfileUserAction($id) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user1 = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $id));
+        $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('entraineur' => $user));
+        if ($notification) {
+            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
+            if (empty($notificationSeen)) {
+
+                $notifevent = new NotificationSeenEvent($user, $notification);
+                $dispatcher = $this->get('event_dispatcher');
+                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
+            }
+        }
+        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getEventUserParticipant($id,new \Datetime());
+        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1,'participations' => $participation));
     }
 
     /**

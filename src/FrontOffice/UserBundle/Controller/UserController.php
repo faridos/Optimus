@@ -118,6 +118,31 @@ class UserController extends Controller {
         $response->setContent($relationJson);
         return $response;
     }
+     /**
+     * Lists  Clubs Member.
+     *
+     * @Route("profil={id}/clubs", name="clubs_member")
+     * @Method("GET")
+     * @Template("FrontOfficeUserBundle:Profile:clubs_user.html.twig")
+     */
+    public function clubsMemberAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $id));
+        if (!is_object($user)) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+        $clubs = $em->getRepository('FrontOfficeOptimusBundle:Club')->getClubsMember($id);
+   
+       
+        return array(
+            'clubs' => $clubs,
+            'user' => $user,
+            'user1' => $user1,
+           
+        );
+    }
 
     /**
      * 

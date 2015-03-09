@@ -10,7 +10,10 @@
 
     color: #eab134;
 }
+.rightus{
 
+ float:right;   
+}
 .connected{
 margin-top:25px;
 width:10px;

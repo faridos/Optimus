@@ -48,7 +48,7 @@
                     <div class="mobAvatarName">{{ app.user.nom }} {{ app.user.prenom }}</div>
                 </div>
                 <ul>
-                    <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user"></span>Profile</a></li><li><a href="#"><span class="fa fa-users"></span>Mes clubs</a></li><li><a href="profile.html"><span class="fa fa-trophy"></span>Mes évenements</a></li>
+                    <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="glyphicon glyphicon-user"></span>Profile</a></li><li><a href="#"><span class="fa fa-users"></span>Mes clubs</a></li><li><a href="profile.html"><span class="fa fa-trophy"></span>Mes évenements</a></li>
                     <li><a href="#"><span class="icon-settings"></span>Settings</a></li><li><a href="#"><span class="glyphicon glyphicon-globe"></span>Historique</a></li>
                     <li class="divider"></li>
                     <li><a href="{{ path('fos_user_security_logout') }}"><span class="icon-power"></span>Deconnexion</a></li>
@@ -225,7 +225,7 @@
                                                                                 <a href="#" class="mapHandler"><span class="icon-map"></span></a>
                                                                                 <div class="clearfix"></div>
                                                                             </div>
-                                                                            <div id="leftSide" style="height: 355px;">
+                                                                            <div id="leftSide" >
                                                                                 <nav class="leftNav scrollable">
                                                                                     <div class="search">
                                                                                         <span class="searchIcon icon-magnifier"></span>
@@ -233,162 +233,154 @@
                                                                                     </div>
                                                                                     <ul><li class="hasSub">
                                                                                             <a href="#"><span class="navIcon fa fa-comment"></span><span class="navLabel">Tchat</span><span class="fa fa-angle-left arrowRight"></span></a>
-                                                                                            <ul class="dropdown-menu scrollbar" role="menu" style="
-                                                                                                direction: rtl; 
-                                                                                                overflow-x: hidden;
-                                                                                                overflow-y: auto;
-                                                                                                overflow-wrap: break-word;
-                                                                                                height: 607px;
-                                                                                                background-color:#fff;
-                                                                                                ">
-                                                                                                {% set friends = getFriends(app.user.id) %}
-                                                                                                    {% for friend in friends %}
-
-                                                                                                        <li class="definedname"><a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
-                                                                                                                <img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
-                                                                                                                <div class="userTop pull-left">
-                                                                                                                    <span class="headerUserName open">{{ friend.prenom }} {{ friend.nom }}</span> 
-                                                                                                                </div>
-                                                                                                                <div class="clearfix"></div>
-                                                                                                            </a></li>
-
-                                                                                                    {% endfor %}
-
-                                                                                                    <li class="divider"></li>
-
-                                                                                                </ul> 
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a   href="{{ path('add_club') }}">
-                                                                                                    <span class="navIcon fa fa-users"></span>
-                                                                                                    <span class="navLabel">Club</span>
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li class="divider"></li>
-                                                                                            <li>
-                                                                                                <a href="{{ path('add-event') }}">
-                                                                                                    <span class="navIcon fa fa-trophy"></span>
-                                                                                                    <span class="navLabel">Evenement</span>
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <br>
-                                                                                            <li class="agendx">	
-                                                                                                <div class="leftUserWraper dropup">
-                                                                                                    <a href="#">
-                                                                                                        <span class="navIcon fa fa-calendar"></span>
-                                                                                                        <span class="navLabel">Calendrier</span>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                            </li>	
-                                                                                        </ul>
-                                                                                    </nav>
-                                                                                    <!-- agenda**************************************************** -->
+                                                                                            <ul class="dropdown-menu scrollbar" role="menu" >
 
 
 
 
-                                                                                    <!--fin agenda**************************************************** -->
 
-                                                                                </div>
-                                                                                <div class="closeLeftSide"></div>
-                                                                                <div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
-                                                                                    <div class="modal-dialog modal-md">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <h4 class="modal-title" id="signinLabel">Recherche Optimus</h4>
-                                                                                            </div>
-                                                                                            <div class="modal-body">
-                                                                                                <form role="form">
-                                                                                                    <div class="form-group">
-                                                                                                        <input type="text" placeholder=" Nom d'évenement" class="search-optimus">
 
-                                                                                                        <input type="hidden" name="kwtype" value="0">
-                                                                                                        <input class="search-optimus" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." style="text-indent:20px;border-radius: 25px;height: 44px; border: 1.5px solid #C02100;width: 98%;margin: 12px -2px 0 5px;">
-                                                                                                        <a href="#" style="margin-left: -62px;">
-                                                                                                            <span ><select id="selectoption" style="
-                                                                                                                           border: 0;">
-                                                                                                                    <option selected="" disabled=""></option>
-                                                                                                                    <option autocomplete="on">Tous</option>
-                                                                                                                    <option>Amis</option>
-                                                                                                                </select></span></a>
-                                                                                                        <select id="date" name="date" class="search-optimus">
-                                                                                                            <option value="1" selected="" disabled="">Date</option>
-                                                                                                            <option value="e1">Aujourd'hui</option>
-                                                                                                            <option value="e2">Cette semaine</option>
-                                                                                                            <option value="e3">Ce mois</option>
-                                                                                                            <option value="e4">Cette année</option>
-                                                                                                        </select><br><select id="events" name="events" class="search-optimus">
-                                                                                                            <option value="1" selected="" disabled="">Type d'évenement</option>
-                                                                                                            <option value="e1">évenement1</option>
-                                                                                                            <option value="e2">évenement2</option>
-                                                                                                            <option value="e3">évenement3</option>
-                                                                                                            <option value="e4">évenement4</option>
-                                                                                                            <option value="e5">évenement5</option>
-                                                                                                            <option value="e6">évenement6</option>
-                                                                                                            <option value="e7">évenement7</option>
-                                                                                                            <option value="e8">évenement8</option>
-                                                                                                        </select> 
-                                                                                                        <input style="border-radius:25px" type="text" class="search-optimus" id="city" placeholder="Entrer ici votre région" autocomplete="off" size="60">
-                                                                                                    </div>
-                                                                                                    <div class="form-group">
-                                                                                                        <div class="btn-group-justified">
-                                                                                                            <a href="#" class="btn btn-round btn-green btn-m"><span class="icon-magnifier"></span></a>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </form>
-                                                                                            </div>
+
+
+
+
+
+
+
+
+                                                                                                <li class="divider"></li>
+
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li><a href="{{ path('add_club')}}"><span class="navIcon fa fa-users"></span><span class="navLabel">Club</span></a></li>
+                                                                                        <li><a href="#"><span class="navIcon fa fa-trophy"></span><span class="navLabel">Evenement</span></a></li>
+                                                                                        <br>
+                                                                                        <li class="agendx "><a href="#"><span class="navIcon fa fa-calendar"></span><span class="navLabel">Calendrier</span></a></li>
+
+
+
+                                                                                    </ul>
+                                                                                </nav>
+                                                                                <!-- agenda**************************************************** -->
+                                                                                <div class="row" id="agendaa" style="display:none">
+                                                                                    <div class="col-lg-4  navbar-fixed-bottom" style="left:10%;top:20%">
+                                                                                        <div class="affiche_agenda" >
+
+                                                                                            <i id="fermer" class="glyphicon glyphicon-remove pull-right"></i>
+                                                                                        </div>
+                                                                                        <div class="calendarWidget agenda" >
+                                                                                            <div class="cal" ></div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="row" id="descu" style="display:none;">
-                                                                                    <div class="col-lg-3  navbar-fixed-bottom">
-                                                                                        <div class="well well-sm " style="background:white;height:300px;z-index:111111;">
-                                                                                            <div class="affiche_nom" style="height:30px;">
-                                                                                                <b class="pull-left affiche_personne"></b>
-                                                                                                <i id="close" class="glyphicon glyphicon-remove pull-right"></i>
-                                                                                            </div>
-                                                                                            <div class="affichage">
-                                                                                                <div class="well well-sm" style="height:200px;">
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-md-2">
-                                                                                                            <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
-                                                                                                        </div>
-                                                                                                        <div class="col-md-10" style="background:white;">
-                                                                                                            <p>
-                                                                                                                Bonjour , comment vas-tu? ça fait un bail que je t'ai pas vu !
-                                                                                                            </p>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <hr>
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-md-2 pull-right">
-                                                                                                            <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
-                                                                                                        </div>
-                                                                                                        <div class="col-md-10 pull-left" style="background:white;">
-                                                                                                            <p>
-                                                                                                                bjr, ça va mon frere tout va bien ... quoi de neuf chez toi?
-                                                                                                            </p>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <hr>
+
+
+
+
+
+                                                                                <!--fin agenda**************************************************** -->
+
+                                                                            </div>
+                                                                            <div class="closeLeftSide"></div>
+                                                                            <div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
+                                                                                <div class="modal-dialog modal-md">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h4 class="modal-title" id="signinLabel">Recherche Optimus</h4>
+                                                                                        </div>
+                                                                                        <div class="modal-body">
+                                                                                            <form role="form">
+                                                                                                <div class="form-group">
+                                                                                                    <input type="text" placeholder=" Nom d'évenement" class="search-optimus">
+
+                                                                                                    <input type="hidden" name="kwtype" value="0">
+                                                                                                    <input class="search-optimus" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." style="text-indent:20px;border-radius: 25px;height: 44px; border: 1.5px solid #C02100;width: 98%;margin: 12px -2px 0 5px;">
+                                                                                                    <a href="#" style="margin-left: -62px;">
+                                                                                                        <span ><select id="selectoption" style="
+                                                                                                                       border: 0;">
+                                                                                                                <option selected="" disabled=""></option>
+                                                                                                                <option autocomplete="on">Tous</option>
+                                                                                                                <option>Amis</option>
+                                                                                                            </select></span></a>
+                                                                                                    <select id="date" name="date" class="search-optimus">
+                                                                                                        <option value="1" selected="" disabled="">Date</option>
+                                                                                                        <option value="e1">Aujourd'hui</option>
+                                                                                                        <option value="e2">Cette semaine</option>
+                                                                                                        <option value="e3">Ce mois</option>
+                                                                                                        <option value="e4">Cette année</option>
+                                                                                                    </select><br><select id="events" name="events" class="search-optimus">
+                                                                                                        <option value="1" selected="" disabled="">Type d'évenement</option>
+                                                                                                        <option value="e1">évenement1</option>
+                                                                                                        <option value="e2">évenement2</option>
+                                                                                                        <option value="e3">évenement3</option>
+                                                                                                        <option value="e4">évenement4</option>
+                                                                                                        <option value="e5">évenement5</option>
+                                                                                                        <option value="e6">évenement6</option>
+                                                                                                        <option value="e7">évenement7</option>
+                                                                                                        <option value="e8">évenement8</option>
+                                                                                                    </select> 
+                                                                                                    <input style="border-radius:25px" type="text" class="search-optimus" id="city" placeholder="Entrer ici votre région" autocomplete="off" size="60">
                                                                                                 </div>
-                                                                                            </div>
-                                                                                            <form action="" method="post">
-                                                                                                <input type="text" class="form-control input-sm">
+                                                                                                <div class="form-group">
+                                                                                                    <div class="btn-group-justified">
+                                                                                                        <a href="#" class="btn btn-round btn-green btn-m"><span class="icon-magnifier"></span></a>
+                                                                                                    </div>
+                                                                                                </div>
                                                                                             </form>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                {% endblock %}
+                                                                            </div>
+                                                                            <div class="row" id="descu" style="display:none;">
+                                                                                <div class="col-lg-3  navbar-fixed-bottom">
+                                                                                    <div class="well well-sm " style="background:white;height:300px;z-index:111111;">
+                                                                                        <div class="affiche_nom" style="height:30px;">
+                                                                                            <b class="pull-left affiche_personne"></b>
+                                                                                            <i id="close" class="glyphicon glyphicon-remove pull-right"></i>
+                                                                                        </div>
+                                                                                        <div class="affichage">
+                                                                                            <div class="well well-sm" style="height:200px;">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-md-2">
+                                                                                                        <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
+                                                                                                    </div>
+                                                                                                    <div class="col-md-10" style="background:white;">
+                                                                                                        <p>
+                                                                                                            Bonjour , comment vas-tu? ça fait un bail que je t'ai pas vu !
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <hr>
+                                                                                                <div class="row">
+                                                                                                    <div class="col-md-2 pull-right">
+                                                                                                        <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
+                                                                                                    </div>
+                                                                                                    <div class="col-md-10 pull-left" style="background:white;">
+                                                                                                        <p>
+                                                                                                            bjr, ça va mon frere tout va bien ... quoi de neuf chez toi?
+                                                                                                        </p>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <hr>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <form action="" method="post">
+                                                                                            <input type="text" class="form-control input-sm">
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            {% endblock %}
 
-                                                                                    {% block javascripts %}
-                                                                                        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-                                                                                        <script src="{{ asset('template/js/plugin.js') }}" type="text/javascript" ></script>
-                                                                                        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-                                                                                        <script src="{{ asset('template/js/ajaxNotif.js') }}" type="text/javascript"></script>
-                                                                                        <script>
-                                                                                            {% set messages = getNonSeenMessage(app.user.id) %}
-                                                                                                {% for message in messages %}
+                                                                                {% block javascripts %}
+                                                                                    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                                                                                    <script src="{{ asset('template/js/plugin.js') }}" type="text/javascript" ></script>
+                                                                                    <script src="{{ asset('template/js/agenda.js') }}" type="text/javascript"></script>
+                                                                                    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+                                                                                    <script src="{{ asset('template/js/ajaxNotif.js') }}" type="text/javascript"></script>
+                                                                                    <script>
+                                                                                        {% set messages = getNonSeenMessage(app.user.id) %}
+                                                                                            {% for message in messages %}
                                                                                                     $('.message{{message.id}}').click(function() {
 
 
@@ -416,8 +408,8 @@
                                                                                                             }
                                                                                                         });
                                                                                                     });
-                                                                                                {% endfor %}
-                                                                                            </script>
-                                                                                            {% block javascriptfils %}
-                                                                                                {% endblock %}
-                                                                                            {% endblock %}
+                                                                                            {% endfor %}
+                                                                                        </script>
+                                                                                        {% block javascriptfils %}
+                                                                                        {% endblock %}
+                                                                                        {% endblock %}

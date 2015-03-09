@@ -42,7 +42,7 @@
                                 <div data-linkto="" class="card albumus" >
                                     <div class="figure" id="main">
                                         <a href="{{ path('photos_user', {'id' : user.id}) }}" >
-                                            <img src="images/1.jpg" />
+                                            <img src="{{ asset(user.WebPath) }}" />
                                         </a>
 
                                         <div class="figView"></div>

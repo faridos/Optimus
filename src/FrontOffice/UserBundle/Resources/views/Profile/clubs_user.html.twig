@@ -32,29 +32,44 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <ul class="tab-pane fade active in scrollbar" id="clubs" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 87%;background-color:#fff;">       
-                        <div class="userWidget-2" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
-                            <div class="avatar" >
-                                <img src="images/logo1.jpg" alt="avatar" style="width:100px;height:100px">
-                            </div>
-                            <div class="info">
-                                <div class="name">Nom du Club</div>
-                                <div class="title">Créateur du club : <span class="address">Abweb abweb</span></div>
-                                <div class="title">Adresse du club : <span class="address">Tunis</span></div>
-                                <div class="title">Frais d'abonnement : <span class="address">200 $</span></div>
-                            </div>
-                            <div class="info" style="margin-left:10px;width:40%">
-                                <div class="title">Text descriptif : <span class="address">le club est un chocolat tunisien tres mauvais avec des différents gouts chiant</span></div>
-                            </div>
-                            <div class="clearfix"></div>
+                    <ul class="tab-pane fade  active in scrollbar" id="clubs" >
+                        <div class="buttonsWrapper col-xs-12">
+                            <a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
                         </div>
+                        {% for club in clubs %}
+                            <div class="userWidget-2 col-xs-12" >
+                                <div class="tooltipsContainer avatar imagus">
+                                    <a href="#" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ club.nom }}"><img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="info">
+                                        <div class="name">{{ club.nom }}</div>
+                                        <div class="title">Créateur du club : <span class="address">{{ club.createur }}</span></div>
+                                        <div class="title">Adresse du club : <span class="address">{{ club.adresse }}</span></div>
+                                        <div class="title">Frais d'abonnement : <span class="address">{{ club.fraisAdhesion }} $</span></div>
+                                    </div></div>
+                                <div class="col-md-4">
+                                    <div class="info" >
+
+                                        <div class="title">Text descriptif : <span class="address">le club est un chocolat tunisien tres mauvais avec des différents gouts chiant</span></div>
+
+                                    </div></div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        {% endfor %}
+
+
+
+
+
                     </ul>
                 </div>
                 <div class="clearfix"></div>
 
 
 
-               
+
             </div>
 
         </div>
