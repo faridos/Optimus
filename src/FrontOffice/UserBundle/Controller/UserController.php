@@ -42,7 +42,7 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
       
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findAll();
-        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime());
+        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime('- 1 months'));
 
         return $this->render('FrontOfficeUserBundle:User:redirect.html.twig', array('events' => $eventsMap));
     }
@@ -59,8 +59,8 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $lng = $user->getLng();
         $lat = $user->getLat();
-        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventLoad(new \Datetime(), $lng, $lat);
-        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime());
+        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventLoad(new \Datetime('- 1 months'), $lng, $lat);
+        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime('- 1 months'));
         return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $events, 'eventsMap' => $eventsMap));
     }
 
@@ -90,7 +90,7 @@ class UserController extends Controller {
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
-        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getEventUserParticipant($id,new \Datetime());
+        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getEventUserParticipant($id,new \Datetime('- 1 months'));
         return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1,'participations' => $participation));
     }
 
