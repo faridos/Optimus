@@ -4,7 +4,7 @@
         <div class="row mb20"></div>
         <div class="col-lg-12">
             <div class="tabsContainer">
-               <ul class="nav nav-tabs nav-justified" role="tablist">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li class="">
                         <a href="{{ path('show_profil', { 'id' : user.id }) }}" >
                             <span class="icon-trophy"></span> Events
@@ -32,52 +32,36 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-
-
-                    <ul class="tab-pane fade scrollbar active in" id="albums" >       
-                        <div class="row">
-                            <br>
-                          
-                              <div class="col-xs-6" >
-                                <div data-linkto="" class="card albumus" >
-                                    <div class="figure" id="main">
-                                        <a href="{{ path('photos_user', {'id' : user.id}) }}" >
-                                            <img src="{{ asset(user.WebPath) }}" />
-                                        </a>
-
-                                        <div class="figView"></div>
-
+                    <ul class="tab-pane fade scrollbar active in" id="albums" > 
+                        {% for album in albums %}
+                            <div class="row">
+                                <br>
+                                <div class="col-xs-6" >
+                                    <div data-linkto="" class="card albumus" >
+                                        <div class="figure" id="main">
+                                            <a href="{{ path('photos_user', {'id' : user.id}) }}" >
+                                                <img src="images/1.jpg" />
+                                            </a>
+                                            <div class="figView"></div>
+                                        </div>
+                                        <h2 align="center">{{ album.nom }}</h2>
+                                        <div align="center" >
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                        </div>
+                                        <br>
+                                        <div class="clearfix"></div>
                                     </div>
-                                    <h2 align="center">Album</h2>
-
-                                    <div align="center" >
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                    </div>
-                                    <br>
-
-                                    <div class="clearfix"></div>
                                 </div>
                             </div>
-                             
-                        </div>
+                        {% endfor %}
                         <div class="clearfix"></div>
                     </ul>
-
-
-
                 </div>
                 <div class="clearfix"></div>
-
-
-
-
             </div>
-
         </div>
-
     </div>
-
 {% endblock %}
 
 

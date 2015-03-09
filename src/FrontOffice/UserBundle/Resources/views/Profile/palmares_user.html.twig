@@ -4,7 +4,7 @@
         <div class="row mb20"></div>
         <div class="col-lg-12">
             <div class="tabsContainer">
-                 <ul class="nav nav-tabs nav-justified" role="tablist">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li class="">
                         <a href="{{ path('show_profil', { 'id' : user.id }) }}" >
                             <span class="icon-trophy"></span> Events
@@ -32,75 +32,68 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                   
+
                     <ul class="tab-pane fade active in scrollbar" id="palmares" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 87%;background-color:#fff;">       
-                        <div class="row">
-                            <br>
-                            <div class="col-xs-4" >
-                                <div data-linkto="" class="card" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
-                                    <br> 
-                                    <div class="profile-card">
-                                        <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest btn-lg"style="width:100px;height:100px" ><span class="fa fa-child"style="font-size: 75px;"></span></a></div>
-                                        <div class="pc-name">Titre</div>
-                                    </div>           
-                                    <div align="center" >
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                    </div>
-                                    <br>
+                        {% for reward in rewards %}
+                            <div class="row">
+                                <br>
+                                <div class="col-md-4" >
+                                    <div data-linkto="" class="card albumus" >
+                                        <br>
+                                        <div class="profile-card">
+                                            <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-child palmarus"></span></a></div>
+                                            <div class="pc-name">{{ reward.titre }}</div>
+                                        </div>
+                                        <div align="center" >
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                        </div>
+                                        <br>
 
-                                    <div class="clearfix"></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" >
+                                    <div data-linkto="" class="card albumus" >
+                                        <br>
+                                        <div class="profile-card">
+                                            <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-star palmarus"></span></a></div>
+                                            <div class="pc-name">{{ reward.classment }}</div>
+                                        </div>
+                                        <div align="center" >
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                        </div>
+                                        <br>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" >
+                                    <div data-linkto="" class="card albumus" >
+                                        <br>
+                                        <div class="profile-card">
+                                            <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-calendar palmarus"></span></a></div>
+                                            <div class="pc-name">{{ reward.date |date('Y-m-d')}}</div>
+                                        </div>
+                                        <div align="center" >
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                        </div>
+                                        <br>
+
+                                        <div class="clearfix"></div>
+                                    </div>
                                 </div>
                             </div>
-
-
-
-                            <div class="col-xs-4" >
-                                <div data-linkto="" class="card" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
-                                    <br> 
-                                    <div class="profile-card">
-                                        <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest btn-lg"style="width:100px;height:100px" ><span class="fa fa-star"style="font-size: 75px;"></span></a></div>
-                                        <div class="pc-name">Classement</div>
-                                    </div>           
-                                    <div align="center" >
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                    </div>
-                                    <br>
-
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-xs-4" >
-                                <div data-linkto="" class="card" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
-                                    <br> 
-                                    <div class="profile-card">
-                                        <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest btn-lg"style="width:100px;height:100px" ><span class="fa fa-calendar"style="font-size: 75px;"></span></a></div>
-                                        <div class="pc-name">Date</div>
-                                    </div>           
-                                    <div align="center" >
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                    </div>
-                                    <br>
-
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-
-
-
-
-                        </div>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="clearfix"></div>
 
 
 
-               
+
             </div>
 
         </div>

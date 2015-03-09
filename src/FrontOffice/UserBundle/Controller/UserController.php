@@ -216,7 +216,8 @@ class UserController extends Controller {
          $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-          return $this->render('FrontOfficeUserBundle:Profile:albums_user.html.twig', array('user' => $user));
+          $albums = $em->getRepository('FrontOfficeOptimusBundle:Album')->findBy(array('user' => $user));
+          return $this->render('FrontOfficeUserBundle:Profile:albums_user.html.twig', array('albums'=> $albums, 'user' => $user));
     }
     /**
      * 
@@ -229,6 +230,7 @@ class UserController extends Controller {
          $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
+          
           return $this->render('FrontOfficeUserBundle:Profile:photos_user.html.twig', array('user' => $user));
     }
     /**
@@ -242,7 +244,8 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-        return $this->render('FrontOfficeUserBundle:Profile:palmares_user.html.twig', array('user' => $user));
+        $rewards = $em->getRepository('FrontOfficeOptimusBundle:Reward')->findBy(array('user' => $user));
+        return $this->render('FrontOfficeUserBundle:Profile:palmares_user.html.twig', array('rewards'=> $rewards, 'user' => $user));
     }
     
     

@@ -46,4 +46,24 @@ class AlbumController extends Controller
             'form' => $form->createView(),
         );
     }
+    /**
+     * Lists all Album entities.
+     *
+     * @Route("profil={id}/albums", name="album")
+     * @Method("GET")
+     * @Template()
+     */
+    public function albumUserAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $id));
+        $albums = $em->getRepository('FrontOfficeOptimusBundle:Album')->findBy(array('utilisateur' => $user));
+        return $this->render('FrontOfficeOptimusBundle:Album:albumProfil.html.twig', array(
+                    'id' => $id,
+                    'user' => $user,
+                    'albums' => $albums,
+                    'user1' => $user1,
+        ));
+    }
 }
