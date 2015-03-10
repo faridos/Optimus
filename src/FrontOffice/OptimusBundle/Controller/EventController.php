@@ -132,6 +132,7 @@ class EventController extends Controller {
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
+                
             }
         }
         return $this->render('FrontOfficeOptimusBundle:Event:new.html.twig', array('form' => $form->createView(), 'user' => $user));

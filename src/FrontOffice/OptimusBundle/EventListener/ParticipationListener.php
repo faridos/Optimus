@@ -29,7 +29,7 @@ class ParticipationListener {
         $participation->setDatePaticipation(new DateTime());
         $em->persist($participation);
         $em->flush();
-        die('ee');
+        
     }
 
    
