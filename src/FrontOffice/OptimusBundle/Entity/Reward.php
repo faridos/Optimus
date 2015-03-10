@@ -27,6 +27,12 @@ class Reward
    
    protected $user;
    /**
+     * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Club", inversedBy="reward")
+     * @ORM\JoinColumn(name="club_id", referencedColumnName="id")
+     **/
+   
+   protected $club;
+   /**
      * @var \DateTime
      *
      * @ORM\Column(name="Date_reward", type="date")
@@ -103,6 +109,14 @@ class Reward
    public function setUser($user) {
        $this->user = $user;
    }
+   public function getClub() {
+       return $this->club;
+   }
+
+   public function setClub($club) {
+       $this->club = $club;
+   }
+
 
 
 

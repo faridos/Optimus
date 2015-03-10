@@ -47,23 +47,36 @@ class AlbumController extends Controller
         );
     }
     /**
-     * Lists all Album entities.
+     * Creates a new Album entity.
      *
-     * @Route("profil={id}/albums", name="album")
-     * @Method("GET")
-     * @Template()
+     * @Route("/club={id}/albumc/new/", name="new_album_club")
+     * 
+     * @Template("FrontOfficeOptimusBundle:Club:newAlbum.html.twig")
      */
-    public function albumUserAction($id) {
+    public function createAlbumClubAction(Request $request, $id) {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $entity = new Album();
+        $date = new DateTime();
+        $entity->setCreatedate($date);
+        $entity->setUpdatedate($date);
         $em = $this->getDoctrine()->getManager();
-        $user1 = $this->container->get('security.context')->getToken()->getUser();
-        $userManager = $this->container->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(array('id' => $id));
-        $albums = $em->getRepository('FrontOfficeOptimusBundle:Album')->findBy(array('utilisateur' => $user));
-        return $this->render('FrontOfficeOptimusBundle:Album:albumProfil.html.twig', array(
-                    'id' => $id,
-                    'user' => $user,
-                    'albums' => $albums,
-                    'user1' => $user1,
-        ));
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        $entity->setClub($club);
+        $form = $this->createForm(new AlbumType(), $entity);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+           
+            $em->persist($entity);
+            $em->flush();
+
+           die('okk');
+        }
+
+        return array(
+            'entity' => $club,
+            'album' => $entity,
+            'form' => $form->createView(),
+        );
     }
+   
 }

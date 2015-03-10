@@ -236,7 +236,6 @@
                                                                                             <ul class="dropdown-menu scrollbar" role="menu" >
                                                                                                 {% set friends = getFriends(app.user.id) %}
                                                                                                     {% for friend in friends %}
-
                                                                                                         <li class="definedname"><a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
                                                                                                                 <img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
                                                                                                                 <div class="userTop pull-left">
@@ -244,7 +243,6 @@
                                                                                                                 </div><img class="connected" src="{{ asset('template/images/connected.png') }}" alt="en ligne" title="en ligne" >
                                                                                                                 <div class="clearfix"></div>
                                                                                                             </a></li>
-
                                                                                                     {% endfor %}
                                                                                                     <li class="divider"></li>
 

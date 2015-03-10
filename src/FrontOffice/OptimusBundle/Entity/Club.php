@@ -123,6 +123,11 @@ class Club {
      * @ORM\OneToMany(targetEntity="Member", mappedBy="clubad")
      * */
     protected $adherents;
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Reward", mappedBy="club")
+     * 
+     */
+    protected $reward;
 
     public function __construct() {
 

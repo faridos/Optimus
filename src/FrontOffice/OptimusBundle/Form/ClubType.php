@@ -16,12 +16,13 @@ class ClubType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom','text',array('attr'=>array('class'=>'form-control')))
+            ->add('nom','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le nom du club')))
             ->add('file', 'file' ,array('attr'=>array('class'=>'form-control')))
             ->add('dateCreation','datetime', array('years' => range( date('Y'),1930), 'format' => 'dd-MMMM-yyyy'))
             ->add('discpline','text',array('attr'=>array('class'=>'form-control')))
+                  ->add('description','text',array('attr'=>array('class'=>'form-control')))
             ->add('adresse','text',array('attr'=>array('class'=>'form-control'),'required'=>True))
-            ->add('lienWeb','url',array('attr'=>array('class'=>'form-control'),'required'=>false))
+           
             ->add('fraisAdhesion','text',array('attr'=>array('class'=>'form-control')))
             ->add('lat','number',array('attr'=>array('class'=>'form-control', )),array('required'=>true))
             ->add('lng','number',array('attr'=>array('class'=>'form-control',)),array('required'=>true))

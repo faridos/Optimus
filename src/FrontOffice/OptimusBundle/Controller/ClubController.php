@@ -13,8 +13,6 @@ use FrontOffice\OptimusBundle\Form\ClubPhotoType;
 use FrontOffice\OptimusBundle\Entity\Member;
 use FrontOffice\OptimusBundle\Entity\Comment;
 use FrontOffice\OptimusBundle\Entity\Palmares;
-
-
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FrontOffice\OptimusBundle\Form\MemberType;
 use FrontOffice\OptimusBundle\Controller\MemberController;
@@ -28,14 +26,13 @@ use FrontOffice\OptimusBundle\Event\HistoryClubEvent;
 use FrontOffice\OptimusBundle\Event\NotificationClubEvent;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 
-
 /**
  * Club controller.
  *
  * @Route("/")
  */
 class ClubController extends Controller {
-    
+
     /**
      * 
      *
@@ -54,26 +51,29 @@ class ClubController extends Controller {
         $club = new Club();
         $club->setCreateur($user);
         $club->setActive(1);
+        $club->setLienWeb('http://www.sport.com');
         $form = $this->createForm(new ClubType(), $club);
         $req = $this->get('request');
         if ($req->getMethod() == 'POST') {
             $form->bind($req);
-            if ($form->isValid()) {
+           
                 $em->persist($club);
                 $em->flush();
-                  var_dump($club);die();
+              
+                die('ok');
 //                $action = 'add';
 //                $clubevent = new HistoryClubEvent($user, $club, $action);
 //                $clubnotification = new NotificationClubEvent($user, $club, $action);
 //                $dispatcher = $this->get('event_dispatcher');
 //                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
 //                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
-            }
+           
         }
         return array(
             'form' => $form->createView(),
             'user' => $user);
     }
+
     /**
      * 
      *
@@ -89,7 +89,7 @@ class ClubController extends Controller {
         $user1 = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-       
+
         return $this->render('FrontOfficeOptimusBundle:Club:show_club.html.twig', array('club' => $club, 'user1' => $user1));
     }
 
@@ -108,7 +108,7 @@ class ClubController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-        if (!$entity || $entity->getActive()==0) {
+        if (!$entity || $entity->getActive() == 0) {
             throw $this->createNotFoundException('Unable to find Club entity.');
         }
         if ($entity->getCreateur() == $user) {
@@ -144,7 +144,7 @@ class ClubController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-        if (!$entity || $entity->getActive()==0) {
+        if (!$entity || $entity->getActive() == 0) {
             throw $this->createNotFoundException('Unable to find Club entity.');
         }
         if ($entity->getCreateur() == $user) {
@@ -153,11 +153,53 @@ class ClubController extends Controller {
             $em->flush();
             // add History 
             $action = 'delete';
-                $clubevent = new HistoryClubEvent($user, $entity, $action);
-                $dispatcher = $this->get('event_dispatcher');
-                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-            
+            $clubevent = new HistoryClubEvent($user, $entity, $action);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
         }
+    }
+
+    /**
+     * 
+     *
+     * @Route("club={id}/palmares", name="palmares_club", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function getPalmaresUserAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        $rewards = $em->getRepository('FrontOfficeOptimusBundle:Reward')->findBy(array('club' => $club));
+        return $this->render('FrontOfficeOptimusBundle:Club:palmaresClub.html.twig', array('rewards' => $rewards, 'club' => $club));
+    }
+
+    /**
+     * 
+     *
+     * @Route("club={id}/albums", name="albums_club", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function getAlbumsClubAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        $albums = $em->getRepository('FrontOfficeOptimusBundle:Album')->findBy(array('club' => $club));
+        return $this->render('FrontOfficeOptimusBundle:Club:albumsClub.html.twig', array('albums' => $albums, 'club' => $club));
+    }
+    /**
+     * 
+     *
+     * @Route("club={id}/album={id_album}/photos", name="photos_club", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function getPhotosUserAction($id_album) {
+          $em = $this->getDoctrine()->getManager();
+          $album = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id_album);
+          $club = $album->getClub();
+          $photos = $em->getRepository('FrontOfficeOptimusBundle:Photo')->findby(array('album'=> $album));
+          return $this->render('FrontOfficeOptimusBundle:Club:photosClub.html.twig', array('album' => $album,'club' => $club,'photos'=> $photos));
     }
 
 }

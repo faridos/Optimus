@@ -1,0 +1,43 @@
+<form action="{{ path("reward_user_update", {'id' :reward.id}) }}" {{ form_enctype(edit_form) }} method="post" class="form-horizontal">
+                             <div class="well">
+                        <div class="form-group">
+
+                            <div class="col-md-12 form-group">
+                                <div class="col-md-3">
+                                    <label class="control-label">Titre :</label>
+                                </div>
+                                <div class="col-md-9">
+                                    {{ form_widget(edit_form.titre) }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <div class="col-md-3">
+                                    <label class="control-label">Classement :</label>
+                                </div>
+                                <div class="col-md-9">
+                                    {{ form_widget(edit_form.classment) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <div class="col-md-3">
+                                    <label class="control-label">Date :</label>
+                                </div>
+                                <div class="col-md-9">
+                                    {{ form_widget(edit_form.date) }}
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-12 control-label">
+                                <div class="col-md-9 droite">
+                                 <button type="submit" class="btn btn-primary droite2">Modifier</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {{ form_widget(edit_form._token) }}
+                        </div>
+                        </form>
