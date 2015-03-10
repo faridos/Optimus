@@ -21,7 +21,6 @@ class ParticipationController extends Controller {
      * 
      *
      * @Route("event={id}/participer", name="add_participation")
-
      * 
      * @Method("GET|POST")
      */
