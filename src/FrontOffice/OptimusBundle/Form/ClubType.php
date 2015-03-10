@@ -17,15 +17,15 @@ class ClubType extends AbstractType
     {
         $builder
             ->add('nom','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le nom du club')))
-            ->add('file', 'file' ,array('attr'=>array('class'=>'form-control')))
-            ->add('dateCreation','datetime', array('years' => range( date('Y'),1930), 'format' => 'dd-MMMM-yyyy'))
-            ->add('discpline','text',array('attr'=>array('class'=>'form-control')))
-                  ->add('description','text',array('attr'=>array('class'=>'form-control')))
-            ->add('adresse','text',array('attr'=>array('class'=>'form-control'),'required'=>True))
+            ->add('file', 'file' ,array('attr'=>array('class'=>'btn btn-round btn-o search-optimus')))
+            ->add('dateCreation','date', array('attr'=>array('class'=>'some_class search-optimus')))
+            ->add('discpline','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer la discpline')))
+                  ->add('description','text',array('attr'=>array('class'=>'form-control search-optimus','placeholder'=>'Entrer la description du votre club...')))
+            ->add('adresse','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Adresse'),'required'=>True))
            
-            ->add('fraisAdhesion','text',array('attr'=>array('class'=>'form-control')))
-            ->add('lat','number',array('attr'=>array('class'=>'form-control', )),array('required'=>true))
-            ->add('lng','number',array('attr'=>array('class'=>'form-control',)),array('required'=>true))
+            ->add('fraisAdhesion','integer',array('attr'=>array('class'=>'form-control round','placeholder'=>'Entrer les frais du club')))
+            ->add('lat','number',array('attr'=>array('class'=>'search-optimus', )),array('required'=>true))
+            ->add('lng','number',array('attr'=>array('class'=>'search-optimus',)),array('required'=>true))
             
         ;
     }

@@ -3551,6 +3551,9 @@ tbody.collapse.in {
   float: left;
   width: 100%;
   margin-bottom: 0;
+  border: 0;
+  margin: 2px 0px 0px 0px;
+
 }
 .input-group-lg > .form-control,
 .input-group-lg > .input-group-addon,
@@ -3619,9 +3622,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   font-size: 13px;
   font-weight: normal;
   line-height: 1;
-  color: #333;
+  color: #fff;
   text-align: center;
-  background-color: #f7f7f7;
+  background-color: #c02100;
   border: 1px solid #dfdfdf;
   border-radius: 2px;
 }
@@ -5347,6 +5350,11 @@ a.list-group-item-danger.active:focus {
   border-bottom: 1px solid #ddd;
 }
 .panel-default {
+  border-color: #ddd;
+}
+.panel-default > .panel-heading.optimus {
+  color: #fff;
+  background-color: #c02100;
   border-color: #ddd;
 }
 .panel-default > .panel-heading {

@@ -19,7 +19,7 @@
                                         {{ form_widget(form.discpline) }}
                                     </div>
                                     <div class="col-xs-6">
-                                        <span>{{ form_widget(form.file,  {'attr': {'type': 'file','name':'','class':'btn btn-default btn-file'}}) }}</span>
+                                        <span>{{ form_widget(form.file) }}</span>
                                         <p class="help-block">Télécharger le logo du club</p>
                                     </div>                                           
                                     <div class="form-group col-xs-6">
@@ -32,7 +32,9 @@
                                         {{ form_widget(form.dateCreation) }}
                                     </div>
                                     <div class="form-group col-xs-6 descriptus">
+                                       
                                         {{ form_widget(form.description) }}
+                                      
                                     </div> 
                                 </div>
                             </div>
@@ -62,9 +64,59 @@
                         {{ form_widget(form._token) }}
                         {{ form_rest(form) }}
                     </form>
+
                 </div>
             </div>
         </div>
         <div class="clearfix"></div>
     </div>
+{% endblock %}
+{% block javascriptfils %}
+    <script>
+
+        var markerClub;
+        var geocoder;
+        geocoder = new google.maps.Geocoder();
+        google.maps.event.addListener(map, 'click', function(event) {
+
+
+            document.getElementById('lat_id').value = event.latLng.lat();
+            document.getElementById('lng_id').value = event.latLng.lng();
+            //latlng = event.latLng;
+            var latlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+            //latlng = event.latLng;
+
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        document.getElementById('adresse').value = results[0].formatted_address;
+                       placeMarker(event.latLng);
+                    } else {
+                        alert('No results found');
+                    }
+                } else {
+                    alert('Geocoder failed due to: ' + status);
+                }
+
+            });
+            
+        });
+        function placeMarker(location) {
+
+            if (markerClub === undefined) {
+                markerClub = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                });
+                markerClub.setIcon('/Optimus/web/template/images/marker-green.png');
+            }
+            else {
+                markerClub.setPosition(location);
+            }
+        }
+    </script>
 {% endblock %}
