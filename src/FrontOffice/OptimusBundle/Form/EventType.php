@@ -15,19 +15,18 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre','text',array('attr'=>array('class'=>'form-control')))
-            ->add('lieu','text',array('attr'=>array('class'=>'form-control'),'required'=>True))
-            ->add('dateDebut','datetime', array('data' => new \DateTime('now'), 'format' => 'dd-MMMM-yyyy'))
-            ->add('dateFin','datetime', array('data' => new \DateTime("now"), 'format' => 'dd-MMMM-yyyy'))
-            ->add('nbrPlaces','integer',array('attr'=>array('min'=>0,'class'=>'form-control')))
-            ->add('frais','number',array('attr'=>array('class'=>'form-control')))
-            ->add('url','url',array('attr'=>array('class'=>'form-control'),'required'=>false))
-            ->add('description','textarea',array('attr'=>array('class'=>'form-control'),'required'=>false))
-            ->add('type','entity', array(  'attr'=>array('class'=>'form-control'),
+            ->add('titre','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le titre')))
+            ->add('lieu','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le lieu'),'required'=>True))
+            ->add('dateDebut','datetime', array('attr'=>array('class'=>'some_class search-optimus','placeholder'=>'Entrer la date de début'),'widget' => 'single_text','required' => true))
+            ->add('dateFin','datetime', array('attr'=>array('class'=>'some_class search-optimus','placeholder'=>'Entrer la date de fin'),'widget' => 'single_text','required' => true))
+            ->add('nbrPlaces','integer',array('attr'=>array('min'=>0,'class'=>'search-optimus','placeholder'=>'Entrer le nombre de places')))
+            ->add('frais','integer',array('attr'=>array('min'=>0,'class'=>'form-control round','placeholder'=>'Entrer les frais d\'inscription')))
+            ->add('description','textarea',array('attr'=>array('class'=>'search-optimus'),'required'=>false))
+            ->add('type','entity', array(  'attr'=>array('class'=>'search-optimus'),
                                            'class' => 'FrontOfficeOptimusBundle:TypeEvent',
                                            'property'=>'nom'))
-            ->add('lat','number',array('attr'=>array('class'=>'form-control')),array('required'=>true))
-            ->add('lng','number',array('attr'=>array('class'=>'form-control')),array('required'=>true))
+            ->add('lat','number',array('attr'=>array('class'=>'search-optimus')),array('required'=>true))
+            ->add('lng','number',array('attr'=>array('class'=>'search-optimus')),array('required'=>true))
             
         ;
     }

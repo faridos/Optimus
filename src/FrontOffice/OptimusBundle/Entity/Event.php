@@ -92,12 +92,6 @@ class Event {
      */
     private $frais;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="url", type="string", length=255, nullable=true)
-     */
-    private $url;
 
     /**
      * @var string

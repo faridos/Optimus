@@ -1,162 +1,158 @@
-{% extends '::base.html.twig' %}
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block body %}
 
-{% block body -%}
-    <h1>Event creation</h1>
 
-    <form action="{{ path("add-event") }}" method="post" class="form-horizontal0 form-groups-bordered">
-                                    <br>
-                                    {{ form_errors(form) }}
 
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <div class="col-md-2 marge_haut">
-                                                <label class="control-label">Titre</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                {{ form_widget(form.titre) }}
-                                                {{ form_errors(form.titre) }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="col-md-2 marge_haut">
-                                                <label class="control-label">Type</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                {{ form_widget(form.type) }}
-                                                {{ form_errors(form.type) }}
-                                            </div>
-                                        </div>
+    <!-- Content -->
+
+    <div id="wrapper">
+        <div id="mapView" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
+
+        <div id="content" class="mob-max" >
+
+            <div class="col-lg-12"><div class="row mb20">
+
+
+
+                </div>
+
+
+
+                <div class="row">
+                    <form action="{{ path("add-event") }}" method="post">
+                        <div class="col-xs-12 ">
+                            <div class="panel panel-default">
+                                <div class="panel-heading optimus"> <span class="navLabel">Ajouter un évenement</span></div>
+                                <div class="panel-body">
+
+                                    <div class="form-group col-xs-6">
+                                    {{ form_widget(form.titre) }}
                                     </div>
-
-                                    <div class="form-group">
-
-                                        <div class="col-md-6">
-                                            <div class="col-md-2 marge_haut">
-                                                <label class="control-label">Frais</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">€</span>
-
-                                                    {{ form_widget(form.frais) }}
-                                                    {{ form_errors(form.frais) }}
-                                                </div>
-                                            </div>  
-
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="col-md-4 marge_haut">
-                                                <label class="control-label">Nombre de places</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                {{ form_widget(form.nbrPlaces) }}
-                                                {{ form_errors(form.nbrPlaces) }}
-                                            </div>
-                                        </div>
-                                    </div>  
-
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <div class="col-md-4 marge_haut">
-                                                <label class="control-label">Date de début</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                {{ form_widget(form.dateDebut) }}
-                                                {{ form_errors(form.dateDebut) }}
-                                            </div>
-                                        </div>
-                                         
-                                        <div class="col-md-6">
-                                            <div class="col-md-4 marge_haut">
-                                                <label class="control-label">Date de clôture</label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                {{ form_widget(form.dateFin) }}
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                             <div class="form-group">
-                                        <div class="col-md-6">
-                                            <div class="col-md-3 marge_haut">
-                                                <label class="control-label">Description</label>
-                                            </div>
-                                            <div class="col-md-9">
-                                                {{ form_widget(form.description) }}
-                                                {{ form_errors(form.description) }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="col-md-2 marge_haut">
-                                                <label class="control-label">URL</label>
-                                            </div>
-                                            <div class="col-md-10">
-                                                {{ form_widget(form.url) }}
-                                                {{ form_errors(form.url) }}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <p class="text-info"><i class="entypo-info-circled"></i>Naviguer dans la carte, Cliquer pour  choisir votre  lieu de l'évènement</p><br>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-2 marge_haut">
-                                                    <label class="control-label">Lieu</label>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{ form_widget(form.lieu , { 'id': 'lieu' }) }}
-                                                    {{ form_errors(form.lieu) }}
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-2 marge_haut">
-                                                    <label class="control-label">Latitude</label>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{ form_widget(form.lat, { 'id': 'lat_id' }) }}
-                                                    {{ form_errors(form.lat) }}
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-2 marge_haut">
-                                                    <label class="control-label">Longitude</label>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{ form_widget(form.lng, { 'id': 'lng_id' }) }}
-                                                    {{ form_errors(form.lng) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="panel panel-invert" data-collapsed="0" style="zoom: 1; position: static;">
-                                            <div  id="normal" style="height: 300px;"></div>
-                                            </div>
-                                        </div>
+                                    <div class="form-group col-xs-6">
+                                        {{ form_widget(form.type) }}
+                                     </div>
+                                    <div class="form-group col-xs-6">
+                                        {{ form_widget(form.nbrPlaces) }}                                      
                                     </div>
 
 
-                                    <div class="col-sm-5">
-                                        <br>
-                                        <button type="submit" class="btn btn-success"><i class="entypo-check"></i>Enregistrer</button>
-                                        <button type="reset" class="btn btn-danger">annuler</button>
+                                    <div class="form-group col-xs-6">
+
+                                        <div class="input-group search-optimus">
+                                            {{ form_widget(form.frais) }}
+                                            <div class="input-group-addon round ">&euro;</div>
+                                        </div>
+                                    </div> 
+                                    <div class="form-group col-xs-6">
+
+                                        {{ form_widget(form.dateDebut, { 'id': 'some_class_1' }) }}
+                                       
                                     </div>
-                                      
-                                    {{ form_widget(form._token) }}
-                                    {{ form_rest(form) }}
-                                </form>
-                          
+                                    <div class="form-group col-xs-6">
+
+                                        {{ form_widget(form.dateFin, { 'id': 'some_class_2' }) }}
+                                                                            
+                                    </div>
+                                        <div class="form-group col-xs-6">
+
+                                     {{ form_widget(form.description) }}
+                                                                            
+                                    </div>
+                                        
+
+                                </div>
+                            </div>
+
+                        </div> 
 
 
-        <ul class="record_actions">
-    <li>
-      
-            Back to the list
-        </a>
-    </li>
-</ul>
+                        <div class="col-xs-12 ">
+                            <div class="panel panel-default">
+                                <div class="panel-heading optimus">veuiller choisir l'emplacement d'évenement dans la map</div><div class="panel-body">
+                                    <div class="form-group col-xs-12">
+                                        {{ form_widget(form.lieu , { 'id': 'lieu' }) }}
+                                        
+                                    </div>
+
+
+                                    <div class="form-group col-xs-6 " style="display: none; visibility: hidden;">
+                                        {{ form_widget(form.lat, { 'id': 'lat_id' }) }}
+                                       
+                                    </div>
+                                    <div class="form-group col-xs-6 " style="display: none; visibility: hidden;">
+
+                                        {{ form_widget(form.lng, { 'id': 'lng_id' }) }}
+                                    </div>
+                                   
+
+                                    
+                                </div></div>
+                        </div>
+                                    <div style="text-align: center">
+
+                                        <button type="submit" value="Submit" class="btn btn-round btn-green">Submit</button>
+                                        <button type="reset" value="Reset" class="btn btn-round btn-green">Reset</button>
+                                    </div>
+
+    {{ form_widget(form._token) }}
+    {{ form_rest(form) }}
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+
+{% endblock %}
+{% block javascriptfils %}
+    <script>
+
+        var markerevent;
+        var geocoder;
+        geocoder = new google.maps.Geocoder();
+        google.maps.event.addListener(map, 'click', function(event) {
+
+
+            document.getElementById('lat_id').value = event.latLng.lat();
+            document.getElementById('lng_id').value = event.latLng.lng();
+            //latlng = event.latLng;
+            var latlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+            //latlng = event.latLng;
+
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        document.getElementById('lieu').value = results[0].formatted_address;
+                       placeMarker(event.latLng);
+                    } else {
+                        alert('No results found');
+                    }
+                } else {
+                    alert('Geocoder failed due to: ' + status);
+                }
+
+            });
+            
+        });
+        function placeMarker(location) {
+
+            if (markerevent === undefined) {
+                markerevent = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                });
+                markerevent.setIcon('/Optimus/web/template/images/marker-green.png');
+            }
+            else {
+                markerevent.setPosition(location);
+            }
+        }
+    </script>
 {% endblock %}
