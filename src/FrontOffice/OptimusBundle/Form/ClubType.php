@@ -18,9 +18,11 @@ class ClubType extends AbstractType
         $builder
             ->add('nom','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le nom du club')))
             ->add('file', 'file' ,array('attr'=>array('class'=>'btn btn-round btn-o search-optimus')))
-            ->add('dateCreation','date', array('attr'=>array('class'=>'some_class search-optimus')))
+            ->add('dateCreation','datetime', array('attr'=>array('class'=>'some_class search-optimus','placeholder'=>'Date de creation'),'widget' => 'single_text','required' => true)
+	
+	)
             ->add('discpline','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer la discpline')))
-                  ->add('description','text',array('attr'=>array('class'=>'form-control search-optimus','placeholder'=>'Entrer la description du votre club...')))
+            ->add('description','text',array('attr'=>array('class'=>'form-control search-optimus','placeholder'=>'Entrer la description du votre club...')))
             ->add('adresse','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Adresse'),'required'=>True))
            
             ->add('fraisAdhesion','integer',array('attr'=>array('class'=>'form-control round','placeholder'=>'Entrer les frais du club')))

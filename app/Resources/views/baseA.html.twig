@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <title>{% block title %}Optimus{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ asset('template/css/jquery.datetimepicker.css') }}"/>
         <link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
         <link href="{{ asset('template/css/simple-line-icons.css') }}" rel="stylesheet">
         <link href="{{ asset('template/css/jquery-ui.css') }}" rel="stylesheet">
@@ -13,7 +14,7 @@
         <link href="{{ asset('template/css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('template/css/jquery.lightbox.css') }}" type="text/css" rel="stylesheet" />
         <link href="{{ asset('template/css/selectinput.css') }}" rel="stylesheet" type="text/css">
-         <link rel="icon" type="image/x-icon" href="{{ asset('favo.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favo.ico') }}" />
         {% block stylesheets %}
 
         {% endblock %}
@@ -38,7 +39,7 @@
         <script src="{{ asset('template/js/json2.js') }}"></script>
         <script src="{{ asset('template/js/jquery-2.1.1.min.js') }}"></script>
 
-        
+
         <script src="{{ asset('template/js/jquery.lightbox.min.js') }}" type="text/javascript" ></script>
         <script src="{{ asset('template/js/underscore.js') }}"></script>
         <script src="{{ asset('template/js/moment-2.5.1.js') }}"></script>
@@ -58,6 +59,10 @@
         <script src="{{ asset('template/js/calendar.js') }}"></script>
         <script src="{{ asset('template/js/selectinput.js') }}" type=template/text/javascript" ></script>
         <script src="{{ asset('template/js/write.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('template/js/jquery.js') }}"></script>
+        <script src="{{ asset('template/js/jquery.datetimepicker.js') }}"></script>
+        <script src="{{ asset('template/js/datus.js') }}"></script>
+
         <!--- script lightbox optimus --->
         <script>
             $(document).ready(function(e) {
