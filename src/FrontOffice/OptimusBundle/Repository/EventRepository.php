@@ -36,6 +36,22 @@ class EventRepository extends EntityRepository {
 
         return $events = $query->getResult();
     }
+    
+    public function getParticipants($event) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $particip = $qb->select('p')
+                        ->from("FrontOfficeOptimusBundle:Participation", 'p')
+                        ->where("p.event = :event")
+                        ->setParameter('event', $event)
+                        ->getQuery()->getResult();
+
+        $participants = array();
+
+        foreach ($particip as $p) {
+            $participants[] = $p->getParticipant();
+        }
+        return $participants;
+    }
 
     
 //    public function getEventLoadAjax($date, $lng, $lat, $last_id) {

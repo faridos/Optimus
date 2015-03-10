@@ -24,7 +24,7 @@
                                     <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
                                     <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
                                 </div>
-                                <div class="name osLight eventus" ><strong>Nom Evenement</strong></div>
+                                <div class="name osLight eventus" ><strong>{{event.titre}}</strong></div>
                             </div>
 
                             <div class="address eventus"><div class="cardRating">
@@ -38,9 +38,9 @@
                             <div class="row">
                                 <div class="col-md-6 pb20">
 
-                                    <div class="pc-about osLight"><div class="title eventus">Créateur :<span class="address detaillus">Foulén ben foulén</span></div>
-                                        <div class="title eventus">Date début :<span class="address detaillus">25/03/2015</span></div>
-                                        <div class="title eventus">Nombre de participants :<span class="address detaillus">208</span></div><br>
+                                    <div class="pc-about osLight"><div class="title eventus">Créateur :<span class="address detaillus">{{event.createur}}</span></div>
+                                        <div class="title eventus">Date début :<span class="address detaillus">{{event.dateDebut|date}}</span></div>
+                                        <div class="title eventus">Nombre de places :<span class="address detaillus">{{event.nbrPlaces}}</span></div><br>
                                         <a class="btn btn-green btn-round eventus" href="#" >
                                             <span class="fa icon-action-redo "></span> <span >Participer</span>
 
@@ -48,9 +48,9 @@
 
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="pc-title osLight"><div class="title eventus">Type d'évenement : <span class="address leftus"> sport</span></div>
-                                        <div class="title eventus">Date fin : <span class="address leftus">25/03/2015 </span></div>
-                                        <div class="title eventus">Frais participation : <span class="address leftus">950$ </span></div><br>
+                                    <div class="pc-title osLight"><div class="title eventus">Type d'évenement : <span class="address leftus">{{event.type.nom}}</span></div>
+                                        <div class="title eventus">Date fin : <span class="address leftus">{{event.dateFin|date}}</span></div>
+                                        <div class="title eventus">Frais participation : <span class="address leftus">{{event.frais}} &euro; </span></div><br>
                                         <div class="buttonsWrapper pb20 buttonleftus">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
                                     </div>
 
@@ -68,7 +68,7 @@
 
                             </div>
                             <div class="info">
-                                <div class="name">Nombre de participants confirmés <span class="address leftus"> : 160</span></div>
+                                <div class="name">Nombre de participants :<span class="address leftus"> {{participants|length}}</span></div>
 
 
                             </div>
@@ -79,13 +79,81 @@
                     </div>
 
                 </div>
-                <div id="mapView" class="eventmap" style="width:110%"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div><div class="clearfix"></div>
+              
+                <div id="mapView" class="eventmap" style=" max-height: 60%; width:110%;"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div><div class="clearfix"></div>
             </div>
-
+              
         </div>
         <div class="clearfix"></div>
     </div>
+{% endblock %}
+{% block javascriptfils %}
+    <script>
+        (function($) {
+            
+        "use strict";
+        var infobox = new InfoBox({
+                        disableAutoPan: false,
+                                maxWidth: 202,
+                                pixelOffset: new google.maps.Size( - 101, - 285),
+                                zIndex: null,
+                                boxStyle: {
+                                background: "url('/Optimus/web/template/images/infobox-bg.png') no-repeat",
+                                        opacity: 1,
+                                        width: "202px",
+                                        height: "245px"
+                                },
+                                closeBoxMargin: "28px 26px 0px 0px",
+                                closeBoxURL: "",
+                                infoBoxClearance: new google.maps.Size(1, 1),
+                                pane: "floatPane",
+                                enableEventPropagation: false
+                        });
+                        
+                        var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
+                                    var marker_{{ event.id}} = new google.maps.Marker({
+                                    position: myLatLng,
+                                            map: map,
+                                            icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),
+                                            draggable: false,
+                                            animation: google.maps.Animation.DROP,
+                                            title: "Cliquez pour voir aperçu"
+                                    });
+                                    var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
+                                    '<div class="propImg">' +
+                                    '<img src="/Optimus/web/template/images/prop/1-1-thmb.png">' +
+                                    '<div class="propBg">' +
+                                    '<div class="propPrice">{{event.frais}} &euro;</div>' +
+                                    '<div class="propType">{{event.type.nom}}</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="paWrapper">' +
+                                    '<div class="propTitle">{{event.titre}}</div>' +
+                                    '<div class="propAddress">{{event.lieu}}</div>' +
+                                    '</div>' +
+                                    '<div class="propRating">' +
+                                    '<span class="fa fa-star"></span>' +
+                                    '<span class="fa fa-star"></span>' +
+                                    '<span class="fa fa-star"></span>' +
+                                    '<span class="fa fa-star"></span>' +
+                                    '<span class="fa fa-star-o"></span>' +
+                                    '</div>' +
+                                    '<div class="clearfix"></div>' +
+                                    '<div class="infoButtons">' +
+                                    '<a class="btn btn-sm btn-round btn-gray btn-o closeInfo">fermer</a>' +
+                                    '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
+                                    '</div>' +
+                                    '</div>';
+                                    google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
 
-
-
+                                    infobox.setContent(contenuInfoBulle_{{ event.id}});
+                                            infobox.open(map, marker_{{ event.id}});
+                                    });
+                                    $(document).on('click', '.closeInfo', function() {
+                            infobox.open(null, null);
+                            });
+                            map.setZoom(14);
+                            map.setCenter(myLatLng);
+                            })(jQuery);
+    </script>
 {% endblock %}

@@ -9,88 +9,41 @@
         <div class="col-lg-12">
             <div class="tabsContainer">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
-                    <li class="active"><a href="#participants" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
-                    <li class=""><a href="#photos" role="tab" data-toggle="tab"><span class="icon-doc"></span> Photos</a></li>
-                    <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
+                    <li class="active"><a href="{{ path('show_event', {'id': event.id}) }}" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
+                    <li class=""><a href="{{ path('photos_event', {'id': event.id}) }}" role="tab"><span class="icon-doc"></span> Photos</a></li>
+                    <li class=""><a href="{{ path('videos_event', {'id': event.id}) }}" role="tab"><span class="icon-film"></span> Vidéos</a></li>
                 </ul>
                 <div class="tab-content">
 
                     <ul class="tab-pane fade  active in scrollbar" id="participants" >
 
-                        <div class="row pb40">
-                         
-
-
+                        <div class="row">
+                            {% for participant in participants %}
                             <div class="col-md-4">
 
-
                                 <div class="tooltipsContainer agent notifyList">
-                                    <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="Essid Essid">
-                                        <img src="images/avatar-2.png" alt="">
+                                    <a href="{{ path('show_profil',{'id': participant.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{participant.prenom}} {{participant.nom}}">
+                                        <img src="{{ asset(participant.WebPath) }}" alt="">
                                         <div class="pulse border-green pulseoptimus"></div>
                                     </a>
                                     <div class="info">
-                                        <a href="#"> <div class="name clubumus"><strong>Nom et Prénom</strong></div></a>
-                                        <div class="title">Sportif / Entraineur</div>
+                                        <a href="{{ path('show_profil',{'id': participant.id}) }}"> <div class="name clubumus"><strong>{{participant.prenom}} {{participant.nom}}</strong></div></a>
+                                        <div class="title">{{participant.profil}}</div>
 
                                     </div><br>
                                 </div>
                             </div>
-
-
-                            <div class="col-md-4">
-
-
-                                <div class="tooltipsContainer agent notifyList">
-                                    <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="Essid Essid">
-                                        <img src="images/avatar-1.png" alt="">
-                                        <div class="pulse border-green pulseoptimus"></div>
-                                    </a>
-                                    <div class="info">
-                                        <a href="#"> <div class="name clubumus"><strong>Nom et Prénom</strong></div></a>
-                                        <div class="title">Sportif / Entraineur</div>
-
-                                    </div><br>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4">
-
-
-                                <div class="tooltipsContainer agent notifyList">
-                                    <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="Essid Essid">
-                                        <img src="images/avatar-2.png" alt="">
-                                        <div class="pulse border-green pulseoptimus"></div>
-                                    </a>
-                                    <div class="info">
-                                        <a href="#"> <div class="name clubumus"><strong>Nom et Prénom</strong></div></a>
-                                        <div class="title">Sportif / Entraineur</div>
-
-                                    </div><br>
-                                </div>
-                            </div>
-
-
-
-
+                            {% endfor %}
 
                         </div>
 
-
+                        <div class="clearfix"></div>
 
                     </ul>
-
-
-
-
 
                 </div>
                 <div class="clearfix"></div>
 
-
-
-                </ul>
             </div>
 
         </div>
