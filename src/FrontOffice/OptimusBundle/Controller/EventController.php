@@ -54,11 +54,14 @@ class EventController extends Controller {
             throw new AccessDeniedException('.');
         }
         $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
+        $participants = $em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
+        
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array('entity' => $event));
+        return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array('event' => $event, 'participants' => $participants));
     }
     
     /**
@@ -78,7 +81,7 @@ class EventController extends Controller {
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:photo.html.twig');
+        return $this->render('FrontOfficeOptimusBundle:Event:photo.html.twig', array('event' => $event));
     }
     
     /**
@@ -98,7 +101,7 @@ class EventController extends Controller {
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:video.html.twig');
+        return $this->render('FrontOfficeOptimusBundle:Event:video.html.twig', array('event' => $event));
     }
 
     /**
