@@ -56,15 +56,18 @@ class ClubController extends Controller {
         $req = $this->get('request');
         if ($req->getMethod() == 'POST') {
             $form->bind($req);
-            $em->persist($club);
-            $em->flush();
-            $action = 'add';
-            $clubevent = new HistoryClubEvent($user, $club, $action);
-            $clubnotification = new NotificationClubEvent($user, $club, $action);
-            $dispatcher = $this->get('event_dispatcher');
-            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-            $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
-            return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
+           
+                $em->persist($club);
+                $em->flush();
+              
+                die('ok');
+//                $action = 'add';
+//                $clubevent = new HistoryClubEvent($user, $club, $action);
+//                $clubnotification = new NotificationClubEvent($user, $club, $action);
+//                $dispatcher = $this->get('event_dispatcher');
+//                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+//                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
+           
         }
         return array(
             'form' => $form->createView(),
@@ -104,24 +107,23 @@ class ClubController extends Controller {
         }
         $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
-        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-        if (!$club || $club->getActive() == 0) {
+        $entity = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        if (!$entity || $entity->getActive() == 0) {
             throw $this->createNotFoundException('Unable to find Club entity.');
         }
-        if ($club->getCreateur() == $user) {
-            $editForm = $this->createForm(new ClubType, $club);
+        if ($entity->getCreateur() == $user) {
+            $editForm = $this->createForm(new ClubType, $entity);
             $editForm->handleRequest($request);
             if ($editForm->isValid()) {
                 $em->flush();
                 // add History 
                 $action = 'update';
-                $clubevent = new HistoryClubEvent($user, $club, $action);
+                $clubevent = new HistoryClubEvent($user, $entity, $action);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-                return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
             }
             return array(
-                'club' => $club,
+                'entity' => $entity,
                 'form' => $editForm->createView(),
                 'user' => $user,
             );
@@ -185,7 +187,6 @@ class ClubController extends Controller {
         $albums = $em->getRepository('FrontOfficeOptimusBundle:Album')->findBy(array('club' => $club));
         return $this->render('FrontOfficeOptimusBundle:Club:albumsClub.html.twig', array('albums' => $albums, 'club' => $club));
     }
-
     /**
      * 
      *
@@ -194,11 +195,11 @@ class ClubController extends Controller {
      * @Template()
      */
     public function getPhotosUserAction($id_album) {
-        $em = $this->getDoctrine()->getManager();
-        $album = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id_album);
-        $club = $album->getClub();
-        $photos = $em->getRepository('FrontOfficeOptimusBundle:Photo')->findby(array('album' => $album));
-        return $this->render('FrontOfficeOptimusBundle:Club:photosClub.html.twig', array('album' => $album, 'club' => $club, 'photos' => $photos));
+          $em = $this->getDoctrine()->getManager();
+          $album = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id_album);
+          $club = $album->getClub();
+          $photos = $em->getRepository('FrontOfficeOptimusBundle:Photo')->findby(array('album'=> $album));
+          return $this->render('FrontOfficeOptimusBundle:Club:photosClub.html.twig', array('album' => $album,'club' => $club,'photos'=> $photos));
     }
 
 }
