@@ -320,7 +320,7 @@ $('.loader').hide();
                                 pixelOffset: new google.maps.Size( - 101, - 285),
                                 zIndex: null,
                                 boxStyle: {
-                                background: "url('../template/images/infobox-bg.png') no-repeat",
+                                background: "url('/Optimus/web/template/images/infobox-bg.png') no-repeat",
                                         opacity: 1,
                                         width: "202px",
                                         height: "245px"
@@ -336,14 +336,14 @@ $('.loader').hide();
                                     var marker_{{ event.id}} = new google.maps.Marker({
                                     position: myLatLng,
                                             map: map,
-                                            icon: new google.maps.MarkerImage('../template/images/marker-green.png'),
+                                            icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),
                                             draggable: false,
                                             animation: google.maps.Animation.DROP,
                                             title: "Cliquez pour voir aperçu"
                                     });
                                     var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
                                     '<div class="propImg">' +
-                                    '<img src="../template/images/prop/1-1-thmb.png">' +
+                                    '<img src="/Optimus/web/template/images/prop/1-1-thmb.png">' +
                                     '<div class="propBg">' +
                                     '<div class="propPrice">{{event.frais}} &euro;</div>' +
                                     '<div class="propType">{{event.type.nom}}</div>' +

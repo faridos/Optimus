@@ -149,7 +149,7 @@
                         var newMarker = new google.maps.Marker({
                             position: pos,
                             map: map,
-                            icon: new google.maps.MarkerImage('../template/images/marker-position.png'),
+                            icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-position.png'),
                             draggable: true,
                             animation: google.maps.Animation.DROP,
                         });
