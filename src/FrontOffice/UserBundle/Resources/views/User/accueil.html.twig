@@ -28,27 +28,31 @@
                                                         <div class="title">Nombre de places: {{ event.nbrPlaces }} </div>
                                                         <div class="title">Prix: {{ event.frais }} &euro;</div>
                                                         <div class="title">Déscription: {{event.description|raw}}</div>
-                                                    </div>  
+                                                    </div>
+                                                    <br/>
                                                     <div class="buttonsWrapper pb20">
-                                                        <a href="#" class="btn btn-icon btn-round btn-o btn-facebook">
-                                                            <span class="fa fa-facebook"></span>
-                                                        </a> 
-                                                        <a href="#" class="btn btn-icon btn-round btn-o btn-twitter">
-                                                            <span class="fa fa-twitter"></span>
-                                                        </a> 
-                                                        <a href="#" class="btn btn-icon btn-round btn-o btn-google">
-                                                            <span class="fa fa-google-plus"></span>
-                                                        </a> 
-                                                        <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest">
-                                                            <span class="fa fa-pinterest"></span>
-                                                        </a>
-                                                        {% if event.createur != app.user %} 
-                                                            <a class="btn btn-round btn-success" href="#" data-toggle="button" style="
-                                                               background-color: #c02100;
-                                                               border-color: #ccc;">
-                                                                <span class="fa fa-trophy state"></span> <span class="state">Participer</span>
-                                                                <span class="fa fa-trophy state-active"></span> <span class="state-active">Annuler la participation</span>
+
+                                                        {% set participantOuNon=ParticipantOuNon(event,user) %}
+                                                        {% if participantOuNon == 0 %}
+                                                            <a class="btn btn-green btn-round eventus" href="{{path('add_participation',{id: event.id})}}" >
+                                                                <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
                                                             </a>
+
+                                                        {% else %} 
+
+                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-facebook">
+                                                                <span class="fa fa-facebook"></span>
+                                                            </a> 
+                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-twitter">
+                                                                <span class="fa fa-twitter"></span>
+                                                            </a> 
+                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-google">
+                                                                <span class="fa fa-google-plus"></span>
+                                                            </a> 
+                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest">
+                                                                <span class="fa fa-pinterest"></span>
+                                                            </a>
+
                                                         {% endif %}
                                                     </div>
 
@@ -56,32 +60,33 @@
                                                 <div class="clearfix"></div>
                                             </div>
                                         </div>
+
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
                                 <ul id="content_msg_{{event.id}}" class="commentsWidget scrollbar">
                                     <div id="content2_msg_{{event.id}}" class="raw">
-                                    {%for key, comment in event.eventcomments|reverse %}
-                                        {% if key < 5 %}
-                                    <div class="comment">
-                                        <div class="commentAvatar">
-                                            <img class="avatar" src="{{ asset(comment.commenteur.WebPath)}}" alt="avatar">
-                                            <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
-                                        </div>
-                                        <div class="commentContent">
-                                            <div class="commentName">{{ comment.commenteur.prenom }} {{ comment.commenteur.nom }}</div>
-                                            <div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> {{ comment.getDureeComment()}}</div><br>
-                                            <div class="commentBody">{{ comment.Commentaire}}</div>
+                                        {%for key, comment in event.eventcomments|reverse %}
+                                            {% if key < 5 %}
+                                                <div class="comment">
+                                                    <div class="commentAvatar">
+                                                        <img class="avatar" src="{{ asset(comment.commenteur.WebPath)}}" alt="avatar">
+                                                        <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
+                                                    </div>
+                                                    <div class="commentContent">
+                                                        <div class="commentName">{{ comment.commenteur.prenom }} {{ comment.commenteur.nom }}</div>
+                                                        <div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> {{ comment.getDureeComment()}}</div><br>
+                                                        <div class="commentBody">{{ comment.Commentaire}}</div>
 
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
                                             {% endif %}
-                                    {% endfor %}
+                                        {% endfor %}
                                     </div>
                                     <div class="loader" id="loader_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></div>
                                 </ul>
-                                                                 
+
                                 <div class="commentsWidgetForm">
                                     <div class="cfAvatar">
                                         <img class="avatar" src="{{asset(app.user.WebPath)}}" alt="avatar">
@@ -114,8 +119,7 @@
 {% block javascriptfils %}
     <script>
         (function($) {
-        "use strict";
-        {# var load = false;
+        "use strict";        {# var load = false;
                 var last_id = 2;
                 $("#content").scroll(function() {
         if ($("#content").scrollTop() == $("#content2").height() - $("#content").height() && load == false && last_id < {{events|length}}){
@@ -211,13 +215,13 @@ $('.loader').hide();
                 });
         }
         }); #}
-        
-        
+
+
         {% for event in events %}
 
 
                     $("#btnmsg_{{event.id}}").on('click', function () {
-                    var comment = $("#input_{{event.id}}").val();
+            var comment = $("#input_{{event.id}}").val();
                     var photo = " {{app.user.WebPath}}";
                     var commenteur = "{{app.user.username}}";
                     var date = "{{"now"|date('d/m/Y à H:i')}}";
@@ -250,52 +254,48 @@ $('.loader').hide();
                             error: function () {
                             }
                     });
-            });              
+            });
+                    var load = false;
+                    var last_id_{{event.id}} = 5;
+                    $("#content_msg_{{event.id}}").scroll(function() {
+            if ($("#content_msg_{{event.id}}").scrollTop() == $("#content2_msg_{{event.id}}").height() - $("#content_msg_{{event.id}}").height() && load == false && last_id_{{event.id}} <{{event.eventcomments|length}} ){
 
-            var load = false;
-        var last_id_{{event.id}} = 5;
-        $("#content_msg_{{event.id}}").scroll(function() {
-            if ($("#content_msg_{{event.id}}").scrollTop() == $("#content2_msg_{{event.id}}").height() - $("#content_msg_{{event.id}}").height() && load == false && last_id_{{event.id}} <{{event.eventcomments|length}}){
-             
             load = true;
-            $('#loader_{{event.id}}').show();
-            $.ajax({
-                        url: Routing.generate('commentsEventPlus', { ide: {{event.id}} , last_id: last_id_{{event.id}} }),
-                                type: 'GET',
+                    $('#loader_{{event.id}}').show();
+                    $.ajax({
+                    url: Routing.generate('commentsEventPlus', { ide: {{event.id}} , last_id: last_id_{{event.id}} }),
+                            type: 'GET',
+                            beforeSend: function () {
+                            },
+                            success: function (data) {
+                            last_id_{{event.id}} += 5;
+                                    for (var i in data) {
+                            var comment = data[i];
+                                    var photo = "/Optimus/web/upload/profil/" + comment.commenteur.id + "/" + comment.commenteur.path;
+                                    $("#content2_msg_{{event.id}}").append('<div class="comment">' +
+                                    '<div class="commentAvatar">' +
+                                    '<img class="avatar" src="' + photo + '" alt="avatar">' +
+                                    '<div class="commentArrow"><span class="fa fa-caret-left"></span></div>' +
+                                    '</div>' +
+                                    '<div class="commentContent">' +
+                                    '<div class="commentName">' + comment.commenteur.prenom + comment.commenteur.nom + '</div>' +
+                                    '<div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> Maintenant </div>' +
+                                    '<br>' +
+                                    '<div class="commentBody">' + comment.Commentaire + '</div>' +
+                                    '</div>' +
+                                    '<div class="clearfix"></div>' +
+                                    '</div>');
+                                    load = false;
+                                    $('#loader_{{event.id}}').hide();
+                            }
 
-                                beforeSend: function () {
-                                },
-                                success: function (data) {
-                                last_id_{{event.id}} += 5;
-                                        for (var i in data) {
-                                var comment = data[i];
-                                var photo = "/Optimus/web/upload/profil/"+ comment.commenteur.id+"/"+comment.commenteur.path;
-                                       
-                                $("#content2_msg_{{event.id}}").append('<div class="comment">' +
-                                '<div class="commentAvatar">' +
-                                '<img class="avatar" src="'+photo+'" alt="avatar">' +
-                                '<div class="commentArrow"><span class="fa fa-caret-left"></span></div>' +
-                                '</div>' +
-                                '<div class="commentContent">' +
-                                '<div class="commentName">'+ comment.commenteur.prenom + comment.commenteur.nom +'</div>' +
-                                '<div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> Maintenant </div>' +
-                                '<br>' +
-                                '<div class="commentBody">' + comment.Commentaire + '</div>' +
-                                '</div>' +
-                                '<div class="clearfix"></div>' +
-                                '</div>');
-                                load = false;
-                                $('#loader_{{event.id}}').hide();        
-                                }
-
-                                },
-                                error: function () {
-                                   $('#loader_{{event.id}}').hide();
-                                }
-                        });
-        }
-        });
-        {% endfor %}
+                            },
+                            error: function () {
+                            $('#loader_{{event.id}}').hide();
+                            }
+                    });
+            }
+            });        {% endfor %}
 
 
                         $.ajax({
@@ -326,56 +326,51 @@ $('.loader').hide();
                                 infoBoxClearance: new google.maps.Size(1, 1),
                                 pane: "floatPane",
                                 enableEventPropagation: false
-                        });        {% for event in eventsMap %}
+                        });{% for event in eventsMap %}
 
-                                    var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
-                                    var marker_{{ event.id}} = new google.maps.Marker({
-                                    position: myLatLng,
-                                            map: map,
-                                            icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),
-                                            draggable: false,
-                                            animation: google.maps.Animation.DROP,
-                                            title: "Cliquez pour voir aperçu"
-                                    });
-                                    var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
-                                    '<div class="propImg">' +
-                                    '<img src="/Optimus/web/template/images/prop/1-1-thmb.png">' +
-                                    '<div class="propBg">' +
-                                    '<div class="propPrice">{{event.frais}} &euro;</div>' +
-                                    '<div class="propType">{{event.type.nom}}</div>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '<div class="paWrapper">' +
-                                    '<div class="propTitle">{{event.titre}}</div>' +
-                                    '<div class="propAddress">{{event.lieu}}</div>' +
-                                    '</div>' +
-                                    '<div class="propRating">' +
-                                    '<span class="fa fa-star"></span>' +
-                                    '<span class="fa fa-star"></span>' +
-                                    '<span class="fa fa-star"></span>' +
-                                    '<span class="fa fa-star"></span>' +
-                                    '<span class="fa fa-star-o"></span>' +
-                                    '</div>' +
-                                    '<div class="clearfix"></div>' +
-                                    '<div class="infoButtons">' +
-                                    '<a class="btn btn-sm btn-round btn-gray btn-o closeInfo">fermer</a>' +
-                                    '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
-                                    '</div>' +
-                                    '</div>';
-                                    google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
+                        var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
+                        var marker_{{ event.id}} = new google.maps.Marker({
+                        position: myLatLng,
+                                map: map,
+                                icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),
+                                draggable: false,
+                                animation: google.maps.Animation.DROP,
+                                title: "Cliquez pour voir aperçu"
+                        });
+                        var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
+                        '<div class="propImg">' +
+                        '<img src="/Optimus/web/template/images/prop/1-1-thmb.png">' +
+                        '<div class="propBg">' +
+                        '<div class="propPrice">{{event.frais}} &euro;</div>' +
+                        '<div class="propType">{{event.type.nom}}</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="paWrapper">' +
+                        '<div class="propTitle">{{event.titre}}</div>' +
+                        '<div class="propAddress">{{event.lieu}}</div>' +
+                        '</div>' +
+                        '<div class="propRating">' +
+                        '<span class="fa fa-star"></span>' +
+                        '<span class="fa fa-star"></span>' +
+                        '<span class="fa fa-star"></span>' +
+                        '<span class="fa fa-star"></span>' +
+                        '<span class="fa fa-star-o"></span>' +
+                        '</div>' +
+                        '<div class="clearfix"></div>' +
+                        '<div class="infoButtons">' +
+                        '<a class="btn btn-sm btn-round btn-gray btn-o closeInfo">fermer</a>' +
+                        '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
+                        '</div>' +
+                        '</div>';
+                        google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
 
-                                    infobox.setContent(contenuInfoBulle_{{ event.id}});
-                                            infobox.open(map, marker_{{ event.id}});
-                                    });
-                                    $(document).on('click', '.closeInfo', function() {
-                            infobox.open(null, null);
-                            });        {% endfor %}
+                        infobox.setContent(contenuInfoBulle_{{ event.id}});
+                                infobox.open(map, marker_{{ event.id}});
+                        });
+                        $(document).on('click', '.closeInfo', function() {
+                infobox.open(null, null);
+                });{% endfor %}
 
-
-
-
-
-
-                                        })(jQuery);
+                })(jQuery);
     </script>
 {% endblock %}

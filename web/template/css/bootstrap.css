@@ -3551,7 +3551,7 @@ tbody.collapse.in {
   float: left;
   width: 100%;
   margin-bottom: 0;
-  border: 0;
+  border: 1;
   margin: 2px 0px 0px 0px;
 
 }
