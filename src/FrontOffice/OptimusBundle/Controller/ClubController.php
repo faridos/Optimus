@@ -211,7 +211,7 @@ class ClubController extends Controller {
     /**
      * Creates a new Club entity.
      *
-     * @Route("/club={id}/request", name="request_club")
+     * @Route("/club={id}/request", name="request_club", options={"expose"=true})
      * @Method("POST|GET")
      */
     public function requestAction(Request $request, $id) {
@@ -223,15 +223,14 @@ class ClubController extends Controller {
             $member = new Member();
             $member->setClubad($club);
             $member->setMember($this->container->get('security.context')->getToken()->getUser());
-            // Étape 1 : On « persiste » l'entité
             $em->persist($member);
-            // Étape 2 : On « flush » tout ce qui a été persisté avant
             $em->flush();
-            // Reste de la méthode qu'on avait déjà écrit
-        } else {
-            $this->get('session')->getFlashBag('notice', 'ok');
+            $response = new Response();
+            $memberJson = json_encode($member);
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setContent($memberJson);
+            return $response;
         }
-        return $this->redirect($this->generateUrl('show_club', array('id' => $id)));
     }
 
 }

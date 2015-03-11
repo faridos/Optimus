@@ -24,12 +24,23 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('getInvitations', array($this, 'getInvitations')),
             new \Twig_SimpleFunction('getParicipationEventNotification', array($this, 'getParicipationEventNotification')),
             new \Twig_SimpleFunction('getNonSeenMessage', array($this, 'getNonSeenMessage')),
+            new \Twig_SimpleFunction('getMembreRequest', array($this, 'getMembreRequest')),
+            new \Twig_SimpleFunction('getMembreConfirmed', array($this, 'getMembreConfirmed')),
         );
     }
-    public function getNonSeenMessage($id)
-    {
+
+    public function getMembreRequest($user, $club) {
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('member' => $user, 'clubad' => $club));
+    }
+
+    public function getMembreConfirmed($user, $club) {
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('member' => $user, 'clubad' => $club, 'confirmed' => '1'));
+    }
+
+    public function getNonSeenMessage($id) {
         return $this->em->getRepository('FrontOfficeOptimusBundle:Message')->NonseenMsg($id);
     }
+
     public function getUsersInvitations($id) {
         return $this->em->getRepository('FrontOfficeUserBundle:User')->find($id);
     }

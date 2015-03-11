@@ -17,10 +17,10 @@
                             <div class="avatar">
                                 <img src="{{ asset(club.WebPath) }}" alt="avatar" class="clubufus">
                                 {% if app.user == club.createur %} 
-                                <div class="ops">
-                                    <a class="btn btn-round btn-default btn-sm" href="{{ path('club_update', {'id':club.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
-                                    <a class="btn btn-round btn-default btn-sm" href="{{ path('club_delete', {'id':club.id})}}" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
-                                </div>
+                                    <div class="ops">
+                                        <a class="btn btn-round btn-default btn-sm" href="{{ path('club_update', {'id':club.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
+                                        <a class="btn btn-round btn-default btn-sm" href="{{ path('club_delete', {'id':club.id})}}" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
+                                    </div>
                                 {% endif %}
                                 <div class="name osLight fontus">{{ club.nom }}</div>
                             </div>
@@ -35,72 +35,81 @@
 
                             <div class="row clubumus">
                                 {% if app.user != club.createur %}
-                                <div class="col-md-6 pb20">
+                                    <div class="col-md-6 pb20" >
+                                        <div class="pc-about osLight">
+                                            {% set memberrequest = getMembreRequest(app.user,club) %}   
+                                                {% if memberrequest is empty %}
+                                                    <a class="btn btn-green btn-round eventus request" href="#" id="request_club">
+                                                        <span class="fa icon-action-redo "></span> <span class="requestClub" id="{{club.id}}">Rejoindre</span>
+                                                    </a>
+                                                {% else %}
+                                                    {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
+                                                        {% if memberconfirmed is empty %}
+                                                            <a class="btn btn-green btn-round active eventus attente" href="#">
+                                                                <span class="fa icon-action-redo "></span> <span >En attente</span>
+                                                                </a>
+                                                        {% else %}
+                                                            <a class="btn btn-green btn-round eventus quitter" href="#">
+                                                                <span class="fa icon-action-redo "></span> <span >Quitter club</span>
+                                                            </a>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                        <div class="col-md-6">
+                                                            <div class="pc-title osLight">
+                                                                <div class="buttonsWrapper pb20 buttonleftus">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
 
-                                    <div class="pc-about osLight">
-                                        <a class="btn btn-green btn-round eventus" href="#" >
-                                            <span class="fa icon-action-redo "></span> <span >Rejoindre</span>
+                                                <div class="userWidget-2" >
+                                                    <div class="avatar">
 
-                                        </a>
+                                                    </div>
+                                                    <div class="info">
+                                                        <div class="row">
+                                                            <div class="col-md-6 pb20">
+
+                                                                <div class="pc-about osLight"><div class="title eventus">Déscription :<span class="address detaillus">Foulén ben foulén ben faltén el fouléni 3adham ALLAH ajrah wa ad5alah fassi7a jannatih</span></div>
+
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="pc-title osLight"><div class="title eventus">Téléphone: <span class="address "> {{ club.createur.tel }}</span></div>
+                                                                    <div class="title eventus">Email : <span class="address ">{{ club.createur.email }}</span></div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="clearfix"></div>
+
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                        </div>
+                                        <div id="mapView" class="eventmap" style="width:110%"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div><div class="clearfix"></div>
                                     </div>
 
                                 </div>
-                                    {% endif %}
-                                <div class="col-md-6">
-                                    <div class="pc-title osLight">
-
-                                        <div class="buttonsWrapper pb20 buttonleftus">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
-                                    </div>
-
-                                </div>
+                                <div class="clearfix"></div>
                             </div>
                             <div class="clearfix"></div>
                         </div>
 
-                        <div class="userWidget-2" >
-                            <div class="avatar">
+                        {% endblock %}
+                            {% block javascriptfils %}
 
-                            </div>
-                            <div class="info">
-                                <div class="row">
-                                    <div class="col-md-6 pb20">
-
-                                        <div class="pc-about osLight"><div class="title eventus">Déscription :<span class="address detaillus">Foulén ben foulén ben faltén el fouléni 3adham ALLAH ajrah wa ad5alah fassi7a jannatih</span></div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="pc-title osLight"><div class="title eventus">Téléphone: <span class="address "> {{ club.createur.tel }}</span></div>
-                                            <div class="title eventus">Email : <span class="address ">{{ club.createur.email }}</span></div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="clearfix"></div>
-
-                        </div>
-
-
-
-
-                    </div>
-
-                </div>
-                <div id="mapView" class="eventmap" style="width:110%"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div><div class="clearfix"></div>
-            </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="clearfix"></div>
-</div>
-
-{% endblock %}
-{% block javascriptfils %}
-    
-{% endblock %}
+                            {% endblock %}
 
