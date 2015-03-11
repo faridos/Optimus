@@ -68,11 +68,20 @@ $('#envoyerMessage').click(function()
     });
 
 });
-
 $('#btn-fermer-message').click(function() {
     $('#messageEch').hide();
     $('#messageEnvoyer').hide();
     $('textarea').val('');
 });
-
-
+$('#request_club').click(function() {
+// $('.loader').show();
+    var id = $('.requestClub').attr('id');
+   
+    $.ajax({
+        url: Routing.generate('request_club', {'id': id}),
+        success: function() {
+             console.log(id);
+            $('.requestClub').replaceWith('Enattente');
+        }
+    });
+});
