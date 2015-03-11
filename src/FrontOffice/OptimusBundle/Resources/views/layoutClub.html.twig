@@ -17,10 +17,10 @@
                             <div class="avatar">
                                 <img src="{{ asset(club.WebPath) }}" alt="avatar" class="clubufus">
                                 <div class="ops">
-                                    <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
+                                    <a class="btn btn-round btn-default btn-sm" href="{{ path('club_update', {'id':club.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
                                     <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
                                 </div>
-                                <div class="name osLight fontus">Nom Club</div>
+                                <div class="name osLight fontus">{{ club.nom }}</div>
                             </div>
                             <div class="address starsus"><div class="cardRating">
                                     <span class="fa fa-star "></span>
@@ -29,7 +29,7 @@
                                     <span class="fa fa-star"></span>
                                     <span class="fa fa-star-o"></span></div>
                             </div>
-                            <div class="title clubumus">Proprietaire :<span class="address detaillus">Foulén ben foulén</span></div>
+                            <div class="title clubumus">Proprietaire :<span class="address detaillus">{{ club.createur }}</span></div>
 
                             <div class="row clubumus">
                                 <div class="col-md-6 pb20">
@@ -66,8 +66,8 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="pc-title osLight"><div class="title eventus">Téléphone: <span class="address "> 06 23 25 58</span></div>
-                                            <div class="title eventus">Email : <span class="address ">foulen@email.com </span></div>
+                                        <div class="pc-title osLight"><div class="title eventus">Téléphone: <span class="address "> {{ club.createur.tel }}</span></div>
+                                            <div class="title eventus">Email : <span class="address ">{{ club.createur.email }}</span></div>
 
                                         </div>
 

@@ -60,7 +60,7 @@ class ClubController extends Controller {
                 $em->persist($club);
                 $em->flush();
               
-                die('ok');
+               return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
 //                $action = 'add';
 //                $clubevent = new HistoryClubEvent($user, $club, $action);
 //                $clubnotification = new NotificationClubEvent($user, $club, $action);
@@ -107,23 +107,24 @@ class ClubController extends Controller {
         }
         $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-        if (!$entity || $entity->getActive() == 0) {
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        if (!$club || $club->getActive() == 0) {
             throw $this->createNotFoundException('Unable to find Club entity.');
         }
-        if ($entity->getCreateur() == $user) {
-            $editForm = $this->createForm(new ClubType, $entity);
+        if ($club->getCreateur() == $user) {
+            $editForm = $this->createForm(new ClubType, $club);
             $editForm->handleRequest($request);
             if ($editForm->isValid()) {
                 $em->flush();
                 // add History 
                 $action = 'update';
-                $clubevent = new HistoryClubEvent($user, $entity, $action);
+                $clubevent = new HistoryClubEvent($user, $club, $action);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+                return $this->redirect($this->generateUrl('show_club', array('id' => $id)));
             }
             return array(
-                'entity' => $entity,
+                'club' => $club,
                 'form' => $editForm->createView(),
                 'user' => $user,
             );

@@ -22,12 +22,12 @@ class ClubType extends AbstractType
 	
 	)
             ->add('discpline','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer la discpline')))
-            ->add('description','text',array('attr'=>array('class'=>'form-control search-optimus','placeholder'=>'Entrer la description du votre club...')))
+            ->add('description','textarea',array('attr'=>array('class'=>'form-control search-optimus','placeholder'=>'Entrer la description du votre club...')))
             ->add('adresse','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Adresse'),'required'=>True))
            
             ->add('fraisAdhesion','integer',array('attr'=>array('class'=>'form-control round','placeholder'=>'Entrer les frais du club')))
-            ->add('lat','number',array('attr'=>array('class'=>'search-optimus', )),array('required'=>true))
-            ->add('lng','number',array('attr'=>array('class'=>'search-optimus',)),array('required'=>true))
+            ->add('lat','hidden',array('attr'=>array('class'=>'search-optimus', )),array('required'=>true))
+            ->add('lng','hidden',array('attr'=>array('class'=>'search-optimus',)),array('required'=>true))
             
         ;
     }

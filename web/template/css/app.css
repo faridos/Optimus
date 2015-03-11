@@ -5,7 +5,10 @@
 *::-moz-focus-inner {
     border: 0;
 }
+.descriptionClub{
 
+    margin-left: 25%;
+}
 .cardRating{
 
     color: #eab134;

@@ -32,9 +32,9 @@
                                         {{ form_widget(form.dateCreation) }}
                                     </div>
                                     <div class="form-group col-xs-6 descriptus">
-                                       
+
                                         {{ form_widget(form.description) }}
-                                      
+
                                     </div> 
                                 </div>
                             </div>
@@ -51,18 +51,18 @@
                                     <div class="form-group col-xs-6">
                                         {{ form_widget(form.lng, { 'id': 'lng_id' }) }}
                                     </div><div class="description">
-                                        <h3>Description</h3>
-                                        <p>Pour donner un lieu ou bien un emplacement pour votre nouveau club veuiller choisir avec la map à gauche en clicant sur le marker.</p>
+
                                     </div>
-                                    <div style="float:right">
-                                        <button type="submit" value="Submit" class="btn btn-round btn-green">Submit</button>
-                                        <button type="reset" value="Reset" class="btn btn-round btn-green">Reset</button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
+                        <div style="text-align: center">
+                            <button type="submit" value="Submit" class="btn btn-round btn-green">Enregistrer</button>
+                            <button type="reset" value="Reset" class="btn btn-round btn-green">Reset</button>
+                        </div>
                         {{ form_widget(form._token) }}
-                        {{ form_rest(form) }}
+
                     </form>
 
                 </div>
@@ -92,7 +92,7 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
                         document.getElementById('adresse').value = results[0].formatted_address;
-                       placeMarker(event.latLng);
+                        placeMarker(event.latLng);
                     } else {
                         alert('No results found');
                     }
@@ -101,7 +101,7 @@
                 }
 
             });
-            
+
         });
         function placeMarker(location) {
 
