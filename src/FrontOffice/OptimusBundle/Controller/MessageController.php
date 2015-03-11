@@ -253,7 +253,7 @@ class MessageController extends Controller {
      */
     public function seenMsgAction($id)
     {
-        $user1 = $this->container->get('security.context')->getToken()->getUser();
+       
         $em = $this->getDoctrine()->getManager();
         $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
         $message->setIsSeen(true);

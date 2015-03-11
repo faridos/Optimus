@@ -37,10 +37,10 @@ class UserController extends Controller {
      * @Template()
      */
     public function indexAction() {
-       
-         
+
+
         $em = $this->getDoctrine()->getManager();
-      
+
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findAll();
         $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime('- 1 months'));
 
@@ -90,8 +90,8 @@ class UserController extends Controller {
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
-        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getEventUserParticipant($id,new \Datetime('- 1 months'));
-        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1,'participations' => $participation));
+        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getEventUserParticipant($id, new \Datetime('- 1 months'));
+        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1, 'participations' => $participation));
     }
 
     /**
@@ -118,7 +118,8 @@ class UserController extends Controller {
         $response->setContent($relationJson);
         return $response;
     }
-     /**
+
+    /**
      * Lists  Clubs Member.
      *
      * @Route("profil={id}/clubs", name="clubs_member")
@@ -134,13 +135,12 @@ class UserController extends Controller {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
         $clubs = $em->getRepository('FrontOfficeOptimusBundle:Club')->getClubsMember($id);
-   
-       
+
+
         return array(
             'clubs' => $clubs,
             'user' => $user,
             'user1' => $user1,
-           
         );
     }
 
@@ -152,17 +152,12 @@ class UserController extends Controller {
      * 
      */
     public function acceptAction($id) {
-        $user1 = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $Invitation = $em->getRepository('SlyRelationBundle:Relation')->find($id);
         $Invitation->setConfirmed(true);
         $em->persist($Invitation);
         $em->flush();
-        $invitations = $em->getRepository('FrontOfficeUserBundle:User')->getInvitations($user1->getId());
-        $response = new Response();
-        $invitationJson = json_encode($invitations);
-        $response->headers->set('Content-Type', 'application/json');
-        $response->setContent($invitationJson);
+        $response = new Response($id);
         return $response;
     }
 
@@ -200,11 +195,12 @@ class UserController extends Controller {
      * @Template()
      */
     public function getClubUserAction($id) {
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-         return $this->render('FrontOfficeUserBundle:Profile:clubs_user.html.twig', array('user' => $user));
+        return $this->render('FrontOfficeUserBundle:Profile:clubs_user.html.twig', array('user' => $user));
     }
+
     /**
      * 
      *
@@ -213,12 +209,13 @@ class UserController extends Controller {
      * @Template()
      */
     public function getAlbumsUserAction($id) {
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-          $albums = $em->getRepository('FrontOfficeOptimusBundle:Album')->findBy(array('user' => $user));
-          return $this->render('FrontOfficeUserBundle:Profile:albums_user.html.twig', array('albums'=> $albums, 'user' => $user));
+        $albums = $em->getRepository('FrontOfficeOptimusBundle:Album')->findBy(array('user' => $user));
+        return $this->render('FrontOfficeUserBundle:Profile:albums_user.html.twig', array('albums' => $albums, 'user' => $user));
     }
+
     /**
      * 
      *
@@ -227,12 +224,13 @@ class UserController extends Controller {
      * @Template()
      */
     public function getPhotosUserAction($id) {
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-          
-          return $this->render('FrontOfficeUserBundle:Profile:photos_user.html.twig', array('user' => $user));
+
+        return $this->render('FrontOfficeUserBundle:Profile:photos_user.html.twig', array('user' => $user));
     }
+
     /**
      * 
      *
@@ -245,10 +243,9 @@ class UserController extends Controller {
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
         $rewards = $em->getRepository('FrontOfficeOptimusBundle:Reward')->findBy(array('user' => $user));
-        return $this->render('FrontOfficeUserBundle:Profile:palmares_user.html.twig', array('rewards'=> $rewards, 'user' => $user));
+        return $this->render('FrontOfficeUserBundle:Profile:palmares_user.html.twig', array('rewards' => $rewards, 'user' => $user));
     }
-    
-    
+
     /**
      * 
      *
@@ -256,18 +253,17 @@ class UserController extends Controller {
      * @Method("GET|POST")
      * 
      */
-    public function CoordonneAction($lng,$lat){ 
-      $user = $this->container->get('security.context')->getToken()->getUser();
+    public function CoordonneAction($lng, $lat) {
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
-  
-            $user->setLng($lng);
-            $user->setLat($lat);
-            
-            $em->persist($user);
-            $em->flush();
 
-                return $response = new Response();    
-         
-            }
+        $user->setLng($lng);
+        $user->setLat($lat);
+
+        $em->persist($user);
+        $em->flush();
+
+        return $response = new Response();
+    }
 
 }

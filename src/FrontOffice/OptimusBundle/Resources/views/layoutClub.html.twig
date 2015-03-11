@@ -49,8 +49,8 @@
                                                                 <span class="fa icon-action-redo "></span> <span class="requestAttente" >En attente</span>
                                                                 </a>
                                                         {% else %}
-                                                            <a class="btn btn-green btn-round eventus quitter" href="#">
-                                                                <span class="fa icon-action-redo "></span> <span >Quitter club</span>
+                                                            <a class="btn btn-green btn-round eventus quitter" href="#" id="exit_club">
+                                                                <span class="fa icon-action-redo "></span> <span class="exitClub" id="{{club.id}}">Quitter club</span>
                                                             </a>
                                                         {% endif %}
                                                         {% endif %}
@@ -59,7 +59,16 @@
                                                     {% endif %}
                                                         <div class="col-md-6">
                                                             <div class="pc-title osLight">
-                                                                <div class="buttonsWrapper pb20 buttonleftus">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
+                                                                <div class="buttonsWrapper pb20 buttonleftus">  
+                                                                 <a href="#" class="btn btn-icon btn-round btn-o btn-facebook">
+                                                                     <span class="fa fa-facebook"></span>
+                                                                 </a>
+                                                                 <a href="#" class="btn btn-icon btn-round btn-o btn-twitter">
+                                                                     <span class="fa fa-twitter"></span>
+                                                                 </a>
+                                                                 <a href="#" class="btn btn-icon btn-round btn-o btn-google">
+                                                                     <span class="fa fa-google-plus"></span></a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -74,7 +83,7 @@
                                                         <div class="row">
                                                             <div class="col-md-6 pb20">
 
-                                                                <div class="pc-about osLight"><div class="title eventus">Déscription :<span class="address detaillus">Foulén ben foulén ben faltén el fouléni 3adham ALLAH ajrah wa ad5alah fassi7a jannatih</span></div>
+                                                                <div class="pc-about osLight"><div class="title eventus">Déscription :<span class="address detaillus">{{ club.description }}</span></div>
 
                                                                 </div>
 

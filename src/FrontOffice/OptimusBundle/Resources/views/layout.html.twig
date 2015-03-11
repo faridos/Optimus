@@ -180,7 +180,7 @@
                                                                     {% set Invitations = getInvitations(app.user.id) %}
                                                                         <a href="#"  class="headerNotify dropdown-toggle" id="nb_invitation" data-toggle="dropdown">
                                                                             <span class="notifyIcon icon-users"></span>
-                                                                            {% for invitation in Invitations %}  <span class="counter" id="nombre_invitation"  >{{ Invitations|length  }}</span>{% endfor %}
+                                                                            {% if Invitations is not empty %}  <span class="counter" id="nombre_invitation"  ><span id="nbInvitation">{{ Invitations|length  }}</span></span>{% endif %}
                                                                         </a>
                                                                         <div class="dropdown-menu pull-right notifyMenu" role="menu" style="width:380px">
 
@@ -193,7 +193,7 @@
                                                                                 {% for invitation in Invitations %}  
 
                                                                                     {% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
-                                                                                        <li class="invitation" id="{{ invitation.id }}">
+                                                                                        <li class="invitation{{invitation.id}}" id="{{ invitation.id }}">
                                                                                             <div class="userWidget-2" style="margin-bottom:1px">
                                                                                                 <div class="avatar">
                                                                                                     <a href="{{ path('show_profil', { 'id': invitation.object1Id}) }}"><img alt="avatar" src="{{ asset(UsersInvitations.WebPath) }}" style="
@@ -208,7 +208,7 @@
                                                                                                 </div>
                                                                                                 <div class="ops">
 
-                                                                                                    <a id="accept_invitation" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
+                                                                                                    <a id="accept_invitation{{invitation.id}}" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
                                                                                                     <a id="delete_invitation" href="{{ path('delete_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
                                                                                                     <div class="loader"> <img src="{{asset('template/images/ajax-loader3.gif') }}"></div>
                                                                                                 </div>
@@ -405,7 +405,40 @@
                                                                                                     });
                                                                                                 });
                                                                                                 {% endfor %}
+                                                                                                //accept invitation
+                                                                                                {% set invitations = getInvitations(app.user.id) %}
+                                                                                                {% for invitation in invitations %}
+                                                                                                $('#accept_invitation{{invitation.id}}').click(function() {
+
+
+// $('.loader').show();                                                                                  
+                                                                                                    var id = $('#{{invitation.id}}').attr('id');
+                                                                                                    
+                                                                                                    $.ajax({
+                                                                                                        url: Routing.generate('accept_relation', {'id': id}),
+                                                                                                        success: function(data) {
+
+
+                                                                                                            var nb = parseInt($('#nbInvitation').text());
+                                                                                                            var nouveauNb = nb - 1;
+
+                                                                                                            if (nouveauNb > 0)
+                                                                                                            {
+                                                                                                                $('#nbInvitation').replaceWith(nouveauNb);
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                $('#nombre_invitation').hide();
+                                                                                                            }
+                                                                                                            $('.invitation' + data).empty();
+                                                                                                            // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+
+                                                                                                        }
+                                                                                                    });
+                                                                                                });
+                                                                                                {% endfor %}
                                                                                             </script>
+                                                                                            
                                                                                             {% block javascriptfils %}
                                                                                             {% endblock %}
                                                                                             {% endblock %}

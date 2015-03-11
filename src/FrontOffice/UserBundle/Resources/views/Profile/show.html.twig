@@ -32,7 +32,11 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <ul class="tab-pane fade active in scrollbar" id="events" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 87%;background-color:#fff;">
+                      
+                    <ul class="tab-pane fade active in scrollbar" id="events" >
+                        <div class="buttonsWrapper col-xs-12">
+                            <a class="btn btn-round btn-default btn-sm rightus" href="{{ path('add-event')}}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                        </div>
                         {% for participation in participations %}
                             <div class="userWidget-2 col-md-12" >
                                 <div class="tooltipsContainer avatar imagus">

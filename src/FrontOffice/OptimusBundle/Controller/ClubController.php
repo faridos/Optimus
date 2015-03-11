@@ -60,14 +60,13 @@ class ClubController extends Controller {
 
             $em->persist($club);
             $em->flush();
-
+            $action = 'add';
+            $clubevent = new HistoryClubEvent($user, $club, $action);
+            $clubnotification = new NotificationClubEvent($user, $club, $action);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+            $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
             return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
-//                $action = 'add';
-//                $clubevent = new HistoryClubEvent($user, $club, $action);
-//                $clubnotification = new NotificationClubEvent($user, $club, $action);
-//                $dispatcher = $this->get('event_dispatcher');
-//                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-//                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
         }
         return array(
             'form' => $form->createView(),
@@ -231,6 +230,32 @@ class ClubController extends Controller {
             $response->setContent($memberJson);
             return $response;
         }
+    }
+
+    /**
+     * Deletes a Club entity.
+     *
+     * @Route("/club={id}/quitter", name="exit_club", options={"expose"=true})
+     * 
+     */
+    public function exitClubAction(Request $request, $id) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->findOneBy(array('member' => $user, 'clubad' => $club));
+        if (!empty($member)) {
+            $em->remove($member);
+            $em->flush();
+        }
+        $response = new Response();
+        $memberJson = json_encode($member);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($memberJson);
+        return $response;
     }
 
 }
