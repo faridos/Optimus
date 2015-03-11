@@ -21,7 +21,7 @@ class EventType extends AbstractType
             ->add('dateFin','datetime', array('attr'=>array('class'=>'some_class search-optimus','placeholder'=>'Entrer la date de fin'),'widget' => 'single_text','required' => true))
             ->add('nbrPlaces','integer',array('attr'=>array('min'=>0,'class'=>'search-optimus','placeholder'=>'Entrer le nombre de places')))
             ->add('frais','integer',array('attr'=>array('min'=>0,'class'=>'form-control round','placeholder'=>'Entrer les frais d\'inscription')))
-            ->add('description','textarea',array('attr'=>array('class'=>'search-optimus'),'required'=>false))
+            ->add('description','textarea',array('attr'=>array('class'=>'form-control search-optimus','placeholder'=>'Entrer la description du votre évènement...'),'required'=>false))
             ->add('type','entity', array(  'attr'=>array('class'=>'search-optimus'),
                                            'class' => 'FrontOfficeOptimusBundle:TypeEvent',
                                            'property'=>'nom'))

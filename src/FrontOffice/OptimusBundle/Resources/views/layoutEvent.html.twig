@@ -20,20 +20,21 @@
 
                         <div class="userWidget-1" >
                             <div class="avatar" id="main">
+                                {% if event.createur == app.user %}
                                 <div class="ops">
-                                    <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
-                                    <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
+                                    <a class="btn btn-round btn-default btn-sm" href="{{ path('update-event',{id: event.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
+                                    <a class="btn btn-round btn-default btn-sm" href="{{ path('delete-event',{id: event.id})}}" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
                                 </div>
+                                {% endif %}
                                 <div class="name osLight eventus" ><strong>{{event.titre}}</strong></div>
                             </div>
 
-                            <div class="address eventus"><div class="cardRating">
-                                    <span class="fa fa-star "></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star-o"></span></div>
+                            <div class="address eventus">
+                                <div class="cardRating" style="color:#eab134"> 
+                                    <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'E'~event.id} %}</div>
+                                </div>
                             </div>
+                            
 
                             <div class="row">
                                 <div class="col-md-6 pb20">

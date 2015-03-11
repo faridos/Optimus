@@ -61,7 +61,7 @@ class EventController extends Controller {
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array('event' => $event, 'participants' => $participants));
+        return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array('event' => $event,'participants' => $participants));
     }
     
     /**
@@ -78,10 +78,11 @@ class EventController extends Controller {
         }
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
+        $participants = $em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:photo.html.twig', array('event' => $event));
+        return $this->render('FrontOfficeOptimusBundle:Event:photo.html.twig', array('event' => $event,'participants' => $participants));
     }
     
     /**
@@ -98,10 +99,11 @@ class EventController extends Controller {
         }
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
+        $participants = $em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:video.html.twig', array('event' => $event));
+        return $this->render('FrontOfficeOptimusBundle:Event:video.html.twig', array('event' => $event,'participants' => $participants));
     }
 
     /**
@@ -132,6 +134,7 @@ class EventController extends Controller {
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
+                return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
             }
         }
         return $this->render('FrontOfficeOptimusBundle:Event:new.html.twig', array('form' => $form->createView(), 'user' => $user));
@@ -147,26 +150,26 @@ class EventController extends Controller {
     public function updateAction(Request $request, $id) {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
-        if (!$entity || $entity->getActive() == 0) {
+        $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+        if (!$event || $event->getActive() == 0) {
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
-        $editForm = $this->createForm(new EventType(), $entity);
+        $editForm = $this->createForm(new EventType(), $event);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
-            $entity->setDateModification(new DateTime());
+            $event->setDateModification(new DateTime());
             $em->flush();
 //add notification
             $action = 'update';
-            $eventhistory = new HistoryEventEvent($user, $entity, $action);
+            $eventhistory = new HistoryEventEvent($user, $event, $action);
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
 
-            return $this->redirect($this->generateUrl('events', array('id' => $id)));
+            return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
         }
         return $this->render('FrontOfficeOptimusBundle:Event:edit.html.twig', array(
                     'user' => $user,
-                    'entity' => $entity,
+                    'event' => $event,
                     'edit_form' => $editForm->createView(),
         ));
     }

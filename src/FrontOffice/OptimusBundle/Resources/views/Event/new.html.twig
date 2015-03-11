@@ -20,6 +20,7 @@
 
                 <div class="row">
                     <form action="{{ path("add-event") }}" method="post">
+                        {{ form_errors(form) }}
                         <div class="col-xs-12 ">
                             <div class="panel panel-default">
                                 <div class="panel-heading optimus"> <span class="navLabel">Ajouter un évenement</span></div>
@@ -53,7 +54,7 @@
                                         {{ form_widget(form.dateFin, { 'id': 'some_class_2' }) }}
                                                                             
                                     </div>
-                                        <div class="form-group col-xs-6">
+                                        <div class="form-group col-xs-8 col-xs-offset-2" >
 
                                      {{ form_widget(form.description) }}
                                                                             
@@ -90,7 +91,7 @@
                         </div>
                                     <div style="text-align: center">
 
-                                        <button type="submit" value="Submit" class="btn btn-round btn-green">Submit</button>
+                                        <button type="submit" value="Submit" class="btn btn-round btn-green">Enregistrer</button>
                                         <button type="reset" value="Reset" class="btn btn-round btn-green">Reset</button>
                                     </div>
 
