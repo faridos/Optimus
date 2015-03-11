@@ -35,18 +35,18 @@
 
                             <div class="row clubumus">
                                 {% if app.user != club.createur %}
-                                    <div class="col-md-6 pb20" >
+                                    <div class="col-md-6 pb20 cluboptimus" >
                                         <div class="pc-about osLight">
                                             {% set memberrequest = getMembreRequest(app.user,club) %}   
                                                 {% if memberrequest is empty %}
                                                     <a class="btn btn-green btn-round eventus request" href="#" id="request_club">
-                                                        <span class="fa icon-action-redo "></span> <span class="requestClub" id="{{club.id}}">Rejoindre</span>
+                                                        <span class="fa icon-action-redo"></span> <span class="requestClub" id="{{club.id}}">Rejoindre</span>
                                                     </a>
                                                 {% else %}
                                                     {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
                                                         {% if memberconfirmed is empty %}
                                                             <a class="btn btn-green btn-round active eventus attente" href="#">
-                                                                <span class="fa icon-action-redo "></span> <span >En attente</span>
+                                                                <span class="fa icon-action-redo "></span> <span class="requestAttente" >En attente</span>
                                                                 </a>
                                                         {% else %}
                                                             <a class="btn btn-green btn-round eventus quitter" href="#">
@@ -109,7 +109,5 @@
                         </div>
 
                         {% endblock %}
-                            {% block javascriptfils %}
-
-                            {% endblock %}
+                          
 

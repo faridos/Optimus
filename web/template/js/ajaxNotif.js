@@ -68,7 +68,6 @@ $('#envoyerMessage').click(function()
     });
 
 });
-
 $('#btn-fermer-message').click(function() {
     $('#messageEch').hide();
     $('#messageEnvoyer').hide();
@@ -77,11 +76,12 @@ $('#btn-fermer-message').click(function() {
 $('#request_club').click(function() {
 // $('.loader').show();
     var id = $('.requestClub').attr('id');
-    console.log(id);
+   
     $.ajax({
         url: Routing.generate('request_club', {'id': id}),
         success: function() {
-            $('#btn btn-green btn-round eventus request').empty();
+             console.log(id);
+            $('.requestClub').replaceWith('Enattente');
         }
     });
 });
