@@ -6,7 +6,7 @@
             <div class="col-lg-12"><div class="row mb20">
                 </div>
                 <div class="row">
-                    <form action="{{ path("add_club") }}" {{ form_enctype(form) }} method="post" >
+                    <form action="{{ path("club_update",{'id': club.id }) }}" {{ form_enctype(form) }} method="post" >
                         {{ form_errors(form) }}
                         <div class="col-xs-12 ">
                             <div class="panel panel-default">
@@ -51,7 +51,7 @@
                         </div>
                         <div style="text-align: center">
                             <button type="submit" value="Submit" class="btn btn-round btn-green">Modifier</button>
-                            <button type="reset" value="Reset" class="btn btn-round btn-green">Annuler</button>
+                            <a href="{{ path('show_club', {'id': club.id}) }}" class="btn btn-round btn-green">Annuler</a>
                         </div>
                         {{ form_widget(form._token) }}
                     </form>
@@ -63,6 +63,11 @@
 {% endblock %}
 {% block javascriptfils %}
     <script>
+        var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+        });
+        placeMarker(myLatLng);
         var markerClub;
         var geocoder;
         geocoder = new google.maps.Geocoder();

@@ -16,10 +16,12 @@
                         <div class="userWidget-1">
                             <div class="avatar">
                                 <img src="{{ asset(club.WebPath) }}" alt="avatar" class="clubufus">
+                                {% if app.user == club.createur %} 
                                 <div class="ops">
                                     <a class="btn btn-round btn-default btn-sm" href="{{ path('club_update', {'id':club.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
-                                    <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
+                                    <a class="btn btn-round btn-default btn-sm" href="{{ path('club_delete', {'id':club.id})}}" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
                                 </div>
+                                {% endif %}
                                 <div class="name osLight fontus">{{ club.nom }}</div>
                             </div>
                             <div class="address starsus"><div class="cardRating">
@@ -32,15 +34,18 @@
                             <div class="title clubumus">Proprietaire :<span class="address detaillus">{{ club.createur }}</span></div>
 
                             <div class="row clubumus">
+                                {% if app.user != club.createur %}
                                 <div class="col-md-6 pb20">
 
                                     <div class="pc-about osLight">
                                         <a class="btn btn-green btn-round eventus" href="#" >
                                             <span class="fa icon-action-redo "></span> <span >Rejoindre</span>
 
-                                        </a></div>
+                                        </a>
+                                    </div>
 
                                 </div>
+                                    {% endif %}
                                 <div class="col-md-6">
                                     <div class="pc-title osLight">
 
