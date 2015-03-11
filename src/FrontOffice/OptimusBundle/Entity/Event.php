@@ -138,9 +138,15 @@ class Event {
      */
      protected $eventcomments;
 
+    /**
+    * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Photo", mappedBy="event")
+    **/
+    protected $images;
+    
     public function __construct() {
         $this->dateCreation = new \Datetime();
         $this->eventcomments = new ArrayCollection();
+        $this->images = new ArrayCollection();
         $this->setDescription("Pas de description");
     }
 
@@ -504,5 +510,38 @@ class Event {
     public function getEventcomments()
     {
         return $this->eventcomments;
+    }
+    
+    /**
+     * Add images
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Photo $images
+     * @return Photo
+     */
+    public function addImage(\FrontOffice\OptimusBundle\Entity\Photo $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Photo $images
+     */
+    public function removeImage(\FrontOffice\OptimusBundle\Entity\Photo $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

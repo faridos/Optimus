@@ -31,10 +31,17 @@ class Photo
     public $file;
     /**
      * @ORM\ManyToOne(targetEntity="Album", inversedBy="images")
-     * @ORM\JoinColumn(name="album_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="album_id", referencedColumnName="id", nullable=true)
      **/
    
    protected $album;
+   
+   /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="images")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id", nullable=true)
+     **/
+   
+   protected $event;
     public function __construct()
     {
         
@@ -77,6 +84,13 @@ class Photo
     
     public function setAlbum($album) {
         $this->album = $album;
+    }
+    
+    public function getEvent() {
+        return $this->event;
+    }
+    public function setEvent($event) {
+        $this->event = $event;
     }
        public function getAbsolutePath()
     {

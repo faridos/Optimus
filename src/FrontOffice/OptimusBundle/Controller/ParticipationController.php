@@ -20,8 +20,7 @@ class ParticipationController extends Controller {
     /**
      * 
      *
-     * @Route("event={id}/participer", name="add_participation")
-
+     * @Route("event={id}/participer", name="add_participation", options={"expose"=true})
      * 
      * @Method("GET|POST")
      */
@@ -33,18 +32,14 @@ class ParticipationController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
-        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findOneBy(array('event' => $event, 'participant' => $user));
-        if ($participation != null)
-            return new Response("Echec : déja participé !!");
-
+        
         $newparticipation = new Participation();
         $newparticipation->setParticipant($user);
         $newparticipation->setEvent($event);
 
-
         $em->persist($newparticipation);
         $em->flush();
-        return die('ok');
+        return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
     }
 
     public function deleteAction($event_id, $route) {

@@ -44,7 +44,7 @@ class EventController extends Controller {
     /**
      * 
      *
-     * @Route("={id}/participants", name="show_event", options={"expose"=true})
+     * @Route("={id}", name="show_event", options={"expose"=true})
      * @Method("GET|POST")
      * @Template()
      */
@@ -57,11 +57,20 @@ class EventController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
         $participants = $em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
+        $isparticipant= false;
+        foreach($participants as $participateur){
+        if($participateur == $user){
+            $isparticipant = true;
+        }  
+        }
         
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array('event' => $event,'participants' => $participants));
+        return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array(
+            'event' => $event,
+            'participants' => $participants,
+            'isparticipant' => $isparticipant));
     }
     
     /**
