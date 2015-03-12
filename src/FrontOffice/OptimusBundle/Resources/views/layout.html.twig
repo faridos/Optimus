@@ -243,7 +243,7 @@
                                                                                                                 </div><img class="connected" src="{{ asset('template/images/connected.png') }}" alt="en ligne" title="en ligne" >
                                                                                                                 <div class="clearfix"></div>
                                                                                                             </a></li>
-                                                                                                    {% endfor %}
+                                                                                                        {% endfor %}
                                                                                                     <li class="divider"></li>
 
                                                                                                 </ul>
@@ -290,14 +290,14 @@
                                                                                                         <input type="text" placeholder=" Nom d'évenement" class="search-optimus">
 
                                                                                                         <input type="hidden" name="kwtype" value="0">
-                                                                                                        <input class="search-optimus" name="keyword" type="text" id="search-text" placeholder="Recherche Optimus..." style="text-indent:20px;border-radius: 25px;height: 44px; border: 1.5px solid #C02100;width: 98%;margin: 12px -2px 0 5px;">
-                                                                                                        <a href="#" style="margin-left: -62px;">
-                                                                                                            <span ><select id="selectoption" style="
-                                                                                                                           border: 0;">
-                                                                                                                    <option selected="" disabled=""></option>
-                                                                                                                    <option autocomplete="on">Tous</option>
-                                                                                                                    <option>Amis</option>
-                                                                                                                </select></span></a>
+                                                                                                        <div >
+                                                                                                        <input list="createurlist" type="text" name="createur" class="search-optimus" placeholder="Ecrire votre créateur ou bien sélectionner">
+                                                                                                        <datalist id="createurlist" class="select">
+                                                                                                            <option value="tous">
+                                                                                                            <option value="amis">
+
+                                                                                                        </datalist>
+                                                                                                        </div>
                                                                                                         <select id="date" name="date" class="search-optimus">
                                                                                                             <option value="1" selected="" disabled="">Date</option>
                                                                                                             <option value="e1">Aujourd'hui</option>
@@ -377,68 +377,68 @@
                                                                                         <script>
                                                                                             {% set messages = getNonSeenMessage(app.user.id) %}
                                                                                                 {% for message in messages %}
-                                                                                                $('.message{{message.id}}').click(function() {
+                                                                                                    $('.message{{message.id}}').click(function() {
 
 
 // $('.loader').show();                                                                                  
-                                                                                                    var id = $('#{{message.id}}').attr('id');
-                                                                                                    $.ajax({
-                                                                                                        url: Routing.generate('message_seen', {'id': id}),
-                                                                                                        success: function(data) {
+                                                                                                        var id = $('#{{message.id}}').attr('id');
+                                                                                                        $.ajax({
+                                                                                                            url: Routing.generate('message_seen', {'id': id}),
+                                                                                                            success: function(data) {
 
 
-                                                                                                            var nb = parseInt($('#samir').text());
-                                                                                                            var nouveauNb = nb - 1;
+                                                                                                                var nb = parseInt($('#samir').text());
+                                                                                                                var nouveauNb = nb - 1;
 
-                                                                                                            if (nouveauNb > 0)
-                                                                                                            {
-                                                                                                                $('#samir').replaceWith(nouveauNb);
+                                                                                                                if (nouveauNb > 0)
+                                                                                                                {
+                                                                                                                    $('#samir').replaceWith(nouveauNb);
+                                                                                                                }
+                                                                                                                else
+                                                                                                                {
+                                                                                                                    $('#nombre_message').hide();
+                                                                                                                }
+                                                                                                                $('.message' + data).empty();
+                                                                                                                // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+
                                                                                                             }
-                                                                                                            else
-                                                                                                            {
-                                                                                                                $('#nombre_message').hide();
-                                                                                                            }
-                                                                                                            $('.message' + data).empty();
-                                                                                                            // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
-
-                                                                                                        }
+                                                                                                        });
                                                                                                     });
-                                                                                                });
                                                                                                 {% endfor %}
-                                                                                                //accept invitation
+                                                                                                    //accept invitation
                                                                                                 {% set invitations = getInvitations(app.user.id) %}
-                                                                                                {% for invitation in invitations %}
-                                                                                                $('#accept_invitation{{invitation.id}}').click(function() {
+                                                                                                    {% for invitation in invitations %}
+                                                                                                    $('#accept_invitation{{invitation.id}}').click(function() {
 
 
 // $('.loader').show();                                                                                  
-                                                                                                    var id = $('#{{invitation.id}}').attr('id');
-                                                                                                    
-                                                                                                    $.ajax({
-                                                                                                        url: Routing.generate('accept_relation', {'id': id}),
-                                                                                                        success: function(data) {
+                                                                                                        var id = $('#{{invitation.id}}').attr('id');
+
+                                                                                                        $.ajax({
+                                                                                                            url: Routing.generate('accept_relation', {'id': id}),
+                                                                                                            success: function(data) {
 
 
-                                                                                                            var nb = parseInt($('#nbInvitation').text());
-                                                                                                            var nouveauNb = nb - 1;
+                                                                                                                var nb = parseInt($('#nbInvitation').text());
+                                                                                                                var nouveauNb = nb - 1;
 
-                                                                                                            if (nouveauNb > 0)
-                                                                                                            {
-                                                                                                                $('#nbInvitation').replaceWith(nouveauNb);
+                                                                                                                if (nouveauNb > 0)
+                                                                                                                {
+                                                                                                                    $('#nbInvitation').replaceWith(nouveauNb);
+                                                                                                                }
+                                                                                                                else
+                                                                                                                {
+                                                                                                                    $('#nombre_invitation').hide();
+                                                                                                                }
+                                                                                                                $('.invitation' + data).empty();
+                                                                                                                // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+
                                                                                                             }
-                                                                                                            else
-                                                                                                            {
-                                                                                                                $('#nombre_invitation').hide();
-                                                                                                            }
-                                                                                                            $('.invitation' + data).empty();
-                                                                                                            // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
-
-                                                                                                        }
+                                                                                                        });
                                                                                                     });
-                                                                                                });
-                                                                                                {% endfor %}
-                                                                                            </script>
-                                                                                            
-                                                                                            {% block javascriptfils %}
-                                                                                            {% endblock %}
-                                                                                            {% endblock %}
+                                                                                                    {% endfor %}
+                                                                                                </script>
+
+                                                                                                {% block javascriptfils %}
+                                                                                                {% endblock %}
+                                                                                                {% endblock %}
