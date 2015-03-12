@@ -32,33 +32,30 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-
-                    <ul href="#uploadalbum" data-toggle="modal"  class="tab-pane fade scrollbar active in" id="albums" > 
-                        <div class="buttonsWrapper col-xs-12">
-                            <a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                    <ul class="tab-pane fade scrollbar active in" id="albums" > 
+                        <div class="buttonsWrapper col-md-12">
+                            <a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
                         </div>
-                        {% for album in albums %}
-                            <div class="row">
-                                <br>
-                                <div class="col-md-4" >
-                                    <div data-linkto="" class="card albumus" >
+                        <div class="row">
+                            {% for album in albums %}
+                                <div class="col-md-4" id="{{album.id}}">
+                                    <div data-linkto="" class="card albumus tooltipsContainer" >
                                         <div class="figure" id="main">
-                                            <a href="{{ path('photos_user', {'id' : user.id}) }}" >
-                                                <img src="images/1.jpg" />
+                                            <a href="albums.html" >
+                                                <img src="{{ asset(app.user.WebPath) }}" />
                                             </a>
                                             <div class="figView"></div>
                                         </div>
                                         <h2 align="center">{{ album.nom }}</h2>
-                                        <div align="center" >
-                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                        <div class="albumUser" id="{{album.id}}" align="center" >
+                                            <a href="#modifieralbum" data-toggle="modal"class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                            <a href="#supprimuss" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
                                         </div>
                                         <br>
-                                        <div class="clearfix"></div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -70,46 +67,54 @@
 
     <div class="modal fade" id="uploadalbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="contactLabel">Ajouter Album</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="contactForm">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                                <input type="text" placeholder="Titre de l'album" class="form-control">
-                            </div>
+            {{ render (controller('FrontOfficeOptimusBundle:Album:createAlbumUser',  { 'id': app.user.id })) }}
 
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                                <div class="formField open ">
-
-                                    <a href="#" data-toggle="dropdown" class="btn btn-gray dropdown-btn dropdown-toggle propTypeSelect">
-                                        <span class="dropdown-label">Visible</span>
-                                        <span class="fa fa-angle-down dsArrow"></span>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-select full" role="menu">
-                                        <li class="active"><input type="radio" name="pType" checked="checked"><a href="#">Tout le monde</a></li>
-                                        <li><input type="radio" name="pType"><a href="#">Amis</a></li>
-                                        <li><input type="radio" name="pType"><a href="#">Moi uniquement</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Annuler</a>
-                    <a href="#" class="btn btn-round btn-green">Confirmer</a>
-                </div>
-            </div>
         </div>
     </div>
 
 
 
     <!--------------- fin upload album ------------------>
+     {% for album in albums %}
+    <!---------------- Update album----------------------------->
+
+    <div class="modal fade" id="modifieralbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {{ render (controller('FrontOfficeOptimusBundle:Album:editAlbum',  { 'id': album.id })) }}
+
+        </div>
+    </div>
+
+
+
+    <!--------------- fin update album ------------------>
+    <!------------------- modal supprission------------------->
+    
+    <div class="modal fade" id="supprimuss" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                </div>
+                <div class="modal-body">
+
+                    <p>Souhaitez vous vraiment supprimer l'album ?</p>
+
+
+                </div>
+                <div class="modal-footer supp-album">
+                    <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                    <a id='supprimerAlbum' href="{{ path('album_delete',{'id': album.id}) }}" class="btn btn-round btn-green">Confirmer</a>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+    <!-------------------fin modal suppression-------------------> 
 {% endblock %}
 
 

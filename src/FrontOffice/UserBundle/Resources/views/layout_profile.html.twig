@@ -14,15 +14,17 @@
 
                         <div class="userWidget-1" >
                             <div class="avatar">
-                                <img src="{{ asset(user.WebPath) }}" alt="avatar" >
+                             <a href="#" class=" avatar profilus file" > 
+                                 <img src="{{ asset(user.WebPath) }}" alt="avatar" >
+                             </a>
                                 <div class="ops">
 
 
                                 </div>
-                                <div class="name osLight" ><strong>{{ user.prenom }} {{ user.nom }}</strong></div>
+                                <div class="name osLight profilus" ><strong>{{ user.prenom }} {{ user.nom }}</strong></div>
                             </div>
-                            <div class="title" >{% if user.profil == 'E' %}Entraineur{% endif %}{% if user.profil == 'S' %}Sportif{% endif %}</div>
-                            <div class="address" >
+                            <div class="title profilus" >{% if user.profil == 'E' %}Entraineur{% endif %}{% if user.profil == 'S' %}Sportif{% endif %}</div>
+                            <div class="address profilus" >
                                 <div class="cardRating" style="color:#eab134"> 
                                     <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'U'~user.id} %}</div>
                                 </div>

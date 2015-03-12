@@ -1,30 +1,29 @@
-<form action="{{ path('add_reward_user', {'id':app.user.id}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal0 form-groups-bordered">
+<form action="{{ path('new_album_profil',{ 'id' : user.id }) }}" {{ form_enctype(form) }} method="post" class="form-horizontal0 form-groups-bordered">
     {{ form_errors(form) }}
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title" id="contactLabel">upload Palmares</h4>
+            <h4 class="modal-title" id="contactLabel">Ajouter Album</h4>
         </div>
         <div class="modal-body">
             <div class="contactForm">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                        {{ form_widget(form.titre) }}
+                        {{ form_widget(form.nom) }}
                     </div>
+
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                        {{ form_widget(form.classment) }}
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                        <input type="text" class="some_class form-control" value="" id="some_class_1" placeholder="Entrer la date"/>
-                        {{ form_widget(form.date) }}
+                        {{ form_widget(form.privacy) }}
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
             <a href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Annuler</a>
-            <button type="submit" class="btn btn-round btn-green">Confirmer</button>
+            <button type="submit"  class="btn btn-round btn-green">Confirmer</button>
         </div>
-    </div> 
+    </div>
     {{ form_widget(form._token) }}
 </form>
+
+

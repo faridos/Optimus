@@ -37,7 +37,7 @@ class RewardController extends Controller {
             $em->persist($reward);
             $em->flush();
 
-            die('ok reward');
+            return $this->redirect($this->generateUrl('palmares_user', array('id' => $user->getId())));
         }
 
         return array(

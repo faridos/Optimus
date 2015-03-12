@@ -128,7 +128,10 @@ class Club {
      * 
      */
     protected $reward;
-
+  /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Album", mappedBy="club")
+     * */
+    protected $album;
     public function __construct() {
 
         $this->clubcomments = new ArrayCollection();

@@ -142,6 +142,10 @@ class Event {
     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Photo", mappedBy="event")
     **/
     protected $images;
+      /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Album", mappedBy="event")
+     * */
+    protected $album;
     
     public function __construct() {
         $this->dateCreation = new \Datetime();

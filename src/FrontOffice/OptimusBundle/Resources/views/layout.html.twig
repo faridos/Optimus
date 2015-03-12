@@ -1,9 +1,9 @@
 {% extends "::baseA.html.twig" %}
 
 {% block navigation %}
-    <div id="header" style="box-shadow:0px 1px 20px rgba(0, 0, 0, 0.3)">
-        <div class="home-logo osLight" style="margin:12px 0px 0 15px;"><a href="{{ path('index_optumis') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
-        <a href="#" class="navHandler" style="padding-top:18px;font-size:18px;color:#c02100"><span class="fa fa-list-ul"></span></a>
+    <div id="header" >
+        <div class="home-logo osLight"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
+        <a href="#" class="navHandler" ><span class="fa fa-navicon"></span></a>
         <div class="search">
             <form action="" class="search-form" name="formsearch">
                 <input type="hidden" name="kwtype" value="0">
@@ -31,7 +31,7 @@
             <a href="#" class="userHandler dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span></a>
             <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
                 <img class="avatar headerAvatar pull-left" src="{{ asset( app.user.getWebPath ) }}" alt="avatar">
-                <div class="userTop pull-left" style="margin:13px 0 0 7px">
+                <div class="userTop pull-left" >
                     <span class="headerUserName">{{ app.user.nom }} {{ app.user.prenom }}</span> <span class="fa fa-angle-down"></span>
                     <div class="cardRating" style="color:#eab134">
                         <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'U'~app.user.id} %}</div>

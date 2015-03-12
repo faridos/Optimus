@@ -34,8 +34,8 @@
                 <div class="tab-content">
 
                     <ul class="tab-pane fade active in scrollbar" id="palmares" >       
-                         <div class="buttonsWrapper col-xs-12">
-                            <a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                        <div class="buttonsWrapper col-xs-12">
+                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadpalmares" data-toggle="modal" ><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
                         </div>
                         {% for reward in rewards %}
                             <div class="row">
@@ -93,16 +93,18 @@
                     </ul>
                 </div>
                 <div class="clearfix"></div>
-
-
-
-
             </div>
-
         </div>
-
+    </div>
+    <!--------------- upload palmares ------------------>
+    <div class="modal fade" id="uploadpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+             {{ render (controller('FrontOfficeOptimusBundle:Reward:addRewardUser',  { 'id': app.user.id })) }}
+        </div>
     </div>
 
+
+    <!--------------- fin upload  ------------------>
 {% endblock %}
 
 

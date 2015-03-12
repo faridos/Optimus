@@ -1,16 +1,29 @@
-{% extends '::base.html.twig' %}
+<form action="{{ path('album_edit',{ 'id' : album.id }) }}" {{ form_enctype(edit_form) }} method="post" class="form-horizontal0 form-groups-bordered">
+    {{ form_errors(edit_form) }}
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="contactLabel">Ajouter Album</h4>
+        </div>
+        <div class="modal-body">
+            <div class="contactForm">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                        {{ form_widget(edit_form.nom) }}
+                    </div>
 
-{% block body -%}
-    <h1>Album edit</h1>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                        {{ form_widget(edit_form.privacy) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Annuler</a>
+            <button type="submit"  class="btn btn-round btn-green">Confirmer</button>
+        </div>
+    </div>
+    {{ form_widget(edit_form._token) }}
+</form>
 
-    {{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('album') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
-{% endblock %}
