@@ -225,7 +225,7 @@ $('.loader').hide();
                     
                     var oa = new Object();
                     oa.comment = comment;
-                    
+                    if(comment){
                     $.ajax({
                     url:    Routing.generate('ajax_event_comment', { eventid: {{event.id}}}),
                             type: 'POST',
@@ -253,6 +253,7 @@ $('.loader').hide();
                             error: function () {
                             }
                     });
+                    }
             });
                     var load = false;
                     var last_id_{{event.id}} = 5;
