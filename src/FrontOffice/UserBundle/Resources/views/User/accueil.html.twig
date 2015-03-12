@@ -222,12 +222,20 @@ $('.loader').hide();
 
                     $("#btnmsg_{{event.id}}").on('click', function () {
             var comment = $("#input_{{event.id}}").val();
-                    var photo = " {{app.user.WebPath}}";
-                    var commenteur = "{{app.user.username}}";
-                    var date = "{{"now"|date('d/m/Y à H:i')}}";
+                    
                     var oa = new Object();
                     oa.comment = comment;
-                    $("#content_msg_{{event.id}}").prepend('<div class="comment">' +
+                    
+                    $.ajax({
+                    url:    Routing.generate('ajax_event_comment', { eventid: {{event.id}}}),
+                            type: 'POST',
+                            data: oa,
+                            contentType: "application/json; charset=ISO-8859-4",
+                            beforeSend: function () {
+                            console.log("envoi");
+                            },
+                            success: function () {
+                                $("#content_msg_{{event.id}}").prepend('<div class="comment">' +
                     '<div class="commentAvatar">' +
                     '<img class="avatar" src="{{ asset(app.user.WebPath)}}" alt="avatar">' +
                     '<div class="commentArrow"><span class="fa fa-caret-left"></span></div>' +
@@ -241,15 +249,6 @@ $('.loader').hide();
                     '<div class="clearfix"></div>' +
                     '</div>');
                     $("#input_{{event.id}}").val("");
-                    $.ajax({
-                    url:    Routing.generate('ajax_event_comment', { eventid: {{event.id}}}),
-                            type: 'POST',
-                            data: oa,
-                            contentType: "application/json; charset=ISO-8859-4",
-                            beforeSend: function () {
-                            console.log("envoi");
-                            },
-                            success: function () {
                             },
                             error: function () {
                             }
@@ -279,7 +278,7 @@ $('.loader').hide();
                                     '</div>' +
                                     '<div class="commentContent">' +
                                     '<div class="commentName">' + comment.commenteur.prenom + comment.commenteur.nom + '</div>' +
-                                    '<div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> Maintenant </div>' +
+                                    '<div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> ' + comment.createdat.date+'</div>' +
                                     '<br>' +
                                     '<div class="commentBody">' + comment.Commentaire + '</div>' +
                                     '</div>' +
