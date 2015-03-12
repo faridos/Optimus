@@ -80,14 +80,14 @@ class UserRepository extends EntityRepository {
     }
 
     public function getUsersByName($nomOuPrenom) {
-//      $qb=$this->getEntityManager()->createQueryBuilder();
-//      $user=$qb->select('u')
-//                     ->from("FrontOfficeUserBundle:User", 'u')
-//                     ->where("UPPER(u.nom) LIKE :nomPrenom")
-//                     ->orWhere("UPPER(u.prenom) LIKE :nomPrenom")
-//                     ->setParameter('nomPrenom', strtoupper($nomOuPrenom).'%')
-//                     ->getQuery()->getResult();
-//     return $user;
+      $qb=$this->getEntityManager()->createQueryBuilder();
+      $user=$qb->select('u')
+                     ->from("FrontOfficeUserBundle:User", 'u')
+                     ->where("UPPER(u.nom) LIKE :nomPrenom")
+                     ->orWhere("UPPER(u.prenom) LIKE :nomPrenom")
+                     ->setParameter('nomPrenom', strtoupper($nomOuPrenom).'%')
+                     ->getQuery()->getResult();
+     return $user;
     }
 
     public function getConnectedUsers() {

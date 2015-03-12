@@ -1,0 +1,139 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+
+{% block body %}
+    <br/><br/><br/><br/><br/><br/>
+    <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+            <div class="mail-env">
+
+                <!-- Personnes Body -->
+                <div class="mail-body">
+
+
+
+                    <h4>Utilisateur</h4>
+                    {% if res is defined %}
+                        {% if res.users==null %}
+                            <div class="alert alert-danger">
+                                <strong>Aucun personne</strong> trouvé avec ces critères <i class="entypo-alert"></i>
+                            </div>
+                        {% else %}
+                            <div class="list-group">
+                                {% for user in res.users %}
+                                    <div class="list-group-item">
+
+                                        <div class="row info-list">
+                                            <div class="col-sm-12">
+                                                <a href="#" class="">
+                                                    <h4 class="list-group-item-heading"> {{ user.nom }} {{ user.prenom }} </h4>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <i class="entypo-suitcase"></i>{% if user.profil=="E" %} Entraineur {% else %} Sportif {% endif %}
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <i class="entypo-location"></i> {{ user.adresse}} 
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <i class="entypo-calendar"></i>Né le {{ user.dateNaissance|date('d/m/Y') }} 
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                    <h4>Clubs</h4>
+                    {% if res is defined %}
+                        {% if res.clubs==null %}
+                            <div class="alert alert-danger">
+                                <strong>Aucun club</strong> trouvé avec ces critères <i class="entypo-alert"></i>
+                            </div>
+                        {% else %}
+                            <div class="list-group">
+                                {% for club in res.clubs %}
+                                    <div class="list-group-item">
+
+                                        <div class="row info-list">
+                                            <div class="col-sm-12">
+                                                <a href="#" class="">
+                                                    <h4 class="list-group-item-heading"> {{ club.nom }} </h4>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <i class="entypo-flag"></i>{{ club.discpline }}
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <i class="entypo-location"></i> {{ club.adresse}} 
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <i class="entypo-calendar"></i> {{ club.dateCreation|date('d/m/Y') }} 
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+
+                    <h4>Events</h4>
+
+                    {% if res is defined %}
+                        {% if res.events==null %}
+                            <div class="alert alert-danger">
+                                <strong>Aucun évènement</strong> trouvé avec ces critères <i class="entypo-alert"></i>
+                            </div>
+                        {% else %}
+                            {% for event in res.events %}
+                                <div class="list-group-item">
+
+                                    <div class="row info-list">
+                                        <div class="col-sm-12">
+                                            <a href="#" class="">
+                                                <h4 class="list-group-item-heading"> {{ event.titre }} </h4>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <i class="entypo-location"></i>{{ event.lieu }}
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <i class="entypo-clock"></i>Du 01 {{ event.dateDebut|date('d/m/Y à H:i') }} 
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <i class="entypo-ticket"></i> {{ event.frais }} €
+                                        </div>
+                                        <div class="clear"></div>
+                                        <div class="col-sm-4">
+                                            <i class="entypo-users"></i>
+                                            {{ event.nbrPlaces }}
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <i class="entypo-clock"></i>Au {{ event.dateFin|date('d/m/Y à H:i') }}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{%endblock%}
+

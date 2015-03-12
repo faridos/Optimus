@@ -1,0 +1,100 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+
+{% block body %}
+    <br/><br/><br/><br/><br/><br/>
+     <div class="col-md-10 col-md-offset-1">
+    <div class="row">
+        <div class="mail-env">
+
+            <!-- Personnes Body -->
+            <div class="mail-body">
+
+                <div class="mail-header">
+                    <!-- title -->
+                    <h3 class="mail-title">
+                        <i class="entypo-users"></i>Personnes
+                        <span class="badge badge-success ">{{ res.nbr_users}}</span>
+                    </h3>
+
+                </div>
+                <div class="row">
+                    <!-- search -->
+                    <div class="col-md-12 well" style="padding-left: 100px;">
+                        <form action="{{ path('search_user',{'key':res.key}) }}" method="get">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Personne :<input type="text" name="key" value="{{res.key}}"class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    Profil :
+                                    <select name="profil" class="form-control">
+                                        <option value=""></option>
+                                        <option value="E" {% if res.profil=='E' %} selected {%endif%} >Entraineur</option>
+                                        <option value="S" {% if res.profil=='S' %} selected {%endif%}>Sportif</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    Adresse :<input type="text" name="adresse" value="{{res.adresse}}"class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    Email :<input type="email" name="email" value="{{res.email}}"class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    Tel :<input type="tel" name="tel" value="{{res.tel}}"class="form-control" />
+                                </div>
+                                <div class="col-md-1">
+                                    <br>
+                                    <button type="submit" class="btn btn-blue btn-icon">Chercher
+                                        <i class="entypo-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- resultats de recherche -->
+                    <div class="col-md-12">
+
+                        {% if res is defined %}
+                            {% if res.users==null %}
+                                <div class="alert alert-danger">
+                                    <strong>Aucun personne</strong> trouvé avec ces critères <i class="entypo-alert"></i>
+                                </div>
+                            {% else %}
+                                <div class="list-group">
+                                    {% for user in res.users %}
+                                        <div class="list-group-item">
+
+                                            <div class="row info-list">
+                                                <div class="col-sm-12">
+                                                    <a href="#" class="">
+                                                        <h4 class="list-group-item-heading"> {{ user.nom }} {{ user.prenom }} </h4>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <i class="entypo-suitcase"></i>{% if user.profil=="E" %} Entraineur {% else %} Sportif {% endif %}
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <i class="entypo-location"></i> {{ user.adresse}} 
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <i class="entypo-calendar"></i>Né le {{ user.dateNaissance|date('d/m/Y') }} 
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+

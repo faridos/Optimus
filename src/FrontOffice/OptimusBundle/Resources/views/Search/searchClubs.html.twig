@@ -1,0 +1,98 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block body %}
+    <br/><br/><br/><br/><br/><br/>
+    <div class="col-md-10 col-md-offset-1">
+    <div class="row">
+        <div class="mail-env">
+
+            <!-- Personnes Body -->
+            <div class="mail-body">
+
+                <div class="mail-header">
+                    <!-- title -->
+                    <h3 class="mail-title">
+                        <i class="entypo-flag"></i>Clubs
+                        <span class="badge badge-success ">{{ res.nbr_clubs}}</span>
+                    </h3>
+
+                </div>
+                <div class="row">
+                    <!-- search -->
+                    <div class="col-md-12 well" style="padding-left: 100px;">
+                        <form action="{{ path('search_clubs',{'key':res.key}) }}" method="get">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Club :<input type="text" name="key" value="{{res.key}}"class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    Discipline :<input type="text" name="sport" value="{{res.sport}}"class="form-control" />
+                                </div>
+                                <div class="col-md-3">
+                                    Adresse :<input type="text" name="adresse" value="{{res.adresse}}"class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    createur:
+                                    {#<label for="createur">createur :</label>#}
+                                    <input list="createurlist" type="text" name="createur" value="{{res.createur}}">
+                                    <datalist id="createurlist">
+                                        <option value="tous">
+                                        <option value="amis">
+
+                                    </datalist>
+                                </div>
+                                <div class="col-md-2">
+                                    <br>
+                                    <button type="submit" class="btn btn-blue btn-icon">Chercher
+                                        <i class="entypo-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- resultats de recherche -->
+                    <div class="col-md-12">
+
+                        {% if res is defined %}
+                            {% if res.clubs==null %}
+                                <div class="alert alert-danger">
+                                    <strong>Aucun club</strong> trouvé avec ces critères <i class="entypo-alert"></i>
+                                </div>
+                            {% else %}
+                                <div class="list-group">
+                                    {% for club in res.clubs %}
+                                        <div class="list-group-item">
+
+                                            <div class="row info-list">
+                                                <div class="col-sm-12">
+                                                    <a href="#" class="">
+                                                        <h4 class="list-group-item-heading"> {{ club.nom }} </h4>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <i class="entypo-flag"></i>{{ club.discpline }}
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <i class="entypo-location"></i> {{ club.adresse}} 
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <i class="entypo-calendar"></i> {{ club.dateCreation|date('d/m/Y') }} 
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>      
+        </div>
+    </div>
+
+ </div>
+{%endblock%}
+

@@ -61,7 +61,8 @@ class UserController extends Controller {
         $lat = $user->getLat();
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventLoad(new \Datetime('- 1 months'), $lng, $lat);
         $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime('- 1 months'));
-        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $events, 'eventsMap' => $eventsMap));
+        $typesEv = $em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findAll();
+        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('type_events' => $typesEv, 'user' => $user, 'events' => $events, 'eventsMap' => $eventsMap));
     }
 
     /**

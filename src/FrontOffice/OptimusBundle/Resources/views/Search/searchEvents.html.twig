@@ -1,0 +1,115 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block body %}
+    <br/><br/><br/><br/><br/><br/>
+    <div class="col-md-10 col-md-offset-1">
+ <div class="row">
+  <div class="mail-env">
+   <!-- Personnes Body -->
+   <div class="mail-body">
+    <div class="mail-header">
+     <!-- title -->
+     <h3 class="mail-title">
+      <i class="entypo-calendar"></i>Évènements
+      <span class="badge badge-success ">{{ res.nbr_events}}</span>
+     </h3>
+    </div>
+    <div class="row">
+     <!-- search -->
+     <div class="col-md-12 well" style="padding-left: 100px;">
+      <form action="{{ path('search_events',{'key':res.key}) }}" method="get">
+       <div class="row">
+        <div class="col-md-2">
+         Titre :<input type="text" name="key" value="{{res.key}}"class="form-control" />
+        </div>
+        <div class="col-md-2">
+         Type :
+         <select name="type" value="{{res.type}}" class="form-control">
+          <option value=""></option>
+          {% for type in type_events %}
+           <option value="{{type.id}}" {% if res.type == type.id %} selected {% endif %} >{{ type.nom }}</option>
+          {% endfor %}
+         </select>
+        </div>
+        <div class="col-md-2">
+         Createur :{#<input type="text" name="createur" value="{{res.createur}}"class="form-control" />#}
+         {#<label for="createur"></label>#}
+                                    <input list="createurlist" type="text" name="createur" value="{{res.createur}}">
+                                    <datalist id="createurlist">
+                                        <option value="tous">
+                                        <option value="amis">
+
+                                    </datalist>
+        </div>
+        <div class="col-md-2">
+         Lieu :<input type="text" name="lieu" value="{{res.lieu}}"class="form-control" />
+        </div>
+        <div class="col-md-2">
+         Date :
+         <select name="date" class="form-control" value="{{res.date}}">
+          <option value=""  >Date indifférente</option>
+          <option value="aujourdhui" {% if res.date == 'aujourdhui' %} selected {% endif %}>Aujourd'hui</option>
+          <option value="semaine" {% if res.date == 'semaine' %} selected {% endif %}>Moins d'une semaine</option>
+          <option value="mois" {% if res.date == 'mois' %} selected {% endif %}>Moins d'un mois</option>
+          <option value="an" {% if res.date == 'an' %} selected {% endif %}>Moins d'un an</option>
+         </select>
+        </div>
+        <div class="col-md-2">
+         <br>
+         <button type="submit" class="btn btn-blue btn-icon">Chercher
+          <i class="entypo-search"></i>
+         </button>
+        </div>
+       </div>
+      </form>
+     </div>
+     <!-- resultats de recherche -->
+     <div class="col-md-12">
+
+      {% if res is defined %}
+       {% if res.events==null %}
+        <div class="alert alert-danger">
+         <strong>Aucun évènement</strong> trouvé avec ces critères <i class="entypo-alert"></i>
+        </div>
+       {% else %}
+        {% for event in res.events %}
+         <div class="list-group-item">
+
+          <div class="row info-list">
+           <div class="col-sm-12">
+            <a href="#" class="">
+             <h4 class="list-group-item-heading"> {{ event.titre }} </h4>
+            </a>
+           </div>
+
+           <div class="col-sm-4">
+            <i class="entypo-location"></i>{{ event.lieu }}
+           </div>
+           <div class="col-sm-4">
+            <i class="entypo-clock"></i>Du 01 {{ event.dateDebut|date('d/m/Y à H:i') }} 
+           </div>
+           <div class="col-sm-4">
+            <i class="entypo-ticket"></i> {{ event.frais }} €
+           </div>
+           <div class="clear"></div>
+           <div class="col-sm-4">
+            <i class="entypo-users"></i>
+            {{ event.nbrPlaces }}
+           </div>
+           <div class="col-sm-4">
+            <i class="entypo-clock"></i>Au {{ event.dateFin|date('d/m/Y à H:i') }}
+           </div>
+          
+          </div>
+
+         </div>
+        {% endfor %}
+       {% endif %}
+      {% endif %}</div>
+    </div>
+   </div>
+
+
+  </div>
+ </div>
+ </div>
+{%endblock%}

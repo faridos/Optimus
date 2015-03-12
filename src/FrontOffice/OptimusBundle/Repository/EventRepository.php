@@ -82,4 +82,189 @@ class EventRepository extends EntityRepository {
 //        return $events = $query->getArrayResult();
 //    }
      
+    
+    public function getEvents($titre, $type, $lieu, $date) {
+        $em = $this->getEntityManager();
+        $events=Null;
+        $condition = "WHERE 1=1";
+        $condition = $condition . " AND e.active='1' ";
+        $parameters = array();
+
+        if ($type != null) {
+            $condition = $condition . " AND e.type = :type";
+            $parameters[':type'] = $type;
+        }
+
+        if ($lieu != null) {
+            $condition = $condition . " AND UPPER(e.lieu) LIKE :lieu";
+            $parameters[':lieu'] = "%". strtoupper($lieu) . "%";
+        }
+
+        //par date
+        if ($date == 'aujourdhui') {
+            $condition = $condition . " AND ( e.dateDebut BETWEEN :deb AND :fin )";
+            $parameters[':deb'] = date("Y-m-d 00:00:00");
+            $parameters[':fin'] = date("Y-m-d 23:59:59");
+        } elseif ($date == 'semaine') {
+            $today = date('Y-m-d H:i:s');
+            $condition = $condition . " AND ( e.dateDebut BETWEEN :dernier_semaine AND :now )";
+            $parameters[':now'] = $today;
+            $parameters[':dernier_semaine'] = date('Y-m-d H:i:s', strtotime('-1 week', strtotime($today)));
+        } elseif ($date == 'mois') {
+            $today = date('Y-m-d H:i:s');
+            $condition = $condition . " AND ( e.dateDebut BETWEEN :dernier_semaine AND :now )";
+            $parameters[':now'] = $today;
+            $parameters[':dernier_semaine'] = date('Y-m-d H:i:s', strtotime('-1 month', strtotime($today)));
+        } elseif ($date == 'an') {
+            $today = date('Y-m-d H:i:s');
+            $condition = $condition . " AND ( e.dateDebut BETWEEN :dernier_semaine AND :now )";
+            $parameters[':now'] = $today;
+            $parameters[':dernier_semaine'] = date('Y-m-d H:i:s', strtotime('-1 year', strtotime($today)));
+        }
+
+        if ($titre != null) {
+        $condition = $condition . " AND UPPER(e.titre) LIKE :titre";
+        $parameters[':titre'] = "%". strtoupper($titre) . "%";
+        }
+
+        if($type || $lieu || $date || $titre != Null){
+        $events = $em->createQuery("SELECT e FROM FrontOfficeOptimusBundle:Event e " . $condition)
+                        ->setParameters($parameters)->getResult();
+        }
+        return $events;
+    }
+    
+    public function getEventsCreateurAm($createur, $titre, $type, $lieu, $date , $usercrt) {
+        $em = $this->getEntityManager();
+        $friends = $em->getRepository("FrontOfficeUserBundle:User")->getFrinds($usercrt->getId());
+        $res = null;
+
+        foreach ($friends as $friend) {
+            $condition = "WHERE 1=1";
+            $condition = $condition . " AND e.active='1' ";
+            $parameters = array();
+
+
+
+            if ($friend != null) {
+                $condition = $condition . " AND e.createur in (:friend)";
+                $parameters[':friend'] = $friend;
+            }
+
+            if ($type != null) {
+                $condition = $condition . " AND e.type = :type";
+                $parameters[':type'] = $type;
+            }
+
+            if ($lieu != null) {
+                $condition = $condition . " AND UPPER(e.lieu) LIKE :lieu";
+                $parameters[':lieu'] = "%". strtoupper($lieu) . "%";
+            }
+
+            //par date
+            if ($date == 'aujourdhui') {
+                $condition = $condition . " AND ( e.dateDebut BETWEEN :deb AND :fin )";
+                $parameters[':deb'] = date("Y-m-d 00:00:00");
+                $parameters[':fin'] = date("Y-m-d 23:59:59");
+            } elseif ($date == 'semaine') {
+                $today = date('Y-m-d H:i:s');
+                $condition = $condition . " AND ( e.dateDebut BETWEEN :dernier_semaine AND :now )";
+                $parameters[':now'] = $today;
+                $parameters[':dernier_semaine'] = date('Y-m-d H:i:s', strtotime('-1 week', strtotime($today)));
+            } elseif ($date == 'mois') {
+                $today = date('Y-m-d H:i:s');
+                $condition = $condition . " AND ( e.dateDebut BETWEEN :dernier_semaine AND :now )";
+                $parameters[':now'] = $today;
+                $parameters[':dernier_semaine'] = date('Y-m-d H:i:s', strtotime('-1 month', strtotime($today)));
+            } elseif ($date == 'an') {
+                $today = date('Y-m-d H:i:s');
+                $condition = $condition . " AND ( e.dateDebut BETWEEN :dernier_semaine AND :now )";
+                $parameters[':now'] = $today;
+                $parameters[':dernier_semaine'] = date('Y-m-d H:i:s', strtotime('-1 year', strtotime($today)));
+            }
+
+
+            $condition = $condition . " AND UPPER(e.titre) LIKE :titre";
+            $parameters[':titre'] = "%". strtoupper($titre) . "%";
+
+
+
+            $res[] = $em->createQuery("SELECT e FROM FrontOfficeOptimusBundle:Event e " . $condition)
+                            ->setParameters($parameters)->getResult();
+        }
+        return $res;
+    }
+    
+    public function getEventsCreateur($createur, $titre, $type, $lieu, $date) {
+        $em = $this->getEntityManager();
+        $users = $em->getRepository("FrontOfficeUserBundle:User")->getUsersByName($createur);
+
+
+        $res = null;
+
+        foreach ($users as $user) {
+            $condition = "WHERE 1=1";
+            $condition = $condition . " AND e.active='1' ";
+            $parameters = array();
+
+
+
+            if ($user != null) {
+                $condition = $condition . " AND e.createur = :createur";
+                $parameters[':createur'] = $user->getId();
+            }
+
+            if ($type != null) {
+                $condition = $condition . " AND e.type = :type";
+                $parameters[':type'] = $type;
+            }
+
+            if ($lieu != null) {
+                $condition = $condition . " AND UPPER(e.lieu) LIKE :lieu";
+                $parameters[':lieu'] = "%". strtoupper($lieu) . "%";
+            }
+
+            //par date
+            if ($date == 'aujourdhui') {
+                $condition = $condition . " AND ( e.dateDebut BETWEEN :deb AND :fin )";
+                $parameters[':deb'] = date("Y-m-d 00:00:00");
+                $parameters[':fin'] = date("Y-m-d 23:59:59");
+            } elseif ($date == 'semaine') {
+                $today = date('Y-m-d H:i:s');
+                $condition = $condition . " AND ( e.dateDebut BETWEEN :dernier_semaine AND :now )";
+                $parameters[':now'] = $today;
+                $parameters[':dernier_semaine'] = date('Y-m-d H:i:s', strtotime('-1 week', strtotime($today)));
+            } elseif ($date == 'mois') {
+                $today = date('Y-m-d H:i:s');
+                $condition = $condition . " AND ( e.dateDebut BETWEEN :dernier_semaine AND :now )";
+                $parameters[':now'] = $today;
+                $parameters[':dernier_semaine'] = date('Y-m-d H:i:s', strtotime('-1 month', strtotime($today)));
+            } elseif ($date == 'an') {
+                $today = date('Y-m-d H:i:s');
+                $condition = $condition . " AND ( e.dateDebut BETWEEN :dernier_semaine AND :now )";
+                $parameters[':now'] = $today;
+                $parameters[':dernier_semaine'] = date('Y-m-d H:i:s', strtotime('-1 year', strtotime($today)));
+            }
+
+
+            $condition = $condition . " AND UPPER(e.titre) LIKE :titre";
+            $parameters[':titre'] = "%". strtoupper($titre) . "%";
+
+
+
+            $res[] = $em->createQuery("SELECT e FROM FrontOfficeOptimusBundle:Event e " . $condition)
+                            ->setParameters($parameters)->getResult();
+        }
+        return $res;
+    }
+    
+    public function getEventsSearch($titre) {
+      $qb=$this->getEntityManager()->createQueryBuilder();
+      $events=$qb->select('e')
+                     ->from("FrontOfficeOptimusBundle:Event", 'e')
+                     ->where("UPPER(e.titre) LIKE :key")
+                     ->setParameter('key', strtoupper($titre).'%')
+                     ->getQuery()->getResult();
+     return $events;
+    }
 }
