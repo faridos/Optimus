@@ -18,8 +18,7 @@ class AlbumType extends AbstractType
              ->add('nom','text',array('attr'=>array('class'=>'form-control','placeholder'=>'Entrer le titre album')))
              ->add('privacy', 'choice', array('choices' => array('Publique' => 'Public', 'Unique' => 'Unique', 'Amis' => 'Amis'),'attr'=>array('class'=>'form-control')))
         ;
-    }
-    
+    }               
     /**
      * @param OptionsResolverInterface $resolver
      */

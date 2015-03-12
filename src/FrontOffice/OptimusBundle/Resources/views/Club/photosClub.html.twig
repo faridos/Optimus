@@ -12,8 +12,9 @@
                     <li class=""><a href="{{ path('palmares_club',{'id' : club.id}) }}" role="tab" ><span class="icon-badge"></span> Palmares</a></li>
                     <li class="active"><a href="{{ path('albums_club',{'id' : club.id }) }}" role="tab" data-toggle="tab"><span class="icon-doc"></span> Albums</a></li>
                     <li class=""><a href="#videos" role="tab" ><span class="icon-film"></span> Vidéos</a></li>
-                    <li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span> Liste adhérents</a></li>
-                    <li class=""><a href="" role="tab" ><span class="icon-user-unfollow"></span> Adhèrer</a></li>
+                    <li class=""><a href="{{ path('members_club',{'id':club.id})}}" role="tab" ><span class="icon-user-unfollow"></span> Adhérents</a></li>
+                    <li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span> Demandes</a></li>
+                    
                 </ul>
                 <div class="tab-content">
                   

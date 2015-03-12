@@ -5,35 +5,38 @@
         <div class="col-lg-12">
             <div class="tabsContainer">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
-                    <li class=""><a href="#Programme" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Programme</a></li>
-                    <li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-badge"></span> Palmares</a></li>
-                    <li class=""><a href="#albums" role="tab" data-toggle="tab"><span class="icon-doc"></span> Albums</a></li>
+                    <li class=""><a href="{{ path('show_club',{'id' : club.id})}}" role="tab" ><span class="icon-trophy"></span> Programme</a></li>
+                    <li class=""><a href="{{ path('palmares_club',{'id' : club.id}) }}" role="tab" ><span class="icon-badge"></span> Palmares</a></li>
+                    <li class=""><a href="{{ path('albums_club', {'id' : club.id}) }}" role="tab" ><span class="icon-doc"></span> Albums</a></li>
                     <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
-                    <li class="active"><a href="#liste" role="tab"><span class="icon-user-following"></span> Liste adhérents</a></li>
-                    <li class=""><a href="#demande" role="tab" ><span class="icon-user-unfollow"></span> Adhèrer</a></li>
+                    <li class=""><a href="{{ path('members_club',{'id':club.id})}}" role="tab"><span class="icon-user-following"></span> Adhérents</a></li>
+                     <li class="active"><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-unfollow"></span> Demandes</a></li>
+                   
                 </ul>
                 <div class="tab-content">
                     <ul class="tab-pane fade active in scrollbar" id="demande" >
-                        <div class="row pb40">
-                            {% for demande in demandes %}
-                            <div class="col-md-4">
-                                <div class="tooltipsContainer agent notifyList">
-                                    <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{ demande.nom }} {{ demande.prenom }}">
-                                        <img src="{{ asset(demande.WebPath) }}" alt="">
-                                        <div class="pulse border-green pulseoptimus"></div>
-                                    </a>
-                                    <div class="info">
-                                        <a href="#"> <div class="name clubumus"><strong>{{ demande.nom }} {{ demande.prenom }}</strong></div></a>
-                                        <div class="title">{{ demande.profil }}</div>
-                                    </div> <br>
-                                    <div align="center">
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="accepter"><span class="fa fa-check"></span></a>
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="refuser"><span class="fa fa-close"></span></a>
-                                    </div><br>
+                          <div class="row">
+                        {% for demande in demandes %}
+                          
+                                <div id="demende{{demande.id}}" class="col-md-4">
+                                    <div class="tooltipsContainer agent notifyList">
+                                        <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{ demande.member.nom }} {{ demande.member.prenom }}">
+                                            <img src="{{ asset(demande.member.WebPath) }}" alt="">
+                                            <div class="pulse border-green pulseoptimus"></div>
+                                        </a>
+                                        <div class="info">
+                                            <a href="#"> <div class="name clubumus"><strong>{{ demande.member.nom }} {{ demande.member.prenom }}</strong></div></a>
+                                            <div class="title">{{ demande.member.profil }}</div>
+                                        </div> <br>
+                                        <div id="{{demande.id}}" align="center">
+                                            <a  id="accept_rejoindre{{demande.id}}" href="#" class="btn btn-icon btn-round btn-green btn-xs" title="accepter"><span class="fa fa-check"></span></a>
+                                            <a  id="refuser_rejoindre{{demande.id}}" href="#" class="btn btn-icon btn-round btn-green btn-xs" title="refuser"><span class="fa fa-close"></span></a>
+                                        </div><br>
+                                    </div>
                                 </div>
-                            </div>
-                            {% endfor %}
-                        </div>
+                          
+                        {% endfor %}
+                          </div>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -41,4 +44,39 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascriptfils %}
+    <script>
+       
+        {% for demande in demandes %}
+            $('#accept_rejoindre{{demande.id}}').click(function() {
+                
+                var id = $('#{{demande.id}}').attr('id');
+             
+                $.ajax({
+                    url: Routing.generate('accept_demande', {'id': id}),
+                    success: function(data) {
+                           
+                           
+                        $('#demende'+data).hide();
+                        console.log(data);
+                    }
+                });
+            });
+            $('#refuser_rejoindre{{demande.id}}').click(function() {
+                
+                var id = $('#{{demande.id}}').attr('id');
+               console.log(id);
+                $.ajax({
+                    url: Routing.generate('delete_demande', {'id': id}),
+                    success: function(data) {
+                           
+                           
+                        $('#demende'+data).hide();
+                        console.log(data);
+                    }
+                });
+            });
+        {% endfor %}
+    </script>
 {% endblock %}

@@ -118,7 +118,8 @@ class AlbumController extends Controller
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id);
         $em->remove($entity);
         $em->flush();
-        return $this->redirect($this->generateUrl('albums_user', array('id' => $user->getId())));  
+        $response = new Response($id);
+         return $response;
     }
    
 }

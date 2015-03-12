@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class MemberRepository extends EntityRepository
 {
-    public function getMembers($id)
+    public function getMembers($id,$id_user)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('u');
@@ -22,7 +22,9 @@ class MemberRepository extends EntityRepository
            ->Join('FrontOffice\OptimusBundle\Entity\Club', 'c',"WITH", 'm.clubad = c.id')
            ->where('m.confirmed = 1')
            ->andWhere('c.id = :id')
-           ->setParameter('id', $id);
+           ->andWhere('u.id != :id_user')
+           ->setParameter('id', $id)
+         ->setParameter('id_user',$id_user);
         return $qb->getQuery() ->getResult();
 				  
     }
@@ -30,10 +32,9 @@ class MemberRepository extends EntityRepository
     {
        $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
-        $qb->select(array('u'))
-           ->from('FrontOffice\UserBundle\Entity\User', 'u')
-           ->Join('FrontOffice\OptimusBundle\Entity\Member','m', "WITH" ,'m.member = u.id')
-           ->Join('FrontOffice\OptimusBundle\Entity\Club', 'c',"WITH", 'm.clubad = c.id')
+        $qb->select(array('m'))
+           ->from('FrontOffice\OptimusBundle\Entity\Member', 'm')
+           ->Join('FrontOffice\OptimusBundle\Entity\Club','c', "WITH" ,'m.clubad = c.id')
            ->where('m.confirmed = 0')
            ->andWhere('c.id = :id')
            ->andWhere('c.createur = :idc')

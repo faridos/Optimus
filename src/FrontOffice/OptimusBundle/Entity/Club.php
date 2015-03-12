@@ -120,7 +120,7 @@ class Club {
     protected $clubcomments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Member", mappedBy="clubad")
+     * @ORM\OneToMany(targetEntity="Member", mappedBy="clubad", cascade={"persist","remove"})
      * */
     protected $adherents;
     /**

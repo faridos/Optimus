@@ -15,9 +15,9 @@ class RewardType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date')
-            ->add('titre')
-            ->add('classment')
+            ->add('date', 'datetime' ,array('attr'=>array('class'=>'some_class form-control','placeholder'=>'Date de creation'),'widget' => 'single_text','required' => true))
+            ->add('titre','text',array('attr'=>array('class'=>'form-control','placeholder'=>'Entrer le titre de reward')))
+            ->add('classment', 'text',array('attr'=>array('class'=>'form-control','placeholder'=>'Entrer le classement')))
             
         ;
     }
