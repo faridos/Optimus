@@ -159,7 +159,7 @@ class ClubController extends Controller {
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
 
-            return $this->redirect($this->generateUrl('  clubs_member', array('id' => $user->getId())));
+            return $this->redirect($this->generateUrl('clubs_member', array('id' => $user->getId())));
         }
     }
 
