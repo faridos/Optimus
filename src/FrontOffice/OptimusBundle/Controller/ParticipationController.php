@@ -39,6 +39,10 @@ class ParticipationController extends Controller {
 
         $em->persist($newparticipation);
         $em->flush();
+        $action = 'participation';
+        $eventhistory = new HistoryEventEvent($user, $event, $action);
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
     }
 

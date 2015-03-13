@@ -224,6 +224,10 @@ class ClubController extends Controller {
             $member->setMember($this->container->get('security.context')->getToken()->getUser());
             $em->persist($member);
             $em->flush();
+            $action = 'rejoindre';
+            $clubevent = new HistoryClubEvent($user, $club, $action);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
             $response = new Response();
             $memberJson = json_encode($member);
             $response->headers->set('Content-Type', 'application/json');
@@ -251,6 +255,10 @@ class ClubController extends Controller {
             $em->remove($member);
             $em->flush();
         }
+        $action = 'quitter';
+        $clubevent = new HistoryClubEvent($user, $club, $action);
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
         $response = new Response();
         $memberJson = json_encode($member);
         $response->headers->set('Content-Type', 'application/json');
@@ -280,5 +288,7 @@ class ClubController extends Controller {
             return $response;
         }
     }
+    
+
 
 }

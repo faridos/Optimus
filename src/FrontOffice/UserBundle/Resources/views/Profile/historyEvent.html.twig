@@ -1,0 +1,121 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block body %}
+    <div id="wrapper">
+        <div id="content" class="max">
+            <div class="components">
+                <h4>Historique</h4>
+                <div class="row">
+                    <div class="col-md-3">
+                        <ol class="breadcrumb">
+                            <ul class="notifyList nav">
+                                <li class="active"><a href="{{ path('history_event', {'id': app.user.id}) }}" class="notifyName"><span class="notifyIcon fa fa-trophy"></span> Evenement</a></li>
+                                <li class=""><a href="{{ path('history_club', {'id': app.user.id}) }}" class="notifyName" ><span class="notifyIcon fa fa-users"></span> Clubs</a></li>
+                            </ul>
+                        </ol>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="tabsContainer">
+                            <div class="tab-content ">
+                                <ul class="tab-pane fade active in  scrollbar" id="historyevents" style="max-height:483px">
+                                   
+                                        {% for Nb, historyevent in historys_event %}
+                                            {% if Nb <5 %}
+                                                 <div class="notificationsWidget">
+                                        <div class="notification">
+                                            <div class="time green">
+                                                <div class="timeBody hidden-xs">{{ historyevent.date|date('Y-m-d') }} à {{ historyevent.date|date('H:i:s') }}</div>
+                                                <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
+                                                <div class="indicator"><span class="fa fa-circle-o"></span></div>
+                                                <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
+                                            </div>
+                                            <div class="notifyContent">
+                                                <div class="notifyBody">
+                                                    <div class="notifyRound notifyRound-green icon-plus"></div>
+                                                    <div class="notify pull-left">
+                                                        <div class="name">{{ historyevent.action }}<span class="label label-green visible-xs">02/02/2015 à 14:48</span></div>
+                                                        <div class="message">{{ historyevent.event.titre }} : {{ historyevent.event.description }}</div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                                      </div>
+                                                     {% endif %}
+                                        {% endfor %}
+                                  
+                                  
+                                </ul>
+                                          <div class="loader" id="loaderClub">
+                                        <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}
+{% block javascriptfils %}
+     <script>
+        (function($) {
+               "use strict"; 
+               var load = false;
+           var last_id = 6;
+              $("#historyevents").scroll(function() {
+                  if ($("#historyevents").scrollTop() - $("#historyevents").height() && load == false && last_id < {{historys_event|length}}){
+                  load = true;
+                 $('.loader').show();
+                  $.ajax({
+                url: Routing.generate('history_event_ajax', { last_id: last_id}),
+                        type: 'POST', 
+
+                        beforeSend: function() {
+                           
+                        },
+                        success: function(data) {
+                             
+                            last_id +=1;
+                           
+                            for (var i in data) {
+                                
+                                 var historyevent = data[i];
+                                 $("#historyevents").append('<div class="notificationsWidget"><div class="notification">'+
+                                            '<div class="time green">'+
+                                                '<div class="timeBody hidden-xs">' + historyevent.date.date + '</div>' +
+                                                '<div class="timeArrow hidden-xs">' +
+                                                '<span class="fa fa-caret-right">' +
+                                                '</span></div>'+
+                                                '<div class="indicator"><span class="fa fa-circle-o"></span></div>'+
+                                               ' <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>'+
+                                           ' </div>'+
+                                            '<div class="notifyContent">'+
+                                               ' <div class="notifyBody">'+
+                                                   '<div class="notifyRound notifyRound-green icon-plus"></div>'+
+                                                   '<div class="notify pull-left">'+
+                                                        '<div class="name">'+ historyevent.action +'<span class="label label-green visible-xs">02/02/2015 à 14:48</span></div>'+
+                                                       ' <div class="message"></div>'+
+                                                    '</div>'+
+                                                  '  <div class="clearfix"></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="clearfix"></div>'+
+                                        '</div></div>');
+                                 load = false;
+                            }
+                            $('.loader').hide();
+                        },
+                        error: function () {
+                            alert('error');
+                        }
+                            
+                  });
+              }
+     });
+       
+          })(jQuery);
+    </script>
+{% endblock %}

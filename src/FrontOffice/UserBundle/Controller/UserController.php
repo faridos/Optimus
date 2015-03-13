@@ -266,5 +266,17 @@ class UserController extends Controller {
 
         return $response = new Response();
     }
+    /**
+     * 
+     *
+     * @Route("profil={id}/paramétres", name="setting_user", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function editAccountAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
+        return $this->render('FrontOfficeUserBundle:Resetting:editAccount.html.twig', array('user' => $user));
+    }
 
 }

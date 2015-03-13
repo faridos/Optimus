@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * HistoryEvent
- *
+ * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Repository\HistoryEventRepository")
  * @ORM\Table(name="historyevent")
- * @ORM\Entity
+ * 
  */
 class HistoryEvent
 {
