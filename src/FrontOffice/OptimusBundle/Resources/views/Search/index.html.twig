@@ -1,31 +1,31 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 {% block body %}
-     <div id="wrapper">
+    <div id="wrapper">
 
         <div id="content" class="max">
             <div class="components">
 
-                
-            <h4>Résultat des recherches</h4>
-            <div class="row">
-                <div class="col-md-3">
 
-                    <ol class="breadcrumb">
-                        <ul class="notifyList nav">
+                <h4>Résultat des recherches</h4>
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <ol class="breadcrumb">
+                            <ul class="notifyList nav">
                                 <li class=""><a href="{{path('search_user')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-users"></span> Personnes</a></li>
                                 <li class=""><a href="{{path('search_events')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-trophy"></span> Evenement</a></li>
                                 <li class=""><a href="{{path('search_clubs')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-users"></span> Clubs</a></li>
                             </ul>
 
 
-                    </ol>
+                        </ol>
 
-                </div>
-                <div class="col-md-9">
-                    <div class="tabsContainer">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="tabsContainer">
 
-                        <div class="tab-content ">
-                           <ul class="tab-pane fade active in scrollbar" id="personne">
+                            <div class="tab-content ">
+                                <ul class="tab-pane fade active in scrollbar" id="personne">
                                     <div class="notificationsWidget">
                                         <h5><span class="badge">{{ res.users|length}}</span> Personnes</h5>
 
@@ -64,106 +64,104 @@
                                             {% endfor %}
                                     </div>
                                 </ul>
-                            
-                        </div>
-                    </div>
-                    <div class="tabsContainer">
-                        <div class="tab-content ">
-                            <ul class="tab-pane fade active in  scrollbar" id="events">
-                                <div class="notificationsWidget">
-                                    <h5><span class="badge">{{ res.events|length}}</span> Evenements</h5>
-                                    {% for event in res.events %}
-                                    <div class="notification">
-                                        <div class="row ">
-                                            <div class="time green">
-                                                <div class="timeBody hidden-xs">{{event.titre}}</div>
-                                                <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
-                                                <div class="indicator"><span class="fa fa-circle-o"></span></div>
-                                                <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
-                                            </div>
-                                                <a href='{{path('show_event',{id:event.id})}}'>
-                                            <div class="notifyContent">
-                                                <div class="notifyBody">
-                                                    <div class="notifyRound notifyRound-red navIcon fa fa-trophy"></div>
-                                                    <div class="col-md-3 pb20"> <div class="notify pull-left">
-                                                            <div class="name"><span class=" navIcon fa fa-map-marker"></span> Lieu : {{event.lieu}}<span class="label label-green visible-xs">{{event.titre}}</span></div>
-                                                            <div class="name"><span class=" navIcon icon-users"></span> Nombre de places : {{event.nbrPlaces}}</div>
-                                                        </div></div>
-                                                    <div class="col-md-3 pb20"><div class="notify pull-left">
-                                                            <div class="name"><span class=" navIcon icon-clock"></span> Date début: {{event.dateDebut|date("d/m/Y h:i")}}</div>
-                                                            <div class="name"><span class=" navIcon icon-clock"></span> Date fin: {{event.dateFin|date("d/m/Y h:i")}}</div>
-                                                        </div></div>
 
-                                                    <div class="col-md-3 pb20"><div class="notify pull-left">
-                                                            <div class="name"><span class=" navIcon fa fa-money"></span> Frais: {{event.frais}} &euro;</div>
-                                                            
-                                                        </div></div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                            </div>
-                                                </a>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    {%endfor%}
-                                    </div>
-                            </ul>
-                            
-                        </div>
-                    </div>
-                            <div class="tabsContainer">
-                        <div class="tab-content ">
-                            <ul class="tab-pane fade active in  scrollbar" id="clubs">
-                                <div class="notificationsWidget">
-                                    <h5><span class="badge">{{ res.clubs|length}}</span> Clubs</h5>
-
-                                    {% for club in res.clubs %}
-                                    <div class="notification">
-                                        <div class="row ">
-                                            <div class="time green">
-                                                <div class="timeBody hidden-xs">{{club.nom}}</div>
-                                                <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
-                                                <div class="indicator"><span class="fa fa-circle-o"></span></div>
-                                                <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
-                                            </div>
-                                                <a href='{{path('show_club',{id:club.id})}}'>
-                                            <div class="notifyContent">
-                                                <div class="notifyBody">
-                                                    <img class="avatar pull-left" src="{{asset(club.webPath)}}" alt="avatar">
-                                                    <div class="col-md-3 pb20"> <div class="notify pull-left">
-                                                            <div class="name">Dicipline<span class="label label-green visible-xs">Club</span></div>
-                                                            <div class="message">{{club.discpline}}</div>
-                                                        </div></div>
-                                                    <div class="col-md-3 pb20"><div class="notify pull-left">
-                                                            <div class="name">Créateur</div>
-                                                            <div class="message">{{club.createur.prenom}} {{club.createur.nom}}</div>
-                                                        </div></div>
-
-                                                    <div class="col-md-3 pb20"><div class="notify pull-left">
-                                                            <div class="name">Date Création</div>
-                                                            <div class="message">{{club.dateCreation|date('d/m/Y')}}</div>
-                                                        </div></div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                            </div>
-                                                </a>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                            </ul>
                             </div>
-                    </div>
-                    <div class="clearfix"></div>
+                        </div>
+                        <div class="tabsContainer">
+                            <div class="tab-content ">
+                                <ul class="tab-pane fade active in  scrollbar" id="events">
+                                    <div class="notificationsWidget">
+                                        <h5><span class="badge">{{ res.events|length}}</span> Evenements</h5>
+                                        {% for event in res.events %}
+                                            <div class="notification">
+                                                <div class="row ">
+                                                    <div class="time green">
+                                                        <div class="timeBody hidden-xs">{{event.titre}}</div>
+                                                        <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
+                                                        <div class="indicator"><span class="fa fa-circle-o"></span></div>
+                                                        <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
+                                                    </div>
+                                                    <a href='{{path('show_event',{id:event.id})}}'>
+                                                        <div class="notifyContent">
+                                                            <div class="notifyBody">
+                                                                <div class="notifyRound notifyRound-red navIcon fa fa-trophy"></div>
+                                                                <div class="col-md-3 pb20"> <div class="notify pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-map-marker"></span> Lieu : {{event.lieu}}<span class="label label-green visible-xs">{{event.titre}}</span></div>
+                                                                        <div class="name"><span class=" navIcon icon-users"></span> Nombre de places : {{event.nbrPlaces}}</div>
+                                                                    </div></div>
+                                                                <div class="col-md-3 pb20"><div class="notify pull-left">
+                                                                        <div class="name"><span class=" navIcon icon-clock"></span> Date début: {{event.dateDebut|date("d/m/Y h:i")}}</div>
+                                                                        <div class="name"><span class=" navIcon icon-clock"></span> Date fin: {{event.dateFin|date("d/m/Y h:i")}}</div>
+                                                                    </div></div>
 
+                                                                <div class="col-md-3 pb20"><div class="notify pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-money"></span> Frais: {{event.frais}} &euro;</div>
+
+                                                                    </div></div>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="tabsContainer">
+                            <div class="tab-content ">
+                                <ul class="tab-pane fade active in  scrollbar" id="clubs">
+                                    <div class="notificationsWidget">
+                                        <h5><span class="badge">{{ res.clubs|length}}</span> Clubs</h5>
+
+                                        {% for club in res.clubs %}
+                                            <div class="notification">
+                                                <div class="row ">
+                                                    <div class="time green">
+                                                        <div class="timeBody hidden-xs">{{club.nom}}</div>
+                                                        <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
+                                                        <div class="indicator"><span class="fa fa-circle-o"></span></div>
+                                                        <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
+                                                    </div>
+                                                    <a href='{{path('show_club',{id:club.id})}}'>
+                                                        <div class="notifyContent">
+                                                            <div class="notifyBody">
+                                                                <img class="avatar pull-left" src="{{asset(club.webPath)}}" alt="avatar">
+                                                                <div class="col-md-3 pb20"> <div class="notify pull-left">
+                                                                        <div class="name">Dicipline<span class="label label-green visible-xs">Club</span></div>
+                                                                        <div class="message">{{club.discpline}}</div>
+                                                                    </div></div>
+                                                                <div class="col-md-3 pb20"><div class="notify pull-left">
+                                                                        <div class="name">Créateur</div>
+                                                                        <div class="message">{{club.createur.prenom}} {{club.createur.nom}}</div>
+                                                                    </div></div>
+
+                                                                <div class="col-md-3 pb20"><div class="notify pull-left">
+                                                                        <div class="name">Date Création</div>
+                                                                        <div class="message">{{club.dateCreation|date('d/m/Y')}}</div>
+                                                                    </div></div>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-</div>
-
-
-   
-{%endblock%}
+{% endblock %}
 
