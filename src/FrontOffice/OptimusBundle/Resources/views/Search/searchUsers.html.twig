@@ -1,100 +1,122 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
-
 {% block body %}
-    <br/><br/><br/><br/><br/><br/>
-     <div class="col-md-10 col-md-offset-1">
-    <div class="row">
-        <div class="mail-env">
 
-            <!-- Personnes Body -->
-            <div class="mail-body">
+    <div id="wrapper">
+        <div id="content" class="max">
+            <div class="components">
 
-                <div class="mail-header">
-                    <!-- title -->
-                    <h3 class="mail-title">
-                        <i class="entypo-users"></i>Personnes
-                        <span class="badge badge-success ">{{ res.nbr_users}}</span>
-                    </h3>
+                <form action="{{ path('search_user',{'key':res.key}) }}" method="get">
+                    <div class="col-xs-12 ">
+                        <div class="panel panel-default">
+                            <div class="panel-heading optimus"> <span class="navLabel">Filtre des recherches</span></div>
+                            <div class="panel-body">
 
-                </div>
-                <div class="row">
-                    <!-- search -->
-                    <div class="col-md-12 well" style="padding-left: 100px;">
-                        <form action="{{ path('search_user',{'key':res.key}) }}" method="get">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    Personne :<input type="text" name="key" value="{{res.key}}"class="form-control" />
+                                <div class="form-group col-xs-2">
+
+                                    <input type="text" name="key" value="{{res.key}}" class="search-optimus" id="" placeholder="Entrer le nom">
                                 </div>
-                                <div class="col-md-2">
-                                    Profil :
-                                    <select name="profil" class="form-control">
-                                        <option value=""></option>
+                                <div class="form-group col-xs-2">
+
+                                    <select id="" name="profil" class="search-optimus">
+                                        <option value="" selected="" disabled="">Profil</option>
                                         <option value="E" {% if res.profil=='E' %} selected {%endif%} >Entraineur</option>
                                         <option value="S" {% if res.profil=='S' %} selected {%endif%}>Sportif</option>
-                                    </select>
+
+                                    </select>                                       </div>
+                                <div class="form-group col-xs-2">
+
+                                    <input type="text" name="adresse" value="{{res.adresse}}"class="search-optimus" id="" placeholder="Adresse">
                                 </div>
-                                <div class="col-md-2">
-                                    Adresse :<input type="text" name="adresse" value="{{res.adresse}}"class="form-control" />
+
+
+                                <div class="form-group col-xs-2">
+                                    <input class="search-optimus" type="email" name="email" value="{{res.email}}" placeholder="Entrer l'email" >
                                 </div>
-                                <div class="col-md-2">
-                                    Email :<input type="email" name="email" value="{{res.email}}"class="form-control" />
+                                <div class="form-group col-xs-2">
+
+                                    <input type="tel" class="search-optimus" name="tel" value="{{res.tel}}" placeholder="Entrer le telephone ">
+
                                 </div>
-                                <div class="col-md-2">
-                                    Tel :<input type="tel" name="tel" value="{{res.tel}}"class="form-control" />
-                                </div>
-                                <div class="col-md-1">
-                                    <br>
-                                    <button type="submit" class="btn btn-blue btn-icon">Chercher
-                                        <i class="entypo-search"></i>
-                                    </button>
-                                </div>
+                                <div class="form-group col-xs-2">
+
+
+                                    <button type="submit" value="Submit" class="btn btn-round btn-green search-optimus">Rechercher</button>	</div>
+
+
+
                             </div>
-                        </form>
+                        </div>
+
                     </div>
-                    <!-- resultats de recherche -->
-                    <div class="col-md-12">
+                </form>
 
-                        {% if res is defined %}
-                            {% if res.users==null %}
-                                <div class="alert alert-danger">
-                                    <strong>Aucun personne</strong> trouvé avec ces critères <i class="entypo-alert"></i>
-                                </div>
-                            {% else %}
-                                <div class="list-group">
-                                    {% for user in res.users %}
-                                        <div class="list-group-item">
 
-                                            <div class="row info-list">
-                                                <div class="col-sm-12">
-                                                    <a href="#" class="">
-                                                        <h4 class="list-group-item-heading"> {{ user.nom }} {{ user.prenom }} </h4>
+
+                <h4>Résultat des recherches</h4>
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <ol class="breadcrumb">
+                            <ul class="notifyList nav">
+                                <li class="active"><a href="{{path('search_user')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-users"></span> Personnes</a></li>
+                                <li class=""><a href="{{path('search_events')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-trophy"></span> Evenement</a></li>
+                                <li class=""><a href="{{path('search_clubs')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-users"></span> Clubs</a></li>
+                            </ul>
+                        </ol>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="tabsContainer">
+
+                            <div class="tab-content ">
+                                <ul class="tab-pane fade active in scrollbar" id="personne">
+                                    <div class="notificationsWidget">
+                                        <h5><span class="badge">{{ res.nbr_users}}</span> Personnes</h5>
+
+                                        {% for user in res.users %}
+                                            <div class="notification">
+                                                <div class="row ">
+                                                    <div class="time green">
+                                                        <div class="timeBody hidden-xs">{{user.profil}}</div>
+                                                        <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
+                                                        <div class="indicator"><span class="fa fa-circle-o"></span></div>
+                                                        <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
+                                                    </div>
+                                                    <a href='{{path('show_profil',{id:user.id})}}'>
+                                                        <div class="notifyContent">
+                                                            <div class="notifyBody">
+                                                                <img class="avatar pull-left" src="{{asset(user.WebPath)}}" alt="avatar">
+                                                                <div class="col-md-3 pb20"> <div class="notify pull-left">
+                                                                        <div class="name">Nom et Prénom<span class="label label-green visible-xs">Sportif/ Entraineur</span></div>
+                                                                        <div class="message">{{user.prenom}} {{user.nom}}</div>
+                                                                    </div></div>
+                                                                <div class="col-md-3 pb20"><div class="notify pull-left">
+                                                                        <div class="name">Adresse</div>
+                                                                        <div class="message">{{user.adresse}}</div>
+                                                                    </div></div>
+
+                                                                <div class="col-md-3 pb20"><div class="notify pull-left">
+                                                                        <div class="name">Téléphone</div>
+                                                                        <div class="message">{{user.tel}}</div>
+                                                                    </div></div>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                        </div>
                                                     </a>
-                                                </div>
+                                                    <div class="clearfix"></div>
+                                                </div></div>
+                                            {% endfor %}
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
 
-                                                <div class="col-sm-4">
-                                                    <i class="entypo-suitcase"></i>{% if user.profil=="E" %} Entraineur {% else %} Sportif {% endif %}
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <i class="entypo-location"></i> {{ user.adresse}} 
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <i class="entypo-calendar"></i>Né le {{ user.dateNaissance|date('d/m/Y') }} 
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div>
-
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        {% endif %}
+                        <div class="clearfix"></div>
 
                     </div>
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
-</div>
+
 {%endblock%}
-
-

@@ -1,115 +1,134 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 {% block body %}
-    <br/><br/><br/><br/><br/><br/>
-    <div class="col-md-10 col-md-offset-1">
- <div class="row">
-  <div class="mail-env">
-   <!-- Personnes Body -->
-   <div class="mail-body">
-    <div class="mail-header">
-     <!-- title -->
-     <h3 class="mail-title">
-      <i class="entypo-calendar"></i>Évènements
-      <span class="badge badge-success ">{{ res.nbr_events}}</span>
-     </h3>
+
+
+    <div id="wrapper">
+
+        <div id="content" class="max">
+            <div class="components">
+
+                <form action="{{ path('search_events',{'key':res.key}) }}" method="get">
+                    <div class="col-xs-12 ">
+                        <div class="panel panel-default">
+                            <div class="panel-heading optimus"> <span class="navLabel">Filtre des recherches</span></div>
+                            <div class="panel-body">
+
+                                <div class="form-group col-xs-2">
+
+                                    <input type="text" class="search-optimus" name="key" value="{{res.key}}" placeholder="Entrer le titre">
+                                </div>
+                                <div class="form-group col-xs-2">
+                                    <select name="type" value="{{res.type}}" class="search-optimus">
+                                        <option value="" selected="" disabled="">Type</option>
+                                        {% set type_events = getTypeEvent() %}
+                                        {% for type in type_events %}
+                                            <option value="{{type.id}}" {% if res.type == type.id %} selected {% endif %} >{{ type.nom }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-2">
+
+                                    <input list="createurlist" type="text" name="createur" value="{{res.createur}}" class="search-optimus" placeholder="Créateur">
+                                <datalist id="createurlist" class="select">
+                                    <option value="tous">
+                                    <option value="amis">
+
+                                </datalist>
+                                </div>
+                                
+
+                                <div class="form-group col-xs-2">
+                                    <input class="search-optimus" type="text" name="lieu" value="{{res.lieu}}" placeholder="Entrer le lieu" autocomplete="off">
+                                </div>
+                                <div class="form-group col-xs-2">
+                                    <select id="date" name="date" value="{{res.date}}" class="search-optimus">
+                                        <option value="" selected="" disabled="">Date</option>
+                                        <option value="aujourdhui">Aujourd'hui</option>
+                                        <option value="semaine">Cette semaine</option>
+                                        <option value="mois">Ce mois</option>
+                                        <option value="an">Cette année</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-2">
+
+
+                                    <button type="submit" value="Submit" class="btn btn-round btn-green search-optimus">Rechercher</button>	</div>
+
+
+
+                            </div>
+                        </div>
+                
+            </div>
+                    </form>
+
+
+
+            <h4>Résultat des recherches</h4>
+            <div class="row">
+                <div class="col-md-3">
+
+                    <ol class="breadcrumb">
+                        <ul class="notifyList nav">
+                                <li class=""><a href="{{path('search_user')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-users"></span> Personnes</a></li>
+                                <li class="active"><a href="{{path('search_events')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-trophy"></span> Evenement</a></li>
+                                <li class=""><a href="{{path('search_clubs')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-users"></span> Clubs</a></li>
+                            </ul>
+                    </ol>
+                </div>
+                <div class="col-md-9">
+                    <div class="tabsContainer">
+                        <div class="tab-content ">
+                            <ul class="tab-pane fade active in  scrollbar" id="events">
+                                <div class="notificationsWidget">
+                                    <h5><span class="badge">{{ res.nbr_events}}</span> Evenements</h5>
+                                    {% for event in res.events %}
+                                    <div class="notification">
+                                        <div class="row ">
+                                            <div class="time green">
+                                                <div class="timeBody hidden-xs">{{event.titre}}</div>
+                                                <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
+                                                <div class="indicator"><span class="fa fa-circle-o"></span></div>
+                                                <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
+                                            </div>
+                                                <a href='{{path('show_event',{id:event.id})}}'>
+                                            <div class="notifyContent">
+                                                <div class="notifyBody">
+                                                    <div class="notifyRound notifyRound-red navIcon fa fa-trophy"></div>
+                                                    <div class="col-md-3 pb20"> <div class="notify pull-left">
+                                                            <div class="name"><span class=" navIcon fa fa-map-marker"></span> Lieu : {{event.lieu}}<span class="label label-green visible-xs">{{event.titre}}</span></div>
+                                                            <div class="name"><span class=" navIcon icon-users"></span> Nombre de places : {{event.nbrPlaces}}</div>
+                                                        </div></div>
+                                                    <div class="col-md-3 pb20"><div class="notify pull-left">
+                                                            <div class="name"><span class=" navIcon icon-clock"></span> Date début: {{event.dateDebut|date("d/m/Y h:i")}}</div>
+                                                            <div class="name"><span class=" navIcon icon-clock"></span> Date fin: {{event.dateFin|date("d/m/Y h:i")}}</div>
+                                                        </div></div>
+
+                                                    <div class="col-md-3 pb20"><div class="notify pull-left">
+                                                            <div class="name"><span class=" navIcon fa fa-money"></span> Frais: {{event.frais}} &euro;</div>
+                                                            
+                                                        </div></div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                                </a>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    {%endfor%}
+                                    </div>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
-     <!-- search -->
-     <div class="col-md-12 well" style="padding-left: 100px;">
-      <form action="{{ path('search_events',{'key':res.key}) }}" method="get">
-       <div class="row">
-        <div class="col-md-2">
-         Titre :<input type="text" name="key" value="{{res.key}}"class="form-control" />
-        </div>
-        <div class="col-md-2">
-         Type :
-         <select name="type" value="{{res.type}}" class="form-control">
-          <option value=""></option>
-          {% for type in type_events %}
-           <option value="{{type.id}}" {% if res.type == type.id %} selected {% endif %} >{{ type.nom }}</option>
-          {% endfor %}
-         </select>
-        </div>
-        <div class="col-md-2">
-         Createur :{#<input type="text" name="createur" value="{{res.createur}}"class="form-control" />#}
-         {#<label for="createur"></label>#}
-                                    <input list="createurlist" type="text" name="createur" value="{{res.createur}}">
-                                    <datalist id="createurlist">
-                                        <option value="tous">
-                                        <option value="amis">
+    <div class="clearfix"></div>
+</div>
 
-                                    </datalist>
-        </div>
-        <div class="col-md-2">
-         Lieu :<input type="text" name="lieu" value="{{res.lieu}}"class="form-control" />
-        </div>
-        <div class="col-md-2">
-         Date :
-         <select name="date" class="form-control" value="{{res.date}}">
-          <option value=""  >Date indifférente</option>
-          <option value="aujourdhui" {% if res.date == 'aujourdhui' %} selected {% endif %}>Aujourd'hui</option>
-          <option value="semaine" {% if res.date == 'semaine' %} selected {% endif %}>Moins d'une semaine</option>
-          <option value="mois" {% if res.date == 'mois' %} selected {% endif %}>Moins d'un mois</option>
-          <option value="an" {% if res.date == 'an' %} selected {% endif %}>Moins d'un an</option>
-         </select>
-        </div>
-        <div class="col-md-2">
-         <br>
-         <button type="submit" class="btn btn-blue btn-icon">Chercher
-          <i class="entypo-search"></i>
-         </button>
-        </div>
-       </div>
-      </form>
-     </div>
-     <!-- resultats de recherche -->
-     <div class="col-md-12">
-
-      {% if res is defined %}
-       {% if res.events==null %}
-        <div class="alert alert-danger">
-         <strong>Aucun évènement</strong> trouvé avec ces critères <i class="entypo-alert"></i>
-        </div>
-       {% else %}
-        {% for event in res.events %}
-         <div class="list-group-item">
-
-          <div class="row info-list">
-           <div class="col-sm-12">
-            <a href="#" class="">
-             <h4 class="list-group-item-heading"> {{ event.titre }} </h4>
-            </a>
-           </div>
-
-           <div class="col-sm-4">
-            <i class="entypo-location"></i>{{ event.lieu }}
-           </div>
-           <div class="col-sm-4">
-            <i class="entypo-clock"></i>Du 01 {{ event.dateDebut|date('d/m/Y à H:i') }} 
-           </div>
-           <div class="col-sm-4">
-            <i class="entypo-ticket"></i> {{ event.frais }} €
-           </div>
-           <div class="clear"></div>
-           <div class="col-sm-4">
-            <i class="entypo-users"></i>
-            {{ event.nbrPlaces }}
-           </div>
-           <div class="col-sm-4">
-            <i class="entypo-clock"></i>Au {{ event.dateFin|date('d/m/Y à H:i') }}
-           </div>
-          
-          </div>
-
-         </div>
-        {% endfor %}
-       {% endif %}
-      {% endif %}</div>
-    </div>
-   </div>
-
-
-  </div>
- </div>
- </div>
 {%endblock%}
