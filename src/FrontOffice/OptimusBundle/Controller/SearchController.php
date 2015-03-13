@@ -72,8 +72,8 @@ class SearchController extends Controller {
         $res['nbr_users'] = count($res['users']);
 
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $typesEv = $em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findAll();
-        return $this->render("FrontOfficeOptimusBundle:Search:searchUsers.html.twig", array('res' => $res, 'user' => $user,'type_events' => $typesEv));
+        
+        return $this->render("FrontOfficeOptimusBundle:Search:searchUsers.html.twig", array('res' => $res, 'user' => $user));
     }
 //_____________________________________________________________________________________________________
 //Recherche Event
@@ -128,7 +128,7 @@ class SearchController extends Controller {
         else {
             $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEvents($titre, $type, $lieu, $date);
         }
-        $typesEv = $em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findAll();
+        
 
         $res['events'] = $events;
         $res['key'] = $titre;
@@ -139,7 +139,7 @@ class SearchController extends Controller {
         $res['nbr_events'] = count($res['events']);
 
 
-        return $this->render("FrontOfficeOptimusBundle:Search:searchEvents.html.twig", array('res' => $res, 'type_events' => $typesEv));
+        return $this->render("FrontOfficeOptimusBundle:Search:searchEvents.html.twig", array('res' => $res));
     }
 //_____________________________________________________________________________________________________
     //Recherche Club
@@ -210,10 +210,10 @@ class SearchController extends Controller {
 
         //parametres envoyer au layout.html.tiwg
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $typesEv = $em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findAll();
+        
 
 
-        return $this->render("FrontOfficeOptimusBundle:Search:searchClubs.html.twig", array('res' => $res, 'user' => $user,'type_events' => $typesEv));
+        return $this->render("FrontOfficeOptimusBundle:Search:searchClubs.html.twig", array('res' => $res, 'user' => $user));
     }
 
     /**
@@ -248,8 +248,8 @@ class SearchController extends Controller {
         $res['nbr_users'] = count($res['users']);
 
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $typesEv = $em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findAll();
-        return $this->render("FrontOfficeOptimusBundle:Search:index.html.twig", array('res' => $res, 'user' => $user,'type_events' => $typesEv));
+        
+        return $this->render("FrontOfficeOptimusBundle:Search:index.html.twig", array('res' => $res, 'user' => $user));
     }
 }
 

@@ -15,6 +15,7 @@ class OptimusExtension extends \Twig_Extension {
 
     public function getFunctions() {
         return array(
+            new \Twig_SimpleFunction('getTypeEvent', array($this, 'getTypeEvent')),
             new \Twig_SimpleFunction('ParticipantOuNon', array($this, 'ParticipantOuNon')),
             new \Twig_SimpleFunction('getNotifications', array($this, 'getNotifications')),
             new \Twig_SimpleFunction('getNombreNotification', array($this, 'getNombreNotification')),
@@ -29,7 +30,11 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('getMembreConfirmed', array($this, 'getMembreConfirmed')),
         );
     }
-
+    
+    public function getTypeEvent() {
+        return $this->em->getRepository('FrontOfficeOptimusBundle:TypeEvent')->findAll();
+    }
+    
     public function getMembreRequest($user, $club) {
         return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('member' => $user, 'clubad' => $club));
     }

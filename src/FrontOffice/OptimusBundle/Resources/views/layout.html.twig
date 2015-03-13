@@ -2,7 +2,7 @@
 
 {% block navigation %}
     <div id="header" >
-        <div class="home-logo osLight"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
+        <div class="home-logo osLight"><a href="{{ path('accueil') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
         <a href="#" class="navHandler" ><span class="fa fa-navicon"></span></a>
         <div class="search">
             
@@ -308,6 +308,7 @@
                             </select><br><select id="events" name="type" class="search-optimus">
                                 <option value="" selected="" disabled="">Type d'évenement</option>
                                 <option value="">Tout</option>
+                                {% set type_events = getTypeEvent() %}
                                 {% for type in type_events %}
                                 <option value="{{type.id}}">{{type.nom}}</option>
                                 {% endfor %}
