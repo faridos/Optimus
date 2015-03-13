@@ -350,11 +350,7 @@ $('.loader').hide();
                         '<div class="propAddress">{{event.lieu}}</div>' +
                         '</div>' +
                         '<div class="propRating">' +
-                        '<span class="fa fa-star"></span>' +
-                        '<span class="fa fa-star"></span>' +
-                        '<span class="fa fa-star"></span>' +
-                        '<span class="fa fa-star"></span>' +
-                        '<span class="fa fa-star-o"></span>' +
+                        '{% include 'DCSRatingBundle:Rating:rating.html.twig' with {'id' : "E"~event.id} %}' +
                         '</div>' +
                         '<div class="clearfix"></div>' +
                         '<div class="infoButtons">' +
