@@ -1,0 +1,17 @@
+{% if url is not defined or url == null %}
+    {% set url = app.request.uri %}
+{% endif %}
+
+{% spaceless %}
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{url}}" data-lang="{{locale}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+<img src="http://www.baptiste-donaux.fr/wp-content/plugins/simple-share-buttons-adder/buttons/somacro/linkedin.png" title="Linkedin" {#alt="Share on LinkedIn" #}width="35px"></a>
+
+<script src="//platform.linkedin.com/in.js" type="text/javascript">
+  lang: {{ locale }}
+</script>
+ <script type="IN/Share" data-url="{{ url }}" data-counter="{{ counter }}"  style="height: 25px; "></script>
+ 
+ 
+ 
+ 
+{% endspaceless %}

@@ -23,7 +23,8 @@
         "misd/phone-number-bundle": "1.1.*@dev",
         "sly/relation-bundle": "dev-master",
         "damianociarla/rating-bundle": "~1.2",
-        "friendsofsymfony/jsrouting-bundle": "~1.5"
+        "friendsofsymfony/jsrouting-bundle": "~1.5",
+        "nomaya/social-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

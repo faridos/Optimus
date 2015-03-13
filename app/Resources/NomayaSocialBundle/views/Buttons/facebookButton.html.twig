@@ -1,0 +1,23 @@
+{% if url is not defined or url == null %}
+    {% set url = app.request.uri %}
+{% endif %}
+
+{% spaceless %}
+ {# initialize facebook SDK #}
+ {#<div id="fb-root">#}
+    
+<a href="https://www.facebook.com/sharer/sharer.php?u={{url}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" data-lang="{{locale}}" data-href="{{url}}"  > <img src="http://www.baptiste-donaux.fr/wp-content/plugins/simple-share-buttons-adder/buttons/somacro/facebook.png" width="35px" title="facebook" ></a>
+
+ <script>(function(d, s, id) {
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) return;
+   js = d.createElement(s); js.id = id;
+   js.src = "//connect.facebook.net/{{locale}}/all.js#xfbml=1";
+   fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
+  
+ </script>
+ 
+
+{# <div class="fb-like" data-href="{{url}}" data-send="{{send}}" data-layout="{{layout}}" data-width="{{width}}" data-show-faces="{{showFaces}}" data-share="{{share}}"style="padding-right: 100px;"></div>#}
+{% endspaceless %}

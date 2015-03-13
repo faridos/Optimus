@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new DCS\RatingBundle\DCSRatingBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Sly\RelationBundle\SlyRelationBundle(),
+            new Nomaya\SocialBundle\NomayaSocialBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
