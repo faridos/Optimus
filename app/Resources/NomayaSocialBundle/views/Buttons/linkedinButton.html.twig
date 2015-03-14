@@ -3,8 +3,8 @@
 {% endif %}
 
 {% spaceless %}
-<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{url}}" data-lang="{{locale}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-<img src="http://www.baptiste-donaux.fr/wp-content/plugins/simple-share-buttons-adder/buttons/somacro/linkedin.png" title="Linkedin" {#alt="Share on LinkedIn" #}width="35px"></a>
+<a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{url}}" class="btn btn-icon btn-round btn-o btn-linkedin" data-lang="{{locale}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+<span class="fa fa-linkedin"></span></a>
 
 <script src="//platform.linkedin.com/in.js" type="text/javascript">
   lang: {{ locale }}

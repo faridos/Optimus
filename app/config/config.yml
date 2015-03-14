@@ -134,6 +134,6 @@ nomaya_social:
         pinterest:
             url:            null
     links: 
-        facebook:           "http://www.facebook.com/yann.chauvel"
-        googleplus:         "https://plus.google.com/105931415830389032796"
+        facebook:           "http://www.facebook.com"
+        googleplus:         "https://plus.google.com"
     theme:                  'default' # optional
