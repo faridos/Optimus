@@ -20,30 +20,39 @@ margin:0px 0px 0 15px;
   margin-top: 10px;
   }
   
-  .pam {
+ .pam {
   padding: 10px;}
   
   .uiBoxRed {
   background-color:rgba(192, 33, 0, 0.6);
-  border: 1px solid rgba(215, 118, 0, 1)}
+  border: 1px solid rgba(215, 118, 0, 1)
+  }
   .alertus{
   color:#fff;
   
   }
-  .connexus{
+ 
+ .connexus{
   
   color:#000;font-size:10px;
   }
   
-  .fildus{
+  
+  .emailevus{
+  color:#000;
+  
+  }  
+ .fildus{
   
   top:-60px;
   }
-    .emailus{
+ 
+ .emailus{
   
   top:0px;
   }
-  .home-title.emailus{
+ 
+ .home-title.emailus{
   
   font-size:20px;
   
@@ -55,7 +64,6 @@ font-family: 'open_sanslight';
   font-size: 14px;
   font-style: italic;
   line-height: 18px;
-
   color: #4e4e4e;
   }
   
@@ -70,5 +78,13 @@ font-family: 'open_sanslight';
   
   }
   
-  
+ .bordusbottomus{
+  border-radius:32px 32px 30px 30px;
+ 
+ }
+ 
+ .bordustopus{
+  border-radius:30px 30px 0px 0px;
+ 
+ }
   

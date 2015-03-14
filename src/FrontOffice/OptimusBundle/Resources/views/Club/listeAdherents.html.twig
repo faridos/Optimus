@@ -14,40 +14,89 @@
                     <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
                     <li class="active"> <a href="{{ path('members_club',{'id':club.id})}}" role="tab" ><span class="icon-user-unfollow"></span> Adhérents</a></li>
                     <li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab"><span class="icon-user-following"></span> Demandes</a></li>
-                    
+
                 </ul>
                 <div class="tab-content">
                     <ul class="tab-pane fade active in  scrollbar" id="liste" >
-                      <div class="row pb40">
-                        {% for member in membresclub %}
-                                 
-                            <div class="col-sm-4">
-                                <div class="tooltipsContainer agent notifyList">
-                                    <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="Essid Essid">
-                                        <img src="{{ asset(member.WebPath)}}" alt="">
-                                        <div class="pulse border-green pulseoptimus"></div>
-                                    </a>
-                                    <div class="info">
-                                        <a href="#"> <div class="name clubumus"><strong>{{member.prenom}} {{member.nom}}</strong></div></a>
-                                        <div class="title">{{member.profil}}</div>
+                        <div class="row pb40">
+                            {% for member in membresclub %}
+{% if app.user != member.member %}
+                                <div class="col-sm-4" id="{{member.id}}">
+                                    <div class="tooltipsContainer agent notifyList">
+                                        <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="Essid Essid">
+                                            <img src="{{ asset(member.member.WebPath)}}" alt="">
+                                            <div class="pulse border-green pulseoptimus"></div>
+                                        </a>
+                                        <div class="info">
+                                            <a href="#"> <div class="name clubumus"><strong>{{member.member.prenom}} {{member.member.nom}}</strong></div></a>
+                                            <div class="title">{{member.member.profil}}</div>
 
-                                    </div><br>
-                                    <div align="center">
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="retirer"><span class="fa fa-close"></span></a>
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="signaler"><span class="fa fa-legal"></span></a>
-                                    </div><br>
+                                        </div><br>
+                                        <div align="center">
+                                            <a href="#retirer{{member.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="retirer"><span class="fa fa-close"></span></a>
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="signaler"><span class="fa fa-legal"></span></a>
+                                        </div><br>
+                                    </div>
                                 </div>
-                            </div>
-                                      
-                          {% endfor %}
+{% endif %}
+                            {% endfor %}
                         </div>
                         <div class="clearfix"></div>
                     </ul>
-                   </div>
+                </div>
                 <div class="clearfix"></div>
-                
+
             </div>
         </div>
     </div>
+    {% for member in membresclub %}
+        <!------------------- modal supprission------------------->
 
+        <div class="modal" id="retirer{{member.id}}"   >
+            <div class="modal-dialog">
+                <div class="modal-content bordusbottomus">
+                    <div class="modal-header bordustopus">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <p>Souhaitez vous vraiment cet Adhérent ?</p>
+
+
+                    </div>
+                    <div class="modal-footer supp-album">
+                        <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                        <a id="supprimerAdherant{{member.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+{% block javascriptfils %}
+    <script>
+      
+       {% for member in membresclub %}
+            $('#supprimerAdherant{{member.id}}').click(function() {
+               
+                var id = $('#{{member.id}}').attr('id');
+             
+                $.ajax({
+                    url: Routing.generate('delete_member', {'id': id}),
+                    success: function(data) {
+                        $('#'+data).hide();
+                     $("#retirer{{member.id}}").toggle();
+                     $('.modal-backdrop').hide();
+                    }
+                });
+                                           
+
+            });
+        {% endfor %}
+        
+    </script>
 {% endblock %}

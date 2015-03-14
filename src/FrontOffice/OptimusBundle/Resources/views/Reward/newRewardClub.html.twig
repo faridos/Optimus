@@ -1,45 +1,29 @@
- <form action="{{ path("add_reward_club", {'id' : club.id }) }}" {{ form_enctype(form) }} method="post" class="form-horizontal0 form-groups-bordered">
-                                    <br>
-                                    {{ form_errors(form) }}
-                    <div class="well">
-                     
-
-
-                        <div class="form-group">
-
-                            <div class="col-md-12 form-group">
-                                <div class="col-md-3">
-                                    <label class="control-label">Titre :</label>
-                                </div>
-                                <div class="col-md-9">
-                                    {{ form_widget(form.titre) }}
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 form-group">
-                                <div class="col-md-3">
-                                    <label class="control-label">Classement:</label>
-                                </div>
-                                <div class="col-md-9">
-                                    {{ form_widget(form.classment) }}
-                                </div>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <div class="col-md-3">
-                                    <label class="control-label">Date :</label>
-                                </div>
-                                <div class="col-md-9">
-                                    {{ form_widget(form.date) }}
-                                </div>
-                            </div>
-
-
-
-
-                        </div>
-
-                    <button type="submit" class="btn btn-blue">Enregistrer</button>
-                                  {{ form_widget(form._token) }}
+ <form action="{{ path("add_reward_club", {'id' : club.id }) }}" {{ form_enctype(form) }} method="post" >
+    {{ form_errors(form) }}
+    <div class="modal-content bordusbottomus">
+        <div class="modal-header bordustopus">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="contactLabel">upload Palmares</h4>
+        </div>
+        <div class="modal-body">
+            <div class="contactForm">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                        {{ form_widget(form.titre) }}
                     </div>
-                
-                    </form>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                        {{ form_widget(form.classment) }}
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                        {{ form_widget(form.date) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Annuler</a>
+            <button type="submit" class="btn btn-round btn-green">Confirmer</button>
+        </div>
+    </div> 
+    {{ form_widget(form._token) }}
+</form>
