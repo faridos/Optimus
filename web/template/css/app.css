@@ -5,6 +5,7 @@
 *::-moz-focus-inner {
     border: 0;
 }
+
 .cardRating{
 
     color: #eab134;
@@ -18,6 +19,27 @@ float:right;
 
 }
 
+.optimus-logus{
+float: right;
+margin-right: 45px;
+  margin-top: 100px;
+}
+.salamus{
+width:150px;
+height: 150px;
+}
+.propWidget-1.logotus{
+
+     width: 150px;
+  height: 150px;
+  border-radius: 50%;
+ margin-top: 30px;
+}
+.agent-avatar img.logotus{
+    width: 150px;
+    height:150px;
+   
+}
 .rightus{
 
  float:right;   
@@ -144,7 +166,17 @@ background-color: #e3e3e3;
 
 }
 
+.propWidget-1 .fig .priceCap.paddus{
+    float: right;
+    height:0;
 
+  /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.3)), color-stop(100%,rgba(0,0,0,0))); */
+  /* background: -webkit-linear-gradient(top, rgba(0,0,0,0.3) 0%,rgba(0,0,0,0) 100%); */
+  background: transparent;
+  background: transparent;
+  /* background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%,rgba(0,0,0,0) 100%); */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d000000', endColorstr='#00000000',GradientType=0 );
+}
 .userWidget-1 .title.eventus{
 
 margin-left:15px;
@@ -212,9 +244,9 @@ width: 110%;
 
  text-indent:20px;
     border-radius: 25px;      
-    height: 44px;      
+    height: 37px;      
     border: 1.5px solid #C02100;      
-    width: 98%;      
+    width: 510px;      
     margin: 12px -2px 0 5px;
 
 
@@ -345,7 +377,11 @@ width:100px;
 
 }
 /*albumus*/
+.card.albumus.abwebus{
 
+
+  box-shadow:  3px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
 .card.albumus{
 
 box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13);
@@ -419,11 +455,16 @@ overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 150
 }
 
 ul.notifyList.scrollbar {
-overflow-x: hidden;
-overflow-y: auto;
-overflow-wrap: break-word;
-max-height: 250px;
-background-color:#fff;
+
+
+
+overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;
+}
+ul.notifyList.scrollbar-1 {
+
+
+
+overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 490px;background-color:#fff;
 }
 
 
@@ -440,6 +481,15 @@ ul.tab-pane.fade.active.in.scrollbar{
       overflow-y: auto;
        overflow-wrap: break-word; 
        max-height: auto;
+       background-color:#fff;
+}
+ul.tab-pane.fade.active.in.scrollbar-1{
+
+
+     overflow-x: hidden;
+      overflow-y: auto;
+       overflow-wrap: break-word; 
+       max-height: 450px;
        background-color:#fff;
 }
 
@@ -487,6 +537,35 @@ ul.scrollbar::-webkit-scrollbar {
 }
 
 
+ul.scrollbar-1::-webkit-scrollbar {
+    width: 8px;
+
+}
+
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+
+.row.clubumus.atlaaus{
+margin-top: 0px;
+
+}
+.userWidget-1 .avatar .name.namusclubus{
+    font-size:30px;
+    bottom: 10px;
+}
+.userWidget-1 .title.nombrus{
+    margin-left: -10px;
+    margin-top: -12px;
+}
 /* Buttons */
 
 .btn {
@@ -1990,7 +2069,7 @@ a.handleFilter {
 }
 a.btn.dropdown-btn.btn-gray {
     background-color: #fff;
-    border-color: #dfdfdf;
+    border-color: #c02100;
     color: #333;
 }
 .no-touch a.dropdown-btn.btn-gray:hover, .open a.dropdown-btn.btn-gray {
@@ -3327,6 +3406,18 @@ h1.pageTitle {
 }
 
 
+.sakalus{
+ margin-left: 80px;
+  margin-bottom: 30px;
+
+}
+.sikibus{
+
+  margin-left: 38px;
+  margin-bottom: -34px;
+
+
+}
 /* User Widget 1 */
 
 .userWidget-1 {
@@ -3335,9 +3426,8 @@ h1.pageTitle {
     box-shadow: 1px 2px 10px 1px rgba(0, 0, 0, 0.13);
     margin-bottom: 20px;
     text-decoration: none;
-   
+    
     border-radius: 3px;
-    min-height: 200px;
 }
 .userWidget-1 .avatar {
     width: 100%;
@@ -3502,11 +3592,35 @@ h1.pageTitle {
     top: 24px;
     right: 10px;
 }
+
 .descriptus{
 
 
 margin-top:-70px;
 
+}
+
+.commentAvatar.rightus{
+float: right;
+
+}
+.commentArrow.rightus{
+
+left: -15px;
+
+
+}
+.notify .pull-left.textus{
+
+  font-size: 11px;
+  line-height: 11px;
+  color: #999;
+  font-style: italic;
+
+}
+.commentContent.leftus{
+float: left;
+margin-left:118px;
 }
 
 /* Tabs Widget 2 */
@@ -3518,7 +3632,7 @@ margin-top:-70px;
     margin-bottom: 20px;
     text-decoration: none;
     border-radius: 3px;
-    height: 283px;
+    height: 500px;
 }
 .nav-tabs, .nav-tabs.nav-justified {
     border-bottom: none;
@@ -5038,7 +5152,7 @@ h3.s-sub {
 }
 
 .userWidget-1 .title.clubumus{
-margin-left: 150px;
+margin-left: 138px;
 margin-top:-14px;
 
 }
@@ -5048,7 +5162,7 @@ margin-left: 150px;
     font-size: 18px;
 }
 .userWidget-1 .avatar .name.fontus{
-    left: 150px;
+    left: 200px;
     font-size: 30px;
     margin-bottom: 10px;
 }
@@ -6106,7 +6220,6 @@ blockquote {
         font-size: 11px;
     }
 }
-
 .loader{
     bottom: 0px;
     text-align: center;
@@ -6117,4 +6230,14 @@ blockquote {
     overflow: hidden;
     display: inline-block;
     unicode-bidi: bidi-override;
+}
+.messageEnvoyer{
+    display: none;
+    color:#2f9a1e;
+    float: right;
+}
+.messageEch{
+   display: none; 
+   color:#f60707;
+   float: right;
 }

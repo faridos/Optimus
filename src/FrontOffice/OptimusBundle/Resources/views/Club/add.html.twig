@@ -73,12 +73,11 @@
 {% endblock %}
 {% block javascriptfils %}
     <script>
-
         var markerClub;
         var geocoder;
         geocoder = new google.maps.Geocoder();
         google.maps.event.addListener(map, 'click', function(event) {
-
+ 
 
             document.getElementById('lat_id').value = event.latLng.lat();
             document.getElementById('lng_id').value = event.latLng.lng();

@@ -96,7 +96,7 @@ class Event {
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=true)
+     * @ORM\Column(name="description", type="text")
      */
     private $description;
 
@@ -151,7 +151,7 @@ class Event {
         $this->dateCreation = new \Datetime();
         $this->eventcomments = new ArrayCollection();
         $this->images = new ArrayCollection();
-        $this->setDescription("Pas de description");
+       
     }
 
     /**

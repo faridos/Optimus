@@ -1,7 +1,8 @@
 {% extends "FrontOfficeUserBundle::layout_profile.html.twig" %}
 {% block content %}
     <div class="col-lg-12">
-        <div class="row mb20"></div>
+        <div class="row mb20">
+        </div>
         <div class="col-lg-12">
             <div class="tabsContainer">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
@@ -32,47 +33,40 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                      
-                    <ul class="tab-pane fade active in scrollbar" id="events" >
-                        <div class="buttonsWrapper col-xs-12">
-                            <a class="btn btn-round btn-default btn-sm rightus" href="{{ path('add-event')}}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
-                        </div>
+                    <br>
+                    {% if app.user == user %}
+                    <div class="buttonsWrapper col-xs-12">
+                        <a class="btn btn-round btn-default btn-sm rightus" href="{{ path('add-event') }}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                    </div>
+                    {% endif %}
+                    <ul class="tab-pane fade  active in scrollbar" id="events" >
                         {% for participation in participations %}
-                            <div class="userWidget-2 col-md-12" >
-                                <div class="tooltipsContainer avatar imagus">
-                                    <a href="{{ path('show_profil', { 'id': participation.participant.id }) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{  participation.participant.prenom }} {{  participation.participant.nom }}">
-                                        <img src="{{  asset(participation.participant.WebPath) }}" alt="avatar" ></a>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="info">
-                                        <a href="{{ path('show_event', { 'id' : participation.event.id }) }}"> <div class="name">{{ participation.event.titre }}</div></a>
-                                        <div class="title">Lieu de l'évenement: <span class="address">{{ participation.event.lieu }}</span></div>
-
-                                    </div></div>
-                                <div class="col-md-5">
-                                    <div class="info" >
-
-                                        <div class="title">Date de début : <span class="address">{{ participation.event.dateDebut|date('Y-m-d H:i:s') }}</span></div>
-                                        <div class="title">Date de fin : <span class="address">{{ participation.event.dateFin|date('Y-m-d H:i:s') }}</span></div>
-                                        <div class="title">Nombre de places : <span class="address">{{ participation.event.nbrPlaces }}</span></div>
-                                    </div></div>
-
-                                <div class="clearfix"></div>
-                                 {% if participation.event.createur == app.user%}
-                                    admin
-                                {% endif %}
+                        <div class="userWidget-2 col-xs-12" >
+                            <div class="tooltipsContainer avatar imagus">
+                                <a href="{{ path('show_profil', { 'id' : participation.participant.id }) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{participation.participant.prenom }} {{ participation.participant.nom }}">
+                    <img src="{{ asset(participation.participant.WebPath) }}" ></a>
                             </div>
-                         
+                            <div class="col-md-4">
+                                <div class="info">
+                                    <a href="{{ path('show_event',{'id':participation.event.id}) }}"> <div class="name">{{ participation.event.titre }}</div></a>
+                                    <div class="title">Lieu de l'évenement: <span class="address">{{ participation.event.lieu}}</span></div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="info" >
+                                    <div class="title">Date de début : <span class="address">{{ participation.event.dateDebut|date('Y-m-d H:i:s') }}</span></div>
+                                    <div class="title">Date de fin : <span class="address">{{ participation.event.dateFin|date('Y-m-d H:i:s') }}</span></div>
+                                    <div class="title">Nombre de places : <span class="address">{{ participation.event.nbrPlaces }}</span></div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                        </div>
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="clearfix"></div>
             </div>
         </div>
     </div>
-
 {% endblock %}
-
-
-
-
