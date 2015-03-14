@@ -1,3 +1,4 @@
+ var pos;
 (function($) {
     "use strict";
 
@@ -8,7 +9,7 @@
             mapTypeControlOptions : {
                 mapTypeIds : [ 'Styled' ]
             },
-            scrollwheel: false
+            scrollwheel: true
         };
     var styles = [{
         stylers : [ {
@@ -38,227 +39,8 @@
     }];
 
     var markers = [];
-    var props = [{
-        title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.696047,
-            lng : -73.997159
-        },
-        markerIcon : "marker-green.png"
-    }, {
-        title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.688042,
-            lng : -73.996472
-        },
-        markerIcon : "marker-green.png"
-    }, {
-    title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.702620,
-            lng : -73.989682
-        },
-        markerIcon : "marker-green.png"
-    }, {
-      title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.694355,
-            lng : -73.985229
-        },
-        markerIcon : "marker-green.png"
-    }, {
-           title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.686838,
-            lng : -73.990078
-        },
-        markerIcon : "marker-green.png"
-    }, {
-         title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.703686,
-            lng : -73.982910
-        },
-        markerIcon : "marker-green.png"
-    }, {
-          title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.702189,
-            lng : -73.995098
-        },
-        markerIcon : "marker-green.png"
-    }, {
-          title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.687417,
-            lng : -73.982653
-        },
-        markerIcon : "marker-green.png"
-    }, {
-           title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.694120,
-            lng : -73.974413
-        },
-        markerIcon : "marker-green.png"
-    }, {
-           title : 'Evenement ',
-        image : '1-1-thmb.png',
-        type : 'Créé par',
-        price : 'Prix',
-        address : 'Adresse',
-        bedrooms : '3',
-        bathrooms : '2',
-        area : '3430 Sq Ft',
-        position : {
-            lat : 40.682665,
-            lng : -74.000934
-        },
-        markerIcon : "marker-green.png"
-    }];
 
-    var infobox = new InfoBox({
-        disableAutoPan: false,
-        maxWidth: 202,
-        pixelOffset: new google.maps.Size(-101, -285),
-        zIndex: null,
-        boxStyle: {
-            background: "url('images/infobox-bg.png') no-repeat",
-            opacity: 1,
-            width: "202px",
-            height: "245px"
-        },
-        closeBoxMargin: "28px 26px 0px 0px",
-        closeBoxURL: "",
-        infoBoxClearance: new google.maps.Size(1, 1),
-        pane: "floatPane",
-        enableEventPropagation: false
-    });
-
-    var addMarkers = function(props, map) {
-        $.each(props, function(i,prop) {
-            var latlng = new google.maps.LatLng(prop.position.lat,prop.position.lng);
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map,
-                icon: new google.maps.MarkerImage( 
-                    'images/' + prop.markerIcon,
-                    null,
-                    null,
-                    // new google.maps.Point(0,0),
-                    null,
-                    new google.maps.Size(36, 36)
-                ),
-                draggable: false,
-                animation: google.maps.Animation.DROP,
-            });
-            var infoboxContent = '<div class="infoW">' +
-                                    '<div class="propImg">' +
-                                        '<img src="images/prop/' + prop.image + '">' +
-                                        '<div class="propBg">' +
-                                            '<div class="propPrice">' + prop.price + '</div>' +
-                                            '<div class="propType">' + prop.type + '</div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<div class="paWrapper">' +
-                                        '<div class="propTitle">' + prop.title + '</div>' +
-                                        '<div class="propAddress">' + prop.address + '</div>' +
-                                    '</div>' +
-                                    '<div class="propRating">' +
-                                        '<span class="fa fa-star"></span>' +
-                                        '<span class="fa fa-star"></span>' +
-                                        '<span class="fa fa-star"></span>' +
-                                        '<span class="fa fa-star"></span>' +
-                                        '<span class="fa fa-star-o"></span>' +
-                                    '</div>' +
-                                  
-                                    '<div class="clearfix"></div>' +
-                                    '<div class="infoButtons">' +
-                                        '<a class="btn btn-sm btn-round btn-gray btn-o closeInfo">fermer</a>' +
-                                        '<a href="#" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
-                                    '</div>' +
-                                 '</div>';
-
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                return function() {
-                    infobox.setContent(infoboxContent);
-                    infobox.open(map, marker);
-                }
-            })(marker, i));
-
-            $(document).on('click', '.closeInfo', function() {
-                infobox.open(null,null);
-            });
-
-            markers.push(marker);
-        });
-    }
-
-    var map;
-
+ var map;
     setTimeout(function() {
         $('body').removeClass('notransition');
 
@@ -269,10 +51,83 @@
             });
 
             map.mapTypes.set('Styled', styledMapType);
-            map.setCenter(new google.maps.LatLng(40.6984237,-73.9890044));
-            map.setZoom(14);
+            
+            map.setZoom(12);
 
-            addMarkers(props, map);
+    
+            
+            if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                         pos = new google.maps.LatLng(position.coords.latitude,
+                                position.coords.longitude);
+
+
+
+                        var newMarker = new google.maps.Marker({
+                            position: pos,
+                            map: map,
+                            icon: new google.maps.MarkerImage('template/images/marker-position.png'),
+                            draggable: true,
+                            animation: google.maps.Animation.DROP,
+                        });
+
+                        map.setCenter(pos);
+                        
+                    }, function () {
+                        handleNoGeolocation(true);
+                    });
+                } else {
+                    handleNoGeolocation(false);
+                }
+                
+                var btn = (document.getElementById('btn-input'));
+                google.maps.event.addDomListener(btn, 'click', function () {
+                    map.setCenter(pos),
+                    map.setZoom(12)
+
+                });
+                
+                var input = (document.getElementById('pac-input2'));
+                
+                var searchBox = new google.maps.places.SearchBox((input));
+                
+                google.maps.event.addListener(searchBox, 'places_changed', function () {
+                    var places = searchBox.getPlaces();
+
+                    if (places.length == 0) {
+                        return;
+                    }
+//                    for (var i = 0, marker; marker = markers[i]; i++) {
+//                        marker.setMap(null);
+//                    }
+
+                    // For each place, get the icon, place name, and location.
+                    markers = [];
+                    var bounds = new google.maps.LatLngBounds();
+                    for (var i = 0, place; place = places[i]; i++) {
+                        var image = {
+                            url: place.icon,
+                            size: new google.maps.Size(71, 71),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(17, 34),
+                            scaledSize: new google.maps.Size(25, 25)
+                        };
+
+
+                        bounds.extend(place.geometry.location);
+                    }
+
+                    map.fitBounds(bounds);
+                    map.setZoom(12);
+                    
+                    
+                });
+              
+                google.maps.event.addListener(map, 'bounds_changed', function () {
+                    var bounds = map.getBounds();
+                    searchBox.setBounds(bounds);
+                });
+                
         }
     }, 300);
 

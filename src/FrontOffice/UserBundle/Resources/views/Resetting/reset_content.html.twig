@@ -1,8 +1,12 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
+    {{ form_errors(form) }}
+    <div class="form-group">
+    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'search-optimus', 'placeholder': 'Mot de passe'} }) }}
+    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'search-optimus', 'placeholder': 'Verifier Mot de passe'} }) }}
+    </div>
+    <div align="center">
+        <input type="submit" class="btn btn-round btn-green" value="{{ 'resetting.reset.submit'|trans }}" />
     </div>
 </form>
