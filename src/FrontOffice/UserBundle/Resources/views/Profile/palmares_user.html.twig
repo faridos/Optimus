@@ -33,10 +33,12 @@
                 </ul>
                 <div class="tab-content">
 
-                    <ul class="tab-pane fade active in scrollbar" id="palmares" >       
+                    <ul class="tab-pane fade active in scrollbar" id="palmares" > 
+                        {% if app.user == user %}
                         <div class="buttonsWrapper col-xs-12">
                             <a class="btn btn-round btn-default btn-sm rightus" href="#uploadpalmares" data-toggle="modal" ><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
                         </div>
+                        {% endif %}
                         {% for reward in rewards %}
                             <div class="row">
                                 <br>

@@ -31,7 +31,7 @@ class MemberController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         if ($club->getActive() == 1) {
-            $membres = $em->getRepository('FrontOfficeOptimusBundle:Member')->getMembers($id,$user->getId());
+            $membres = $em->getRepository('FrontOfficeOptimusBundle:Member')->getMembers($id);
             $nbMembers = (count($membres));
             return array(
                 'id' => $id,
@@ -100,6 +100,24 @@ class MemberController extends Controller {
      * 
      */
     public function deleteDemandeAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
+        if (!empty($demande)) {
+            $em->remove($demande);
+            $em->flush();
+            $response = new Response($id);
+            return $response;
+        }
+    }
+
+     /**
+     * Creates a new Member entity.
+     *
+     * @Route("member={id}/delete", name="delete_member", options={"expose"=true})
+     * 
+     * 
+     */
+    public function deleteMemberAction($id) {
         $em = $this->getDoctrine()->getManager();
         $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
         if (!empty($demande)) {

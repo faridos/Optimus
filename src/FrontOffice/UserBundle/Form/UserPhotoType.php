@@ -6,14 +6,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class UserEmailType  extends AbstractType
+
+class UserPhotoType extends AbstractType
 {
      public function buildForm(FormBuilderInterface $builder, array $options)
     {
          $builder
-                  ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle','attr'=>array('class'=>'search-optimus','style'=>'margin-top: 0px')));
-                 
-                  
+                   ->add('file', 'file' ,array('attr'=>array('class'=>'form-control'),'required'=>True));
+         
      }
       /**
      * @param OptionsResolverInterface $resolver

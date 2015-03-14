@@ -26,7 +26,7 @@ class AlbumController extends Controller
      * 
      * @Template("FrontOfficeOptimusBundle:Album:newAlbumUser.html.twig")
      */
-    public function createAlbumUserAction(Request $request) {
+    public function createAlbumUserAction(Request $request,$id) {
         $entity = new Album();
         $date = new DateTime();
         $entity->setCreatedate($date);
@@ -39,7 +39,7 @@ class AlbumController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-          return $this->redirect($this->generateUrl('albums_user', array('id' => $user->getId())));  
+          return $this->redirect($this->generateUrl('albums_user', array('id' => $id)));  
         }
         return array(
             'user' => $user,
@@ -52,10 +52,9 @@ class AlbumController extends Controller
      *
      * @Route("/club={id}/albumc/new/", name="new_album_club")
      * 
-     * @Template("FrontOfficeOptimusBundle:Club:newAlbum.html.twig")
+     * @Template("FrontOfficeOptimusBundle:Album:newAlbumClub.html.twig")
      */
     public function createAlbumClubAction(Request $request, $id) {
-        $user = $this->container->get('security.context')->getToken()->getUser();
         $entity = new Album();
         $date = new DateTime();
         $entity->setCreatedate($date);
@@ -70,11 +69,11 @@ class AlbumController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('albums_user', array('id' => $user->getId()))); 
+            return $this->redirect($this->generateUrl('albums_club', array('id' => $id))); 
         }
 
         return array(
-            'entity' => $club,
+            'club' => $club,
             'album' => $entity,
             'form' => $form->createView(),
         );
@@ -101,6 +100,32 @@ class AlbumController extends Controller
         }
         return array(
            
+            'album' => $album,
+            'edit_form' => $editForm->createView(),
+        );
+    }
+     /**
+     * Displays a form to edit an existing Album entity.
+     *
+     * @Route("/club{id_club}/album={id}/modifier", name="album_club_edit")
+     * @Method("POST|GET|PUT")
+     * @Template("FrontOfficeOptimusBundle:Album:editAlbumClub.html.twig")
+     */
+    public function editAlbumClubAction(Request $request,$id_club, $id) {
+          
+        $em = $this->getDoctrine()->getManager();
+        $album = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id);
+        if (!$album) {
+            throw $this->createNotFoundException('Unable to find Album entity.');
+        }
+        $editForm = $this->createForm(new AlbumType(), $album);
+        $editForm->handleRequest($request);
+        if ($editForm->isValid()) {
+            $em->flush();
+            return $this->redirect($this->generateUrl('albums_club', array('id' => $id_club)));
+        }
+        return array(
+            'id_club' => $id_club,
             'album' => $album,
             'edit_form' => $editForm->createView(),
         );

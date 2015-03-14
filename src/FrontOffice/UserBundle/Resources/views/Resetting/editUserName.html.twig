@@ -1,0 +1,12 @@
+
+
+        <form action="{{ path('setting_user_username', { 'id': app.user.id }) }}" method="post" {{ form_enctype(form) }}>
+            <div class="col-md-10">
+                {{ form_widget(form.username) }}
+            </div>
+            <div class="col-md-2">
+              <button type="submit" value="Submit" class="btn btn-round btn-green" style="margin-top: 3px">Enregistrer</button>
+            </div>
+            {{ form_widget(form._token) }}
+        </form>
+    

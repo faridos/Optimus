@@ -21,32 +21,32 @@
                     <ul class="tab-pane fade active in  scrollbar" id="albums" >
                         
                         <div class="buttonsWrapper col-md-12">
-                            <a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                            <a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
                             <br>
                         </div>
+                          <div class="row">
                           {% for album in albums %}
-                        <div class="row">
-                            <br>
-                            <div class="col-md-4" >
-                                <div data-linkto="" class="card albumus" >
+                            <div class="col-md-4" id="{{album.id}}" >
+                                <div data-linkto="" class="card albumus tooltipsContainer" >
                                     <div class="figure" id="main">
                                         <a href="{{ path('photos_club', {'id' : club.id,'id_album' : album.id}) }}" >
-                                            <img src="images/1.jpg" />
+                                            <img src="{{ asset(club.WebPath) }}" />
                                         </a>
                                         <div class="figView"></div>
                                     </div>
                                     <h2 align="center">{{ album.nom }}</h2>
                                     <div align="center" >
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                        <a href="#modifieralbum"  data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#supprimuss{{album.id}}"  data-toggle="modal"  class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
                                     </div>
                                     <br>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
-                        </div>
+                       
                         {% endfor %}
+                         </div>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
@@ -54,4 +54,78 @@
             </div>
         </div>
     </div>
+  <!---------------- upload album----------------------------->
+
+    <div class="modal fade" id="uploadalbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {{ render (controller('FrontOfficeOptimusBundle:Album:createAlbumClub',  { 'id': club.id })) }}
+
+        </div>
+    </div>
+
+
+
+    <!--------------- fin upload album ------------------>
+     {% for album in albums %}
+    <!---------------- Update album----------------------------->
+
+    <div class="modal fade" id="modifieralbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {{ render (controller('FrontOfficeOptimusBundle:Album:editAlbumClub',  {'id_club': club.id, 'id': album.id })) }}
+
+        </div>
+    </div>
+
+
+
+    <!--------------- fin update album ------------------>
+    <!------------------- modal supprission------------------->
+    
+    <div class="modal" id="supprimuss{{album.id}}"   >
+        <div class="modal-dialog">
+            <div class="modal-content bordusbottomus">
+        <div class="modal-header bordustopus">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                </div>
+                <div class="modal-body">
+
+                    <p>Souhaitez vous vraiment supprimer l'album ?</p>
+
+
+                </div>
+                <div class="modal-footer supp-album">
+                    <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                    <a id="supprimerAlbum{{album.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
+{% block javascriptfils %}
+    <script>
+      
+        {% for album in albums %}
+            $('#supprimerAlbum{{album.id}}').click(function() {
+               
+                var id = $('#{{album.id}}').attr('id');
+             
+                $.ajax({
+                    url: Routing.generate('album_delete', {'id': id}),
+                    success: function(data) {
+                        $('#'+data).hide();
+                     $("#supprimuss{{album.id}}").toggle();
+                     $('.modal-backdrop').hide();
+                    }
+                });
+                                           
+
+            });
+        {% endfor %}
+        
+    </script>
 {% endblock %}

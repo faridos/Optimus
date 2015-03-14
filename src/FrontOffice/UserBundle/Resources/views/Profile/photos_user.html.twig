@@ -33,9 +33,11 @@
                     </li>
                 </ul>
                 <div class="tab-content">
+                    {% if app.user == user %}
                       <div class="buttonsWrapper col-xs-12">
                             <a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
                         </div>
+                      {% endif %}
                     <ul class="tab-pane fade active in scrollbar" id="albums" >
                         <div class="row">
                             <br>

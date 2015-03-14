@@ -15,8 +15,8 @@ class AlbumType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-             ->add('nom','text',array('attr'=>array('class'=>'form-control','placeholder'=>'Entrer le titre album')))
-             ->add('privacy', 'choice', array('choices' => array('Publique' => 'Public', 'Unique' => 'Unique', 'Amis' => 'Amis'),'attr'=>array('class'=>'form-control')))
+             ->add('nom','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le titre album')))
+             ->add('privacy', 'choice', array('choices' => array('Publique' => 'Public', 'Unique' => 'Unique', 'Amis' => 'Amis'),'attr'=>array('class'=>'search-optimus')))
         ;
     }               
     /**

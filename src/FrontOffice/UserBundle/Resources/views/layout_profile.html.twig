@@ -2,7 +2,6 @@
 
 {% block body %}
     <div id="wrapper">
-
         <div id="content" class="" >
             {% block content %}
             {% endblock %}
@@ -23,7 +22,8 @@
                                                 <button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo">
                                                     <span class="notifyIcon fa fa-camera-retro"></span>
                                                 </button>
-                                            </div>                                      
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -32,13 +32,13 @@
                                 <div class="namusprofilus" ><strong>{{ user.prenom }} {{ user.nom }}</strong>
                                 </div>
                             </div>
+                            <div class="title profilus" >{{user.profil}}</div>
                             <div class="address profilus">
                                 <div class="cardRating" style="color:#eab134"> 
                                     <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'U'~user.id} %}</div>
                                 </div>
                             </div>
-                            <div class="title profilus" >{{ user.profil }}</div>
-                            <div class="buttonsWrapper" id="{{ user.id }}" > 
+                            <div class="buttonsWrapper" > 
                                 {% if app.user.id != user.id %}
                                     {% if app.user | relation_exists('friendship', user ) %}
                                         {% set pendingInvitations = pendingInvitation(user,app.user)%}
@@ -74,117 +74,119 @@
                                                     <div class="clearfix"></div>
                                                 </div>   
 
-
-                                                <div class="clearfix"></div>
-
-                                                <div class="userWidget-2" >
-                                                    <div class="col-md-6">
-                                                        <div class="avatar">
-                                                        </div>
-                                                        <div class="info">
-                                                            <div class="name">Informations</div>
-                                                            <div class="title">Date de naissance : <span class="address">{{ user.dateNaissance|date('Y-d-m') }} </span>
-                                                            </div>
-                                                            <div class="title">Adresse : <span class="address">{{ user.adresse }}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="info ">
-                                                            <div class="name"></div>
-                                                            <div class="title">Numéro de téléphone : <span class="address">{{ user.tel }}</span></div>
-                                                            <div class="title">Email: <span class="address">{{ user.email }}</span></div>
-                                                            <div class="title">Pseudo: <span class="address">{{ user.username }}</span></div>
-                                                        </div></div>
-                                                    <div class="clearfix"></div>
+                                            </div>
+                                            <br><br><br>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="userWidget-2" >
+                                            <div class="col-md-6">
+                                                <div class="avatar">
                                                 </div>
-                                                <div class="clearfix"></div>
-                                                <div class="userWidget-2">
-                                                    <div class="avatar">
+                                                <div class="info">
+                                                    <div class="name">Informations</div>
+                                                    <div class="title">Date de naissance : <span class="address">{{ user.dateNaissance|date('Y-d-m') }} </span>
                                                     </div>
-                                                    <div class="info">
-                                                        <div class="name">Liste des amis</div>
-                                                    </div> <div class="clearfix"></div>
-                                                    <ul class="notifyList scrollbar" >
-                                                        {% set friends = getFriends(app.user.id) %}
-                                                            {% for friend in friends %}
-                                                                <div class="tooltipsContainer avatar friendus">
-                                                                    <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
-                                                                        <img src="{{ asset(friend.WebPath) }}" >
-                                                                    </a>
-                                                                </div>
-                                                            {% endfor %}               
-
-                                                        </ul>
-
-                                                        <div class="clearfix"></div>
+                                                    <div class="title">Adresse : <span class="address">{{ user.adresse }}</span>
                                                     </div>
                                                 </div>
-
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="info ">
+                                                    <div class="name"></div>
+                                                    <div class="title">Numéro de téléphone : <span class="address">{{ user.tel }}</span></div>
+                                                    <div class="title">Email: <span class="address">{{ user.email }}</span></div>
+                                                    <div class="title">Pseudo: <span class="address">{{ user.username }}</span></div>
+                                                </div></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="userWidget-2">
+                                            <div class="avatar">
+                                            </div>
+                                            <div class="info">
+                                                <div class="name">Liste des amis</div>
+                                            </div> <div class="clearfix"></div>
+                                            <ul class="notifyList scrollbar" >
+                                                {% set friends = getFriends(app.user.id) %}
+                                                    {% for friend in friends %}
+                                                        <div class="tooltipsContainer avatar friendus">
+                                                            <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
+                                                                <img src="{{ asset(friend.WebPath) }}" >
+                                                            </a>
+                                                        </div>
+                                                    {% endfor %}               
 
+                                                </ul>
+
+                                                <div class="clearfix"></div>
+                                            </div>
                                         </div>
 
                                     </div>
-                                    <div class="clearfix"></div>
+
                                 </div>
-                                <!------------------- modal photo------------------->
-                                <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="contactLabel">Télécharger votre photo</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form class="contactForm">
-                                                    <div class="row">
-                                                        <div class="form-group">
-                                                            <div class="col-sm-10">
-                                                                <input type="file" class="file" multiple data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-o btn-default" data-browse-label="Browse Images">
-                                                                <p class="help-block">Cliquez pour uploader votre image</p>
-                                                            </div>
-                                                        </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!------------------- modal photo------------------->
+                        <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="contactLabel">Télécharger votre photo</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="contactForm">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-sm-10">
+                                                        <input type="file" class="file" multiple data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-o btn-default" data-browse-label="Browse Images">
+                                                        <p class="help-block">Cliquez pour uploader votre image</p>
                                                     </div>
+                                                </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                                                <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                                        <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-------------------fin modal photo------------------->
+                        <!------------------- modal Envoie message------------------->
+                        <div class="modal fade" id="contactAgent" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="contactLabel">Optimus Message</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="contactForm">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                                                    <label  class="idReciever" id="{{ user.id }}" type="text" placeholder="Nom et Prénom" >Envoyer Message à <b>{{ user.prenom }} {{ user.nom }}</b></label>
+                                                    <label  id="messageEch" class="messageEch">Envoie echoué</label>
+                                                    <label  id="messageEnvoyer" class="messageEnvoyer">Envoie effectué</label>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                                                    <textarea id="txt-message"  placeholder="Message" rows="3" class="form-control"></textarea>
+                                                </div>
                                             </div>
-                                                        </form>
-                                        </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a id="btn-fermer-message" type="reset" href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Fermer</a>
+                                        <a id="envoyerMessage" href="#" class="btn btn-round btn-green">Envoyer message</a>
                                     </div>
                                 </div>
-                                <!-------------------fin modal photo------------------->
-                                 <!------------------- modal Envoie message------------------->
-                                 <div class="modal fade" id="contactAgent" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="contactLabel">Optimus Message</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form class="contactForm">
-                                                    <div class="row">
-                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                                                            <label  class="idReciever" id="{{ user.id }}" type="text" placeholder="Nom et Prénom" >Envoyer Message à <b>{{ user.prenom }} {{ user.nom }}</b></label>
-                                                            <label  id="messageEch" class="messageEch">Envoie echoué</label>
-                                                            <label  id="messageEnvoyer" class="messageEnvoyer">Envoie effectué</label>
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                                                            <textarea id="txt-message"  placeholder="Message" rows="3" class="form-control"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a id="btn-fermer-message" type="reset" href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Fermer</a>
-                                                <a id="envoyerMessage" href="#" class="btn btn-round btn-green">Envoyer message</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                 <!------------------- fin modal Envoie message------------------->
+                            </div>
+                        </div>
+                        <!------------------- fin modal Envoie message------------------->
 
-                                {% endblock %}
+                        {% endblock %}

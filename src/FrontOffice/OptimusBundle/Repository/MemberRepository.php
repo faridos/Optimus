@@ -12,20 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class MemberRepository extends EntityRepository
 {
-    public function getMembers($id,$id_user)
+    public function getMembers($id)
     {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('u');
-        $qb->select('u')
-           ->from('FrontOffice\UserBundle\Entity\User', 'u')
-           ->Join('FrontOffice\OptimusBundle\Entity\Member','m', "WITH" ,'m.member = u.id')
-           ->Join('FrontOffice\OptimusBundle\Entity\Club', 'c',"WITH", 'm.clubad = c.id')
+       $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select(array('m'))
+           ->from('FrontOffice\OptimusBundle\Entity\Member', 'm')
+           ->Join('FrontOffice\OptimusBundle\Entity\Club','c', "WITH" ,'m.clubad = c.id')
            ->where('m.confirmed = 1')
            ->andWhere('c.id = :id')
-           ->andWhere('u.id != :id_user')
-           ->setParameter('id', $id)
-         ->setParameter('id_user',$id_user);
-        return $qb->getQuery() ->getResult();
+           ->setParameter('id', $id);
+           return $qb->getQuery() ->getResult();
 				  
     }
     public function getMembersRequest($id,$idc)

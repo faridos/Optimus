@@ -16,7 +16,7 @@
                 <div class="tab-content">
                     <ul class="tab-pane fade active in scrollbar" id="palmares" >
                          <div class="buttonsWrapper col-md-12">
-                            <a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadpalmares" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
                             <br>
                         </div>
                         <div class="row">
@@ -26,7 +26,7 @@
                                 <div data-linkto="" class="card albumus" >
                                     <br>
                                     <div class="profile-card">
-                                        <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-child palmarus"></span></a></div>
+                                        <div class="pc-avatar"><a href="#uploadpalmares" data-toggle="modal" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-child palmarus"></span></a></div>
                                         <div class="pc-name">{{ reward.titre}}</div>
                                     </div>
                                     <div align="center" >
@@ -49,7 +49,6 @@
                                         <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
                                     </div>
                                     <br>
-
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
@@ -65,7 +64,6 @@
                                         <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
                                     </div>
                                     <br>
-
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
@@ -74,19 +72,16 @@
                     </ul>
                 </div>
                 <div class="clearfix"></div>
-
-
-
-
-
-
-
-
-
             </div>
-
+       </div>
+    </div>
+ <!--------------- upload palmares ------------------>
+    <div class="modal fade" id="uploadpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+             {{ render (controller('FrontOfficeOptimusBundle:Reward:addRewardClub',  { 'id': club.id })) }}
         </div>
-
     </div>
 
+
+    <!--------------- fin upload  ------------------>
 {% endblock %}

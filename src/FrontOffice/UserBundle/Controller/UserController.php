@@ -269,7 +269,7 @@ class UserController extends Controller {
     /**
      * 
      *
-     * @Route("profil={id}/paramétres", name="setting_user", options={"expose"=true})
+     * @Route("profil={id}/settings", name="setting_user", options={"expose"=true})
      * @Method("GET")
      * @Template()
      */
@@ -277,6 +277,60 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
         return $this->render('FrontOfficeUserBundle:Resetting:editAccount.html.twig', array('user' => $user));
+    }
+    /**
+     * 
+     *
+     * @Route("profil={id}/paramétres/photo", name="setting_user_photo", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function editPhotoAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
+        $editForm = $this->createForm(new UserPhotoType(), $entity);
+        $editForm->handleRequest($request);
+        if ($editForm->isValid()) {
+            $em->flush();
+            return $this->redirect($this->generateUrl('user_schow', array('id' => $id)));
+        }
+        return $this->render('FrontOfficeOptimusBundle:Photo:editPhoto.html.twig', array('form' => $editForm->createView()));
+    }
+    /**
+     * 
+     *
+     * @Route("profil={id}/paramétres/username", name="setting_user_username", options={"expose"=true})
+     * @Method("POST|GET")
+     * @Template()
+     */
+    public function editUserNameAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
+        $editForm = $this->createForm(new UserNameType(), $entity);
+        $editForm->handleRequest($request);
+        if ($editForm->isValid()) {
+            $em->flush();
+             return $this->redirect($this->generateUrl('setting_user', array('id' => $id))); 
+        }
+        return $this->render('FrontOfficeUserBundle:Resetting:editUserName.html.twig', array('form' => $editForm->createView()));
+    }
+    /**
+     * 
+     *
+     * @Route("profil={id}/settings/email", name="setting_user_email", options={"expose"=true})
+     * @Method("POST|GET|HEAD")
+     * @Template("FrontOfficeUserBundle:Resetting:editEmail.html.twig")
+     */
+    public function editEmailAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
+        $editForm = $this->createForm(new UserEmailType(), $entity);
+        $editForm->handleRequest($request);
+        if ($editForm->isValid()) {
+            $em->flush();
+            return $this->redirect($this->generateUrl('setting_user', array('id' => $id))); 
+        }
+        return  array('form' => $editForm->createView());
     }
 
 }

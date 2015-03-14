@@ -1,0 +1,29 @@
+<form action="{{ path('new_album_club',{ 'id' : club.id }) }}" {{ form_enctype(form) }} method="post" class="form-horizontal0 form-groups-bordered">
+    {{ form_errors(form) }}
+    <div class="modal-content bordusbottomus">
+        <div class="modal-header bordustopus">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="contactLabel">Ajouter Album</h4>
+        </div>
+        <div class="modal-body">
+            <div class="contactForm">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                        {{ form_widget(form.nom) }}
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                        {{ form_widget(form.privacy) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Annuler</a>
+            <button type="submit"  class="btn btn-round btn-green">Confirmer</button>
+        </div>
+    </div>
+    {{ form_widget(form._token) }}
+</form>
+
+

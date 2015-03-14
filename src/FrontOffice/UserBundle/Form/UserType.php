@@ -6,14 +6,16 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class UserEmailType  extends AbstractType
+
+class UserType extends AbstractType
 {
      public function buildForm(FormBuilderInterface $builder, array $options)
     {
          $builder
-                  ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle','attr'=>array('class'=>'search-optimus','style'=>'margin-top: 0px')));
-                 
-                  
+               
+                 ->add('type_notification','choice', array('choices' => array('All'=>'Tout','NOT'=>'Aucune','EC' => 'Evenement et Club','EU' => 'Evenement et nouvelle inscription',
+                            'UC' => 'User et club','E' => 'event','C' => 'club','U' => 'user'),'attr'=>array('class'=>'form-control')));
+         
      }
       /**
      * @param OptionsResolverInterface $resolver

@@ -14,40 +14,66 @@
                     <li class=""><a href="#videos" role="tab" ><span class="icon-film"></span> Vidéos</a></li>
                     <li class=""><a href="{{ path('members_club',{'id':club.id})}}" role="tab" ><span class="icon-user-unfollow"></span> Adhérents</a></li>
                     <li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span> Demandes</a></li>
-                    
+
                 </ul>
                 <div class="tab-content">
-                  
+
                     <ul class="tab-pane fade active in  scrollbar" id="albums" >
-                      
+
                         <div class="buttonsWrapper col-md-12">
                             <a href="">{{ album.nom }}</a> - photos
-                            <a class="btn btn-round btn-default btn-sm rightus" href="{{ path('photoClub_create',{'id': club.id , 'ida' : album.id}) }}"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
+                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
                             <br>
                         </div>
-                       {% for photo in photos %}
-                        <div class="row">
-                            <br>
-                            <div class="col-md-3" >
-                                  
-                                <div data-linkto="" class="card albumus" >
-                                    <div class="figure" id="main">
-                                        <a href="{{ asset(photo.WebPath) }}" target="_self" class="inline-block litebox" data-litebox-group="group-1">
-                                            <img src="{{ asset(photo.WebPath) }}" class="inline-block" />
-                                        </a>
-                                        <div class="figView">  </div>
+                        {% for photo in photos %}
+                            <div class="row">
+                                <br>
+                                <div class="col-md-3" >
+
+                                    <div data-linkto="" class="card albumus" >
+                                        <div class="figure" id="main">
+                                            <a href="{{ asset(photo.WebPath) }}" target="_self" class="inline-block litebox" data-litebox-group="group-1">
+                                                <img src="{{ asset(photo.WebPath) }}" class="inline-block" />
+                                            </a>
+                                            <div class="figView">  </div>
+                                        </div>
+                                        <div class="clearfix"></div>
                                     </div>
-                                    <div class="clearfix"></div>
+
                                 </div>
-                          
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="clearfix"></div>
-                        </div>
-                     {% endfor %}
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="clearfix"></div>
                 </ul>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="contactLabel">Télécharger votre photo</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="contactForm">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <input type="file" class="file" multiple data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-o btn-default" data-browse-label="Browse Images">
+                                    <p class="help-block">Cliquez pour uploader votre image</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                    <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>

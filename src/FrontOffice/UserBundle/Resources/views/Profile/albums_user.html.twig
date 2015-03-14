@@ -33,9 +33,11 @@
                 </ul>
                 <div class="tab-content">
                     <ul class="tab-pane fade scrollbar active in" id="albums" > 
+                        {% if app.user == user %}
                         <div class="buttonsWrapper col-md-12">
                             <a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
                         </div>
+                        {% endif %}
                         <div class="row">
                             {% for album in albums %}
                                 <div class="col-md-4" id="{{album.id}}">

@@ -1,0 +1,114 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+
+{% block contenu %}
+    <div class="row">
+        <div class="mail-env">
+
+            <!-- Personnes Body -->
+            <div class="mail-body">
+
+                <div class="mail-header">
+                    <!-- title -->
+                    <h3 class="mail-title">
+                        Paramètres de notifications
+
+                    </h3>
+
+
+                </div>
+
+
+                <!-- resultats de recherche -->
+                <div class="row">
+                    <!-- search -->
+                    <!-- resultats de recherche -->
+                    <div class="col-md-8">
+
+
+
+                        <div class="list-group-item">
+
+                            <div class="row info-list">
+                                <div class="col-sm-9">
+                                    <form action="{{ path('edit_notification', {'id' : entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal form-groups-bordered">
+                                        {{ form_errors(edit_form) }}
+                                        
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Type de notification</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{ form_widget(edit_form.type_notification) }}
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-5" style="margin-left: 20px;">
+                                                <br>
+                                                <button type="submit" class="btn btn-blue">Enregistrer</button>
+                                            </div>
+                                       
+                                        {{ form_widget(edit_form._token) }}
+
+
+                                    </form>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+            <!-- Sidebar -->
+            <div class="mail-sidebar" style="margin-top:63px;">
+
+                <!-- recherche -->
+                <div class="mail-sidebar-row hidden-xs">
+                    <h3>
+                        <i class="entypo-tools"></i>Setting
+                    </h3>
+                </div>
+
+                <!-- menu -->
+                <ul class="mail-menu">
+                    <li >
+                        <a href="{{ path('edit_compte', {'id' :  entity.id}) }}">
+
+                            <i class="entypo-users"></i>Compte
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+
+                            <i class="entypo-calendar"></i>Confidentialité
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href= "">
+
+                            <i class="entypo-bell"></i>Notification
+                        </a>
+                    </li>
+
+                </ul>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock contenu%}
+
