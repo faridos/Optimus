@@ -16,7 +16,7 @@
                                 {% if app.user == club.createur %} 
                                     <div class="ops">
                                         <a class="btn btn-round btn-default btn-sm" href="{{ path('club_update', {'id':club.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
-                                        <a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"  ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
+                                        <a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
                                     </div>
                                 {% endif %}
                                 <div class="name osLight fontus">{{ club.nom }}</div>
@@ -54,14 +54,7 @@
                                                         <div class="col-md-6">
                                                             <div class="pc-title osLight">
                                                                 <div class="buttonsWrapper pb20 buttonleftus">  
-                                                                    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook">
-                                                                        <span class="fa fa-facebook"></span>
-                                                                    </a>
-                                                                    <a href="#" class="btn btn-icon btn-round btn-o btn-twitter">
-                                                                        <span class="fa fa-twitter"></span>
-                                                                    </a>
-                                                                    <a href="#" class="btn btn-icon btn-round btn-o btn-google">
-                                                                        <span class="fa fa-google-plus"></span></a>
+                                                                    <div class="buttonsWrapper pb20 buttonleftus">{{ socialButtons( {'pinterest' : false}) }}</div>
                                                                 </div>
                                                             </div>
                                                         </div>

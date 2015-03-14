@@ -17,7 +17,7 @@
                                     <div class="propWidget-1 logotus tooltipsContainer ">
                                         <div class="fig salamus">
                                             <a href="{{ asset(user.WebPath) }}" data-lightbox-title="photo de profil" data-lightbox-gallery="">
-                                                <img src="{{ asset(user.WebPath) }}" class="inline-block">
+                                                <img src="{{ asset(user.WebPath) }}" class="inline-block imaguss">
                                             </a>
                                             <div class="priceCap paddus">
                                                 <button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo">
@@ -29,15 +29,15 @@
                                 </div>
                                 <div class="ops">
                                 </div>
-                                <div class="name osLight profilus namusclubus" ><strong>{{ user.prenom }} {{ user.nom }}</strong>
+                                <div class="namusprofilus" ><strong>{{ user.prenom }} {{ user.nom }}</strong>
                                 </div>
                             </div>
-                            <div class="title profilus" >{{ user.profil }}</div>
                             <div class="address profilus">
                                 <div class="cardRating" style="color:#eab134"> 
                                     <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'U'~user.id} %}</div>
                                 </div>
                             </div>
+                            <div class="title profilus" >{{ user.profil }}</div>
                             <div class="buttonsWrapper" id="{{ user.id }}" > 
                                 {% if app.user.id != user.id %}
                                     {% if app.user | relation_exists('friendship', user ) %}
