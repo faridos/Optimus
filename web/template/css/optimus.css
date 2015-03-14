@@ -1,0 +1,74 @@
+.shadbeta{
+background-color:rgba(192, 33, 0, 0.7);
+
+  border: 0 none;
+  border-radius: 40px;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+  padding: 20px 30px;
+  box-sizing: border-box;
+  width: 80%;
+  margin: 0 10%;
+  position: absolute;
+  top:90px;
+}
+.home-logo.osLight.logomus{
+
+margin:0px 0px 0 15px;
+}
+
+.login_error_box {
+  margin-top: 10px;
+  }
+  
+  .pam {
+  padding: 10px;}
+  
+  .uiBoxRed {
+  background-color:rgba(192, 33, 0, 0.6);
+  border: 1px solid rgba(215, 118, 0, 1)}
+  .alertus{
+  color:#fff;
+  
+  }
+  .connexus{
+  
+  color:#000;font-size:10px;
+  }
+  
+  .fildus{
+  
+  top:-60px;
+  }
+    .emailus{
+  
+  top:0px;
+  }
+  .home-title.emailus{
+  
+  font-size:20px;
+  
+  }
+  
+.bienvenus{
+  
+font-family: 'open_sanslight';
+  font-size: 14px;
+  font-style: italic;
+  line-height: 18px;
+
+  color: #4e4e4e;
+  }
+  
+ .panel-default > .panel-heading.optimus.bordusbottomus{
+  
+    border-radius:25px 25px 0px 0px;
+  
+  }
+  
+  .panel.bordustopus{
+  border-radius:25px 25px 25px 25px;
+  
+  }
+  
+  
+  
