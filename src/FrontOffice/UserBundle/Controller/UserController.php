@@ -346,6 +346,19 @@ class UserController extends Controller {
         $notifications = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotification($user->getId(),$user->getCreatedAt());
         return $this->render('FrontOfficeUserBundle:Profile:showAllNotifications.html.twig', array('notifications' => $notifications, 'user' => $user));
     }
+     /**
+     * 
+     *
+     * @Route("profil={id}/invitations", name="all_invitations_user", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function getAllInvitationAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $invitations = $em->getRepository('FrontOfficeUserBundle:User')->getInvitations($user);
+        return $this->render('FrontOfficeUserBundle:Profile:showAllInvitations.html.twig', array('invitations' => $invitations, 'user' => $user));
+    }
     
 
 }

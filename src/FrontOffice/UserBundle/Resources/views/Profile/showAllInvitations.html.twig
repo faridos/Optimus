@@ -1,1 +1,98 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block body %}
+    <div id="wrapper">
+        <div id="content" class="max">
+            <div class="components">
+                <h4>Tout</h4>
+                <div class="row">
+                    <div class="col-md-3">
+                        <ol class="breadcrumb">
+                            <ul class="notifyList nav">
+                                <li class=""><a href="{{ path('all_notifications_user',{'id': app.user.id}) }}" class="notifyName" ><span class="notifyIcon icon-bell"></span> Notiifications</a></li>
+                                <li class="active"><a href="{{ path('all_invitations_user',{'id': app.user.id}) }}" class="notifyName" ><span class="notifyIcon icon-users"></span> Demandes d'ajout</a></li>
+                            </ul>
+                        </ol>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="tabsContainer">
+                            <div class="tab-content ">
+                                <ul class="tab-pane fade active in scrollbar" id="notifications">
+                                    <div  class="notificationsWidget">
+                                        <h5><span id="nombres_invitation" class="badge"><span id="nbrsInvitation">{{ invitations|length}}</span></span>Invitations</h5>
+                                        {% for invitation in invitations %}  
+                                            {% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
+                                        <div class="emptyinvitation{{invitation.id}}">      
+                                        <div class="notification" id="{{invitation.id}}">
+                                                    <div class="time green">
+                                                        <div class="timeBody hidden-xs">{{ invitation.createdAt|date('Y-m-d H:i:s')}}</div>
+                                                        <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
+                                                        <div class="indicator"><span class="fa fa-circle-o"></span></div>
+                                                        <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
+                                                    </div>
+                                                    <div class="notifyContent">
+                                                        <div class="notifyBody col-sm-12">
+                                                            <a class="col-sm-1" href="{{ path('show_profil', { 'id': invitation.object1Id}) }}">
+                                                                <img class="avatar pull-left" src="{{ asset(UsersInvitations.WebPath) }}" alt="avatar">
+                                                            </a>
+                                                            <div class="">
+                                                                <a href="#" class="notifyName demandus col-sm-7">{{ UsersInvitations.prenom }} {{ UsersInvitations.nom }}
+                                                                    <span class="label label-green visible-xs">02/02/2015 à 14:48</span></a>
+                                                                <div class="ops rightus col-sm-4">
+                                                                    <a id="accept_amis{{invitation.id}}" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter </a>
+                                                                    <a href="#" class="btn btn-round btn-o btn-default btn-sm">Refuser </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                   </div>                 
+                                                {% endfor %}
+                                                </div>
+                                            </ul>
+                                            <div class="loader" id="loaderClub">
+                                                <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                {% endblock %}
+                    {% block javascriptfils %}
+                        <script>
+                         
+                                    //accept invitation
+                                    {% for invitation in invitations %}
+                                        $('#accept_amis{{invitation.id}}').click(function() {
+// $('.loader').show();                                                                                  
+                                            var id = $('#'+{{invitation.id}}).attr('id');
+
+                                            $.ajax({
+                                                url: Routing.generate('accept_relation', {'id': id}),
+                                                success: function(data) {
+                                                    var nb = parseInt($('#nbrsInvitation').text());
+                                                    var nouveauNb = nb - 1;
+
+                                                    if (nouveauNb > 0 )
+                                                    {
+                                                        $('#nbrsInvitation').replaceWith(nouveauNb);
+                                                    }
+                                                    else{
+                                                         $('#nbrsInvitation').hide();
+                                                    }
+                                                   
+                                                    $('.emptyinvitation' + data).hide();
+                                                    // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+
+                                                }
+                                            });
+                                        });
+                                    {% endfor %}
+                                </script>
+                                {% endblock %}
