@@ -23,7 +23,8 @@
                                 {% if event.createur == app.user %}
                                     <div class="ops">
                                         <a class="btn btn-round btn-default btn-sm" href="{{ path('update-event',{id: event.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
-                                        <a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>                                </div>
+                                        <a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a> 
+                                    </div>
                                     {% endif %}
                                 <div class="name osLight eventus" ><strong>{{event.titre}}</strong></div>
                             </div>
@@ -57,7 +58,7 @@
                                 </div>
                                 <div class="col-md-6 pb20">
                                     {% set isparticipant = isParticipant(event,app.user) %}
-                                        {% if not isparticipant %}
+                                        {% if not isparticipant and date(event.dateFin)>= date() %}
                                             <a class="btn btn-green btn-round eventus" href="{{path('add_participation',{id: event.id})}}" >
                                                 <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
                                             </a>
@@ -67,8 +68,8 @@
                                     </div>
                                     <div class="col-md-6">
 
-                                        {% if isparticipant %}
-                                            <div class="buttonsWrapper pb20 buttonleftus">{{ socialButtons( {'pinterest' : false}) }}</div>
+                                        {% if isparticipant and date(event.dateFin)>= date() %}
+                                            <div class="buttonsWrapper pb20 buttonleftus">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
                                         {% endif %}
 
                                     </div>

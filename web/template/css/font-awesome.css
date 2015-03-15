@@ -179,6 +179,9 @@
   content: "\f004";
 }
 .fa-star:before {
+  content: "\f005";
+}
+.fa-star3:before {
   font-size: 1.3em;
   content: "\f005";
 }

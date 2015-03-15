@@ -12,7 +12,7 @@
                                 <div class="notificationsWidget">
                                     <div class="notification">
                                         <div class="time green">
-                                            <a href="{{ path('show_event', { 'id' : event.id }) }}" class="timeBody hidden-xs">{{ event.titre }}</a>
+                                            <a href="{{ path('show_event', { 'id' : event.id }) }}" class="timeBody hidden-xs" {% if date(event.dateFin) < date() %} style="background-color: rgba(192, 33, 0, 0.2); color: #000;"{% endif %}>{{ event.titre }}</a>
                                             <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
                                             <div class="indicator"><span class="fa fa-circle-o"></span></div>
                                             <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
@@ -33,25 +33,14 @@
                                                     <div class="buttonsWrapper pb20">
 
                                                         {% set participantOuNon=ParticipantOuNon(event,user) %}
-                                                        {% if participantOuNon == 0 %}
+                                                        {% if participantOuNon == 0 and date(event.dateFin)>= date() %}
                                                             <a class="btn btn-green btn-round eventus" href="{{path('add_participation',{id: event.id})}}" >
                                                                 <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
                                                             </a>
 
-                                                        {% else %} 
+                                                        {% elseif date(event.dateFin)>= date() %} 
 
-                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-facebook">
-                                                                <span class="fa fa-facebook"></span>
-                                                            </a> 
-                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-twitter">
-                                                                <span class="fa fa-twitter"></span>
-                                                            </a> 
-                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-google">
-                                                                <span class="fa fa-google-plus"></span>
-                                                            </a> 
-                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest">
-                                                                <span class="fa fa-pinterest"></span>
-                                                            </a>
+                                                            <div class="buttonsWrapper pb20 buttonleftus">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
 
                                                         {% endif %}
                                                     </div>
