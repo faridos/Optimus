@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="4"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Message/new.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/UserController.php</file>
-            <file>file:/C:/wamp/www/Optimus/web/template/js/ajaxNotif.js</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/add.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Form/MessageType.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Form/EventType.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/layoutClub.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/demandeClub.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Reward/newRewardClub.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/RewardController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/albumsClub.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Form/AlbumType.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/MemberController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/listeAdherents.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/web/template/css/app.css</file>
             <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/layout_profile.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/MessageController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/ClubController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Repository/MemberRepository.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/albums_user.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Reward/newRewardUser.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/app/Resources/views/baseA.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/palmaresClub.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/palmares_user.html.twig</file>
         </group>
     </open-files>
 </project-private>
