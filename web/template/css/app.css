@@ -252,7 +252,17 @@ width: 110%;
 
 } 
 
+.search-optimus-1 {
+   
 
+    text-indent:20px;
+    border-radius: 25px;      
+    height: 44px;      
+    border: 1.5px solid #C02100;      
+    width: 98%;      
+    margin: 0 -2px 0 5px;
+
+}
 .search-optimus {
    
 
