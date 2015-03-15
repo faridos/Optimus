@@ -288,7 +288,33 @@ class ClubController extends Controller {
             return $response;
         }
     }
-    
 
+    /**
+     * 
+     *
+     * @Route("club={id}/paramétres/photo", name="setting_club_photo", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function editPhotoAction(Request $request, $id) {
+        if (!$this->get('security.context')->isGranted('ROLE_ENTRAINEUR')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('Accès limité aux Entraîneurs.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        if ($club->getActive() == 1) {
+            $editForm = $this->createForm(new ClubPhotoType(), $club);
+            $editForm->handleRequest($request);
+            if ($editForm->isValid()) {
+                $em->flush();
+                return $this->redirect($this->generateUrl('show_club', array('id' => $id)));
+            }
+            return $this->render('FrontOfficeOptimusBundle:Club:editPhotoClub.html.twig', array('club' => $club, 'form' => $editForm->createView()));
+//                    'user' => $user,)
+        } else {
+            throw $this->createNotFoundException('Club Annulé.');
+        }
+    }
 
 }

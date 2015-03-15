@@ -301,7 +301,7 @@ class UserController extends Controller {
      * 
      *
      * @Route("profil={id}/paramétres/photo", name="setting_user_photo", options={"expose"=true})
-     * @Method("GET")
+     * @Method("GET|POST")
      * @Template()
      */
     public function editPhotoAction(Request $request, $id) {
@@ -311,9 +311,9 @@ class UserController extends Controller {
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $em->flush();
-            return $this->redirect($this->generateUrl('user_schow', array('id' => $id)));
+            return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));
         }
-        return $this->render('FrontOfficeOptimusBundle:Photo:editPhoto.html.twig', array('form' => $editForm->createView()));
+        return $this->render('FrontOfficeOptimusBundle:Photo:editPhotoProfil.html.twig', array('form' => $editForm->createView()));
     }
 
     /**

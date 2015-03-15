@@ -12,7 +12,7 @@ class UserPhotoType extends AbstractType
      public function buildForm(FormBuilderInterface $builder, array $options)
     {
          $builder
-                   ->add('file', 'file' ,array('attr'=>array('class'=>'form-control'),'required'=>True));
+                   ->add('file', 'file' ,array('attr'=>array('class'=>'file','multiple data-show-upload'=>'false','data-show-caption'=>'false', 'data-show-remove'=>'false')));
          
      }
       /**

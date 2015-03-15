@@ -18,12 +18,13 @@
                                             <a href="{{ asset(user.WebPath) }}" data-lightbox-title="photo de profil" data-lightbox-gallery="">
                                                 <img src="{{ asset(user.WebPath) }}" class="inline-block imaguss">
                                             </a>
-                                            <div class="priceCap paddus">
-                                                <button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo">
-                                                    <span class="notifyIcon fa fa-camera-retro"></span>
-                                                </button>
-                                            </div>
-
+                                            {% if app.user.id == user.id %}
+                                                <div class="priceCap paddus">
+                                                    <button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo">
+                                                        <span class="notifyIcon fa fa-camera-retro"></span>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -134,28 +135,7 @@
                         <!------------------- modal photo------------------->
                         <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                             <div class="modal-dialog">
-                                <div class="modal-content bordusbottomus">
-                                    <div class="modal-header bordustopus">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h4 class="modal-title" id="contactLabel">Télécharger votre photo</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form class="contactForm">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-sm-10">
-                                                        <input type="file" class="file" multiple data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-o btn-default" data-browse-label="Browse Images">
-                                                        <p class="help-block">Cliquez pour uploader votre image</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                                        <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
-                                    </div>
-                                    </form>
-                                </div>
+                                {{ render (controller('FrontOfficeUserBundle:User:editPhoto',  { 'id': app.user.id })) }}
                             </div>
                         </div>
                         <!-------------------fin modal photo------------------->
