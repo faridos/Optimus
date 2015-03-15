@@ -426,7 +426,7 @@
 			}
 		},
 		value: '',
-		lang: 'en',
+		lang: 'fr',
 
 		format:	'Y/m/d H:i',
 		formatTime:	'H:i',

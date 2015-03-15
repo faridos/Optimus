@@ -14,7 +14,7 @@ class RegistrationFormType extends BaseType {
                 ->add('nom', 'text', array('attr' => array('class' => 'form-control')))
                 ->add('prenom', 'text', array('attr' => array('class' => 'form-control')))
                 ->add('file', 'file', array('attr' => array('class' => 'form-control'), 'required' => False))
-                ->add('dateNaissance', 'datetime', array('attr'=>array('class'=>'some_class search-optimus','placeholder'=>'Date de creation'),'widget' => 'single_text','required' => true))
+                ->add('dateNaissance', 'datetime', array('attr'=>array('class'=>'some_class form-control','placeholder'=>'Date de naissance'), 'widget' => "single_text",'required' => true))
                 ->add('sexe', 'choice', array('choices' => array('H' => 'Homme', 'F' => 'Femme'), 'attr' => array('class' => 'form-control')))
                 ->add('profil', 'choice', array('choices' => array('S' => 'Sportif', 'E' => 'Entraineur')))
                 ->add('adresse', 'textarea', array('attr' => array('class' => 'form-control')))

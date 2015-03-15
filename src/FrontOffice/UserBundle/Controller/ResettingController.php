@@ -10,7 +10,7 @@
  */
 
 namespace FrontOffice\UserBundle\Controller;
-use FOS\UserBundle\Controller\RegistrationController as BaseController;
+use FOS\UserBundle\Controller\ResettingController as BaseController;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
@@ -30,6 +30,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ResettingController extends BaseController
 {
 
+    /**
+     * Request reset user password: show form
+     */
+    public function requestAction()
+    {
+        return $this->render('FOSUserBundle:Resetting:request.html.twig');
+    }
+    
+    
     /**
      * Reset user password
      */

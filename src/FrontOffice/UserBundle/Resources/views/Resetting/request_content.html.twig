@@ -3,11 +3,14 @@
 <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
     <div>
         {% if invalid_username is defined %}
-            <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+            <div class="pam login_error_box uiBoxRed" role="alert" tabindex="0">
+                <div>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</div>      
+            </div>
+            
         {% endif %}
-        
+
         <div class="form-group">
-            <input class="search-optimus" type="text"  placeholder="{{ 'resetting.request.username'|trans }}" id="username" name="username" required="required">
+            <input class="search-optimus emailevus " type="text"  placeholder="{{ 'resetting.request.username'|trans }}" id="username" name="username" required="required">
         </div>
     </div>
     <div align="center">

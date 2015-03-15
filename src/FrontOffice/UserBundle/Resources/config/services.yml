@@ -7,7 +7,16 @@ services:
           tags:
               - { name: form.type, alias: frontoffice_user_registration }
           arguments: [%fos_user.model.user.class%]
-    
+    FrontOffice_user_change_password.form.type:
+          class: FrontOffice\UserBundle\Form\Type\ChangePasswordFormType
+          arguments: [%fos_user.model.user.class%]
+          tags:
+              - { name: form.type, alias: frontoffice_user_change_password }
+    frontoffice_user_resetting.form.type:
+          class: FrontOffice\UserBundle\Form\Type\ResettingFormType
+          arguments: [%fos_user.model.user.class%]
+          tags:
+              - { name: form.type, alias: frontoffice_user_resetting }
     fos_user.registration_listener:
         class: FrontOffice\UserBundle\EventListener\RegistrationListener
         arguments: []

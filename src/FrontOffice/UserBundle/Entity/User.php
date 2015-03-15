@@ -34,7 +34,7 @@ class User extends BaseUser {
     protected $prenom;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     protected $dateNaissance;
 

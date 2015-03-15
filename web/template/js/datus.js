@@ -6,7 +6,7 @@ window.onerror = function(errorMsg) {
 }*/
 $('#datetimepicker').datetimepicker({
 dayOfWeekStart : 1,
-lang:'en',
+lang:'fr',
 disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
 startDate:	'1986/01/05'
 });
