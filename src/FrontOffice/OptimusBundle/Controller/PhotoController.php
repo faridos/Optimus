@@ -13,7 +13,7 @@ use FrontOffice\OptimusBundle\Form\PhotoType;
 /**
  * Photo controller.
  *
- * @Route("/photo")
+ * @Route("/")
  */
 class PhotoController extends Controller
 {
@@ -51,4 +51,37 @@ class PhotoController extends Controller
             'form'   => $form->createView(),
         );
     }
+     /**
+     * Creates a new Photo entity.
+     *
+     * @Route("evenement={id}/photo/ajouter", name="photoEvent_create")
+     * @Method("GET|POST")
+     * @Template("FrontOfficeOptimusBundle:Photo:newPhotoEvent.html.twig")
+     */
+    public function createPhotoEventAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+        $photo = new Photo();
+        $form = $this->createForm(new PhotoType(), $photo);
+        $form->handleRequest($request);
+        $photo->setEvent($event);
+    
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($photo);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('photos_event', array('id' => $id)));
+        }
+        
+        return array(
+            
+            'photo' => $photo,
+            'id' => $event->getId(),
+            'event' => $event,
+            'form'   => $form->createView(),
+        );
+    }
+
 }

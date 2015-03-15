@@ -112,7 +112,7 @@ class Photo
     {
         // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
         // le document/image dans la vue.
-        return 'upload/albumPhoto/'.$this->getAlbum()->getId();
+        return 'upload/albumPhoto/'.$this->getId();
     }
     /**
      * @ORM\PrePersist()

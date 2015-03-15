@@ -57,6 +57,7 @@
 
                                 </div>
                                 <div class="col-md-6 pb20">
+                                    {% set isparticipant = isParticipant(event,app.user) %}
                                     {% if not isparticipant %}
                                         <a class="btn btn-green btn-round eventus" href="{{path('add_participation',{id: event.id})}}" >
                                             <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
@@ -88,6 +89,7 @@
 
                             </div>
                             <div class="info">
+                                {% set participants = participants(event) %}
                                 <div class="name">Nombre de participants :<span class="address leftus"> {{participants|length}}</span></div>
 
 

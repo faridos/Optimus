@@ -28,9 +28,27 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('getNonSeenMessage', array($this, 'getNonSeenMessage')),
             new \Twig_SimpleFunction('getMembreRequest', array($this, 'getMembreRequest')),
             new \Twig_SimpleFunction('getMembreConfirmed', array($this, 'getMembreConfirmed')),
+             new \Twig_SimpleFunction('isParticipant', array($this, 'isParticipant')),
+             new \Twig_SimpleFunction('participants', array($this, 'participants')),
         );
     }
-    
+    public function  participants($event){
+         return $this->em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
+    }
+           
+    public function isParticipant($event,$user)
+    {
+         $participants = $this->em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
+        $isparticipant= false;
+        foreach($participants as $participateur){
+        if($participateur == $user){
+            $isparticipant = true;
+        }  
+        }
+        return  $isparticipant;
+    }
+
+
     public function getTypeEvent() {
         return $this->em->getRepository('FrontOfficeOptimusBundle:TypeEvent')->findAll();
     }

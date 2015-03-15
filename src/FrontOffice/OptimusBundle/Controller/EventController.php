@@ -56,21 +56,16 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
-        $participants = $em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
-        $isparticipant= false;
-        foreach($participants as $participateur){
-        if($participateur == $user){
-            $isparticipant = true;
-        }  
-        }
+       
+       
         
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
         return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array(
             'event' => $event,
-            'participants' => $participants,
-            'isparticipant' => $isparticipant));
+            
+            ));
     }
     
     /**
@@ -87,11 +82,11 @@ class EventController extends Controller {
         }
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
-        $participants = $em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
+        $photos = $em->getRepository("FrontOfficeOptimusBundle:Photo")->findby(array('event' =>$event));
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:photo.html.twig', array('event' => $event,'participants' => $participants));
+        return $this->render('FrontOfficeOptimusBundle:Event:photo.html.twig', array('event' => $event,'photos' => $photos));
     }
     
     /**
@@ -108,11 +103,11 @@ class EventController extends Controller {
         }
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
-        $participants = $em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
+       
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:video.html.twig', array('event' => $event,'participants' => $participants));
+        return $this->render('FrontOfficeOptimusBundle:Event:video.html.twig', array('event' => $event));
     }
 
     /**
@@ -206,7 +201,8 @@ class EventController extends Controller {
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         return $this->redirect($this->generateUrl('events'));
     }
-
+    
+    
     /**
      * 
      *
