@@ -21,11 +21,10 @@
                         <div class="userWidget-1" >
                             <div class="avatar" id="main">
                                 {% if event.createur == app.user %}
-                                <div class="ops">
-                                    <a class="btn btn-round btn-default btn-sm" href="{{ path('update-event',{id: event.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
-                                    <a class="btn btn-round btn-default btn-sm" href="{{ path('delete-event',{id: event.id})}}" ><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
-                                </div>
-                                {% endif %}
+                                    <div class="ops">
+                                        <a class="btn btn-round btn-default btn-sm" href="{{ path('update-event',{id: event.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
+                                        <a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>                                </div>
+                                    {% endif %}
                                 <div class="name osLight eventus" ><strong>{{event.titre}}</strong></div>
                             </div>
 
@@ -34,7 +33,7 @@
                                     <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'E'~event.id} %}</div>
                                 </div>
                             </div>
-                            
+
 
                             <div class="row">
                                 <div class="col-md-6 pb20">
@@ -43,7 +42,7 @@
                                         <div class="title eventus">Date début :<span class="address detaillus">{{event.dateDebut|date("d/m/Y h:i")}}</span></div>
                                         <div class="title eventus">Date fin :<span class="address detaillus">{{event.dateFin|date("d/m/Y h:i")}}</span></div>
                                         <div class="title eventus">Lieu :<span class="address detaillus">{{event.lieu}}</span></div><br>
-                                          
+
                                     </div>
 
                                 </div>
@@ -52,96 +51,116 @@
                                         <div class="title eventus">Nombre de places : <span class="address leftus">{{event.nbrPlaces}}</span></div>
                                         <div class="title eventus">Frais participation : <span class="address leftus">{{event.frais}} &euro; </span></div>
                                         <div class="title eventus">Description : <span class="address leftus">{{event.description}}</span></div>
-                                        
+
                                     </div>
 
                                 </div>
                                 <div class="col-md-6 pb20">
                                     {% set isparticipant = isParticipant(event,app.user) %}
-                                    {% if not isparticipant %}
-                                        <a class="btn btn-green btn-round eventus" href="{{path('add_participation',{id: event.id})}}" >
-                                            <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
-                                        </a>
-                                     
-                                          {% endif %}
-                                          
+                                        {% if not isparticipant %}
+                                            <a class="btn btn-green btn-round eventus" href="{{path('add_participation',{id: event.id})}}" >
+                                                <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
+                                            </a>
+
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        {% if isparticipant %}
+                                            <div class="buttonsWrapper pb20 buttonleftus">{{ socialButtons( {'pinterest' : false}) }}</div>
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <br/>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    
-                                    {% if isparticipant %}
-                                        <div class="buttonsWrapper pb20 buttonleftus">{{ socialButtons( {'pinterest' : false}) }}</div>
-                                    {% endif %}
-                                    
-                                </div>
-                                <div class="col-md-12">
-                                    <br/>
-                                </div>
+
+
+
+
+                                <div class="clearfix"></div>
                             </div>
 
+                            <div class="userWidget-2" >
+                                <div class="avatar">
+
+                                </div>
+                                <div class="info">
+                                    {% set participants = participants(event) %}
+                                        <div class="name">Nombre de participants :<span class="address leftus"> {{participants|length}}</span></div>
 
 
+                                    </div>
 
-                            <div class="clearfix"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+
                         </div>
 
-                        <div class="userWidget-2" >
-                            <div class="avatar">
-
-                            </div>
-                            <div class="info">
-                                {% set participants = participants(event) %}
-                                <div class="name">Nombre de participants :<span class="address leftus"> {{participants|length}}</span></div>
-
-
-                            </div>
-
-                            <div class="clearfix"></div>
-                        </div>
-
+                        <div id="mapView" class="eventmap" style=" max-height: 60%; width:110%;"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div><div class="clearfix"></div>
                     </div>
 
                 </div>
-              
-                <div id="mapView" class="eventmap" style=" max-height: 60%; width:110%;"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div><div class="clearfix"></div>
+                <div class="clearfix"></div>
             </div>
-              
-        </div>
-        <div class="clearfix"></div>
-    </div>
-{% endblock %}
-{% block javascriptfils %}
-    <script>
-        (function($) {
-            
-        "use strict";
-        var infobox = new InfoBox({
-                        disableAutoPan: false,
+            <!------------------- modal supprission------------------->
+            <div class="modal fade" id="supprimuss" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bordusbottomus">
+                        <div class="modal-header bordustopus">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Souhaitez vous vraiment supprimer ce evenement ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                            <a href="{{ path('delete-event',{'id': event.id}) }}" class="btn btn-round btn-green">Confirmer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-------------------fin modal suppression-------------------> 
+            {% endblock %}
+                {% block javascriptfils %}
+                    <script>
+                        (function($) {
+
+                            "use strict";
+                            var infobox = new InfoBox({
+                                disableAutoPan: false,
                                 maxWidth: 202,
-                                pixelOffset: new google.maps.Size( - 101, - 285),
+                                pixelOffset: new google.maps.Size(-101, -285),
                                 zIndex: null,
                                 boxStyle: {
-                                background: "url('/Optimus/web/template/images/infobox-bg.png') no-repeat",
-                                        opacity: 1,
-                                        width: "202px",
-                                        height: "245px"
+                                    background: "url('/Optimus/web/template/images/infobox-bg.png') no-repeat",
+                                    opacity: 1,
+                                    width: "202px",
+                                    height: "245px"
                                 },
                                 closeBoxMargin: "28px 26px 0px 0px",
                                 closeBoxURL: "",
                                 infoBoxClearance: new google.maps.Size(1, 1),
                                 pane: "floatPane",
                                 enableEventPropagation: false
-                        });
-                        
-                        var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
-                                    var marker_{{ event.id}} = new google.maps.Marker({
-                                    position: myLatLng,
-                                            map: map,
-                                            icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),
-                                            draggable: false,
-                                            animation: google.maps.Animation.DROP,
-                                            title: "Cliquez pour voir aperçu"
-                                    });
-                                    var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
+                            });
+
+                            var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
+                            var marker_{{ event.id}} = new google.maps.Marker({
+                                position: myLatLng,
+                                map: map,
+                                icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),
+                                draggable: false,
+                                animation: google.maps.Animation.DROP,
+                                title: "Cliquez pour voir aperçu"
+                            });
+                            var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
                                     '<div class="propImg">' +
                                     '<img src="/Optimus/web/template/images/prop/1-1-thmb.png">' +
                                     '<div class="propBg">' +
@@ -166,16 +185,16 @@
                                     '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
                                     '</div>' +
                                     '</div>';
-                                    google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
+                            google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
 
-                                    infobox.setContent(contenuInfoBulle_{{ event.id}});
-                                            infobox.open(map, marker_{{ event.id}});
-                                    });
-                                    $(document).on('click', '.closeInfo', function() {
-                            infobox.open(null, null);
+                                infobox.setContent(contenuInfoBulle_{{ event.id}});
+                                infobox.open(map, marker_{{ event.id}});
+                            });
+                            $(document).on('click', '.closeInfo', function() {
+                                infobox.open(null, null);
                             });
                             map.setZoom(14);
                             map.setCenter(myLatLng);
-                            })(jQuery);
-    </script>
-{% endblock %}
+                        })(jQuery);
+                    </script>
+                {% endblock %}

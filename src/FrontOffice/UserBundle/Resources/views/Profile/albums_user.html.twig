@@ -40,28 +40,28 @@
                         {% endif %}
                         <div class="row">
                             {% for album in albums %}
-                                <div class="col-md-4" id="{{album.id}}">
-                                    <div data-linkto="" class="card albumus tooltipsContainer" >
-                                        <div class="figure" id="main">
-                                            <a href="albums.html" >
-                                                <img src="{{ asset(app.user.WebPath) }}" />
-                                            </a>
-                                            <div class="figView"></div>
-                                        </div>
-                                        <h2 align="center">{{ album.nom }}</h2>
-                                        <div class="albumUser"  align="center" >
-                                            <a href="#modifieralbum" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                            <a href="#supprimuss{{album.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                        </div>
-                                        <br>
+                                
+                                <div class="col-md-4" id="{{album.id}}" >
+                                <div data-linkto="" class="card albumus tooltipsContainer" >
+                                    <div class="figure" id="main">
+                                        <a href="{{ path('photos_user', {'id' : user.id,'id_album' : album.id}) }}" >
+                                            <img src="{{ asset(user.WebPath) }}" />
+                                        </a>
+                                        <div class="figView"></div>
+                                    </div>
+                                    <h2 align="center">{{ album.nom }}</h2>
+                                    <div align="center" >
+                                        <a href="#modifieralbum"  data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#supprimuss{{album.id}}"  data-toggle="modal"  class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
                                     </div>
                                 </div>
+                            </div>
                             {% endfor %}
-                        </div>
-                        <div class="clearfix"></div>
+                         </div>
+                          <div class="clearfix"></div>
                     </ul>
                 </div>
-                <div class="clearfix"></div>
+              
             </div>
         </div>
     </div>

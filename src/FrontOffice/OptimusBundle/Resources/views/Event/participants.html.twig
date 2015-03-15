@@ -18,6 +18,7 @@
                     <ul class="tab-pane fade  active in scrollbar" id="participants" >
 
                         <div class="row">
+                             {% set participants = participants(event) %}
                             {% for participant in participants %}
                             <div class="col-md-4">
 

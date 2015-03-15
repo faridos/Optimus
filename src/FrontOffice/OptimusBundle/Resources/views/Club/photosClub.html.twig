@@ -25,56 +25,83 @@
                             <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
                             <br>
                         </div>
+                       <div class="row" >
                         {% for photo in photos %}
-                            <div class="row">
-                                <br>
-                                <div class="col-md-3" >
-
-                                    <div data-linkto="" class="card albumus" >
-                                        <div class="figure" id="main">
-                                            <a href="{{ asset(photo.WebPath) }}" target="_self" class="inline-block litebox" data-litebox-group="group-1">
-                                                <img src="{{ asset(photo.WebPath) }}" class="inline-block" />
+                            
+                                <div class="col-sm-4" id="{{ photo.id }}">
+                                    <div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
+                                        <div class="fig " id="main">
+                                            <a href="{{ asset(photo.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                                <img src="{{ asset(photo.WebPath) }}" />
                                             </a>
-                                            <div class="figView">  </div>
+                                            <div class="priceCap paddus">
+                                                <button href="#suppritus{{photo.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
+                                            </div>
+                                            <div class="figCap">
+                                                <div class="address">Cliquez pour agrandir l'image</div>
+                                            </div>
                                         </div>
-                                        <div class="clearfix"></div>
                                     </div>
-
                                 </div>
-                                <div class="clearfix"></div>
-                            </div>
+                           
                         {% endfor %}
+                         </div>
+                     
                     </ul>
                 </div>
                 <div class="clearfix"></div>
-                </ul>
+               
             </div>
         </div>
     </div>
+    {% for photo in photos %}
+        <div class="modal fade" id="suppritus{{photo.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bordusbottomus">
+                    <div class="modal-header bordustopus">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                    </div>
+                    <form class="contactForm">
+                        <div class="modal-body">
+                            <p>Souhaitez vous vraiment supprimer cette photo ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                            <a id="supprimerPhoto{{photo.id}}" href="#" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
     <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="contactLabel">Télécharger votre photo</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="contactForm">
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-sm-10">
-                                    <input type="file" class="file" multiple data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-o btn-default" data-browse-label="Browse Images">
-                                    <p class="help-block">Cliquez pour uploader votre image</p>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                    <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
-                </div>
-                </form>
-            </div>
+            {{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoClub',  { 'id': club.id, 'ida': album.id })) }}
         </div>
     </div>
+{% endblock %}
+{% block javascriptfils %}
+    <script>
+
+        {% for photo in photos %}
+            $('#supprimerPhoto{{photo.id}}').click(function() {
+
+                var id = $('#{{photo.id}}').attr('id');
+                console.log(id);
+              
+                $.ajax({
+                    url: Routing.generate('photo_delete', {'id': id}),
+                    success: function(data) {
+                        $('#' + data).hide();
+                        $('#suppritus{{photo.id}}').toggle();
+                        $('.modal-backdrop').hide();
+                    }
+                });
+
+
+            });
+        {% endfor %}
+
+    </script>
 {% endblock %}

@@ -220,16 +220,17 @@ class UserController extends Controller {
     /**
      * 
      *
-     * @Route("profil={id}/photos", name="photos_user", options={"expose"=true})
+     * @Route("profil={id}/album={id_album}/photos", name="photos_user", options={"expose"=true})
      * @Method("GET")
      * @Template()
      */
-    public function getPhotosUserAction($id) {
+    public function getPhotosUserAction($id,$id_album) {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-
-        return $this->render('FrontOfficeUserBundle:Profile:photos_user.html.twig', array('user' => $user));
+        $album = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id_album);
+        $photos = $em->getRepository('FrontOfficeOptimusBundle:Photo')->findby(array('album'=>$album));
+        return $this->render('FrontOfficeUserBundle:Profile:photos_user.html.twig', array('user' => $user, 'album' => $album, 'photos' => $photos));
     }
 
     /**

@@ -21,7 +21,7 @@
                     <ul class="tab-pane fade active in  scrollbar" id="albums" >
                         
                         <div class="buttonsWrapper col-md-12">
-                            <a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
                             <br>
                         </div>
                           <div class="row">
@@ -39,11 +39,9 @@
                                         <a href="#modifieralbum"  data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
                                         <a href="#supprimuss{{album.id}}"  data-toggle="modal"  class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
                                     </div>
-                                    <br>
-                                    <div class="clearfix"></div>
                                 </div>
                             </div>
-                            <div class="clearfix"></div>
+                         
                        
                         {% endfor %}
                          </div>

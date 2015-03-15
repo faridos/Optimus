@@ -1,7 +1,7 @@
 <?php
 
 namespace FrontOffice\OptimusBundle\Controller;
-
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,13 +17,46 @@ use FrontOffice\OptimusBundle\Form\PhotoType;
  */
 class PhotoController extends Controller
 {
+     /**
+     * Creates a new Photo entity.
+     *
+     * @Route("profil={id}/album={ida}/photo", name="photoProfil_create")
+     * @Method("GET|POST")
+     * @Template("FrontOfficeOptimusBundle:Photo:newPhotoProfil.html.twig")
+     */
+    public function createPhotoProfilAction(Request $request,$ida)
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $album = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($ida);
+        $entity = new Photo();
+        $form = $this->createForm(new PhotoType(), $entity);
+        $form->handleRequest($request);
+        $entity->setAlbum($album);
+    
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+           return $this->redirect($this->generateUrl('photos_user', array('id' => $user->getId(), 'id_album' => $ida)));
+        }
+        
+        return array(
+            
+            'entity' => $entity,
+            'user' => $user,
+            'ida' => $album->getId(),
+            'form'   => $form->createView(),
+        );
+    }
 
    /**
      * Creates a new Photo entity.
      *
      * @Route("club={id}/album={ida}/photo", name="photoClub_create")
      * @Method("GET|POST")
-     * @Template("FrontOfficeOptimusBundle:Club:newPhotoClub.html.twig")
+     * @Template("FrontOfficeOptimusBundle:Photo:newPhotoClub.html.twig")
      */
     public function createPhotoClubAction(Request $request,$ida)
     {
@@ -40,7 +73,7 @@ class PhotoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            die('ok');
+           return $this->redirect($this->generateUrl('photos_club', array('id' => $club->getId(), 'id_album' => $ida)));
         }
         
         return array(
@@ -82,6 +115,21 @@ class PhotoController extends Controller
             'event' => $event,
             'form'   => $form->createView(),
         );
+    }
+    /**
+     * Deletes a Album entity.
+     *
+     * @Route("photo={id}/supprimer", name="photo_delete", options={"expose"=true})
+     * @Method("GET|DELETE")
+     */
+    public function deleteAction($id) {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $photo = $em->getRepository('FrontOfficeOptimusBundle:Photo')->find($id);
+        $em->remove($photo);
+        $em->flush();
+        $response = new Response($id);
+         return $response;
     }
 
 }
