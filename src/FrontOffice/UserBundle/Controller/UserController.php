@@ -333,5 +333,19 @@ class UserController extends Controller {
         }
         return  array('form' => $editForm->createView());
     }
+    /**
+     * 
+     *
+     * @Route("profil={id}/notifications", name="all_notifications_user", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function getAllNotificationAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $notifications = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotification($user->getId(),$user->getCreatedAt());
+        return $this->render('FrontOfficeUserBundle:Profile:showAllNotifications.html.twig', array('notifications' => $notifications, 'user' => $user));
+    }
+    
 
 }

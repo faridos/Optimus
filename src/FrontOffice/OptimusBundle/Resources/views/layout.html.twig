@@ -144,7 +144,7 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-                <a href="#" class="notifyAll">See All</a>
+                <a href="{{ path('all_notifications_user',{'id' : app.user.id}) }}" class="notifyAll">See All</a>
             </div>
         </div>
         <div class="headerNotifyWraper">
