@@ -34,9 +34,9 @@
                 <div class="tab-content">
                     <ul class="tab-pane fade scrollbar active in" id="albums" > 
                         {% if app.user == user %}
-                        <div class="buttonsWrapper col-md-12">
-                            <a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
-                        </div>
+                            <div class="buttonsWrapper col-md-12">
+                                <a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
+                            </div>
                         {% endif %}
                         <div class="row">
                             {% for album in albums %}
@@ -77,69 +77,69 @@
 
 
     <!--------------- fin upload album ------------------>
-     {% for album in albums %}
-    <!---------------- Update album----------------------------->
+    {% for album in albums %}
+        <!---------------- Update album----------------------------->
 
-    <div class="modal fade" id="modifieralbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            {{ render (controller('FrontOfficeOptimusBundle:Album:editAlbum',  { 'id': album.id })) }}
+        <div class="modal fade" id="modifieralbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                {{ render (controller('FrontOfficeOptimusBundle:Album:editAlbum',  { 'id': album.id })) }}
 
+            </div>
         </div>
-    </div>
 
 
 
-    <!--------------- fin update album ------------------>
-    <!------------------- modal supprission------------------->
-    
-    <div class="modal" id="supprimuss{{album.id}}"   >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                </div>
-                <div class="modal-body">
+        <!--------------- fin update album ------------------>
+        <!------------------- modal supprission------------------->
 
-                    <p>Souhaitez vous vraiment supprimer l'album ?</p>
+        <div class="modal" id="supprimuss{{album.id}}"   >
+            <div class="modal-dialog">
+                <div class="modal-content bordusbottomus">
+                    <div class="modal-header bordustopus">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                    </div>
+                    <div class="modal-body">
 
-
-                </div>
-                <div class="modal-footer supp-album">
-                    <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                    <a id="supprimerAlbum{{album.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+                        <p>Souhaitez vous vraiment supprimer l'album ?</p>
 
 
+                    </div>
+                    <div class="modal-footer supp-album">
+                        <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                        <a id="supprimerAlbum{{album.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
 
+
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
     <!-------------------fin modal suppression-------------------> 
 {% endblock %}
 
 {% block javascriptfils %}
     <script>
-      
+
         {% for album in albums %}
             $('#supprimerAlbum{{album.id}}').click(function() {
-               
+
                 var id = $('#{{album.id}}').attr('id');
-             
+
                 $.ajax({
                     url: Routing.generate('album_delete', {'id': id}),
                     success: function(data) {
-                        $('#'+data).hide();
-                     $("#supprimuss{{album.id}}").toggle();
-                     $('.modal-backdrop').hide();
+                        $('#' + data).hide();
+                        $("#supprimuss{{album.id}}").toggle();
+                        $('.modal-backdrop').hide();
                     }
                 });
-                                           
+
 
             });
         {% endfor %}
-        
+
     </script>
 {% endblock %}
 
