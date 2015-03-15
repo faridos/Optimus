@@ -223,7 +223,7 @@
 
                     {% endfor %}
                 </ul>
-                <a href="#" class="notifyAll">Afficher tout</a>
+                <a href="{{ path('all_invitations_user',{'id': app.user.id}) }}" class="notifyAll">Afficher tout</a>
             </div>
         </div>
         <a href="#" class="mapHandler"><span class="icon-map"></span></a>

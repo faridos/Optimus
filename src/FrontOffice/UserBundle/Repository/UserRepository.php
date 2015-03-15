@@ -47,7 +47,7 @@ class UserRepository extends EntityRepository {
         $qb = $em->createQueryBuilder();
         $qb->select('r.name', 'r.object1Id', 'r.object2Id', 'r.confirmed')
                 ->from('Sly\RelationBundle\Entity\Relation', 'r')
-                ->where('r.confirmed = 0 and r.object1Id = :idc and r.object2Id = :id' )
+                ->where('r.confirmed = 0 and r.object1Id = :id and r.object2Id = :idc' )
                 ->setParameter('id', $idother)
                 ->setParameter('idc', $idcurrent);
         return $qb->getQuery()->getArrayResult();

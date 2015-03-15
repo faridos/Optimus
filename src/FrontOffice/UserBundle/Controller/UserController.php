@@ -165,6 +165,22 @@ class UserController extends Controller {
     /**
      * 
      *
+     * @Route("invitation={id}/supprimer", name="supprimer_invitation", options={"expose"=true})
+     * @Method("GET|POST")
+     * 
+     */
+    public function deleteInvitationAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $Invitation = $em->getRepository('SlyRelationBundle:Relation')->find($id);
+        $em->remove($Invitation);
+        $em->flush();
+        $response = new Response($id);
+        return $response;
+    }
+
+    /**
+     * 
+     *
      * @Route("profil={id}/retirer", name="delete_relation")
      * @Method("GET|POST")
      * @Template()
@@ -224,12 +240,12 @@ class UserController extends Controller {
      * @Method("GET")
      * @Template()
      */
-    public function getPhotosUserAction($id,$id_album) {
+    public function getPhotosUserAction($id, $id_album) {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
         $album = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id_album);
-        $photos = $em->getRepository('FrontOfficeOptimusBundle:Photo')->findby(array('album'=>$album));
+        $photos = $em->getRepository('FrontOfficeOptimusBundle:Photo')->findby(array('album' => $album));
         return $this->render('FrontOfficeUserBundle:Profile:photos_user.html.twig', array('user' => $user, 'album' => $album, 'photos' => $photos));
     }
 
@@ -267,6 +283,7 @@ class UserController extends Controller {
 
         return $response = new Response();
     }
+
     /**
      * 
      *
@@ -279,6 +296,7 @@ class UserController extends Controller {
         $user = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
         return $this->render('FrontOfficeUserBundle:Resetting:editAccount.html.twig', array('user' => $user));
     }
+
     /**
      * 
      *
@@ -297,6 +315,7 @@ class UserController extends Controller {
         }
         return $this->render('FrontOfficeOptimusBundle:Photo:editPhoto.html.twig', array('form' => $editForm->createView()));
     }
+
     /**
      * 
      *
@@ -311,10 +330,11 @@ class UserController extends Controller {
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $em->flush();
-             return $this->redirect($this->generateUrl('setting_user', array('id' => $id))); 
+            return $this->redirect($this->generateUrl('setting_user', array('id' => $id)));
         }
         return $this->render('FrontOfficeUserBundle:Resetting:editUserName.html.twig', array('form' => $editForm->createView()));
     }
+
     /**
      * 
      *
@@ -329,10 +349,11 @@ class UserController extends Controller {
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $em->flush();
-            return $this->redirect($this->generateUrl('setting_user', array('id' => $id))); 
+            return $this->redirect($this->generateUrl('setting_user', array('id' => $id)));
         }
-        return  array('form' => $editForm->createView());
+        return array('form' => $editForm->createView());
     }
+
     /**
      * 
      *
@@ -343,10 +364,11 @@ class UserController extends Controller {
     public function getAllNotificationAction() {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $notifications = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotification($user->getId(),$user->getCreatedAt());
+        $notifications = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotification($user->getId(), $user->getCreatedAt());
         return $this->render('FrontOfficeUserBundle:Profile:showAllNotifications.html.twig', array('notifications' => $notifications, 'user' => $user));
     }
-     /**
+
+    /**
      * 
      *
      * @Route("profil={id}/invitations", name="all_invitations_user", options={"expose"=true})
@@ -359,6 +381,5 @@ class UserController extends Controller {
         $invitations = $em->getRepository('FrontOfficeUserBundle:User')->getInvitations($user);
         return $this->render('FrontOfficeUserBundle:Profile:showAllInvitations.html.twig', array('invitations' => $invitations, 'user' => $user));
     }
-    
 
 }
