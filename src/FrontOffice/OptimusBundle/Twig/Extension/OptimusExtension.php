@@ -33,7 +33,7 @@ class OptimusExtension extends \Twig_Extension {
         );
     }
     public function  participants($event){
-         return $this->em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants($event);
+         return $this->em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants2($event, $event->getCreateur());
     }
            
     public function isParticipant($event,$user)

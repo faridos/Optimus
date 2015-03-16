@@ -52,6 +52,23 @@ class EventRepository extends EntityRepository {
         }
         return $participants;
     }
+    public function getParticipants2($event, $id_createur) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $particip = $qb->select('p')
+                        ->from("FrontOfficeOptimusBundle:Participation", 'p')
+                        ->where("p.event = :event")
+                        ->andWhere('p.participant <> :id_createur')
+                        ->setParameter('event', $event)
+                        ->setParameter('id_createur', $id_createur)
+                        ->getQuery()->getResult();
+
+        $participants = array();
+
+        foreach ($particip as $p) {
+            $participants[] = $p->getParticipant();
+        }
+        return $participants;
+    }
     
     public function ParticipantOuNon($event, $user) {
         $qb = $this->getEntityManager()->createQueryBuilder();
