@@ -70,7 +70,7 @@ class User extends BaseUser {
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\Choice(choices = {"S","E"})
+     * @Assert\Choice(choices = {"Sportif","Entraineur"})
      */
     protected $profil;
 

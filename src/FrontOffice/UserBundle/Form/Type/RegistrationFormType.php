@@ -16,7 +16,7 @@ class RegistrationFormType extends BaseType {
                 ->add('file', 'file', array('attr' => array('class' => 'form-control'), 'required' => False))
                 ->add('dateNaissance', 'datetime', array('attr'=>array('class'=>'some_class form-control','placeholder'=>'Date de naissance'), 'widget' => "single_text",'required' => true))
                 ->add('sexe', 'choice', array('choices' => array('H' => 'Homme', 'F' => 'Femme'), 'attr' => array('class' => 'form-control')))
-                ->add('profil', 'choice', array('choices' => array('S' => 'Sportif', 'E' => 'Entraineur')))
+                ->add('profil', 'choice', array('choices' => array('Sportif' => 'Sportif', 'Entraineur' => 'Entraineur')))
                 ->add('adresse', 'textarea', array('attr' => array('class' => 'form-control')))
                 ->add('tel', 'tel', array('required' => false, 'default_region' => 'FR', 'format' => PhoneNumberFormat::INTERNATIONAL, 'attr' => array('class' => 'form-control')))
                 ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle', 'attr' => array('class' => 'form-control')))
