@@ -6290,3 +6290,12 @@ blockquote {
     width:150px
     
 }
+.sansBorder{
+    border: 0px;
+    margin-left: 2px;
+    height: 45px;
+}
+.centrerAdon{
+    padding-left: 3px;
+    padding-right: 20px;
+}
