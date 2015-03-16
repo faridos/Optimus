@@ -9,10 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="message")
  * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Repository\MessageRepository")
- * * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks()
  */
-class Message
-{
+class Message {
+
     /**
      * @var integer
      *
@@ -22,13 +22,14 @@ class Message
      * 
      */
     private $id;
-     
+
     /**
      * @var sender
      * 
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User")
      */
     protected $sender;
+
     /**
      * @var integer
      *
@@ -36,12 +37,12 @@ class Message
      * 
      */
     protected $reciever;
+
     /**
-     * @var conversationroom
-     * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Conversation" , inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Conversation",inversedBy="messages", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="convers_id", referencedColumnName="id", nullable=true)
      */
-    protected $conversationroom;
-    
+    protected $conversation;
 
     /**
      * @var string
@@ -62,14 +63,14 @@ class Message
      *
      * @ORM\Column(name="is_seen", type="boolean", nullable=true)
      */
-    private  $is_seen;
+    private $is_seen;
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -79,20 +80,26 @@ class Message
      * @param string $content
      * @return Message
      */
-    public function setContent($content)
-    {
+    public function setContent($content) {
         $this->content = $content;
 
         return $this;
     }
+    public function getConversation() {
+        return $this->conversation;
+    }
 
-    /**
+    public function setConversation($conversation) {
+        $this->conversation = $conversation;
+    }
+
+    
+        /**
      * Get content
      *
      * @return string 
      */
-    public function getContent()
-    {
+    public function getContent() {
         return $this->content;
     }
 
@@ -102,8 +109,7 @@ class Message
      * @param \DateTime $msgTime
      * @return Message
      */
-    public function setMsgTime($msgTime)
-    {
+    public function setMsgTime($msgTime) {
         $this->msgTime = $msgTime;
 
         return $this;
@@ -114,8 +120,7 @@ class Message
      *
      * @return \DateTime 
      */
-    public function getMsgTime()
-    {
+    public function getMsgTime() {
         return $this->msgTime;
     }
 
@@ -125,8 +130,7 @@ class Message
      * @param \FrontOffice\UserBundle\Entity\User $sender
      * @return Message
      */
-    public function setSender(\FrontOffice\UserBundle\Entity\User $sender = null)
-    {
+    public function setSender(\FrontOffice\UserBundle\Entity\User $sender = null) {
         $this->sender = $sender;
 
         return $this;
@@ -137,55 +141,29 @@ class Message
      *
      * @return \FrontOffice\UserBundle\Entity\User 
      */
-    public function getSender()
-    {
+    public function getSender() {
         return $this->sender;
     }
+
     public function setReciever($reciever) {
         $this->reciever = $reciever;
     }
-
 
     /**
      * Get reciever
      *
      * @return \FrontOffice\UserBundle\Entity\User 
      */
-    public function getReciever()
-    {
+    public function getReciever() {
         return $this->reciever;
     }
 
     /**
-     * Set conversationroom
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Conversation $conversationroom
-     * @return Message
-     */
-    public function setConversationroom(\FrontOffice\OptimusBundle\Entity\Conversation $conversationroom = null)
-    {
-        $this->conversationroom = $conversationroom;
-
-        return $this;
-    }
-
-    /**
-     * Get conversationroom
-     *
-     * @return \FrontOffice\OptimusBundle\Entity\Conversation 
-     */
-    public function getConversationroom()
-    {
-        return $this->conversationroom;
-    }
-    /**
      * @ORM\PrePersist
      */
-    
     public function sendDate() {
-        
+
         $this->setMsgTime(new \Datetime());
-       
     }
 
     /**
@@ -194,8 +172,7 @@ class Message
      * @param boolean $isSeen
      * @return Message
      */
-    public function setIsSeen($isSeen)
-    {
+    public function setIsSeen($isSeen) {
         $this->is_seen = $isSeen;
 
         return $this;
@@ -206,10 +183,10 @@ class Message
      *
      * @return boolean 
      */
-    public function getIsSeen()
-    {
+    public function getIsSeen() {
         return $this->is_seen;
     }
+
     public function getDuréeMsg() {
         $date = new \DateTime();
         $diff = $date->diff($this->msgTime);
@@ -225,7 +202,7 @@ class Message
         endif;
         return $durée;
     }
-    
+
 //         public function __toString()
 //    {
 //        return (string) $this->getId();

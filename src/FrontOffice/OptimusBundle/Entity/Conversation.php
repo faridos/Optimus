@@ -50,8 +50,8 @@ class Conversation {
     protected $user2;
 
     /**
-     * @var tchater
-     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Message", mappedBy="conversationroom")
+     * 
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Message", mappedBy="conversation", cascade={"persist","remove"})
      */
     protected $messages;
 
@@ -119,7 +119,11 @@ class Conversation {
     public function getUser1() {
         return $this->user1;
     }
+    public function setUser1(\FrontOffice\UserBundle\Entity\User $user1) {
+        $this->user1 = $user1;
+    }
 
+    
     /**
      * Set user2
      *
@@ -140,5 +144,13 @@ class Conversation {
     public function getUser2() {
         return $this->user2;
     }
+    public function getMessages() {
+        return $this->messages;
+    }
+
+    public function setMessages(tchater $messages) {
+        $this->messages = $messages;
+    }
+
 
 }

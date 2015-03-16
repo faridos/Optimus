@@ -12,7 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ConversationRepository extends EntityRepository {
 
-    
+    public function getConversationUser($reciever)
+    {
+         $em = $this->getEntityManager();
+          $qb = $em->createQuery("select conv from FrontOfficeOptimusBundle:Conversation conv"
+                  . " where conv.user2 = :reciever  OR  conv.user1 = :reciever "
+                  )
+                  ->setParameter('reciever', $reciever);
+          return $qb->getResult();
+    }
+   
 
 //    public function getProfileConversations($idprofil) {
 //        $em = $this->getEntityManager();

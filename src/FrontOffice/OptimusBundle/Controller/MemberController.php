@@ -31,7 +31,7 @@ class MemberController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         if ($club->getActive() == 1) {
-            $membres = $em->getRepository('FrontOfficeOptimusBundle:Member')->getMembers($id);
+            $membres = $em->getRepository('FrontOfficeOptimusBundle:Member')->getMembers($id,$club->getCreateur()->getId());
             $nbMembers = (count($membres));
             return array(
                 'id' => $id,

@@ -8,9 +8,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Message;
+use FrontOffice\OptimusBundle\Entity\Conversation;
 use FrontOffice\OptimusBundle\Form\MessageType;
 use FrontOffice\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Message controller.
  *
@@ -47,25 +49,46 @@ class MessageController extends Controller {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
-        $sender = $this->container->get('security.context')->getToken()->getUser();
-      //  $userManager = $this->container->get('fos_user.user_manager');
-        //$reciever = $userManager->findUserBy(array('id' => $id));
         $message = new Message();
-        $message->setReciever($id);
-        $message->setSender($sender);
-        $message->setIsSeen(false);
-        $message->setMsgTime(new \DateTime());
-        $message->setContent($content);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($message);
-        $em->flush();
-
-        $response = new Response();
-        $messageJson = json_encode($message);
-        $response->headers->set('Content-Type', 'application/json');
-        $response->setContent($messageJson);
-        return $response;
+        $em = $this->getDoctrine()->getEntityManager();
+        $sender = $this->container->get('security.context')->getToken()->getUser();
+        $destinatair = $em->getRepository('FrontOfficeUserBundle:User')->findOneBy(array('id' => $id));
+        $conversation1 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' => $destinatair));
+        $conversation2 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $destinatair, 'user2' => $sender));
+        if ($conversation1 == null && $conversation2 == null) {
+            $convers = new Conversation();
+            $convers->setStarttime(new \Datetime());
+            $convers->setUser1($sender);
+            $convers->setUser2($destinatair);
+            $em->persist($convers);
+            $em->flush();
+            $newconvers_toshow = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' => $destinatair));
+            $message->setReciever($id);
+            $message->setSender($sender);
+            $message->setConversation($newconvers_toshow->getId());
+            $message->setIsSeen(false);
+            $message->setMsgTime(new \DateTime());
+            $message->setContent($content);
+            $em->persist($message);
+            $em->flush();
+        } else if ($conversation1 !== null && $conversation2 == null) {
+            $message->setSender($sender);
+            $message->setReciever($id);
+            $message->setConversation($conversation1);
+            $message->getMsgTime(new \Datetime());
+            $message->setContent($content);
+            $em->persist($message);
+            $em->flush();
+        } else if ($conversation1 == null && $conversation2 !== null) {
+            $message->setSender($sender);
+            $message->setReciever($id);
+            $message->setConversation($conversation2);
+            $message->getMsgTime(new \Datetime());
+            $message->setContent($content);
+            $em->persist($message);
+            $em->flush();
+        }
+        return new Response();
     }
 
     /**
@@ -244,6 +267,7 @@ class MessageController extends Controller {
                         ->getForm()
         ;
     }
+
     /**
      * Creates a new Message entity.
      *
@@ -251,9 +275,8 @@ class MessageController extends Controller {
      * @Method("GET|POST")
      * 
      */
-    public function seenMsgAction($id)
-    {
-       
+    public function seenMsgAction($id) {
+
         $em = $this->getDoctrine()->getManager();
         $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
         $message->setIsSeen(true);

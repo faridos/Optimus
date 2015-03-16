@@ -1,1 +1,106 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block body %}
+    <div id="wrapper">
+        <div id="content" class="max">
+            <div class="components">
+                <h4>Boite de récéption</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <ol class="breadcrumb">
+                            <ul class="notifyList nav scrollbar-1">
+                                <li class=""><a href="#" class="notifyName" role="tab" data-toggle="tab"><span class="notifyIcon fa fa-envelope-o"></span> Messages</a></li>
+                                {% for conversation in conversations %}
+                                <li class="active">
+                                    <a href="#message2" class="" role="tab" data-toggle="tab">
+                                        
+                                        <img class="avatar pull-left" src="{{ asset(conversation.user1.WebPath) }}" alt="avatar">
+                                        <div class="pulse border-grey"></div>
+                                        <div class="notify pull-left">
+                                            <div class="notifyName"> {{ conversation.user1.prenom }} {{ conversation.user1.nom}} </div><div class="texte">7assbiya ALLAH wa ni3m al wakil</div>
+                                            <div class="notifyTime">5 minutes ago</div>
+                                        </div>
+                                            
+                                        <div class="clearfix"></div>
+                                    </a>
+                                </li>
+                               {% endfor %}
+                            </ul>
+                        </ol>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tabsContainer" style="height:440px">
+                            <div class="tab-content ">
+                               
+                                <ul class="tab-pane fade active in scrollbar-1" id="message1">
+                                    <div class="notificationsWidget" >
+                                        <div class="row">
+                                            <div class="col-md-5"> <h5><span class="badge" id="message1">Mourad Mouard</span> </h5>
+                                            </div>  
+                                            <div class="col-md-7">
+                                                <div class="btn-group" style="float:right">
+                                                    <a class="btn btn-xs btn-round btn-o btn-green dropdown-toggle" data-toggle="dropdown"><span class="fa fa-pencil"></span> Action</a>
+                                                    <ul class="dropdown-menu pull-right" role="menu">
+                                                        <li><a href="#" class="definedname">Fenetre de Tchat</a></li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#">Supprimer la conversation</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comment" >
+                                            <div class="commentAvatar" >
+                                                <img class="avatar" src="images/avatar-3.png" alt="avatar">
+                                                <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
+                                            </div>
+                                            <div class="commentContent">
+                                                <div class="commentName">Essid Essid</div>
+                                                <div class="commentBody">
+                                                    sélém comment çava ? j'espere que tout va bien, al7amdoulilleh ...
+                                                </div>
+                                                <div class="commentActions">
+                                                    <div class="commentTime"><span class="icon-clock"></span> 1 day ago</div>
+                                                    <ul>
+                                                        <li><a href="#"><span class="icon-action-undo"></span></a></li>
+                                                        <li><a href="#"><span class="icon-like"></span> 13</a></li>
+                                                    </ul>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        </div>
+                                </ul>
+                               
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="tabsContainer" style="margin-top:-8px">
+                            <div class="tab-content ">
+                                <br>
+                                <div class="commentsWidgetForm" >
+                                    <div class="cfAvatar">
+                                        <img class="avatar" src="{{ asset(app.user.WebPath) }}" alt="avatar">
+                                    </div>
+                                    <form class="commentsForm">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control round" placeholder="Votre réponse...">
+                                            <span class="input-group-btn"><a class="btn btn-round btn-green">Envoyer</a></span>
+                                        </div>
+                                    </form>
+                                    <div class="clearfix"></div>
+                                </div> 
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

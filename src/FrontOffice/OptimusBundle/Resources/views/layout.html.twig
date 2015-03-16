@@ -177,7 +177,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <a href="#" class="notifyAll">Afficher tous les messages</a>
+                <a href="{{ path('all_messages_user', {'id' : app.user.id})}}" class="notifyAll">Afficher tous les messages</a>
             </div>
         </div>
         <div class="headerNotifyWraper">
