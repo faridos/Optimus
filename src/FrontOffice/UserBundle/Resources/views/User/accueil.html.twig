@@ -206,6 +206,42 @@ $('.loader').hide();
                 });
         }
         }); #}
+                var map;
+                var pos;
+var options = {
+            zoom : 12,
+            mapTypeId : 'Styled',
+            disableDefaultUI: true,
+            mapTypeControlOptions : {
+                mapTypeIds : [ 'Styled' ]
+            }
+        };
+    var styles = [{
+        stylers : [ {
+            hue : "#cccccc"
+        }, {
+            saturation : -100
+        }]
+    }, {
+        featureType : "road",
+        elementType : "geometry",
+        stylers : [ {
+            lightness : 100
+        }, {
+            visibility : "simplified"
+        }]
+    }, {
+        featureType : "road",
+        elementType : "labels",
+        stylers : [ {
+            visibility : "on"
+        }]
+    }, {
+        featureType: "poi",
+        stylers: [ {
+            visibility: "off"
+        }]
+    }];
 
 
         {% for event in events %}
@@ -289,18 +325,7 @@ $('.loader').hide();
             });        {% endfor %}
 
 
-                        $.ajax({
-                        url:    Routing.generate('user_coordonne', { lng: pos.D, lat: pos.k }),
-                                type: 'POST',
-                                data: null,
-                                contentType: "application/json; charset=ISO-8859-4",
-                                beforeSend: function () {
-                                },
-                                success: function () {
-                                },
-                                error: function () {
-                                }
-                        });
+                        
                         var infobox = new InfoBox({
                         disableAutoPan: false,
                                 maxWidth: 202,
@@ -317,7 +342,56 @@ $('.loader').hide();
                                 infoBoxClearance: new google.maps.Size(1, 1),
                                 pane: "floatPane",
                                 enableEventPropagation: false
-                        });{% for event in eventsMap %}
+                        });
+                        
+            setTimeout(function() {
+                
+
+       map = new google.maps.Map(document.getElementById('mapView'), options);
+        var styledMapType = new google.maps.StyledMapType(styles, {
+            name : 'Styled'
+        });
+        map.mapTypes.set('Styled', styledMapType);
+       
+        map.setZoom(12);
+
+        
+        if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                         pos = new google.maps.LatLng(position.coords.latitude,
+                                position.coords.longitude);
+
+                        var newMarker = new google.maps.Marker({
+                            position: pos,
+                            map: map,
+                            icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-position.png'),
+                            draggable: true,
+                            animation: google.maps.Animation.DROP,
+                        });
+
+                        map.setCenter(pos);
+                        $.ajax({
+                        url:    Routing.generate('user_coordonne', { lng: pos.D, lat: pos.k }),
+                                type: 'POST',
+                                data: null,
+                                contentType: "application/json; charset=ISO-8859-4",
+                                beforeSend: function () {
+                                },
+                                success: function () {
+                                },
+                                error: function () {
+                                }
+                        });
+                        
+                    }, function () {
+                        handleNoGeolocation(true);
+                    });
+                } else {
+                    handleNoGeolocation(false);
+                }
+               
+                        
+            {% for event in eventsMap %}
 
                         var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
                         var marker_{{ event.id}} = new google.maps.Marker({
@@ -357,7 +431,8 @@ $('.loader').hide();
                         $(document).on('click', '.closeInfo', function() {
                 infobox.open(null, null);
                 });{% endfor %}
-
+                
+}, 300);
                 })(jQuery);
     </script>
 {% endblock %}
