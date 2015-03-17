@@ -353,6 +353,31 @@ class UserController extends Controller {
         }
         return array('form' => $editForm->createView());
     }
+    
+    /**
+     * 
+     *
+     * @Route("profil={id}/settings/notifications", name="setting_user_notifications", options={"expose"=true})
+     * @Method("POST|GET|HEAD")
+     * @Template("FrontOfficeUserBundle:Resetting:editNotification.html.twig")
+     */
+    public function editNoificationAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+        $editForm = $this->createForm(new UserType(), $entity);
+        $editForm->handleRequest($request);
+        if ($editForm->isValid()) {
+            $em->flush();
+            return $this->redirect($this->generateUrl('setting_user', array('id' => $id)));
+        }
+        return $this->render("FrontOfficeUserBundle:Resetting:editNotification.html.twig", array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+        ));
+    }
 
     /**
      * 

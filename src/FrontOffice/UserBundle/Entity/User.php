@@ -209,15 +209,18 @@ class User extends BaseUser {
         return $this->profil;
     }
 
-    public function getType_notification() {
-        return $this->type_notification;
-    }
-
     public function getPath() {
         return $this->path;
     }
+    function getType_notification() {
+        return $this->type_notification;
+    }
 
-    public function getFile() {
+    function setType_notification($type_notification) {
+        $this->type_notification = $type_notification;
+    }
+
+        public function getFile() {
         return $this->file;
     }
 
@@ -249,9 +252,7 @@ class User extends BaseUser {
         $this->profil = $profil;
     }
 
-    public function setType_notification($type_notification) {
-        $this->type_notification = $type_notification;
-    }
+  
 
     public function setPath($path) {
         $this->path = $path;
