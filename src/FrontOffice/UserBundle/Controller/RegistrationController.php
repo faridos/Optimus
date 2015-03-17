@@ -52,7 +52,7 @@ class RegistrationController extends BaseController {
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
             $userManager->updateUser($user);
 
-            if ($user->getProfil() == "E") {
+            if ($user->getProfil() == "Entraineur") {
                 $usernotif = new UserRegisterEvent($user);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeUserEvents::AFTER_ENTRAINEUR_REGISTER, $usernotif);

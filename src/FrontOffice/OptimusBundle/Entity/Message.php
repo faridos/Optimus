@@ -65,6 +65,12 @@ class Message {
      */
     private $is_seen;
 
+    public function __construct() {
+
+        $this->is_seen = false;
+//        $this->dateCreation = new \DateTime();
+        // your own logic
+    }
     /**
      * Get id
      *
@@ -172,7 +178,7 @@ class Message {
      * @param boolean $isSeen
      * @return Message
      */
-    public function setIsSeen($isSeen) {
+    public function setIsSeen($isSeen = false) {
         $this->is_seen = $isSeen;
 
         return $this;

@@ -66,7 +66,7 @@ class MessageController extends Controller {
             $message->setReciever($id);
             $message->setSender($sender);
             $message->setConversation($newconvers_toshow->getId());
-            $message->setIsSeen(false);
+           
             $message->setMsgTime(new \DateTime());
             $message->setContent($content);
             $em->persist($message);

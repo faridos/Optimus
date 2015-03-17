@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Event\HistoryEventEvent;
+use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 
 /**
  * Participation controller.

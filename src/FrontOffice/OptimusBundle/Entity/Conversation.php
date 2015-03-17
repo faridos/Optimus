@@ -144,13 +144,6 @@ class Conversation {
     public function getUser2() {
         return $this->user2;
     }
-    public function getMessages() {
-        return $this->messages;
-    }
-
-    public function setMessages(tchater $messages) {
-        $this->messages = $messages;
-    }
-
+    
 
 }

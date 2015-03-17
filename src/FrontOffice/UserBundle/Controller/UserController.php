@@ -86,7 +86,7 @@ class UserController extends Controller {
             $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
             if (empty($notificationSeen)) {
 
-                $notifevent = new NotificationSeenEvent($user, $notification);
+                $notifevent = new NotificationSeenEvent($user1, $notification);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }

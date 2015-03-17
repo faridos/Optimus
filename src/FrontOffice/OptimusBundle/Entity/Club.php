@@ -61,6 +61,7 @@ class Club {
      * @ORM\Column(name="Adresse", type="string", length=255)
      */
     private $adresse;
+
     /**
      * @var string
      *
@@ -123,21 +124,30 @@ class Club {
      * @ORM\OneToMany(targetEntity="Member", mappedBy="clubad", cascade={"persist","remove"})
      * */
     protected $adherents;
+
     /**
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Reward", mappedBy="club")
      * 
      */
     protected $reward;
-  /**
+
+    /**
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Album", mappedBy="club")
      * */
     protected $album;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Program", mappedBy="clubp")
+     * */
+    protected $programs;
+
     public function __construct() {
 
         $this->clubcomments = new ArrayCollection();
 //        $this->dateCreation = new \DateTime();
         // your own logic
     }
+
     public function getDescription() {
         return $this->description;
     }
@@ -170,7 +180,7 @@ class Club {
         $this->clubs = $clubs;
     }
 
-        public function getActive() {
+    public function getActive() {
         return $this->active;
     }
 
