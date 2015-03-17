@@ -43,8 +43,8 @@
                         {% for participation in participations %}
                         <div class="userWidget-2 col-xs-12" >
                             <div class="tooltipsContainer avatar imagus">
-                                <a href="{{ path('show_profil', { 'id' : participation.participant.id }) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{participation.participant.prenom }} {{ participation.participant.nom }}">
-                    <img src="{{ asset(participation.participant.WebPath) }}" ></a>
+                                <a href="{{ path('show_profil', { 'id' : participation.participant.id }) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{participation.event.createur.prenom }} {{ participation.event.createur.nom }}">
+                    <img src="{{ asset(participation.event.createur.WebPath) }}" ></a>
                             </div>
                             <div class="col-md-4">
                                 <div class="info">

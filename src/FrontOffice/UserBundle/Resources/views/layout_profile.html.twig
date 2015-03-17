@@ -110,7 +110,7 @@
                                                 <div class="name">Liste des amis</div>
                                             </div> <div class="clearfix"></div>
                                             <ul class="notifyList scrollbar" >
-                                                {% set friends = getFriends(app.user.id) %}
+                                                {% set friends = getFriends(user.id) %}
                                                     {% for friend in friends %}
                                                         <div class="tooltipsContainer avatar friendus">
                                                             <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
