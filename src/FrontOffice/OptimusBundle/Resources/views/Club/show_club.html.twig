@@ -13,16 +13,57 @@
                     <li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span>Demandes</a></li>
                 </ul>
                 <div class="tab-content">
+
                     <ul class="tab-pane fade  active in scrollbar" id="Programme" >
-                         <div class="buttonsWrapper col-md-12">
-                            <a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
-                            <br>
-                        </div>
+                        {% if app.user == club.createur %}
+                            <div class="buttonsWrapper col-md-12">
+
+                                <a href="#programme" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
+                                <br>
+                            </div>	
+                        {% endif %}
+                        {% for programme in programmes %}
+                        <div class="userWidget-2 tooltipsContainer col-xs-12">
+
+                            <div class="col-md-4">
+                                <div class="info col-md-12">
+                                    <a href="#"> <div class="name" >Nom du programme :</div></a>
+                                    <div class="title">Foulen ben foulen </div>
+
+                                </div></div>
+                            <div class="col-md-4">
+                                <div class="info col-md-12">
+
+                                    <div class="name">Description: <span class="address">sikilus balabus salamus takrizus okitus bilus kus mus lus fsdf sdf sdf sdf sdfs fsdf sdf dgdfg dfg </span></div>
+
+                                </div></div>
+                            <div class="col-md-4">
+                                <div class="info col-md-12">
+
+                                    <div class="name">Date début: <span class="address">25/03/2015</span></div>
+                                    <div class="name">Date fin: <span class="address">01/04/2015</span></div>
+
+                                </div></div>
+
+                            <div class="clearfix"></div>
+                        </div>	
+{% endfor %}
+
+
+
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+<!--------------- upload programme ------------------>
 
-    {% endblock %}
-    
+<div class="modal fade" id="programme" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+
+</div>
+</div>
+
+
+<!--------------- fin upload programme------------------> 
+{% endblock %}

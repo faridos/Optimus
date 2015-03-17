@@ -91,7 +91,8 @@ class ClubController extends Controller {
         if (!$club || $club->getActive() == 0) {
             throw $this->createNotFoundException('Unable to find Club entity.');
         }
-        return $this->render('FrontOfficeOptimusBundle:Club:show_club.html.twig', array('club' => $club, 'user1' => $user1));
+       $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club));
+        return $this->render('FrontOfficeOptimusBundle:Club:show_club.html.twig', array('club' => $club, 'user1' => $user1, 'programmes' =>$progarammes) );
     }
 
     /**

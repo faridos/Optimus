@@ -26,7 +26,7 @@ class RegistrationListener implements EventSubscriberInterface
 
         /** @var $user \FOS\UserBundle\Model\UserInterface */
         $user = $event->getForm()->getData();
-        if($user->getProfil()=='E')
+        if($user->getProfil()=='Entraineur')
         {
         $user->setRoles($rolesArr);
         }

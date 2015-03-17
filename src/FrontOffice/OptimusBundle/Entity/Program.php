@@ -37,6 +37,12 @@ class Program {
      * @ORM\Column(name="Nom", type="string", length=255)
      */
     private $nom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
 
     /**
      * @var \DateTime
@@ -109,8 +115,15 @@ class Program {
     public function setSeances($seances) {
         $this->seances = $seances;
     }
+    public function getDescription() {
+        return $this->description;
+    }
 
-    public function __toString() {
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+
+        public function __toString() {
         return (string) $this->getId();
     }
 
