@@ -392,13 +392,9 @@ class UserController extends Controller {
     public function getAllMessageAction() {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $conversation = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->getConversationUser($user);
-        foreach ($conversation as $convers)
-        {
-            
-        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findBy(array('conversation'=> $convers->getId()));
-        }
-        return $this->render('FrontOfficeUserBundle:Profile:showAllMessage.html.twig', array('messages'=> $messages, 'conversations' => $conversation, 'user' => $user));
+        $conversation = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->getUserConversation($user);
+       
+        return $this->render('FrontOfficeUserBundle:Profile:showAllMessage.html.twig', array('conversations' => $conversation, 'user' => $user));
     }
 
 }

@@ -24,14 +24,13 @@ class ConversationRepository extends EntityRepository {
     public function getUserConversation($reciever)
     {
         $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('u,c');
+        $qb = $em->createQueryBuilder('u,c.id');
         $qb->select('u')
                 ->from('FrontOffice\UserBundle\Entity\User', 'u')
-                ->Join('Sly\RelationBundle\Entity\Relation', 'r')
-                ->where('r.object2Id = u.id and r.object1Id = :id')
-                ->orWhere('r.object1Id = u.id and r.object2Id = :id')
-                ->andWhere('r.confirmed = 1')
-                ->setParameter('id', $id);
+                ->Join('FrontOffice\OptimusBundle\Entity\Conversation', 'c')
+                ->where('c.user1 = u and c.user2 = :id')
+                ->orWhere('c.user2 = u.id and c.user1 = :id')
+                ->setParameter('id', $reciever);
         return $qb->getQuery()->getResult();
     
     }

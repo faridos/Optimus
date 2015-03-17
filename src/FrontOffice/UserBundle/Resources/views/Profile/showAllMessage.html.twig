@@ -10,13 +10,14 @@
                             <ul class="notifyList nav scrollbar-1">
                                 <li class=""><a href="#" class="notifyName" role="tab" data-toggle="tab"><span class="notifyIcon fa fa-envelope-o"></span> Messages</a></li>
                                 {% for conversation in conversations %}
+                                {{ conversation.conversation }}
                                 <li class="active">
                                     <a href="#message2" class="" role="tab" data-toggle="tab">
                                         
-                                        <img class="avatar pull-left" src="{{ asset(conversation.user1.WebPath) }}" alt="avatar">
+                                        <img class="avatar pull-left" src="{{ asset(conversation.WebPath) }}" alt="avatar">
                                         <div class="pulse border-grey"></div>
                                         <div class="notify pull-left">
-                                            <div class="notifyName"> {{ conversation.user1.prenom }} {{ conversation.user1.nom}} </div><div class="texte">7assbiya ALLAH wa ni3m al wakil</div>
+                                            <div class="notifyName"> {{ conversation.prenom }} {{ conversation.nom}} </div><div class="texte">7assbiya ALLAH wa ni3m al wakil</div>
                                             <div class="notifyTime">5 minutes ago</div>
                                         </div>
                                             

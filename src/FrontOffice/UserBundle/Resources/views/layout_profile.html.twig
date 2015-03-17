@@ -42,7 +42,7 @@
                             <div class="buttonsWrapper" > 
                                 {% if app.user.id != user.id %}
                                     {% if app.user | relation_exists('friendship', user ) %}
-                                        {% set pendingInvitations = pendingInvitation(user,app.user)%}
+                                        {% set pendingInvitations = pendingInvitation(app.user,user)%}
                                             {% if pendingInvitations is empty %}
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">
@@ -54,7 +54,12 @@
                                                         <li><a href="#">Signaler</a></li>
                                                     </ul>
                                                 </div>
-                                            {% elseif pendingInvitations[0].object2Id == user.id %}
+                                            {% elseif pendingInvitations[0].object2Id == app.user.id %}
+                                                <a id="enattente" class="btn btn-green btn-round btn-success" href="#"  >
+                                                    <span style="color:#fff" class="fa icon-user-follow state-active"></span> 
+                                                    <span class="state" >Accept</span>
+                                                </a>
+                                                {% elseif pendingInvitations[0].object1Id == app.user.id %}
                                                 <a id="enattente" class="btn btn-green btn-round btn-success" href="#"  >
                                                     <span style="color:#fff" class="fa icon-user-follow state-active"></span> 
                                                     <span class="state" >En attente</span>
