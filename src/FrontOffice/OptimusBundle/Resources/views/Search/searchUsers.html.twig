@@ -11,11 +11,11 @@
                             <div class="panel-heading optimus"> <span class="navLabel">Filtre des recherches</span></div>
                             <div class="panel-body">
 
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
 
                                     <input type="text" name="key" value="{{res.key}}" class="search-optimus" id="" placeholder="Entrer le nom">
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
 
                                     <select id="" name="profil" class="search-optimus">
                                         <option value="" selected="" disabled="">Profil</option>
@@ -23,21 +23,21 @@
                                         <option value="S" {% if res.profil=='Sportif' %} selected {%endif%}>Sportif</option>
 
                                     </select>                                       </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
 
                                     <input type="text" name="adresse" value="{{res.adresse}}"class="search-optimus" id="" placeholder="Adresse">
                                 </div>
 
 
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
                                     <input class="search-optimus" type="email" name="email" value="{{res.email}}" placeholder="Entrer l'email" >
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
 
                                     <input type="tel" class="search-optimus" name="tel" value="{{res.tel}}" placeholder="Entrer le telephone ">
 
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
 
 
                                     <button type="submit" value="Submit" class="btn btn-round btn-green search-optimus">Rechercher</button>	</div>

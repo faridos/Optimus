@@ -28,8 +28,9 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('getNonSeenMessage', array($this, 'getNonSeenMessage')),
             new \Twig_SimpleFunction('getMembreRequest', array($this, 'getMembreRequest')),
             new \Twig_SimpleFunction('getMembreConfirmed', array($this, 'getMembreConfirmed')),
-             new \Twig_SimpleFunction('isParticipant', array($this, 'isParticipant')),
-             new \Twig_SimpleFunction('participants', array($this, 'participants')),
+            new \Twig_SimpleFunction('isParticipant', array($this, 'isParticipant')),
+            new \Twig_SimpleFunction('participants', array($this, 'participants')),
+            new \Twig_SimpleFunction('isAmi', array($this, 'isAmi')),
         );
     }
     public function  participants($event){
@@ -46,6 +47,18 @@ class OptimusExtension extends \Twig_Extension {
         }  
         }
         return  $isparticipant;
+    }
+    
+    public function isAmi($id,$userami)
+    {
+        $amis = $this->em->getRepository("FrontOfficeUserBundle:User")->getFrinds($id);
+        $isami= false;
+        foreach($amis as $ami){
+        if($ami == $userami){
+            $isami = true;
+        }  
+        }
+        return  $isami;
     }
 
 

@@ -51,94 +51,113 @@
                                             <div class="pc-about osLight">
                                                 {% if app.user != club.createur %}
                                                     {% set memberrequest = getMembreRequest(app.user,club) %}   
-                                                        {% if memberrequest is empty %}
-                                                            <a class="btn btn-green btn-round " href="#" id="request_club" >
-                                                                <span class="fa icon-action-redo "></span> <span class="requestClub" id="{{club.id}}">Rejoindre</span>
+                                                    {% if memberrequest is empty %}
+                                                        <a class="btn btn-green btn-round " href="#" id="request_club" >
+                                                            <span class="fa icon-action-redo "></span> <span class="requestClub" id="{{club.id}}">Rejoindre</span>
+                                                        </a>
+
+                                                    {% else %}
+                                                        {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
+                                                        {% if memberconfirmed is empty %}
+                                                            <a class="btn btn-green btn-round active" href="#"  >
+                                                                <span class="fa icon-action-redo "></span> <span class="requestAttente" >En attente</span>
                                                             </a>
-
                                                         {% else %}
-                                                            {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
-                                                                {% if memberconfirmed is empty %}
-                                                                    <a class="btn btn-green btn-round active" href="#"  >
-                                                                        <span class="fa icon-action-redo "></span> <span class="requestAttente" >En attente</span>
-                                                                    </a>
-                                                                {% else %}
-                                                                    <a class="btn btn-green btn-round " href="#" id="exit_club" >
-                                                                        <span class="fa icon-action-redo "></span> <span  class="exitClub" id="{{club.id}}" >Quitter</span>
-                                                                    </a>
-                                                                {% endif %}
-                                                                {% endif %}
-                                                                    {% endif %}
-                                                                        <a class="loader" >
-                                                                            <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-5">
-                                                                    <div class="pc-title osLight">
-                                                                        <div class="title nombrus">Nombre adhérents :<span class="address detaillus">500</span></div>
-                                                                    </div>
-                                                                    <div class="pc-title osLight">
-                                                                        <div class="buttonsWrapper pb20 ">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div> 
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="userWidget-2" >
-                                                    <div class="avatar">
-                                                    </div>
-                                                    <div class="info">
-                                                        <div class="row">
-                                                            <div class="col-md-6 pb20">
-                                                                <div class="pc-about osLight"><div class="title eventus">Déscription :<span class="address detaillus">Foulén ben foulén ben faltén el fouléni 3adham ALLAH ajrah wa ad5alah fassi7a jannatih</span></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="pc-title osLight"><div class="title eventus">Téléphone: <span class="address "> 06 23 25 58</span></div>
-                                                                    <div class="title eventus">Email : <span class="address ">foulen@email.com </span></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="clearfix"></div>
+                                                            <a class="btn btn-green btn-round " href="#" id="exit_club" >
+                                                                <span class="fa icon-action-redo "></span> <span  class="exitClub" id="{{club.id}}" >Quitter</span>
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endif %}
+                                                <a class="loader" >
+                                                    <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                                </a>
                                             </div>
                                         </div>
-                                        <div id="mapView" class="eventmap" style="width:110%"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div><div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    {{ render (controller('FrontOfficeOptimusBundle:Club:editPhoto',  { 'id': club.id })) }}
-                                </div>
-                            </div>
-                            <!------------------- modal supprission------------------->
-                            <div class="modal fade" id="supprimuss" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content bordusbottomus">
-                                        <div class="modal-header bordustopus">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                                        <div class="col-md-5">
+                                            <div class="pc-title osLight">
+                                                <div class="title nombrus">Nombre adhérents :<span class="address detaillus">500</span></div>
+                                            </div>
+                                            <div class="pc-title osLight">
+                                                <div class="buttonsWrapper pb20 ">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
+                                            </div>
                                         </div>
-                                        <div class="modal-body">
-                                            <p>Souhaitez vous vraiment supprimer ce Club ?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                                            <a href="{{ path('club_delete',{'id': club.id}) }}" class="btn btn-round btn-green">Confirmer</a>
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="userWidget-2" >
+                            <div class="avatar">
+                            </div>
+                            <div class="info">
+                                <div class="row">
+                                    <div class="col-md-6 pb20">
+                                        <div class="pc-about osLight"><div class="title eventus">Déscription :<span class="address detaillus">Foulén ben foulén ben faltén el fouléni 3adham ALLAH ajrah wa ad5alah fassi7a jannatih</span></div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="pc-title osLight"><div class="title eventus">Téléphone: <span class="address "> 06 23 25 58</span></div>
+                                            <div class="title eventus">Email : <span class="address ">foulen@email.com </span></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div id="mapView" class="eventmap" style=" max-height: 60%; width:110%"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div><div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {{ render (controller('FrontOfficeOptimusBundle:Club:editPhoto',  { 'id': club.id })) }}
+        </div>
+    </div>
+    <!------------------- modal supprission------------------->
+    <div class="modal fade" id="supprimuss" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bordusbottomus">
+                <div class="modal-header bordustopus">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                </div>
+                <div class="modal-body">
+                    <p>Souhaitez vous vraiment supprimer ce Club ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                    <a href="{{ path('club_delete',{'id': club.id}) }}" class="btn btn-round btn-green">Confirmer</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            <!-------------------fin modal suppression-------------------> 
-                            {% endblock %}
+    <!-------------------fin modal suppression-------------------> 
+{% endblock %}
 
+{% block javascriptfils %}
+    <script>
+        (function ($) {
 
+            "use strict";
+          
+            var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+            });
+            
+            map.setZoom(14);
+            map.setCenter(myLatLng);
+        })(jQuery);
+    </script>
+{% endblock %}

@@ -13,11 +13,11 @@
                             <div class="panel-heading optimus"> <span class="navLabel">Filtre des recherches</span></div>
                             <div class="panel-body">
 
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
 
                                     <input type="text" class="search-optimus" name="key" value="{{res.key}}" placeholder="Entrer le titre">
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
                                     <select name="type" value="{{res.type}}" class="search-optimus">
                                         <option value="" selected="" disabled="">Type</option>
                                         {% set type_events = getTypeEvent() %}
@@ -26,21 +26,21 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
 
                                     <input list="createurlist" type="text" name="createur" value="{{res.createur}}" class="search-optimus" placeholder="Créateur">
-                                <datalist id="createurlist" class="select">
-                                    <option value="tous">
-                                    <option value="amis">
+                                    <datalist id="createurlist" class="select">
+                                        <option value="tous">
+                                        <option value="amis">
 
-                                </datalist>
+                                    </datalist>
                                 </div>
-                                
 
-                                <div class="form-group col-xs-2">
+
+                                <div class="form-group col-md-2">
                                     <input class="search-optimus" type="text" name="lieu" value="{{res.lieu}}" placeholder="Entrer le lieu" autocomplete="off">
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
                                     <select id="date" name="date" value="{{res.date}}" class="search-optimus">
                                         <option value="" selected="" disabled="">Date</option>
                                         <option value="aujourdhui">Aujourd'hui</option>
@@ -49,7 +49,7 @@
                                         <option value="an">Cette année</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-md-2">
 
 
                                     <button type="submit" value="Submit" class="btn btn-round btn-green search-optimus">Rechercher</button>	</div>
@@ -58,80 +58,80 @@
 
                             </div>
                         </div>
-                
-            </div>
-                    </form>
+
+                    </div>
+                </form>
 
 
 
-            <h4>Résultat des recherches</h4>
-            <div class="row">
-                <div class="col-md-3">
+                <h4>Résultat des recherches</h4>
+                <div class="row">
+                    <div class="col-md-3">
 
-                    <ol class="breadcrumb">
-                        <ul class="notifyList nav">
+                        <ol class="breadcrumb">
+                            <ul class="notifyList nav">
                                 <li class=""><a href="{{path('search_user')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-users"></span> Personnes</a></li>
                                 <li class="active"><a href="{{path('search_events')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-trophy"></span> Evenement</a></li>
                                 <li class=""><a href="{{path('search_clubs')}}" class="notifyName" role="tab"><span class="notifyIcon fa fa-users"></span> Clubs</a></li>
                             </ul>
-                    </ol>
-                </div>
-                <div class="col-md-9">
-                    <div class="tabsContainer">
-                        <div class="tab-content ">
-                            <ul class="tab-pane fade active in  scrollbar" id="events">
-                                <div class="notificationsWidget">
-                                    <h5><span class="badge">{{ res.nbr_events}}</span> Evenements</h5>
-                                    {% for event in res.events %}
-                                   
-                                        
-                                        
-                                    <div class="notification">
-                                        <div class="row ">
-                                            <div class="time green">
-                                                <div class="timeBody hidden-xs">{{event.titre}}</div>
-                                                <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
-                                                <div class="indicator"><span class="fa fa-circle-o"></span></div>
-                                                <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
-                                            </div>
-                                                <a href='{{path('show_event',{id:event.id})}}'>
-                                            <div class="notifyContent">
-                                                <div class="notifyBody">
-                                                    <div class="notifyRound notifyRound-red navIcon fa fa-trophy"></div>
-                                                    <div class="col-md-3 pb20"> <div class=" pull-left">
-                                                            <div class="message"><span class=" navIcon fa fa-map-marker"></span> Lieu : {{event.lieu}}<span class="label label-green visible-xs">{{event.titre}}</span></div>
-                                                            <div class="message"><span class=" navIcon icon-users"></span> Nombre de places : {{event.nbrPlaces}}</div>
-                                                        </div></div>
-                                                    <div class="col-md-3 pb20"><div class=" pull-left">
-                                                            <div class="message"><span class=" navIcon icon-clock"></span> Date début: {{event.dateDebut|date("d/m/Y h:i")}}</div>
-                                                            <div class="message"><span class=" navIcon icon-clock"></span> Date fin: {{event.dateFin|date("d/m/Y h:i")}}</div>
-                                                        </div></div>
+                        </ol>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="tabsContainer">
+                            <div class="tab-content ">
+                                <ul class="tab-pane fade active in  scrollbar" id="events">
+                                    <div class="notificationsWidget">
+                                        <h5><span class="badge">{{ res.nbr_events}}</span> Evenements</h5>
+                                        {% for event in res.events %}
 
-                                                    <div class="col-md-3 pb20"><div class=" pull-left">
-                                                            <div class="message"><span class=" navIcon fa fa-money"></span> Frais: {{event.frais}} &euro;</div>
-                                                            
-                                                        </div></div>
+
+
+                                            <div class="notification">
+                                                <div class="row ">
+                                                    <div class="time green">
+                                                        <div class="timeBody hidden-xs">{{event.titre}}</div>
+                                                        <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
+                                                        <div class="indicator"><span class="fa fa-circle-o"></span></div>
+                                                        <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
+                                                    </div>
+                                                    <a href='{{path('show_event',{id:event.id})}}'>
+                                                        <div class="notifyContent">
+                                                            <div class="notifyBody">
+                                                                <div class="notifyRound notifyRound-red navIcon fa fa-trophy"></div>
+                                                                <div class="col-md-3 pb20"> <div class=" pull-left">
+                                                                        <div class="message"><span class=" navIcon fa fa-map-marker"></span> Lieu : {{event.lieu}}<span class="label label-green visible-xs">{{event.titre}}</span></div>
+                                                                        <div class="message"><span class=" navIcon icon-users"></span> Nombre de places : {{event.nbrPlaces}}</div>
+                                                                    </div></div>
+                                                                <div class="col-md-3 pb20"><div class=" pull-left">
+                                                                        <div class="message"><span class=" navIcon icon-clock"></span> Date début: {{event.dateDebut|date("d/m/Y h:i")}}</div>
+                                                                        <div class="message"><span class=" navIcon icon-clock"></span> Date fin: {{event.dateFin|date("d/m/Y h:i")}}</div>
+                                                                    </div></div>
+
+                                                                <div class="col-md-3 pb20"><div class=" pull-left">
+                                                                        <div class="message"><span class=" navIcon fa fa-money"></span> Frais: {{event.frais}} &euro;</div>
+
+                                                                    </div></div>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                                </a>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                </div> 
-                            </ul>
+                                        {% endfor %}
+                                    </div> 
+                                </ul>
 
+                            </div>
                         </div>
+
+                        <div class="clearfix"></div>
+
                     </div>
-
-                    <div class="clearfix"></div>
-
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-</div>
 
 {% endblock %}

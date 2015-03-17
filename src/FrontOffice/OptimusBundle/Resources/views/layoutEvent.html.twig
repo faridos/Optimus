@@ -28,10 +28,14 @@
                                     {% endif %}
                                 <div class="name osLight eventus" ><strong>{{event.titre}}</strong></div>
                             </div>
-
+                            {% set isparticipant = isParticipant(event,app.user) %}
                             <div class="address eventus">
                                 <div class="cardRating" style="color:#eab134"> 
+                                    {% if isparticipant %}
                                     <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'E'~event.id} %}</div>
+                                    {% else %}
+                                    <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'E'~event.id} %}</div>
+                                    {% endif %}
                                 </div>
                             </div>
 
@@ -57,7 +61,7 @@
 
                                 </div>
                                 <div class="col-md-6 pb20">
-                                    {% set isparticipant = isParticipant(event,app.user) %}
+                                    
                                         {% if not isparticipant and date(event.dateFin)>= date() %}
                                             <a class="btn btn-green btn-round eventus" href="{{path('add_participation',{id: event.id})}}" >
                                                 <span class="fa icon-action-redo "></span> <span >Participer</span>                                          

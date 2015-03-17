@@ -35,8 +35,13 @@
                             </div>
                             <div class="title profilus" >{{user.profil}}</div>
                             <div class="address profilus">
-                                <div class="cardRating" style="color:#eab134; font-size: 18px;"> 
-                                    <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'U'~user.id} %}</div>
+                                <div class="cardRating" style="color:#eab134; font-size: 18px;">
+                                    {% set isami = isAmi(app.user,user) %}
+                                    {% if isami %}
+                                    <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'U'+user.id} %}</div>
+                                    {% else %}
+                                    <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'U'+user.id} %}</div>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="buttonsWrapper" > 
