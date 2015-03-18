@@ -26,6 +26,7 @@ use Symfony\Component\Serializer\Encoder\JsonDecode;
 use FrontOffice\OptimusBundle\Event\HistoryClubEvent;
 use FrontOffice\OptimusBundle\Event\NotificationClubEvent;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
+use FrontOffice\OptimusBundle\Event\NotificationSeenEvent;
 
 /**
  * Club controller.
@@ -90,6 +91,16 @@ class ClubController extends Controller {
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         if (!$club || $club->getActive() == 0) {
             throw $this->createNotFoundException('Unable to find Club entity.');
+        }
+        $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('club' => $club));
+        if ($notification) {
+            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
+            if (empty($notificationSeen)) {
+
+                $notifevent = new NotificationSeenEvent($user1, $notification);
+                $dispatcher = $this->get('event_dispatcher');
+                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
+            }
         }
        $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club));
         return $this->render('FrontOfficeOptimusBundle:Club:show_club.html.twig', array('club' => $club, 'user1' => $user1, 'programmes' =>$progarammes) );
@@ -298,9 +309,9 @@ class ClubController extends Controller {
      * @Template()
      */
     public function editPhotoAction(Request $request, $id) {
-        if (!$this->get('security.context')->isGranted('ROLE_ENTRAINEUR')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
-            throw new AccessDeniedException('Accès limité aux Entraîneurs.');
+            throw new AccessDeniedException('.');
         }
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);

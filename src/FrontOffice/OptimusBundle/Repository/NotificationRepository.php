@@ -224,8 +224,70 @@ class NotificationRepository extends EntityRepository {
                     return $qb->getResult();
                     break;
                 case 'EU':
+                    foreach ($notifications as $notif) {
+                        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getParicipationNotification($id, $notif->getEvent(), $notif->getDatenotification());
+                    }
+                    if ($participation) {
+                        $em = $this->getEntityManager();
+                        $qb = $em->createQuery("select n.id "
+                                        . "  from FrontOfficeOptimusBundle:Notification n "
+                                        . "LEFT JOIN n.event e "
+                                        . "LEFT JOIN n.entraineur u "
+                                        . " where (n.entraineur IS NOT NULL OR n.event IS NOT NULL)"
+                                        . " and n.datenotification > :date "
+                                        . "and  n.notificateur != :id  "
+                                )
+                                ->setParameter('date', $date->format('Y-m-d H:i:s'))
+                                ->setParameter('id', $id);
+                        return $qb->getResult();
+                    } else {
+                        $em = $this->getEntityManager();
+                        $qb = $em->createQuery("select n.id "
+                                        . "  from FrontOfficeOptimusBundle:Notification n "
+                                        . "LEFT JOIN n.event e "
+                                        . "LEFT JOIN n.entraineur u "
+                                        . " where (n.entraineur IS NOT NULL OR n.event IS NOT NULL) "
+                                        . " and n.type = 'add' "
+                                        . " and n.datenotification > :date "
+                                        . " and  n.notificateur != :id  "
+                                )
+                                ->setParameter('date', $date->format('Y-m-d H:i:s'))
+                                ->setParameter('id', $id);
+                        return $qb->getResult();
+                    }
                     break;
                 case 'EC':
+                    foreach ($notifications as $notif) {
+                        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getParicipationNotification($id, $notif->getEvent(), $notif->getDatenotification());
+                    }
+                    if ($participation) {
+                        $em = $this->getEntityManager();
+                        $qb = $em->createQuery("select n.id "
+                                        . "  from FrontOfficeOptimusBundle:Notification n "
+                                        . "LEFT JOIN n.event e "
+                                        . "LEFT JOIN n.club c "
+                                        . " where (n.club IS NOT NULL OR n.event IS NOT NULL)"
+                                        . " and n.datenotification > :date "
+                                        . "and  n.notificateur != :id  "
+                                )
+                                ->setParameter('date', $date->format('Y-m-d H:i:s'))
+                                ->setParameter('id', $id);
+                        return $qb->getResult();
+                    } else {
+                        $em = $this->getEntityManager();
+                        $qb = $em->createQuery("select n.id "
+                                        . "  from FrontOfficeOptimusBundle:Notification n "
+                                        . "LEFT JOIN n.event e "
+                                        . "LEFT JOIN n.club c "
+                                        . " where (n.club IS NOT NULL OR n.event IS NOT NULL) "
+                                        . " and n.type = 'add' "
+                                        . " and n.datenotification > :date "
+                                        . " and  n.notificateur != :id  "
+                                )
+                                ->setParameter('date', $date->format('Y-m-d H:i:s'))
+                                ->setParameter('id', $id);
+                        return $qb->getResult();
+                    }
                     break;
             }
         }

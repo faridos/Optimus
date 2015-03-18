@@ -30,57 +30,74 @@
                                                 <tr>
                                                     <td><strong>Type de notification</strong></th>
                                                     <td>
-                                                        <div class="notif">{{ app.user.typeNotification }}</div>
-                                                        <div id="notif"  style="display:none">
-                                                            <form action="{{ path('setting_user_notifications', {'id' : entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal form-groups-bordered">
-                                                                {{ form_errors(edit_form) }}
-                                                                <div class="ops">
-                                                                    <div class="form-group col-md-10">
-                                                                        {{ form_widget(edit_form.type_notification) }}
+                                                        {% set type = app.user.typeNotification %}
+                                                            {% if type == 'All' %}
+                                                                <div class="notif">toutes les notifications</div>
+                                                            {% elseif type == 'E' %}
+                                                                <div class="notif">les notifications évènements</div>
+                                                            {% elseif type == 'C' %}
+                                                                <div class="notif">les notifications clubs</div>
+                                                            {% elseif type == 'U' %}
+                                                                <div class="notif">les notifications inscription entraineur</div>
+                                                            {% elseif type == 'EC' %}
+                                                                <div class="notif">les notifications évènements et clubs</div>
+                                                            {% elseif type == 'EU' %}
+                                                                <div class="notif">les notifications évènements inscription entraineur</div>
+                                                            {% elseif type == 'UC' %}
+                                                                <div class="notif">les notifications clubs inscription entraineur</div>
+                                                            {% elseif type == 'NOT' %}
+                                                                <div class="notif">ne voir aucune notifications</div>
+                                                            {% endif %}
+                                                            <div id="notif"  style="display:none">
+                                                                <form action="{{ path('setting_user_notifications', {'id' : entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal form-groups-bordered">
+                                                                    {{ form_errors(edit_form) }}
+                                                                    <div class="ops">
+                                                                        <div class="form-group col-md-10">
+                                                                            {{ form_widget(edit_form.type_notification) }}
+                                                                        </div>
+                                                                        <div class="col-md-2">
+                                                                            <button style="margin:15px 0 0 20px" type="submit"  value="Submit" class="btn btn-round btn-green">Enregistrer</button>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-md-2">
-                                                                        <button style="margin:15px 0 0 20px" type="submit"  value="Submit" class="btn btn-round btn-green">Enregistrer</button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="clearfix"></div> 
-                                                                {{ form_widget(edit_form._token) }}
-                                                            </form>
-                                                        </div>
-                                                    </td>
-                                                    <td> 
-                                                        <a href="javascript:visibilite('notif');" class="tabledit-edit-button btn btn-sm btn-warning" style="float:right; border-radius: 25px; " >
-                                                            <span class="glyphicon glyphicon-pencil"></span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div> 
+                                                                    <div class="clearfix"></div> 
+                                                                    {{ form_widget(edit_form._token) }}
+                                                                </form>
+                                                            </div>
+                                                        </td>
+                                                        <td> 
+                                                            <a href="javascript:visibilite('notif');" class="tabledit-edit-button btn btn-sm btn-warning" style="float:right; border-radius: 25px; " >
+                                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> 
+                                    </div>
                                 </div>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
-    </div>
-{% endblock %}
-{% block javascriptfils %}
-    <script>
-        function visibilite(thingId)
-        {
-            var targetElement;
-            targetElement = document.getElementById(thingId);
-            if (targetElement.style.display == "none")
-            {
-                $('.' + thingId).hide();
-                targetElement.style.display = "";
-            } else {
-                $('.' + thingId).show();
-                targetElement.style.display = "none";
-            }
-        }
-    </script>
-{% endblock %}
+        {% endblock %}
+            {% block javascriptfils %}
+                <script>
+                    function visibilite(thingId)
+                    {
+                        var targetElement;
+                        targetElement = document.getElementById(thingId);
+                        if (targetElement.style.display == "none")
+                        {
+                            $('.' + thingId).hide();
+                            targetElement.style.display = "";
+                        } else {
+                            $('.' + thingId).show();
+                            targetElement.style.display = "none";
+                        }
+                    }
+                </script>
+            {% endblock %}

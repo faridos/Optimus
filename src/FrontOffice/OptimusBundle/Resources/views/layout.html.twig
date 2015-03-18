@@ -95,7 +95,7 @@
                                             {% elseif notification.type == 'Update' %}
                                                 {% if participations is not empty %}
                                                     <li>
-                                                        <a href="#">
+                                                        <a href="{{ path('show_event', { 'id' : notification.event.id }) }}">
                                                             <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
                                                             <div class="pulse border-grey"></div>
                                                             <div class="notify pull-left">
@@ -123,7 +123,7 @@
                                             {% endif %}
                                             {% elseif notification.club != null  %}
                                                 <li>
-                                                    <a href="#">
+                                                    <a href="{{ path('show_club', { 'id' : notification.club.id }) }}">
                                                         <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
                                                         <div class="pulse border-grey"></div>
                                                         <div class="notify pull-left">

@@ -13,8 +13,14 @@ class UserType extends AbstractType
     {
          $builder
                
-                 ->add('type_notification','choice', array('choices' => array('All'=>'Tout','NOT'=>'Aucune','EC' => 'Evenement et Club','EU' => 'Evenement et nouvelle inscription',
-                            'UC' => 'User et club','E' => 'event','C' => 'club','U' => 'user'),'attr'=>array('class'=>'search-optimus')));
+                 ->add('type_notification','choice', array('choices' => array('All'=>'voir toutes les notifications',
+                     'E' => 'voir les notifications évènements',
+                     'C' => 'voir les notifications clubs',
+                     'U' => 'voir les notifications inscription entraineur',
+                     'EC' => 'voir les notifications évènements et clubs',
+                     'EU' => 'voir les notifications évènements inscription entraineur',
+                     'UC' => 'voir les notifications clubs inscription entraineur',
+                     'NOT'=>' ne voir aucune notifications '),'attr'=> array('class'=>'search-optimus')));
          
      }
       /**

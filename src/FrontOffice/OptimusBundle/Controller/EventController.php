@@ -54,14 +54,24 @@ class EventController extends Controller {
             throw new AccessDeniedException('.');
         }
         $em = $this->getDoctrine()->getManager();
-        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $user1 = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
-       
        
         
         if ($event->getActive() == false) {
             throw $this->createNotFoundException('Event Annulé.');
         }
+        $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('event' => $event));
+        if ($notification) {
+            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
+            if (empty($notificationSeen)) {
+
+                $notifevent = new NotificationSeenEvent($user1, $notification);
+                $dispatcher = $this->get('event_dispatcher');
+                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
+            }
+        }
+       
         return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array(
             'event' => $event,
             
