@@ -15,58 +15,63 @@
                 </ul>
                 <div class="tab-content">
                     <ul class="tab-pane fade active in scrollbar" id="palmares" >
+                        {% if app.user== club.createur %}
                          <div class="buttonsWrapper col-md-12">
-                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadpalmares" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadpalmares" data-toggle="modal">
+                                <span class="fa icon-plus state"></span>
+                                <span class="state">Ajouter </span></a>
+                             <br>
                             <br>
                         </div>
+                        {% endif %}
                         <div class="row">
                             <br>
                             {% for reward in rewards %}
-                            <div class="col-md-4" >
-                                <div data-linkto="" class="card albumus" >
-                                    <br>
-                                    <div class="profile-card">
-                                        <div class="pc-avatar"><a href="#uploadpalmares" data-toggle="modal" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-child palmarus"></span></a></div>
-                                        <div class="pc-name">{{ reward.titre}}</div>
+                            <div class="col-md-12" >
+                                    <div data-linkto="" class="card albumus tooltipsContainer" >
+                                        <br>
+                                        <div class="profile-card">
+                                            <div class="col-md-4">
+                                            <div class="pc-avatar">
+                                                <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Titre" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" >
+                                                    <span class="fa fa-child palmarus"></span></a>
+                                            </div>
+                                            <div class="pc-name">{{ reward.titre }}</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                            <div class="pc-avatar">
+                                                <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Classement" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+                                                    <span class="fa fa-star palmarus"></span></a>
+                                            </div>
+                                            <div class="pc-name">{{ reward.classment }}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                           
+                                        <div class="profile-card">
+                                            <div class="pc-avatar">
+                                                <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Date" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+                                                    <span class="fa fa-calendar palmarus"></span></a>
+                                            </div>
+                                            <div class="pc-name">{{ reward.date |date('Y-m-d')}}</div>
+                                        </div>
+                                        <div align="right">
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
+                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
+                                        </div>
+                                        <br>
+
+                                        <div class="clearfix"></div>
+                                    
+                                        </div>
+                                        </div>
+                                        
+                                        <br>
+
+                                        <div class="clearfix"></div>
                                     </div>
-                                    <div align="center" >
-                                        <a href="{{ path('reward_club_update', {'id':reward.club.id, 'idr': reward.id}) }}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                        <a href="{{ path('delete_reward_club', {'id':reward.id}) }}" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                    </div>
-                                    <br>
-                                    <div class="clearfix"></div>
+                                    
+                                        
                                 </div>
-                            </div>
-                            <div class="col-md-4" >
-                                <div data-linkto="" class="card albumus" >
-                                    <br>
-                                    <div class="profile-card">
-                                        <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-star palmarus"></span></a></div>
-                                        <div class="pc-name">{{ reward.classment }}</div>
-                                    </div>
-                                    <div align="center" >
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                    </div>
-                                    <br>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4" >
-                                <div data-linkto="" class="card albumus" >
-                                    <br>
-                                    <div class="profile-card">
-                                        <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-calendar palmarus"></span></a></div>
-                                        <div class="pc-name">{{ reward.date|date('Y-m-d')}}</div>
-                                    </div>
-                                    <div align="center" >
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                    </div>
-                                    <br>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
                             {% endfor %}
                         </div>
                     </ul>
