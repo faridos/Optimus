@@ -17,6 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use FrontOffice\OptimusBundle\Event\NotificationSeenEvent;
+
 use \DateTime;
 
 /**

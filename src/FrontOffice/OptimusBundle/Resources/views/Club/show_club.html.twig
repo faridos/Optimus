@@ -23,31 +23,35 @@
                             </div>	
                         {% endif %}
                         {% for programme in programmes %}
-                        <div class="userWidget-2 tooltipsContainer col-xs-12">
+                            <div class="userWidget-2 tooltipsContainer col-xs-12" id="{{programme.id}}>
 
-                            <div class="col-md-4">
-                                <div class="info col-md-12">
-                                    <a href="#"> <div class="name" >Nom du programme :</div></a>
-                                    <div class="title">{{ programme.nom }} </div>
+                                <div class="col-md-4">
+                                    <div class="info col-md-12">
+                                        <a href="#"> <div class="name" >Nom du programme :</div></a>
+                                        <div class="title">{{ programme.nom }} </div>
 
-                                </div></div>
-                            <div class="col-md-4">
-                                <div class="info col-md-12">
+                                    </div></div>
+                                <div class="col-md-4">
+                                    <div class="info col-md-12">
 
-                                    <div class="name">Description: <span class="address">{{ programme.description }}</span></div>
+                                        <div class="name">Description: <span class="address">{{ programme.description }}</span></div>
 
-                                </div></div>
-                            <div class="col-md-4">
-                                <div class="info col-md-12">
+                                    </div></div>
+                                <div class="col-md-4">
+                                    <div class="info col-md-12">
 
-                                    <div class="name">Date début: <span class="address">{{ programme.datedebut|date('Y-m-d H:i:s') }}</span></div>
-                                    <div class="name">Date fin: <span class="address">{{ programme.datefin|date('Y-m-d H:i:s') }}</span></div>
+                                        <div class="name">Date début: <span class="address">{{ programme.datedebut|date('Y-m-d H:i:s') }}</span></div>
+                                        <div class="name">Date fin: <span class="address">{{ programme.datefin|date('Y-m-d H:i:s') }}</span></div>
 
-                                </div></div>
+                                    </div></div>
+                                <div align="right">
+                                    <a href="#modifierprogram{{programme.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
-                            <div class="clearfix"></div>
-                        </div>	
-{% endfor %}
+                                    <a href="#supprimerProgram{{programme.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>	
+                        {% endfor %}
 
 
 
@@ -56,14 +60,68 @@
             </div>
         </div>
     </div>
-<!--------------- upload programme ------------------>
+    <!--------------- upload programme ------------------>
 
-<div class="modal fade" id="programme" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-<div class="modal-dialog">
-{{ render (controller('FrontOfficeOptimusBundle:Program:create',  { 'id': club.id })) }}
-</div>
-</div>
+    <div class="modal fade" id="programme" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {{ render (controller('FrontOfficeOptimusBundle:Program:create',  { 'id': club.id })) }}
+        </div>
+    </div>
+        {% for programme in programmes %}
+<div class="modal fade" id="modifierprogram{{programme.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {{ render (controller('FrontOfficeOptimusBundle:Program:create',  { 'id': club.id })) }}
+        </div>
+    </div>
+             <div class="modal" id="supprimuss{{programme.id}}"   >
+        <div class="modal-dialog">
+            <div class="modal-content bordusbottomus">
+        <div class="modal-header bordustopus">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                </div>
+                <div class="modal-body">
+
+                    <p>Souhaitez vous vraiment supprimer l'album ?</p>
 
 
-<!--------------- fin upload programme------------------> 
+                </div>
+                <div class="modal-footer supp-album">
+                    <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                    <a id="supprimerProgram{{programme.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+    <!--------------- fin upload programme------------------> 
+   
+    <!---------------- Update album-----------------------------> 
+    
+{% endblock %}
+{% block javascriptfils %}
+    <script>
+      
+        {% for programme in programmes %}
+            $('#supprimerProgram{{programme.id}}').click(function() {
+               
+                var id = $('#{{programme.id}}').attr('id');
+             
+                $.ajax({
+                    url: Routing.generate('program_delete', {'id': id}),
+                    success: function(data) {
+                        $('#'+data).hide();
+                     $("#supprimuss{{album.id}}").toggle();
+                     $('.modal-backdrop').hide();
+                    }
+                });
+                                           
+
+            });
+        {% endfor %}
+        
+    </script>
 {% endblock %}

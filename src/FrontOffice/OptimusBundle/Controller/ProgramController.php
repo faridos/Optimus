@@ -15,10 +15,8 @@ use FrontOffice\OptimusBundle\Form\ProgramType;
  *
  * @Route("/")
  */
-class ProgramController extends Controller
-{
+class ProgramController extends Controller {
 
-    
     /**
      * Creates a new Program entity.
      *
@@ -32,10 +30,10 @@ class ProgramController extends Controller
         $program = new Program();
         $program->setClubp($entity);
         $form = $this->createForm(new ProgramType(), $program);
-        
+
         $form->handleRequest($request);
         if ($form->isValid()) {
-           
+
             $em->persist($program);
             $em->flush();
 
@@ -47,4 +45,52 @@ class ProgramController extends Controller
             'form' => $form->createView(),
         );
     }
+
+    /**
+     * Creates a new Program entity.
+     *
+     * @Route("club={id_club}/program={id}/modifier", name="program_edit")
+     * @Method("POST")
+     * @Template("FrontOfficeOptimusBundle:Program:editProgramClub.html.twig")
+     */
+    public function editProgramClubAction($id_club, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id_club);
+        $program = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($id);
+
+        if (!$program) {
+            throw $this->createNotFoundException('Unable to find Program entity.');
+        }
+        $editForm = $this->createForm(new ProgramType, $program);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('programs', array('id' => $id)));
+        }
+
+        return array(
+            'club' => $club,
+            'program' => $program,
+            'edit_form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Album entity.
+     *
+     * @Route("program={id}/supprimer", name="program_delete", options={"expose"=true})
+     * @Method("GET|DELETE")
+     */
+    public function deleteAction($id) {
+       
+        $em = $this->getDoctrine()->getManager();
+        $program = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($id);
+        $em->remove($program);
+        $em->flush();
+        $response = new Response($id);
+         return $response;
+    }
+
 }
