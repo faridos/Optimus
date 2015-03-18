@@ -77,12 +77,16 @@
                                             </a>
                                         {% endif %}
                                     {% else %}
+                                        
                                         <div id="replace-enattente" class="btn-group">
                                             <a id ="add_relation"   href="#"  class="btn btn-green btn-round">
                                                 <span class="fa icon-user-follow state"></span> 
                                                 <span  class="state"  >Ajouter</span>
                                             </a>
                                         </div>
+                                         <a class="loader" id="loader_ajouter_relation">
+                                                <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                            </a>
                                     {% endif %}
                                     <a id='envoiemessage' href="#contactAgent" data-toggle="modal" class="btn btn-green btn-round">
                                         <span  class="fa fa-envelope-o"></span> Envoyer Message

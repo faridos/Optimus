@@ -34,14 +34,32 @@
                 </ul>
                 <div class="tab-content">
                     <br>
- <div class="buttonsWrapper col-xs-12">
-                            <a href="">{{ album.nom }}</a> - photos
-                            {% if app.user == user %}
-                                <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
-                            {% endif %}
+                    <div class="buttonsWrapper col-xs-12">
+                        <a href="">{{ album.nom }}</a> - photos
+                        {% if app.user == user %}
+                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
+                        {% endif %}
+                    </div>
+                    <br>
+                    {% if photos is empty %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                            <button type="button" class="close" data-dismiss="alert"></button>
+                            <div align="center">    <strong >Notification Optimus</strong> </div>
+                        </div> <div class="row">
+                            <img  style="margin-top: -30px;width: 90%;height: 350px;"src="{{ asset('template/images/bienvenue.png') }}"/>
+                            <div class="address" align="center" style="margin: 0 20px;">
+                                <h4><span   >Nous ne trouvons aucun élément à afficher
+                                        pour le moment.
+                                        Si vous êtes un nouveau membre d'Optimus ou
+                                        si vous n'avez pas encore eu d'activités, alors
+                                        il est temps de commencer l'aventure!</span></h4>
+
+                            </div>
                         </div>
+                    {% endif %}
                     <ul class="tab-pane fade active in scrollbar" id="albums" >
-                       
+
                         <div class="row">
                             {% for photo in photos %}
 
@@ -52,9 +70,9 @@
                                                 <img src="{{ asset(photo.WebPath) }}" />
                                             </a>
                                             {% if app.user == user %}
-                                            <div class="priceCap paddus">
-                                                <button href="#suppritus{{photo.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
-                                            </div>
+                                                <div class="priceCap paddus">
+                                                    <button href="#suppritus{{photo.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
+                                                </div>
                                             {% endif %}
                                             <div class="figCap">
                                                 <div class="address">Cliquez pour agrandir l'image</div>
@@ -72,7 +90,7 @@
             </div>
         </div>
     </div>
-                             {% for photo in photos %}
+    {% for photo in photos %}
         <div class="modal fade" id="suppritus{{photo.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content bordusbottomus">
@@ -95,7 +113,7 @@
     {% endfor %}
     <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
         <div class="modal-dialog">
- {{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoProfil',  { 'id': user.id, 'ida': album.id })) }}
+            {{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoProfil',  { 'id': user.id, 'ida': album.id })) }}
         </div>
     </div>
 {% endblock %}
@@ -105,9 +123,9 @@
         {% for photo in photos %}
             $('#supprimerPhoto{{photo.id}}').click(function() {
 
-             
+
                 $.ajax({
-                    url: Routing.generate('photo_delete', {'id': {{photo.id}}}),
+                    url: Routing.generate('photo_delete', {'id':{{photo.id}}}),
                     success: function(data) {
                         $('#' + data).hide();
                         $('#suppritus{{photo.id}}').toggle();

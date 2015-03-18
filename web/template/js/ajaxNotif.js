@@ -10,14 +10,17 @@ $('#show_notification').click(function() {
 });
 // envoyer invitation
 $('#add_relation').click(function() {
-// $('.loader').show();
+    $('#loader_ajouter_relation').show();
+    $('#replace-enattente').empty();
     var id = $('.userWidget-1').attr('id');
     console.log(id);
     $.ajax({
         url: Routing.generate('add_relation', {'id': id}),
         success: function() {
-            $('#replace-enattente').empty().append("<a class=\"btn btn-green btn-round\"><span class=\"state\" style=\"color:#fff\">En attente</span></a>");
+            $('#replace-enattente').append("<a class=\"btn btn-green btn-round\"><span class=\"state\" style=\"color:#fff\">En attente</span></a>");
+        $('#loader_ajouter_relation').hide();
         }
+        
     });
 });
 //envoyer message
