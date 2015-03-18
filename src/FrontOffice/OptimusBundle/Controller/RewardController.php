@@ -3,6 +3,7 @@
 namespace FrontOffice\OptimusBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -56,7 +57,7 @@ class RewardController extends Controller {
      */
     public function updateRewardUserAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
-
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $reward = $em->getRepository('FrontOfficeOptimusBundle:Reward')->find($id);
 
         if (!$reward) {
@@ -69,9 +70,8 @@ class RewardController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            die('modif term');
+            return $this->redirect($this->generateUrl('palmares_user', array('id' => $user->getId())));
         }
-        $user = $reward->getUser();
         return array(
             'user' => $user,
             'reward' => $reward,
@@ -82,7 +82,7 @@ class RewardController extends Controller {
     /**
      * Deletes a Reward entity.
      *
-     * @Route("récompense={id}/supprimer", name="delete_reward_user")
+     * @Route("récompense={id}/supprimer", name="delete_reward_user", options={"expose"=true})
      * @Method("GET|DELETE")
      */
     public function deleteRewardUserAction($id) {
@@ -93,7 +93,8 @@ class RewardController extends Controller {
         }
         $em->remove($reward);
         $em->flush();
-        die('supprission ok');
+        $response = new Response($id);
+        return $response;
     }
 
     /**
@@ -115,7 +116,7 @@ class RewardController extends Controller {
             $em->persist($reward);
             $em->flush();
 
-            die('ok reward');
+           return $this->redirect($this->generateUrl('palmares_club', array('id' => $club->getId())));
         }
         return array(
             'id' => $id,
@@ -128,13 +129,14 @@ class RewardController extends Controller {
     /**
      * Edits an existing Reward entity.
      *
-     * @Route("récompense={idr}/modifier", name="reward_club_update")
+     * @Route("recompenses={id}/modifier", name="reward_club_update")
      * @Method("POST|GET|PUT")
      * @Template("FrontOfficeOptimusBundle:Reward:updateRewardClub.html.twig")
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $reward = $em->getRepository('FrontOfficeOptimusBundle:Reward')->find($id);
+        $club = $reward->getClub();
         if (!$reward) {
             throw $this->createNotFoundException('Unable to find Reward entity.');
         }
@@ -143,9 +145,9 @@ class RewardController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            die('modif term');
+          return $this->redirect($this->generateUrl('palmares_club', array('id' => $club->getId())));
         }
-        $club = $reward->getClub();
+        
         return array(
             'club' => $club,
             'reward' => $reward,
@@ -156,7 +158,7 @@ class RewardController extends Controller {
     /**
      * Deletes a Reward entity.
      *
-     * @Route("récompense={id}/supprimer", name="delete_reward_club")
+     * @Route("recompenses={id}/supprimer", name="delete_reward_club", options={"expose"=true})
      * @Method("GET|DELETE")
      */
     public function deleteAction($id) {
@@ -167,7 +169,8 @@ class RewardController extends Controller {
         }
         $em->remove($reward);
         $em->flush();
-        die('supprission ok');
+        $response = new Response($id);
+        return $response;
     }
 
 }

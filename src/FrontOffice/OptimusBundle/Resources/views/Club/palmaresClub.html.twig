@@ -27,7 +27,7 @@
                         <div class="row">
                             <br>
                             {% for reward in rewards %}
-                            <div class="col-md-12" >
+                            <div class="col-md-12" id="{{reward.id}}">
                                     <div data-linkto="" class="card albumus tooltipsContainer" >
                                         <br>
                                         <div class="profile-card">
@@ -55,8 +55,8 @@
                                             <div class="pc-name">{{ reward.date |date('Y-m-d')}}</div>
                                         </div>
                                         <div align="right">
-                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
-                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
+                                            <a href="#modifierpalmares_{{reward.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
+                                            <a href="#supprimerpalmares_{{reward.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
                                         </div>
                                         <br>
 
@@ -72,6 +72,35 @@
                                     
                                         
                                 </div>
+                                        
+                               <!--------------- modifier palmares ------------------>
+
+                            <div class="modal fade" id="modifierpalmares_{{reward.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    {{ render (controller('FrontOfficeOptimusBundle:Reward:update',  { 'id': reward.id })) }}
+                                </div>
+                            </div>
+                            <!--------------- fin modifier  ------------------>
+
+                            <!--------------- supprimer palmares ------------------>
+                            <div class="modal" id="supprimerpalmares_{{reward.id}}"   >
+                                <div class="modal-dialog">
+                                    <div class="modal-content bordusbottomus">
+                                        <div class="modal-header bordustopus">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Souhaitez vous vraiment supprimer l'album ?</p>
+                                        </div>
+                                        <div class="modal-footer supp-album">
+                                            <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                                            <a id="supprimerPalmares{{reward.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--------------- fin supprimer ------------------>
                             {% endfor %}
                         </div>
                     </ul>
@@ -89,4 +118,25 @@
 
 
     <!--------------- fin upload  ------------------>
+{% endblock %}
+{% block javascriptfils %}
+    <script>
+
+        {% for reward in rewards %}
+            $('#supprimerPalmares{{reward.id}}').click(function() {
+
+                $.ajax({
+                    url: Routing.generate('delete_reward_club', {'id': {{reward.id}}}),
+                    success: function(data) {
+                        $('#' + data).hide();
+                        $("#supprimerpalmares_{{reward.id}}").toggle();
+                        $('.modal-backdrop').hide();
+                    }
+                });
+
+
+            });
+        {% endfor %}
+
+    </script>
 {% endblock %}
