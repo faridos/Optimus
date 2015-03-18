@@ -90,7 +90,7 @@ class ClubController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         if (!$club || $club->getActive() == 0) {
-            throw $this->createNotFoundException('Unable to find Club entity.');
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('club' => $club));
         if ($notification) {
@@ -122,7 +122,7 @@ class ClubController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         if (!$club || $club->getActive() == 0) {
-            throw $this->createNotFoundException('Unable to find Club entity.');
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         if ($club->getCreateur() == $user) {
             $editForm = $this->createForm(new UpdateClubType(), $club);
@@ -159,7 +159,7 @@ class ClubController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         if (!$entity || $entity->getActive() == 0) {
-            throw $this->createNotFoundException('Unable to find Club entity.');
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         if ($entity->getCreateur() == $user) {
             $entity->setActive(false);
@@ -198,6 +198,10 @@ class ClubController extends Controller {
      * @Template()
      */
     public function getAlbumsClubAction($id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         $albums = $em->getRepository('FrontOfficeOptimusBundle:Album')->findBy(array('club' => $club));
@@ -212,6 +216,10 @@ class ClubController extends Controller {
      * @Template()
      */
     public function getPhotosUserAction($id_album) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $album = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id_album);
         $club = $album->getClub();
@@ -226,6 +234,10 @@ class ClubController extends Controller {
      * @Method("POST|GET")
      */
     public function requestAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -285,10 +297,14 @@ class ClubController extends Controller {
      * @Method("GET|POST")
      */
     public function confirmAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
         if (!$demande) {
-            throw $this->createNotFoundException('Unable to find Club entity.');
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $demande->setConfirmed(true);
         if ($demande->getConfirmed() == true) {
@@ -315,7 +331,7 @@ class ClubController extends Controller {
         }
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-        if ($club->getActive() == 1) {
+        if (!$club || $club->getActive() == 1) {
             $editForm = $this->createForm(new ClubPhotoType(), $club);
             $editForm->handleRequest($request);
             if ($editForm->isValid()) {
@@ -325,7 +341,7 @@ class ClubController extends Controller {
             return $this->render('FrontOfficeOptimusBundle:Club:editPhotoClub.html.twig', array('club' => $club, 'form' => $editForm->createView()));
 //                    'user' => $user,)
         } else {
-            throw $this->createNotFoundException('Club Annulé.');
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
     }
 

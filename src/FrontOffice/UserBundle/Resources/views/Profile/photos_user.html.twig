@@ -33,14 +33,15 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-
-                    <ul class="tab-pane fade active in scrollbar" id="albums" >
-                        <div class="buttonsWrapper col-xs-12">
+                    <br>
+ <div class="buttonsWrapper col-xs-12">
                             <a href="">{{ album.nom }}</a> - photos
                             {% if app.user == user %}
                                 <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
                             {% endif %}
                         </div>
+                    <ul class="tab-pane fade active in scrollbar" id="albums" >
+                       
                         <div class="row">
                             {% for photo in photos %}
 
@@ -104,11 +105,9 @@
         {% for photo in photos %}
             $('#supprimerPhoto{{photo.id}}').click(function() {
 
-                var id = $('#{{photo.id}}').attr('id');
-                console.log(id);
-              
+             
                 $.ajax({
-                    url: Routing.generate('photo_delete', {'id': id}),
+                    url: Routing.generate('photo_delete', {'id': {{photo.id}}}),
                     success: function(data) {
                         $('#' + data).hide();
                         $('#suppritus{{photo.id}}').toggle();

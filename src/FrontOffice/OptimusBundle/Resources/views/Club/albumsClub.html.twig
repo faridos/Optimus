@@ -12,40 +12,83 @@
                     <li class=""><a href="{{ path('palmares_club',{'id' : club.id}) }}" role="tab" ><span class="icon-badge"></span> Palmares</a></li>
                     <li class="active"><a href="{{ path('albums_club',{'id' : club.id }) }}" role="tab" data-toggle="tab"><span class="icon-doc"></span> Albums</a></li>
                     <li class=""><a href="#videos" role="tab" ><span class="icon-film"></span> Vidéos</a></li>
-                     <li class=""><a href="{{ path('members_club',{'id':club.id})}}" role="tab" ><span class="icon-user-unfollow"></span> Adhérents </a></li>
+                    <li class=""><a href="{{ path('members_club',{'id':club.id})}}" role="tab" ><span class="icon-user-unfollow"></span> Adhérents </a></li>
                     {% if app.user == club.createur %}<li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span>Demandes</a></li> {% endif %}
-                   
+
                 </ul>
                 <div class="tab-content">
-                  
-                    <ul class="tab-pane fade active in  scrollbar" id="albums" >
-                        {% if app.user== club.createur %}
-                        <div class="buttonsWrapper col-md-12">
-                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
+                    <br>
+                    {% if app.user == club.createur %}   <div class="buttonsWrapper col-md-12">
+                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadalbum" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
                             <br>
                         </div>
-                        {% endif %}
-                          <div class="row">
-                          {% for album in albums %}
-                            <div class="col-md-4" id="{{album.id}}" >
-                                <div data-linkto="" class="card albumus tooltipsContainer" >
-                                    <div class="figure" id="main">
-                                        <a href="{{ path('photos_club', {'id' : club.id,'id_album' : album.id}) }}" >
-                                            <img src="{{ asset(club.WebPath) }}" />
-                                        </a>
-                                        <div class="figView"></div>
-                                    </div>
-                                    <h2 align="center">{{ album.nom }}</h2>
-                                    <div align="center" >
-                                        <a href="#modifieralbum"  data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                        <a href="#supprimuss{{album.id}}"  data-toggle="modal"  class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                    {% endif %}
+                    <br>
+                    {% if albums is empty %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                            <button type="button" class="close" data-dismiss="alert"></button>
+                            <div align="center">    <strong >Notification Optimus</strong> </div>
+                        </div> <div class="row">
+                            <img  style="margin-top: -30px;width: 90%;height: 350px;"src="{{ asset('template/images/bienvenue.png') }}"/>
+                            <div class="address" align="center" style="margin: 0 20px;">
+                                <h4><span   >Nous ne trouvons aucun élément à afficher
+                                        pour le moment.
+                                        Si vous êtes un nouveau membre d'Optimus ou
+                                        si vous n'avez pas encore eu d'activités, alors
+                                        il est temps de commencer l'aventure!</span></h4>
+
+                            </div>
+                        </div>
+                    {% endif %}
+                    <ul class="tab-pane fade active in  scrollbar" id="albums" >
+
+                        <div class="row">
+                            {% for album in albums %}
+                                <div class="col-md-4" id="{{album.id}}" >
+                                    <div data-linkto="" class="card albumus tooltipsContainer" >
+                                        <div class="figure" id="main">
+                                            <a href="{{ path('photos_club', {'id' : club.id,'id_album' : album.id}) }}" >
+                                                <img src="{{ asset(club.WebPath) }}" />
+                                            </a>
+                                            <div class="figView"></div>
+                                        </div>
+                                        <h2 align="center">{{ album.nom }}</h2>
+                                        <div align="center" >
+                                            <a href="#modifieralbum"  data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                            <a href="#supprimuss{{album.id}}"  data-toggle="modal"  class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                         
-                       
-                        {% endfor %}
-                         </div>
+                                          <!--------------- modal update album ------------------>
+      
+                                <div class="modal fade" id="modifieralbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        {{ render (controller('FrontOfficeOptimusBundle:Album:editAlbumClub',  {'id_club': club.id, 'id': album.id })) }}
+                                    </div>
+                                </div>
+                                      <!------------------- modal supprission------------------->
+                                <div class="modal" id="supprimuss{{album.id}}"   >
+                                    <div class="modal-dialog">
+                                        <div class="modal-content bordusbottomus">
+                                            <div class="modal-header bordustopus">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Souhaitez vous vraiment supprimer l'album ?</p>
+                                            </div>
+                                            <div class="modal-footer supp-album">
+                                                <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                                                <a id="supprimerAlbum{{album.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            {% endfor %}
+                        </div>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
@@ -53,7 +96,7 @@
             </div>
         </div>
     </div>
-  <!---------------- upload album----------------------------->
+    <!---------------- upload album----------------------------->
 
     <div class="modal fade" id="uploadalbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -65,66 +108,35 @@
 
 
     <!--------------- fin upload album ------------------>
-     {% for album in albums %}
-    <!---------------- Update album----------------------------->
-
-    <div class="modal fade" id="modifieralbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            {{ render (controller('FrontOfficeOptimusBundle:Album:editAlbumClub',  {'id_club': club.id, 'id': album.id })) }}
-
-        </div>
-    </div>
+  
+        <!---------------- Update album----------------------------->
 
 
 
-    <!--------------- fin update album ------------------>
-    <!------------------- modal supprission------------------->
-    
-    <div class="modal" id="supprimuss{{album.id}}"   >
-        <div class="modal-dialog">
-            <div class="modal-content bordusbottomus">
-        <div class="modal-header bordustopus">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                </div>
-                <div class="modal-body">
 
-                    <p>Souhaitez vous vraiment supprimer l'album ?</p>
+        <!--------------- fin update album ------------------>
+        <!------------------- modal supprission------------------->
 
 
-                </div>
-                <div class="modal-footer supp-album">
-                    <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                    <a id="supprimerAlbum{{album.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-{% endfor %}
+   
 {% endblock %}
 {% block javascriptfils %}
     <script>
-      
+
         {% for album in albums %}
             $('#supprimerAlbum{{album.id}}').click(function() {
-               
-                var id = $('#{{album.id}}').attr('id');
-             
                 $.ajax({
-                    url: Routing.generate('album_delete', {'id': id}),
+                    url: Routing.generate('album_delete', {'id': {{album.id}}}),
                     success: function(data) {
-                        $('#'+data).hide();
-                     $("#supprimuss{{album.id}}").toggle();
-                     $('.modal-backdrop').hide();
+                        $('#' + data).hide();
+                        $("#supprimuss{{album.id}}").toggle();
+                        $('.modal-backdrop').hide();
                     }
                 });
-                                           
+
 
             });
         {% endfor %}
-        
+
     </script>
 {% endblock %}
