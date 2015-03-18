@@ -38,9 +38,9 @@
                                 <div class="cardRating" style="color:#eab134; font-size: 18px;">
                                     {% set isami = isAmi(app.user,user) %}
                                     {% if isami %}
-                                    <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'U'+user.id} %}</div>
+                                        <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'U'+user.id} %}</div>
                                     {% else %}
-                                    <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'U'+user.id} %}</div>
+                                        <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'U'+user.id} %}</div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -48,153 +48,153 @@
                                 {% if app.user.id != user.id %}
                                     {% if app.user | relation_exists('friendship', user ) %}
                                         {% set pendingInvitations = pendingInvitation(app.user,user)%}
-                                            {% if pendingInvitations is empty %}
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">
-                                                        Amis
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="#">Retirer</a></li>
-                                                        <li><a href="#">Signaler</a></li>
-                                                    </ul>
-                                                </div>
-                                            {% elseif pendingInvitations[0].object2Id == app.user.id %}
-                                                <div class="btn-group" id="replace-accepte-profil">
+                                        {% if pendingInvitations is empty %}
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">
+                                                    Amis
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Retirer</a></li>
+                                                    <li><a href="#">Signaler</a></li>
+                                                </ul>
+                                            </div>
+                                        {% elseif pendingInvitations[0].object2Id == app.user.id %}
+                                            <div class="btn-group" id="replace-accepte-profil">
                                                 <a id="accept_relation_profil" class="btn btn-green btn-round btn-success" href="#"  >
                                                     <span style="color:#fff" class="fa icon-user-follow state-active"></span> 
                                                     <span  class="state" >Accepter l'invitation</span>
                                                 </a>
-                                                  
-                                                </div>
-                                                  <a class="loader" id="loader_accept_relation">
-                                                                            <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
-                                                                        </a>
-                                                {% elseif pendingInvitations[0].object1Id == app.user.id %}
-                                                <a id="enattente" class="btn btn-green btn-round btn-success" href="#"  >
-                                                    <span style="color:#fff" class="fa icon-user-follow state-active"></span> 
-                                                    <span class="state" >En attente</span>
-                                                </a>
-                                            {% endif %}
-                                            {% else %}
-                                                <div id="replace-enattente" class="btn-group">
-                                                    <a id ="add_relation"   href="#"  class="btn btn-green btn-round">
-                                                        <span class="fa icon-user-follow state"></span> 
-                                                        <span  class="state"  >Ajouter</span>
-                                                    </a>
-                                                </div>
-                                                {% endif %}
-                                                    <a id='envoiemessage' href="#contactAgent" data-toggle="modal" class="btn btn-green btn-round">
-                                                        <span  class="fa fa-envelope-o"></span> Envoyer Message
-                                                    </a>
-                                                    {% endif %}
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>   
 
                                             </div>
-                                            <br><br><br>
-                                            <div class="clearfix"></div>
+                                            <a class="loader" id="loader_accept_relation">
+                                                <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                            </a>
+                                        {% elseif pendingInvitations[0].object1Id == app.user.id %}
+                                            <a id="enattente" class="btn btn-green btn-round btn-success" href="#"  >
+                                                <span style="color:#fff" class="fa icon-user-follow state-active"></span> 
+                                                <span class="state" >En attente</span>
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <div id="replace-enattente" class="btn-group">
+                                            <a id ="add_relation"   href="#"  class="btn btn-green btn-round">
+                                                <span class="fa icon-user-follow state"></span> 
+                                                <span  class="state"  >Ajouter</span>
+                                            </a>
                                         </div>
-                                        
-                                        <div class="panel panel-default" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
-                                <div class="panel-heading optimus"> <span class="icon-user"></span><span class="navLabel"> Informations</span></div>
-                                
-                                        <div class="userWidget-2" style="margin-bottom:0px;">
-                                            <div class="col-md-6">
-                                                <div class="avatar">
-                                                </div>
-                                                <div class="info">
-                                                    <div class="title">Date de naissance : <span class="address">{{ user.dateNaissance|date('Y-d-m') }} </span>
-                                                    </div>
-                                                    <div class="title">Adresse : <span class="address">{{ user.adresse }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="info ">
-                                                    <div class="name"></div>
-                                                    <div class="title">Numéro de téléphone : <span class="address">{{ user.tel }}</span></div>
-                                                    <div class="title">Email: <span class="address">{{ user.email }}</span></div>
-                                                </div></div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                           </div>    
-                                        <div class="clearfix"></div>
-                                        <div class="panel panel-default" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
-                                <div class="panel-heading optimus"> <span class="icon-user"></span><span class="navLabel"> Liste d'amis</span></div>
-                                
-                                        <div class="userWidget-2" style="margin-bottom:0px;">
-                                            <div class="avatar">
-                                            </div>
-                                            
-                                            <ul class="notifyList scrollbar" >
-                                                {% set friends = getFriends(user.id) %}
-                                                {% if friends is empty %}
-                                                <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                                <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-                                <button type="button" class="close" data-dismiss="alert"></button>
-                                <strong>Rien à afficher dans la catégorie amis!</strong> 
-                            </div>
-                                                {% endif %}
-                                                    {% for friend in friends %}
-                                                        <div class="tooltipsContainer avatar friendus">
-                                                            <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
-                                                                <img src="{{ asset(friend.WebPath) }}" >
-                                                            </a>
-                                                        </div>
-                                                    {% endfor %}               
-
-                                                </ul>
-
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
+                                    {% endif %}
+                                    <a id='envoiemessage' href="#contactAgent" data-toggle="modal" class="btn btn-green btn-round">
+                                        <span  class="fa fa-envelope-o"></span> Envoyer Message
+                                    </a>
+                                {% endif %}
                             </div>
                             <div class="clearfix"></div>
-                        </div>
-                        <!------------------- modal photo------------------->
-                        <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                {{ render (controller('FrontOfficeUserBundle:User:editPhoto',  { 'id': app.user.id })) }}
+                        </div>   
+
+                    </div>
+                    <br><br><br>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel panel-default" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
+                    <div class="panel-heading optimus"> <span class="icon-user"></span><span class="navLabel"> Informations</span></div>
+
+                    <div class="userWidget-2" style="margin-bottom:0px;">
+                        <div class="col-md-6">
+                            <div class="avatar">
                             </div>
-                        </div>
-                        <!-------------------fin modal photo------------------->
-                        <!------------------- modal Envoie message------------------->
-                        <div class="modal fade" id="contactAgent" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content bordusbottomus">
-                                    <div class="modal-header bordustopus">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h4 class="modal-title" id="contactLabel">Optimus Message</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form class="contactForm">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                                                    <label  class="idReciever" id="{{ user.id }}" type="text" placeholder="Nom et Prénom" >Envoyer Message à <b>{{ user.prenom }} {{ user.nom }}</b></label>
-                                                    <label  id="messageEch" class="messageEch">Envoie echoué</label>
-                                                    <label  id="messageEnvoyer" class="messageEnvoyer">Envoie effectué</label>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                                                    <textarea id="txt-message"  placeholder="Message" rows="3" class="form-control"></textarea>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a id="btn-fermer-message" type="reset" href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Fermer</a>
-                                        <a id="envoyerMessage" href="#" class="btn btn-round btn-green">Envoyer message</a>
-                                    </div>
+                            <div class="info">
+                                <div class="title">Date de naissance : <span class="address">{{ user.dateNaissance|date('Y-d-m') }} </span>
+                                </div>
+                                <div class="title">Adresse : <span class="address">{{ user.adresse }}</span>
                                 </div>
                             </div>
                         </div>
-                        <!------------------- fin modal Envoie message------------------->
+                        <div class="col-md-6">
+                            <div class="info ">
+                                <div class="name"></div>
+                                <div class="title">Numéro de téléphone : <span class="address">{{ user.tel }}</span></div>
+                                <div class="title">Email: <span class="address">{{ user.email }}</span></div>
+                            </div></div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>    
+                <div class="clearfix"></div>
+                <div class="panel panel-default" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
+                    <div class="panel-heading optimus"> <span class="icon-users"></span><span class="navLabel"> Liste d'amis</span></div>
 
-                        {% endblock %}
+                    <div class="userWidget-2" style="margin-bottom:0px;">
+                        <div class="avatar">
+                        </div>
+
+                        <ul class="notifyList scrollbar" >
+                            {% set friends = getFriends(user.id) %}
+                            {% if friends is empty %}
+                                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                    <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                                    <button type="button" class="close" data-dismiss="alert"></button>
+                                    <strong>Rien à afficher dans la catégorie amis!</strong> 
+                                </div>
+                            {% endif %}
+                            {% for friend in friends %}
+                                <div class="tooltipsContainer avatar friendus">
+                                    <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
+                                        <img src="{{ asset(friend.WebPath) }}" >
+                                    </a>
+                                </div>
+                            {% endfor %}               
+
+                        </ul>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+</div>
+<!------------------- modal photo------------------->
+<div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        {{ render (controller('FrontOfficeUserBundle:User:editPhoto',  { 'id': app.user.id })) }}
+    </div>
+</div>
+<!-------------------fin modal photo------------------->
+<!------------------- modal Envoie message------------------->
+<div class="modal fade" id="contactAgent" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bordusbottomus">
+            <div class="modal-header bordustopus">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="contactLabel">Optimus Message</h4>
+            </div>
+            <div class="modal-body">
+                <form class="contactForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                            <label  class="idReciever" id="{{ user.id }}" type="text" placeholder="Nom et Prénom" >Envoyer Message à <b>{{ user.prenom }} {{ user.nom }}</b></label>
+                            <label  id="messageEch" class="messageEch">Envoie echoué</label>
+                            <label  id="messageEnvoyer" class="messageEnvoyer">Envoie effectué</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                            <textarea id="txt-message"  placeholder="Message" rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a id="btn-fermer-message" type="reset" href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Fermer</a>
+                <a id="envoyerMessage" href="#" class="btn btn-round btn-green">Envoyer message</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------- fin modal Envoie message------------------->
+
+{% endblock %}
