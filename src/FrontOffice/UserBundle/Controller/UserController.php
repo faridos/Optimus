@@ -384,6 +384,7 @@ class UserController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
+        
         $editForm = $this->createForm(new UserType(), $entity);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
@@ -392,6 +393,7 @@ class UserController extends Controller {
         }
         return  array(
                     'entity' => $entity,
+            
                     'edit_form' => $editForm->createView(),
         );
     }

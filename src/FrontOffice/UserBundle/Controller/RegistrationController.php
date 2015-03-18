@@ -32,7 +32,7 @@ class RegistrationController extends BaseController {
 
         $user = $userManager->createUser();
         $user->setEnabled(true);
-        $user->setType_notification('All');
+        $user->setTypeNotification('All');
         $user->setCreatedAt(new DateTime());
 
         $event = new GetResponseUserEvent($user, $request);

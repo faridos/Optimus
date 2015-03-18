@@ -5,9 +5,15 @@
         <div id="content" class="mob-max" style="height: 356px;">
             <div id="content2" class="col-lg-12"><div class="row mb20">
                 </div>
-                {% for event in events %}
+                
                     <div class="col-lg-12">
                         <div class="notificationsWidget">
+                           {% if events is empty %} <div class="alert alert-danger alert-dismissible fade  in" role="alert">
+                                <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                                <button type="button" class="close" data-dismiss="alert"><span class="sr-only">Close</span></button>
+                                <strong>Rien à afficher dans le fil d'actualité!</strong> veuillez créer un évenement pour commencer.
+                            </div>{% endif %}
+                            {% for event in events %}
                             <div class="singleTop whiteBg">
                                 <div class="notificationsWidget">
                                     <div class="notification">
@@ -91,9 +97,10 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
+                                            {% endfor %}
                         </div>
                     </div>
-                {% endfor %}
+                
             </div>
             <!-- <div class="loader"> <img src="{{asset('template/images/ajax-loader(2).gif') }}"></div> -->
         </div>

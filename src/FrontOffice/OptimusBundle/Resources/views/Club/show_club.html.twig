@@ -28,20 +28,20 @@
                             <div class="col-md-4">
                                 <div class="info col-md-12">
                                     <a href="#"> <div class="name" >Nom du programme :</div></a>
-                                    <div class="title">Foulen ben foulen </div>
+                                    <div class="title">{{ programme.nom }} </div>
 
                                 </div></div>
                             <div class="col-md-4">
                                 <div class="info col-md-12">
 
-                                    <div class="name">Description: <span class="address">sikilus balabus salamus takrizus okitus bilus kus mus lus fsdf sdf sdf sdf sdfs fsdf sdf dgdfg dfg </span></div>
+                                    <div class="name">Description: <span class="address">{{ programme.description }}</span></div>
 
                                 </div></div>
                             <div class="col-md-4">
                                 <div class="info col-md-12">
 
-                                    <div class="name">Date début: <span class="address">25/03/2015</span></div>
-                                    <div class="name">Date fin: <span class="address">01/04/2015</span></div>
+                                    <div class="name">Date début: <span class="address">{{ programme.datedebut|date('Y-m-d H:i:s') }}</span></div>
+                                    <div class="name">Date fin: <span class="address">{{ programme.datefin|date('Y-m-d H:i:s') }}</span></div>
 
                                 </div></div>
 
@@ -60,7 +60,7 @@
 
 <div class="modal fade" id="programme" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 <div class="modal-dialog">
-
+{{ render (controller('FrontOfficeOptimusBundle:Program:create',  { 'id': club.id })) }}
 </div>
 </div>
 

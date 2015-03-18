@@ -91,8 +91,8 @@ class OptimusExtension extends \Twig_Extension {
         return $this->em->getRepository('FrontOfficeUserBundle:User')->getInvitations($id);
     }
 
-    public function getParicipationEventNotification($id, $date) {
-        return $this->em->getRepository('FrontOfficeOptimusBundle:Participation')->getParicipationEventNotification($id, $date);
+    public function getParicipationEventNotification($id,$id_user, $date ) {
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Participation')->getParicipationEventNotification($id,$id_user, $date);
     }
 
     public function getUser($id) {

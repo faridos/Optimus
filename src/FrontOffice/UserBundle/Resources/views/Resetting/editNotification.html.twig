@@ -30,11 +30,10 @@
                                                 <tr>
                                                     <td><strong>Type de notification</strong></th>
                                                     <td>
-                                                        <div class="notif">{{ app.user.type_notification }}</div>
+                                                        <div class="notif">{{ app.user.typeNotification }}</div>
                                                         <div id="notif"  style="display:none">
                                                             <form action="{{ path('setting_user_notifications', {'id' : entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal form-groups-bordered">
                                                                 {{ form_errors(edit_form) }}
-
                                                                 <div class="ops">
                                                                     <div class="form-group col-md-10">
                                                                         {{ form_widget(edit_form.type_notification) }}
@@ -54,12 +53,8 @@
                                                         </a>
                                                     </td>
                                                 </tr>
-
-
                                             </tbody>
                                         </table>
-
-
                                     </div> 
                                 </div>
                             </div>

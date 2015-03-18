@@ -199,7 +199,7 @@ class EventController extends Controller {
         $eventhistory = new HistoryEventEvent($user, $entity, $action);
         $dispatcher = $this->get('event_dispatcher');
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
-        return $this->redirect($this->generateUrl('events'));
+        return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
     }
     
     

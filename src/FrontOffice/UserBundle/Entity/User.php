@@ -75,15 +75,15 @@ class User extends BaseUser {
     protected $profil;
 
     /**
+     * @ORM\Column(type="string", length=255,  nullable=true )
+     */
+    protected $path;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Choice(choices = {"All","NOT","EC","EU","UC","E","C","U"})
      */
     protected $type_notification;
-
-    /**
-     * @ORM\Column(type="string", length=255,  nullable=true )
-     */
-    protected $path;
 
     /**
      * @Assert\File(maxSize="6000000")
@@ -157,36 +157,16 @@ class User extends BaseUser {
      * */
     protected $adherent;
 
+    public function __construct() {
+        parent::__construct();
+    }
+
     public function getId() {
         return $this->id;
     }
 
     public function getNom() {
         return $this->nom;
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function setNom($nom) {
-        $this->nom = $nom;
-    }
-
-    public function getCreatedAt() {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTime $createdAt) {
-        $this->createdAt = $createdAt;
-    }
-
-    public function getTel() {
-        return $this->tel;
-    }
-
-    public function setTel($tel) {
-        $this->tel = $tel;
     }
 
     public function getPrenom() {
@@ -197,6 +177,10 @@ class User extends BaseUser {
         return $this->dateNaissance;
     }
 
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
     public function getSexe() {
         return $this->sexe;
     }
@@ -205,23 +189,41 @@ class User extends BaseUser {
         return $this->adresse;
     }
 
+    public function getTel() {
+        return $this->tel;
+    }
+
     public function getProfil() {
         return $this->profil;
     }
 
-    public function getPath() {
-        return $this->path;
+    public function getFile() {
+        return $this->file;
     }
+
+    /**
+     * Set type_notification
+     *
+     * @param string $typeNotification
+     * @return User
+     */
+    public function setTypeNotification($typeNotification) {
+        $this->type_notification = $typeNotification;
+
+        return $this;
+    }
+
+    /**
+     * Get type_notification
+     *
+     * @return string 
+     */
     public function getTypeNotification() {
         return $this->type_notification;
     }
 
-    public function setTypeNotification($type_notification) {
-        $this->type_notification = $type_notification;
-    }
-
-        public function getFile() {
-        return $this->file;
+    public function getPath() {
+        return $this->path;
     }
 
     public function getLat() {
@@ -232,12 +234,64 @@ class User extends BaseUser {
         return $this->lng;
     }
 
+    public function getEvenements() {
+        return $this->evenements;
+    }
+
+    public function getParticipations() {
+        return $this->participations;
+    }
+
+    public function getNotification_entraineur() {
+        return $this->notification_entraineur;
+    }
+
+    public function getNotificationseen() {
+        return $this->notificationseen;
+    }
+
+    public function getClubs() {
+        return $this->clubs;
+    }
+
+    public function getConversations1() {
+        return $this->conversations1;
+    }
+
+    public function getConversations2() {
+        return $this->conversations2;
+    }
+
+    public function getAlbums() {
+        return $this->albums;
+    }
+
+    public function getReward() {
+        return $this->reward;
+    }
+
+    public function getAdherent() {
+        return $this->adherent;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function setNom($nom) {
+        $this->nom = $nom;
+    }
+
     public function setPrenom($prenom) {
         $this->prenom = $prenom;
     }
 
     public function setDateNaissance($dateNaissance) {
         $this->dateNaissance = $dateNaissance;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt) {
+        $this->createdAt = $createdAt;
     }
 
     public function setSexe($sexe) {
@@ -248,14 +302,56 @@ class User extends BaseUser {
         $this->adresse = $adresse;
     }
 
+    public function setTel($tel) {
+        $this->tel = $tel;
+    }
+
     public function setProfil($profil) {
         $this->profil = $profil;
     }
 
-  
-
     public function setPath($path) {
         $this->path = $path;
+    }
+
+    public function setLat($lat) {
+        $this->lat = $lat;
+    }
+
+    public function setLng($lng) {
+        $this->lng = $lng;
+    }
+
+    public function setEvenements($evenements) {
+        $this->evenements = $evenements;
+    }
+
+    public function setParticipations($participations) {
+        $this->participations = $participations;
+    }
+
+    public function setNotification_entraineur($notification_entraineur) {
+        $this->notification_entraineur = $notification_entraineur;
+    }
+
+    public function setNotificationseen($notificationseen) {
+        $this->notificationseen = $notificationseen;
+    }
+
+    public function setClubs($clubs) {
+        $this->clubs = $clubs;
+    }
+
+    public function setAlbums($albums) {
+        $this->albums = $albums;
+    }
+
+    public function setReward($reward) {
+        $this->reward = $reward;
+    }
+
+    public function setAdherent($adherent) {
+        $this->adherent = $adherent;
     }
 
     public function setFile(UploadedFile $file = null) {
@@ -268,18 +364,6 @@ class User extends BaseUser {
         } else {
             $this->path = 'initial';
         }
-    }
-
-    public function setLat($lat) {
-        $this->lat = $lat;
-    }
-
-    public function setLng($lng) {
-        $this->lng = $lng;
-    }
-
-    public function __construct() {
-        parent::__construct();
     }
 
     public function __toString() {
