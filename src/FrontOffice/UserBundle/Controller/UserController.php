@@ -161,6 +161,23 @@ class UserController extends Controller {
         $response = new Response($id);
         return $response;
     }
+     /**
+     * 
+     *
+     * @Route("profil={id}/accepter", name="accept_invitation_profil", options={"expose"=true})
+     * @Method("GET|POST")
+     * 
+     */
+    public function acceptprofilAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
+        $Invitation = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id'=> $id,'object2Id'=> $user1->getId()));
+        $Invitation->setConfirmed(true);
+        $em->persist($Invitation);
+        $em->flush();
+        $response = new Response($Invitation->getId());
+        return $response;
+    }
 
     /**
      * 

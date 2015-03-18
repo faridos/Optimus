@@ -23,7 +23,7 @@ $('#add_relation').click(function() {
 //envoyer message
 $('#envoyerMessage').click(function()
 {
-    
+
     var id = $('.idReciever').attr('id');
     console.log(id);
     var txt = $('#txt-message').val();
@@ -52,24 +52,53 @@ $('#btn-fermer-message').click(function() {
 $('#request_club').click(function() {
     $('.loader').show();
     var id = $('.requestClub').attr('id');
-   
+
     $.ajax({
         url: Routing.generate('request_club', {'id': id}),
         success: function() {
             $('.requestClub').replaceWith('Enattente');
-             $('.loader').hide();
+            $('.loader').hide();
         }
     });
 });
 $('#exit_club').click(function() {
- $('.loader').show();
+    $('.loader').show();
     var id = $('.exitClub').attr('id');
-   
+
     $.ajax({
         url: Routing.generate('exit_club', {'id': id}),
         success: function() {
             $('.exitClub').replaceWith('Rejoindre');
             $('.loader').hide();
+        }
+    });
+});
+$('#accept_relation_profil').click(function() {
+// $('.loader').show();
+    var id = $('.userWidget-1').attr('id');
+    console.log(id);
+    $.ajax({
+        url: Routing.generate('accept_invitation_profil', {'id': id}),
+        success: function(data) {
+            var nb = parseInt($('#nbInvitation').text());
+            var nouveauNb = nb - 1;
+
+            if (nouveauNb > 0)
+            {
+                $('#nbInvitation').replaceWith(nouveauNb);
+            }
+            else
+            {
+                $('#nombre_invitation').hide();
+            }
+            $('.invitation' + data).empty();
+            $('#replace-accepte-profil').empty().append(
+                    '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
+                    'Amis' +
+                    '<span class="caret"></span>' +
+                    ' </button>'
+
+                    );
         }
     });
 });
