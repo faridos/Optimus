@@ -144,11 +144,8 @@
 
         {% for album in albums %}
             $('#supprimerAlbum{{album.id}}').click(function() {
-
-                var id = $('#{{album.id}}').attr('id');
-
                 $.ajax({
-                    url: Routing.generate('album_delete', {'id': id}),
+                    url: Routing.generate('album_delete', {'id': {{album.id}}}),
                     success: function(data) {
                         $('#' + data).hide();
                         $("#supprimuss{{album.id}}").toggle();

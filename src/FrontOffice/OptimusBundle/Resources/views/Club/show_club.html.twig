@@ -10,21 +10,37 @@
                     <li class=""><a href="{{ path('albums_club', {'id' : club.id}) }}" role="tab" ><span class="icon-doc"></span> Albums</a></li>
                     <li class=""><a href="#videos" role="tab"><span class="icon-film"></span> Vidéos</a></li>
                     <li class=""><a href="{{ path('members_club',{'id':club.id})}}" role="tab" ><span class="icon-user-unfollow"></span> Adhérents</a></li>
-                     {% if app.user == club.createur %}<li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span>Demandes</a></li> {% endif %}
+                    {% if app.user == club.createur %}<li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span>Demandes</a></li> {% endif %}
                 </ul>
                 <div class="tab-content">
                     <br>
-                     {% if app.user == club.createur %}
-                            <div class="buttonsWrapper col-md-12">
+                    {% if app.user == club.createur %}
+                        <div class="buttonsWrapper col-md-12">
 
-                                <a href="#programme" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
-                                <br>
-                            </div>	
-                        {% endif %}
-                        <br>
-                        {% if 
+                            <a href="#programme" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
+                            <br>
+                        </div>	
+                    {% endif %}
+                    <br>
+                    {% if programmes is empty %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                            <button type="button" class="close" data-dismiss="alert"></button>
+                            <div align="center">    <strong >Notification Optimus</strong> </div>
+                        </div> <div class="row">
+                            <img  style="margin-top: -30px;width: 90%;height: 350px;"src="{{ asset('template/images/bienvenue.png') }}"/>
+                            <div class="address" align="center" style="margin: 0 20px;">
+                                <h4><span   >Nous ne trouvons aucun élément à afficher
+                                        pour le moment.
+                                        Si vous êtes un nouveau membre d'Optimus ou
+                                        si vous n'avez pas encore eu d'activités, alors
+                                        il est temps de commencer l'aventure!</span></h4>
+
+                            </div>
+                        </div>
+                    {% endif %}
                     <ul class="tab-pane fade  active in scrollbar" id="Programme" >
-                       
+
                         {% for programme in programmes %}
                             <div class="userWidget-2 tooltipsContainer col-xs-12" id="{{programme.id}}">
 
@@ -55,7 +71,37 @@
                                     </div>
                                 {% endif %}
                                 <div class="clearfix"></div>
-                            </div>	
+                            </div>
+                                 <!--------------- update programme ------------------>
+                            <div class="modal fade" id="modifierprogram{{programme.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    {{ render (controller('FrontOfficeOptimusBundle:Program:editProgramClub',  { 'id_club': club.id, 'id' : programme.id })) }}
+                                </div>
+                            </div>
+                                 <!--------------- supprission programme ------------------>
+                            <div class="modal" id="supprimuss{{programme.id}}"   >
+                                <div class="modal-dialog">
+                                    <div class="modal-content bordusbottomus">
+                                        <div class="modal-header bordustopus">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <p>Souhaitez vous vraiment supprimer l'album ?</p>
+
+
+                                        </div>
+                                        <div class="modal-footer supp-album">
+                                            <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                                            <a id="supprimerProgram{{programme.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         {% endfor %}
 
 
@@ -72,51 +118,16 @@
             {{ render (controller('FrontOfficeOptimusBundle:Program:create',  { 'id': club.id })) }}
         </div>
     </div>
-    {% for programme in programmes %}
-        <div class="modal fade" id="modifierprogram{{programme.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                {{ render (controller('FrontOfficeOptimusBundle:Program:editProgramClub',  { 'id_club': club.id, 'id' : programme.id })) }}
-            </div>
-        </div>
-        <div class="modal" id="supprimuss{{programme.id}}"   >
-            <div class="modal-dialog">
-                <div class="modal-content bordusbottomus">
-                    <div class="modal-header bordustopus">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <p>Souhaitez vous vraiment supprimer l'album ?</p>
-
-
-                    </div>
-                    <div class="modal-footer supp-album">
-                        <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                        <a id="supprimerProgram{{programme.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
-
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-    <!--------------- fin upload programme------------------> 
-
-    <!---------------- Update album-----------------------------> 
-
+    
 {% endblock %}
 {% block javascriptfils %}
     <script>
 
         {% for programme in programmes %}
             $('#supprimerProgram{{programme.id}}').click(function() {
-
-                var id = $('#{{programme.id}}').attr('id');
-                console.log(id);
+            
                 $.ajax({
-                    url: Routing.generate('program_delete', {'id': id}),
+                    url: Routing.generate('program_delete', {'id': {{programme.id}}}),
                     success: function(data) {
                         $('#' + data).hide();
                         $("#supprimuss{{programme.id}}").toggle();

@@ -105,11 +105,9 @@
         {% for photo in photos %}
             $('#supprimerPhoto{{photo.id}}').click(function() {
 
-                var id = $('#{{photo.id}}').attr('id');
-                console.log(id);
-              
+             
                 $.ajax({
-                    url: Routing.generate('photo_delete', {'id': id}),
+                    url: Routing.generate('photo_delete', {'id': {{photo.id}}}),
                     success: function(data) {
                         $('#' + data).hide();
                         $('#suppritus{{photo.id}}').toggle();

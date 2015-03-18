@@ -133,7 +133,7 @@ class UserController extends Controller {
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
         if (!is_object($user)) {
-            throw new AccessDeniedException('This user does not have access to this section.');
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $clubs = $em->getRepository('FrontOfficeOptimusBundle:Club')->getClubsMember($id);
 
@@ -309,6 +309,10 @@ class UserController extends Controller {
      * @Template()
      */
     public function editAccountAction($id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
         return $this->render('FrontOfficeUserBundle:Resetting:editAccount.html.twig', array('user' => $user));
@@ -322,6 +326,10 @@ class UserController extends Controller {
      * @Template()
      */
     public function editPhotoAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
         $editForm = $this->createForm(new UserPhotoType(), $entity);
@@ -341,6 +349,10 @@ class UserController extends Controller {
      * @Template()
      */
     public function editUserNameAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
         $editForm = $this->createForm(new UserNameType(), $entity);
@@ -360,6 +372,10 @@ class UserController extends Controller {
      * @Template("FrontOfficeUserBundle:Resetting:editEmail.html.twig")
      */
     public function editEmailAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
         $editForm = $this->createForm(new UserEmailType(), $entity);
@@ -379,10 +395,14 @@ class UserController extends Controller {
      * @Template("FrontOfficeUserBundle:Resetting:editNotification.html.twig")
      */
     public function editNoificationAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         
         $editForm = $this->createForm(new UserType(), $entity);
@@ -406,6 +426,10 @@ class UserController extends Controller {
      * 
      */
     public function editConfidentialityAction($id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
        
@@ -420,6 +444,10 @@ class UserController extends Controller {
      * @Template()
      */
     public function getAllNotificationAction() {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $notifications = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotification($user->getId(), $user->getCreatedAt());
@@ -434,6 +462,10 @@ class UserController extends Controller {
      * @Template()
      */
     public function getAllInvitationAction() {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $invitations = $em->getRepository('FrontOfficeUserBundle:User')->getInvitations($user);
@@ -448,6 +480,10 @@ class UserController extends Controller {
      * @Template()
      */
     public function getAllMessageAction() {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $conversation = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->getUserConversation($user);

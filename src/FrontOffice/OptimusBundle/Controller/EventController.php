@@ -60,8 +60,8 @@ class EventController extends Controller {
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
        
         
-        if ($event->getActive() == false) {
-            throw $this->createNotFoundException('Event Annulé.');
+        if (!$event || $event->getActive() == false) {
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('event' => $event));
         if ($notification) {
@@ -96,7 +96,7 @@ class EventController extends Controller {
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
         $photos = $em->getRepository("FrontOfficeOptimusBundle:Photo")->findby(array('event' =>$event));
         if ($event->getActive() == false) {
-            throw $this->createNotFoundException('Event Annulé.');
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         return $this->render('FrontOfficeOptimusBundle:Event:photo.html.twig', array('event' => $event,'photos' => $photos));
     }
@@ -117,7 +117,7 @@ class EventController extends Controller {
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
        
         if ($event->getActive() == false) {
-            throw $this->createNotFoundException('Event Annulé.');
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         return $this->render('FrontOfficeOptimusBundle:Event:video.html.twig', array('event' => $event));
     }
@@ -130,6 +130,10 @@ class EventController extends Controller {
      * @Template()
      */
     public function addAction() {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $event = new Event;
@@ -164,11 +168,15 @@ class EventController extends Controller {
      * @Template()
      */
     public function updateAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
         if (!$event || $event->getActive() == 0) {
-            throw $this->createNotFoundException('Unable to find Event entity.');
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $editForm = $this->createForm(new EventType(), $event);
         $editForm->handleRequest($request);
@@ -198,11 +206,15 @@ class EventController extends Controller {
      * @Template()
      */
     public function deleteAction($id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
         if (!$entity || $entity->getActive() == 0) {
-            throw $this->createNotFoundException('Unable to find Club entity.');
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $entity->setActive(false);
         $em->persist($entity);

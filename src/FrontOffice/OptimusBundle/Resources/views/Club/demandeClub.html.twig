@@ -50,11 +50,9 @@
        
         {% for demande in demandes %}
             $('#accept_rejoindre{{demande.id}}').click(function() {
-                
-                var id = $('#{{demande.id}}').attr('id');
              
                 $.ajax({
-                    url: Routing.generate('accept_demande', {'id': id}),
+                    url: Routing.generate('accept_demande', {'id': {{demande.id}}}),
                     success: function(data) {
                            
                            
