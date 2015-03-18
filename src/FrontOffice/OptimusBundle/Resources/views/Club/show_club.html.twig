@@ -13,15 +13,18 @@
                      {% if app.user == club.createur %}<li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span>Demandes</a></li> {% endif %}
                 </ul>
                 <div class="tab-content">
-
-                    <ul class="tab-pane fade  active in scrollbar" id="Programme" >
-                        {% if app.user == club.createur %}
+                    <br>
+                     {% if app.user == club.createur %}
                             <div class="buttonsWrapper col-md-12">
 
                                 <a href="#programme" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
                                 <br>
                             </div>	
                         {% endif %}
+                        <br>
+                        {% if 
+                    <ul class="tab-pane fade  active in scrollbar" id="Programme" >
+                       
                         {% for programme in programmes %}
                             <div class="userWidget-2 tooltipsContainer col-xs-12" id="{{programme.id}}">
 
