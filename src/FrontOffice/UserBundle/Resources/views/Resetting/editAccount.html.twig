@@ -18,58 +18,61 @@
                         <div class="tabsContainer">
                             <div class="tab-content">
                                 <div class="tab-pane fade active in" id="compte">
-                                    <table  id="example">
-                                    </table>
-                                    <table class="table" id="{{app.user.id}}">
-                                        <thead>
-                                            <tr>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">Adresse Email</th>
-                                                <td>
-                                                    <div class="emaill">{{ app.user.email }}</div>
-                                                    <div id="emaill"  style="display:none">
-                                                        {{ render(controller('FrontOfficeUserBundle:User:editEmail', {'id' : app.user.id })) }}
-                                                    </div>
-                                                </td>
-                                                <td> 
-                                                    <a href="javascript:visibilite('emaill');" class="tabledit-edit-button btn btn-sm btn-warning" style="float:right; border-radius: 25px; " >
-                                                        <span class="glyphicon glyphicon-pencil"></span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Nom d'utilisateur</th>
-                                                <td>
-                                                    <div class="username">{{ app.user.username }}</div>
-                                                    <div id="username"  style="display:none">
-                                                        {{ render(controller('FrontOfficeUserBundle:User:editUserName', {'id' : app.user.id })) }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="javascript:visibilite('username');" class="tabledit-edit-button btn btn-sm btn-warning" style="float:right; border-radius: 25px;">
-                                                        <span class="glyphicon glyphicon-pencil"></span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Mot de passe</th>
-                                                <td>
-                                                    <div class="pwd">********</div>
-                                                    <div id="pwd"  style="display:none">
-                                                        {{ render(controller('FrontOfficeUserBundle:ChangePassword:changePassword')) }}
-                                                    </div>
-                                                </td>
-                                                <td> 
-                                                    <a href="javascript:visibilite('pwd');" class="tabledit-edit-button btn btn-sm btn-warning" style="float:right; border-radius: 25px;">
-                                                        <span class="glyphicon glyphicon-pencil"></span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading optimus">Compte</div>
+                                        <table  id="example">
+                                        </table>
+                                        <table class="table" id="{{app.user.id}}">
+                                            <thead>
+                                                <tr>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Adresse Email</strong></th>
+                                                    <td>
+                                                        <div class="emaill">{{ app.user.email }}</div>
+                                                        <div id="emaill"  style="display:none">
+                                                            {{ render(controller('FrontOfficeUserBundle:User:editEmail', {'id' : app.user.id })) }}
+                                                        </div>
+                                                    </td>
+                                                    <td> 
+                                                        <a href="javascript:visibilite('emaill');" class="tabledit-edit-button btn btn-sm btn-warning" style="float:right; border-radius: 25px; " >
+                                                            <span class="glyphicon glyphicon-pencil"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Nom d'utilisateur</strong></th>
+                                                    <td>
+                                                        <div class="username">{{ app.user.username }}</div>
+                                                        <div id="username"  style="display:none">
+                                                            {{ render(controller('FrontOfficeUserBundle:User:editUserName', {'id' : app.user.id })) }}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:visibilite('username');" class="tabledit-edit-button btn btn-sm btn-warning" style="float:right; border-radius: 25px;">
+                                                            <span class="glyphicon glyphicon-pencil"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Mot de passe</strong></th>
+                                                    <td>
+                                                        <div class="pwd">********</div>
+                                                        <div id="pwd"  style="display:none">
+                                                            {{ render(controller('FrontOfficeUserBundle:ChangePassword:changePassword')) }}
+                                                        </div>
+                                                    </td>
+                                                    <td> 
+                                                        <a href="javascript:visibilite('pwd');" class="tabledit-edit-button btn btn-sm btn-warning" style="float:right; border-radius: 25px;">
+                                                            <span class="glyphicon glyphicon-pencil"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -92,10 +95,10 @@
                 $('.' + thingId).hide();
                 targetElement.style.display = "";
             } else {
-                 $('.' + thingId).show();
+                $('.' + thingId).show();
                 targetElement.style.display = "none";
             }
         }
     </script>
-   
+
 {% endblock %}

@@ -388,7 +388,7 @@ class UserController extends Controller {
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $em->flush();
-            return $this->redirect($this->generateUrl('setting_user', array('id' => $id)));
+            return $this->redirect($this->generateUrl('setting_user_notifications', array('id' => $id)));
         }
         return  array(
                     'entity' => $entity,
