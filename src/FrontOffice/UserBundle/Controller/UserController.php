@@ -373,10 +373,10 @@ class UserController extends Controller {
             $em->flush();
             return $this->redirect($this->generateUrl('setting_user', array('id' => $id)));
         }
-        return $this->render("FrontOfficeUserBundle:Resetting:editNotification.html.twig", array(
+        return  array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
-        ));
+        );
     }
 
     /**

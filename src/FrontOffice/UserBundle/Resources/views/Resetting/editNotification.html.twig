@@ -18,7 +18,28 @@
                         <div class="tabsContainer">
                             <div class="tab-content">
                                 <div class="tab-pane fade active in" id="compte">
-                                    
+                                  <form action="{{ path('setting_user_notifications', {'id' : entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal form-groups-bordered">
+                                        {{ form_errors(edit_form) }}
+                                        
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Type de notification</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{ form_widget(edit_form.type_notification) }}
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-5" style="margin-left: 20px;">
+                                                <br>
+                                                <button type="submit" class="btn btn-blue">Enregistrer</button>
+                                            </div>
+                                       
+                                        {{ form_widget(edit_form._token) }}
+
+
+                                    </form>  
                                 </div>
                                 <div class="tab-pane fade" id="confid">Confidentialité</div>
                                 <div class="tab-pane fade" id="notifications">Notifications</div>

@@ -216,7 +216,7 @@ class User extends BaseUser {
         return $this->type_notification;
     }
 
-    public function setType_notification($type_notification) {
+    public function setTypeNotification($type_notification) {
         $this->type_notification = $type_notification;
     }
 
