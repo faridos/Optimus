@@ -130,6 +130,13 @@
                                             
                                             <ul class="notifyList scrollbar" >
                                                 {% set friends = getFriends(user.id) %}
+                                                {% if friends is empty %}
+                                                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                                <button type="button" class="close" data-dismiss="alert"></button>
+                                <strong>Rien à afficher dans la catégorie amis!</strong> 
+                            </div>
+                                                {% endif %}
                                                     {% for friend in friends %}
                                                         <div class="tooltipsContainer avatar friendus">
                                                             <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
