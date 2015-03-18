@@ -10,7 +10,7 @@
                     <li class=""><a href="{{ path('albums_club', {'id' : club.id}) }}" role="tab" ><span class="icon-doc"></span> Albums</a></li>
                     <li class=""><a href="#videos" role="tab"><span class="icon-film"></span> Vidéos</a></li>
                     <li class=""><a href="{{ path('members_club',{'id':club.id})}}" role="tab" ><span class="icon-user-unfollow"></span> Adhérents</a></li>
-                    <li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span>Demandes</a></li>
+                     {% if app.user == club.createur %}<li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span>Demandes</a></li> {% endif %}
                 </ul>
                 <div class="tab-content">
 
@@ -23,7 +23,7 @@
                             </div>	
                         {% endif %}
                         {% for programme in programmes %}
-                            <div class="userWidget-2 tooltipsContainer col-xs-12" id="{{programme.id}}>
+                            <div class="userWidget-2 tooltipsContainer col-xs-12" id="{{programme.id}}">
 
                                 <div class="col-md-4">
                                     <div class="info col-md-12">
@@ -44,11 +44,13 @@
                                         <div class="name">Date fin: <span class="address">{{ programme.datefin|date('Y-m-d H:i:s') }}</span></div>
 
                                     </div></div>
-                                <div align="right">
-                                    <a href="#modifierprogram{{programme.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                    {% if app.user == club.createur %}
+                                    <div align="right">
+                                        <a href="#modifierprogram{{programme.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
-                                    <a href="#supprimerProgram{{programme.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                </div>
+                                        <a href="#supprimuss{{programme.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                {% endif %}
                                 <div class="clearfix"></div>
                             </div>	
                         {% endfor %}
@@ -67,61 +69,61 @@
             {{ render (controller('FrontOfficeOptimusBundle:Program:create',  { 'id': club.id })) }}
         </div>
     </div>
-        {% for programme in programmes %}
-<div class="modal fade" id="modifierprogram{{programme.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            {{ render (controller('FrontOfficeOptimusBundle:Program:create',  { 'id': club.id })) }}
+    {% for programme in programmes %}
+        <div class="modal fade" id="modifierprogram{{programme.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                {{ render (controller('FrontOfficeOptimusBundle:Program:editProgramClub',  { 'id_club': club.id, 'id' : programme.id })) }}
+            </div>
         </div>
-    </div>
-             <div class="modal" id="supprimuss{{programme.id}}"   >
-        <div class="modal-dialog">
-            <div class="modal-content bordusbottomus">
-        <div class="modal-header bordustopus">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                </div>
-                <div class="modal-body">
+        <div class="modal" id="supprimuss{{programme.id}}"   >
+            <div class="modal-dialog">
+                <div class="modal-content bordusbottomus">
+                    <div class="modal-header bordustopus">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                    </div>
+                    <div class="modal-body">
 
-                    <p>Souhaitez vous vraiment supprimer l'album ?</p>
-
-
-                </div>
-                <div class="modal-footer supp-album">
-                    <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                    <a id="supprimerProgram{{programme.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+                        <p>Souhaitez vous vraiment supprimer l'album ?</p>
 
 
+                    </div>
+                    <div class="modal-footer supp-album">
+                        <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                        <a id="supprimerProgram{{programme.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
 
+
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-{% endfor %}
+    {% endfor %}
     <!--------------- fin upload programme------------------> 
-   
+
     <!---------------- Update album-----------------------------> 
-    
+
 {% endblock %}
 {% block javascriptfils %}
     <script>
-      
+
         {% for programme in programmes %}
             $('#supprimerProgram{{programme.id}}').click(function() {
-               
+
                 var id = $('#{{programme.id}}').attr('id');
-             
+                console.log(id);
                 $.ajax({
                     url: Routing.generate('program_delete', {'id': id}),
                     success: function(data) {
-                        $('#'+data).hide();
-                     $("#supprimuss{{album.id}}").toggle();
-                     $('.modal-backdrop').hide();
+                        $('#' + data).hide();
+                        $("#supprimuss{{programme.id}}").toggle();
+                        $('.modal-backdrop').hide();
                     }
                 });
-                                           
+
 
             });
         {% endfor %}
-        
+
     </script>
 {% endblock %}

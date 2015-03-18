@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Program;
 use FrontOffice\OptimusBundle\Form\ProgramType;
-
+use Symfony\Component\HttpFoundation\Response;
 /**
  * Program controller.
  *
@@ -53,7 +53,7 @@ class ProgramController extends Controller {
      * @Method("POST")
      * @Template("FrontOfficeOptimusBundle:Program:editProgramClub.html.twig")
      */
-    public function editProgramClubAction($id_club, $id) {
+    public function editProgramClubAction(Request $request,$id_club, $id) {
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id_club);
         $program = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($id);
@@ -67,7 +67,7 @@ class ProgramController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('programs', array('id' => $id)));
+            return $this->redirect($this->generateUrl('show_club', array('id' => $id_club)));
         }
 
         return array(

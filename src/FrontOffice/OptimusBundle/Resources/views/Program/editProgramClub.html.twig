@@ -1,5 +1,5 @@
-<form action="{{ path('program_edit',{'id_club' : club.id, 'id' : program.id }) }}" {{ form_enctype(form) }} method="post" class="form-horizontal0 form-groups-bordered">
-    {{ form_errors(form) }}
+<form action="{{ path('program_edit',{'id_club' : club.id, 'id' : program.id }) }}" {{ form_enctype(edit_form) }} method="post" class="form-horizontal0 form-groups-bordered">
+    {{ form_errors(edit_form) }}
     <div class="modal-content bordusbottomus">
         <div class="modal-header bordustopus">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -9,18 +9,18 @@
             <div class="contactForm">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                        {{ form_widget(form.nom) }}
+                        {{ form_widget(edit_form.nom) }}
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
-                        {{ form_widget(form.description) }}
+                        {{ form_widget(edit_form.description) }}
                     </div>
 
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 cfItem">
-                        {{ form_widget(form.datedebut) }}
+                        {{ form_widget(edit_form.datedebut) }}
 
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 cfItem">
-                        {{ form_widget(form.datefin) }}
+                        {{ form_widget(edit_form.datefin) }}
                     </div>
 
                 </div>
@@ -31,6 +31,6 @@
             </div>
         </div>
     </div>
-    {{ form_widget(form._token) }}
+    {{ form_widget(edit_form._token) }}
 </form>
 

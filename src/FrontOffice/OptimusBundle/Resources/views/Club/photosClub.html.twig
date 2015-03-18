@@ -13,7 +13,7 @@
                     <li class="active"><a href="{{ path('albums_club',{'id' : club.id }) }}" role="tab" data-toggle="tab"><span class="icon-doc"></span> Albums</a></li>
                     <li class=""><a href="#videos" role="tab" ><span class="icon-film"></span> Vidéos</a></li>
                     <li class=""><a href="{{ path('members_club',{'id':club.id})}}" role="tab" ><span class="icon-user-unfollow"></span> Adhérents</a></li>
-                    <li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span> Demandes</a></li>
+                   {% if app.user == club.createur %}<li class=""><a href="{{ path('members_request',{'id':club.id})}}" role="tab" ><span class="icon-user-following"></span>Demandes</a></li> {% endif %}
 
                 </ul>
                 <div class="tab-content">
