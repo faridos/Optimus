@@ -34,21 +34,35 @@
                                         <a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
                                     </div>
                                 {% endif %}
-                                <div class="name osLight profilus namusclubus" ><strong>{{ club.nom }}</strong></div>              
+                                <div class="namusprofilus" ><strong>{{ club.nom }}</strong>
+                                </div>
+                                             
                             </div>
+                            {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
                             <div class="address profilus " style="font-size:18px">
-                                <div class="cardRating" style="color:#eab134"> 
-                                    <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'C'~club.id} %}</div>
+                                <div class="cardRating" style="color:#eab134">
+                                    {% if memberconfirmed %}
+                                        <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'C'~club.id} %}</div>
+                                    {% else %}
+                                        <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'C'~club.id} %}</div>
+                                    {% endif %}
                                 </div>
                             </div>
+                            
                             <div class="buttonsWrapper profilus" > 
                                 <div class="group">
                                     <div class="row">
-                                        <div class="col-md-6 pb20">
-                                            <div class="pc-about osLight">
+                                        <div class="col-md-10">
+                                            <div class="pc-about osLight col-md-6">
                                                 <div class="title nombrus ">Proprietaire :<span class="address detaillus">{{ club.createur.prenom }} {{ club.createur.nom }}</span></div>
                                             </div>
-                                            <div class="pc-about osLight">
+                                            <div class="pc-title osLight col-md-6">
+                                                <div class="title nombrus">Nombre adhérents :<span class="address detaillus">500</span></div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="pc-about osLight col-md-6">
                                                 {% if app.user != club.createur %}
                                                     {% set memberrequest = getMembreRequest(app.user,club) %}   
                                                     {% if memberrequest is empty %}
@@ -57,7 +71,7 @@
                                                         </a>
 
                                                     {% else %}
-                                                        {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
+
                                                         {% if memberconfirmed is empty %}
                                                             <a class="btn btn-green btn-round active" href="#"  >
                                                                 <span class="fa icon-action-redo "></span> <span class="requestAttente" >En attente</span>
@@ -73,12 +87,8 @@
                                                     <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
                                                 </a>
                                             </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="pc-title osLight">
-                                                <div class="title nombrus">Nombre adhérents :<span class="address detaillus">500</span></div>
-                                            </div>
-                                            <div class="pc-title osLight">
+                                            
+                                            <div class="pc-title osLight col-md-6">
                                                 <div class="buttonsWrapper pb20 ">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
                                             </div>
                                         </div>
@@ -89,21 +99,24 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="userWidget-2" >
-                            <div class="avatar">
-                            </div>
-                            <div class="info">
+                           
+                            
                                 <div class="row">
+                                    <div class="col-md-12">
                                     <div class="col-md-6 pb20">
-                                        <div class="pc-about osLight"><div class="title eventus">Déscription :<span class="address detaillus">Foulén ben foulén ben faltén el fouléni 3adham ALLAH ajrah wa ad5alah fassi7a jannatih</span></div>
+                                        <div class="pc-about osLight info">
+                                            <div class="title eventus">Description :<span class="address detaillus">{{club.description}}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="pc-title osLight"><div class="title eventus">Téléphone: <span class="address "> 06 23 25 58</span></div>
-                                            <div class="title eventus">Email : <span class="address ">foulen@email.com </span></div>
+                                        <div class="pc-title osLight info"><div class="title eventus">Téléphone: <span class="address ">{{club.createur.tel}}</span></div>
+                                            <div class="title eventus">Email : <span class="address ">{{club.createur.email}} </span></div>
                                         </div>
                                     </div>
+                                        </div>
                                 </div>
-                            </div>
+                          
                             <div class="clearfix"></div>
                         </div>
                         <div class="clearfix"></div>
@@ -146,7 +159,7 @@
         (function ($) {
 
             "use strict";
-          
+
             var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
             var marker = new google.maps.Marker({
                 position: myLatLng,
@@ -155,7 +168,7 @@
                 draggable: false,
                 animation: google.maps.Animation.DROP,
             });
-            
+
             map.setZoom(14);
             map.setCenter(myLatLng);
         })(jQuery);
