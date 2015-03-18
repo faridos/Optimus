@@ -378,6 +378,20 @@ class UserController extends Controller {
                     'edit_form' => $editForm->createView(),
         );
     }
+    
+    /**
+     * 
+     *
+     * @Route("profil={id}/settings/confidentiality", name="setting_user_confidentiality", options={"expose"=true})
+     * @Method("POST|GET|HEAD")
+     * 
+     */
+    public function editConfidentialityAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
+       
+        return $this->render('FrontOfficeUserBundle:Resetting:editConfidentiality.html.twig',array('entity' => $entity));
+    }
 
     /**
      * 

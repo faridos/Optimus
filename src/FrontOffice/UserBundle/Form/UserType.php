@@ -14,7 +14,7 @@ class UserType extends AbstractType
          $builder
                
                  ->add('type_notification','choice', array('choices' => array('All'=>'Tout','NOT'=>'Aucune','EC' => 'Evenement et Club','EU' => 'Evenement et nouvelle inscription',
-                            'UC' => 'User et club','E' => 'event','C' => 'club','U' => 'user'),'attr'=>array('class'=>'form-control')));
+                            'UC' => 'User et club','E' => 'event','C' => 'club','U' => 'user'),'attr'=>array('class'=>'search-optimus')));
          
      }
       /**

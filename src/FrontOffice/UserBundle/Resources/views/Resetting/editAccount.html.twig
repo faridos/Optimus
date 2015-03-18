@@ -8,9 +8,9 @@
                     <div class="col-md-3">
                         <ol class="breadcrumb">
                             <ul class="notifyList nav">
-                                <li class="active"><a href="{{ path('setting_user',{'id': app.user.id}) }}" class="notifyName" role="tab" data-toggle="tab"><span class="notifyIcon icon-settings"></span> Compte</a></li>
-                                <li class=""><a href="#confid" class="notifyName" role="tab" data-toggle="tab"><span class="notifyIcon fa fa-unlock-alt"></span> Confidentialité</a></li>
-                                <li class=""><a href="#notifications" class="notifyName" role="tab" data-toggle="tab"><span class="notifyIcon icon-bell"></span> Notifications</a></li>
+                                <li class="active"><a href="{{ path('setting_user',{'id': app.user.id}) }}" class="notifyName" role="tab" ><span class="notifyIcon icon-settings"></span> Compte</a></li>
+                                <li class=""><a href="{{ path('setting_user_confidentiality',{'id': app.user.id}) }}" class="notifyName" role="tab" ><span class="notifyIcon fa fa-unlock-alt"></span> Confidentialité</a></li>
+                                <li class=""><a href="{{ path('setting_user_notifications',{'id': app.user.id}) }}" class="notifyName" role="tab" ><span class="notifyIcon icon-bell"></span> Notifications</a></li>
                             </ul>
                         </ol>
                     </div>
@@ -71,8 +71,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="tab-pane fade" id="confid">Confidentialité</div>
-                                <div class="tab-pane fade" id="notifications">Notifications</div>
                             </div>
                         </div>
                         <div class="clearfix"></div>

@@ -1,1 +1,35 @@
-{# empty Twig template #}
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block  body %}
+    <div id="wrapper">
+        <div id="content" class="max">
+            <div class="components">
+                <h4>Paramètres</h4>
+                <div class="row">
+                    <div class="col-md-3">
+                        <ol class="breadcrumb">
+                            <ul class="notifyList nav">
+                                <li class=""><a href="{{ path('setting_user',{'id': app.user.id}) }}" class="notifyName" role="tab" ><span class="notifyIcon icon-settings"></span> Compte</a></li>
+                                <li class="active"><a href="{{ path('setting_user_confidentiality',{'id': app.user.id}) }}" class="notifyName" role="tab" ><span class="notifyIcon fa fa-unlock-alt"></span> Confidentialité</a></li>
+                                <li class=""><a href="{{ path('setting_user_notifications',{'id': app.user.id}) }}" class="notifyName" role="tab" ><span class="notifyIcon icon-bell"></span> Notifications</a></li>
+                            </ul>
+                        </ol>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="tabsContainer">
+                            <div class="tab-content">
+                                <div class="tab-pane fade active in" id="compte">
+                                    Confidentialité
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}
+{% block javascriptfils %}
+{% endblock %}
+
