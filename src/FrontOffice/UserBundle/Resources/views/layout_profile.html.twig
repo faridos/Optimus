@@ -8,7 +8,7 @@
         </div>
         <div id="content" class="mob-max" style="overflow: hidden;height: 100%;">
             <div class="singleTop whiteBg" style="height:100%">
-                <div class="row mb20">
+                <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pb20">
                         <div class="userWidget-1" id="{{ user.id }}">
                             <div class="avatar" id="main">
@@ -96,13 +96,15 @@
                                             <br><br><br>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <div class="clearfix"></div>
-                                        <div class="userWidget-2" >
+                                        
+                                        <div class="panel panel-default" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
+                                <div class="panel-heading optimus"> <span class="icon-user"></span><span class="navLabel"> Informations</span></div>
+                                
+                                        <div class="userWidget-2" style="margin-bottom:0px;">
                                             <div class="col-md-6">
                                                 <div class="avatar">
                                                 </div>
                                                 <div class="info">
-                                                    <div class="name">Informations</div>
                                                     <div class="title">Date de naissance : <span class="address">{{ user.dateNaissance|date('Y-d-m') }} </span>
                                                     </div>
                                                     <div class="title">Adresse : <span class="address">{{ user.adresse }}</span>
@@ -114,17 +116,18 @@
                                                     <div class="name"></div>
                                                     <div class="title">Numéro de téléphone : <span class="address">{{ user.tel }}</span></div>
                                                     <div class="title">Email: <span class="address">{{ user.email }}</span></div>
-                                                    <div class="title">Pseudo: <span class="address">{{ user.username }}</span></div>
                                                 </div></div>
                                             <div class="clearfix"></div>
                                         </div>
+                                           </div>    
                                         <div class="clearfix"></div>
-                                        <div class="userWidget-2">
+                                        <div class="panel panel-default" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
+                                <div class="panel-heading optimus"> <span class="icon-user"></span><span class="navLabel"> Liste d'amis</span></div>
+                                
+                                        <div class="userWidget-2" style="margin-bottom:0px;">
                                             <div class="avatar">
                                             </div>
-                                            <div class="info">
-                                                <div class="name">Liste des amis</div>
-                                            </div> <div class="clearfix"></div>
+                                            
                                             <ul class="notifyList scrollbar" >
                                                 {% set friends = getFriends(user.id) %}
                                                     {% for friend in friends %}
@@ -139,6 +142,7 @@
 
                                                 <div class="clearfix"></div>
                                             </div>
+                                        </div>
                                         </div>
 
                                     </div>

@@ -63,15 +63,12 @@
                                 <div class="col-md-6 pb20">
                                     
                                         {% if not isparticipant and date(event.dateFin)>= date() %}
-                                            <a class="btn btn-green btn-round eventus" href="{{path('add_participation',{id: event.id})}}" >
+                                            <a class="btn btn-green btn-round eventus " href="{{path('add_participation',{id: event.id})}}" >
                                                 <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
                                             </a>
-
                                         {% endif %}
-
                                     </div>
                                     <div class="col-md-6">
-
                                         {% if isparticipant and date(event.dateFin)>= date() %}
                                             <div class="buttonsWrapper pb20 buttonleftus">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
                                         {% endif %}

@@ -31,7 +31,13 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('isParticipant', array($this, 'isParticipant')),
             new \Twig_SimpleFunction('participants', array($this, 'participants')),
             new \Twig_SimpleFunction('isAmi', array($this, 'isAmi')),
+            new \Twig_SimpleFunction('adherents', array($this, 'adherents')),
         );
+    }
+    
+    public function  adherents($id){
+        $club = $this->em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->getMembers($id,$club->getCreateur()->getId());
     }
     public function  participants($event){
          return $this->em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants2($event, $event->getCreateur());

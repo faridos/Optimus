@@ -57,7 +57,8 @@
                                                 <div class="title nombrus ">Proprietaire :<span class="address detaillus">{{ club.createur.prenom }} {{ club.createur.nom }}</span></div>
                                             </div>
                                             <div class="pc-title osLight col-md-6">
-                                                <div class="title nombrus">Nombre adhérents :<span class="address detaillus">500</span></div>
+                                                {% set adherents= adherents(club.id)%}
+                                                <div class="title nombrus">Nombre adhérents :<span class="address detaillus">{{adherents|length}}</span></div>
                                             </div>
                                             
                                         </div>
@@ -89,7 +90,11 @@
                                             </div>
                                             
                                             <div class="pc-title osLight col-md-6">
-                                                <div class="buttonsWrapper pb20 ">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
+                                                <div class="buttonsWrapper pb20 ">
+                                                    {% if memberconfirmed %}
+                                                  {{ socialButtons( {'pinterest' : false,'linkedin': false}) }}
+                                                  {% endif %}
+                                                </div>
                                             </div>
                                         </div>
                                     </div> 
@@ -104,7 +109,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                     <div class="col-md-6 pb20">
-                                        <div class="pc-about osLight info">
+                                        <div class="pc-about osLight info" style="margin-left:20px">
                                             <div class="title eventus">Description :<span class="address detaillus">{{club.description}}</span>
                                             </div>
                                         </div>
