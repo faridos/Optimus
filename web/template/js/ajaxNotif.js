@@ -74,7 +74,9 @@ $('#exit_club').click(function() {
     });
 });
 $('#accept_relation_profil').click(function() {
-// $('.loader').show();
+    $('#accept_relation_profil').hide();
+    $('#loader_accept_relation').show();
+
     var id = $('.userWidget-1').attr('id');
     console.log(id);
     $.ajax({
@@ -92,6 +94,7 @@ $('#accept_relation_profil').click(function() {
                 $('#nombre_invitation').hide();
             }
             $('.invitation' + data).empty();
+            $('#loader_accept_relation').hide();
             $('#replace-accepte-profil').empty().append(
                     '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
                     'Amis' +

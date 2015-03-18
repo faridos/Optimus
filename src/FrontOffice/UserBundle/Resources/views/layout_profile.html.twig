@@ -65,7 +65,11 @@
                                                     <span style="color:#fff" class="fa icon-user-follow state-active"></span> 
                                                     <span  class="state" >Accepter l'invitation</span>
                                                 </a>
+                                                  
                                                 </div>
+                                                  <a class="loader" id="loader_accept_relation">
+                                                                            <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                                                        </a>
                                                 {% elseif pendingInvitations[0].object1Id == app.user.id %}
                                                 <a id="enattente" class="btn btn-green btn-round btn-success" href="#"  >
                                                     <span style="color:#fff" class="fa icon-user-follow state-active"></span> 

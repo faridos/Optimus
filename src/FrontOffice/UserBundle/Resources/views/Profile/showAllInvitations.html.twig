@@ -72,54 +72,56 @@
 
                             //accept invitation
                             {% for invitation in invitations %}
-                                        $('#accept_amis{{invitation.id}}').click(function() {
-                                            $('#accept_amis{{invitation.id}}').hide();
-                                            $('#loader{{invitation.id}}').show();
+                                $('#accept_amis{{invitation.id}}').click(function() {
+                                    $('#accept_amis{{invitation.id}}').hide();
+                                    $('#loader{{invitation.id}}').show();
                                             var id = $('#' +{{invitation.id}} ).attr('id');
-                                                    $.ajax({
-                                                        url: Routing.generate('accept_relation', {'id': id}),
-                                                        success: function(data) {
-                                                            var nb = parseInt($('#nbrsInvitation').text());
-                                                            var nouveauNb = nb - 1;
+                                            $.ajax({
+                                                url: Routing.generate('accept_relation', {'id': id}),
+                                                success: function(data) {
+                                                    var nb = parseInt($('#nbrsInvitation').text());
+                                                    var nouveauNb = nb - 1;
 
-                                                            if (nouveauNb > 0)
-                                                            {
-                                                                $('#nbrsInvitation').replaceWith(nouveauNb);
-                                                            }
-                                                            else {
-                                                                $('#nbrsInvitation').replaceWith('0');
-                                                            }
+                                                    if (nouveauNb > 0)
+                                                    {
+                                                        $('#nbrsInvitation').replaceWith(nouveauNb);
+                                                        $('#nbInvitation').replaceWith(nouveauNb);
+                                                    }
+                                                    else {
+                                                        $('#nombre_invitation').hide();
+                                                        $('#nbrsInvitation').replaceWith('0');
+                                                    }
+                                                    $('.invitation' + data).empty();
+                                                    $('.emptyinvitation' + data).hide();
+                                                    // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
 
-                                                            $('.emptyinvitation' + data).hide();
-                                                            // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
-
-                                                        }
-                                                    });
-                                        });
-                                        $('#delete_demande_amis{{invitation.id}}').click(function() {
-                                            $('#delete_demande_amis{{invitation.id}}').hide();
-                                            $('#loaderdelete{{invitation.id}}').show();
+                                                }
+                                            });
+                                });
+                                $('#delete_demande_amis{{invitation.id}}').click(function() {
+                                    $('#delete_demande_amis{{invitation.id}}').hide();
+                                    $('#loaderdelete{{invitation.id}}').show();
                                             var id = $('#' +{{invitation.id}} ).attr('id');
-                                                    $.ajax({
-                                                        url: Routing.generate('supprimer_invitation', {'id': id}),
-                                                        success: function(data) {
-                                                            var nb = parseInt($('#nbrsInvitation').text());
-                                                            var nouveauNb = nb - 1;
+                                            $.ajax({
+                                                url: Routing.generate('supprimer_invitation', {'id': id}),
+                                                success: function(data) {
+                                                    var nb = parseInt($('#nbrsInvitation').text());
+                                                    var nouveauNb = nb - 1;
 
-                                                            if (nouveauNb > 0)
-                                                            {
-                                                                $('#nbrsInvitation').replaceWith(nouveauNb);
-                                                            }
-                                                            else {
-                                                                $('#nbrsInvitation').replaceWith('0');
-                                                            }
+                                                    if (nouveauNb > 0)
+                                                    {
+                                                        $('#nbrsInvitation').replaceWith(nouveauNb);
+                                                    }
+                                                    else {
+                                                        $('#nbrsInvitation').replaceWith('0');
+                                                    }
 
-                                                            $('.emptyinvitation' + data).hide();
-                                                            // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+                                                    $('.emptyinvitation' + data).hide();
+                                                    // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
 
-                                                        }
-                                                    });
-                                        });
+                                                }
+                                            });
+                                });
                             {% endfor %}
                         </script>
                     {% endblock %}
