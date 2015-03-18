@@ -212,11 +212,11 @@ class User extends BaseUser {
     public function getPath() {
         return $this->path;
     }
-    function getType_notification() {
+    public function getTypeNotification() {
         return $this->type_notification;
     }
 
-    function setType_notification($type_notification) {
+    public function setType_notification($type_notification) {
         $this->type_notification = $type_notification;
     }
 

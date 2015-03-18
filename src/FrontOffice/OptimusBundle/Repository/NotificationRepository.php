@@ -9,7 +9,7 @@ class NotificationRepository extends EntityRepository {
     public function getNotification($id, $date) {
         $em = $this->getEntityManager();
         $user = $em->getRepository("FrontOfficeUserBundle:User")->find($id);
-        $type = $user->getType_notification();
+        $type = $user->getTypeNotification();
         switch ($type) {
             case 'NOT':
                 break;
@@ -121,7 +121,7 @@ class NotificationRepository extends EntityRepository {
     public function getNbNotification($id, $date) {
         $em = $this->getEntityManager();
         $user = $em->getRepository("FrontOfficeUserBundle:User")->find($id);
-        $type = $user->getType_notification();
+        $type = $user->getTypeNotification();
         $notifications = $this->getNotification($id, $date);
         if ($notifications) {
 
