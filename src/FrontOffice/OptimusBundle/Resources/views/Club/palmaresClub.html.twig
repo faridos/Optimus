@@ -27,7 +27,7 @@
                         <div class="row">
                             <br>
                             {% for reward in rewards %}
-                            <div class="col-md-12" id="{{reward.id}}">
+                            <div class="col-md-12" id="block{{ reward.id }}">
                                     <div data-linkto="" class="card albumus tooltipsContainer" >
                                         <br>
                                         <div class="profile-card">
@@ -54,10 +54,12 @@
                                             </div>
                                             <div class="pc-name">{{ reward.date |date('Y-m-d')}}</div>
                                         </div>
+                                        {% if app.user== club.createur %}
                                         <div align="right">
                                             <a href="#modifierpalmares_{{reward.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
                                             <a href="#supprimerpalmares_{{reward.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
                                         </div>
+                                        {% endif %}
                                         <br>
 
                                         <div class="clearfix"></div>
@@ -128,7 +130,7 @@
                 $.ajax({
                     url: Routing.generate('delete_reward_club', {'id': {{reward.id}}}),
                     success: function(data) {
-                        $('#' + data).hide();
+                        $('#block'+data).hide();
                         $("#supprimerpalmares_{{reward.id}}").toggle();
                         $('.modal-backdrop').hide();
                     }

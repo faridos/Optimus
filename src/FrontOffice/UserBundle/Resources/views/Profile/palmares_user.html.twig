@@ -46,7 +46,7 @@
                         {% for reward in rewards %}
                             <div class="row">
                                 <br>
-                                <div class="col-md-12" id="{{reward.id}}}">
+                                <div class="col-md-12" id="block{{ reward.id }}">
                                     <div data-linkto="" class="card albumus tooltipsContainer" >
                                         <br>
                                         <div class="profile-card">
@@ -150,7 +150,7 @@
                 $.ajax({
                     url: Routing.generate('delete_reward_user', {'id': {{reward.id}}}),
                     success: function(data) {
-                        $('#' + data).hide();
+                        $('#block'+data).hide();
                         $("#supprimerpalmares_{{reward.id}}").toggle();
                         $('.modal-backdrop').hide();
                     }
