@@ -32,9 +32,9 @@
                             <div class="address eventus">
                                 <div class="cardRating" style="color:#eab134"> 
                                     {% if isparticipant %}
-                                    <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with {'id' : 'E'~event.id} %}</div>
+                                    <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with { 'id' : 'E'+event.id } %}</div>
                                     {% else %}
-                                    <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'E'~event.id} %}</div>
+                                    <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with { 'id' : 'E'+event.id } %}</div>
                                     {% endif %}
                                 </div>
                             </div>
