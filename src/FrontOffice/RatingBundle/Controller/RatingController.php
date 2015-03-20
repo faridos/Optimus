@@ -14,14 +14,15 @@ class RatingController extends BaseController
     {
         $ratingManager = $this->container->get('dcs_rating.manager.rating');
 
-        if (null === $rating = $ratingManager->findOneById($id)) {
-            $rating = $ratingManager->createRating($id);
-            $ratingManager->saveRating($rating);
+        $rating = $ratingManager->findOneById($id);
+             $rate=0;
+        if($rating){
+            $rate=$rating->getRate();
         }
 
         return $this->render('FrontOfficeRatingBundle:Rating:star.html.twig', array(
             'rating' => $rating,
-            'rate'   => $rating->getRate(),
+            'rate'   => $rate,
             'maxValue' => $this->container->getParameter('dcs_rating.max_value'),
         ));
     }
