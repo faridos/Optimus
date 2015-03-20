@@ -8,8 +8,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Program;
+use FrontOffice\OptimusBundle\Entity\Seance;
 use FrontOffice\OptimusBundle\Form\ProgramType;
+use FrontOffice\OptimusBundle\Form\SeanceType;
 use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Program controller.
  *
@@ -49,11 +52,45 @@ class ProgramController extends Controller {
     /**
      * Creates a new Program entity.
      *
+     * @Route("club={id_club}/program={id}/show", name="program_show")
+     * @Method("GET|POST")
+     * @Template("FrontOfficeOptimusBundle:Program:show.html.twig")
+     */
+    public function showProgramAction($id_club, $id) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id_club);
+        $programme = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($id);
+        $sessions = $em->getRepository('FrontOfficeOptimusBundle:Seance')->findBy(array('program' => $programme));
+        // setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
+        //$date = (strftime("%A"));
+      
+            $seance = new Seance();
+            $seance->setProgram($programme);
+            $form = $this->createForm(new SeanceType(), $seance);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($seance);
+                $em->flush();
+            }
+        
+        return array(
+            'form' => $form->createView(),
+            'club' => $club,
+            'programme' => $programme,
+            'sessions' => $sessions
+        );
+    }
+
+    /**
+     * Creates a new Program entity.
+     *
      * @Route("club={id_club}/program={id}/modifier", name="program_edit")
      * @Method("POST")
      * @Template("FrontOfficeOptimusBundle:Program:editProgramClub.html.twig")
      */
-    public function editProgramClubAction(Request $request,$id_club, $id) {
+    public function editProgramClubAction(Request $request, $id_club, $id) {
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id_club);
         $program = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($id);
@@ -84,13 +121,13 @@ class ProgramController extends Controller {
      * @Method("GET|DELETE")
      */
     public function deleteAction($id) {
-       
+
         $em = $this->getDoctrine()->getManager();
         $program = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($id);
         $em->remove($program);
         $em->flush();
         $response = new Response($id);
-         return $response;
+        return $response;
     }
 
 }

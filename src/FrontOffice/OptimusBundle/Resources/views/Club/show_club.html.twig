@@ -46,8 +46,8 @@
 
                                 <div class="col-md-4">
                                     <div class="info col-md-12">
-                                        <a href="#"> <div class="name" >Nom du programme :</div></a>
-                                        <div class="title">{{ programme.nom }} </div>
+                                        <div class="name" >Nom du programme :</div>
+                                        <a href="{{ path('program_show',{'id_club':club.id,'id' :programme.id} ) }}"> <div class="title">{{ programme.nom }} </div></a>
 
                                     </div></div>
                                 <div class="col-md-4">

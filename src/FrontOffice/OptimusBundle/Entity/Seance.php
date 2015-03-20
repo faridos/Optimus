@@ -31,25 +31,22 @@ class Seance
      * @ORM\Column(name="Nom", type="string", length=255)
      */
     private $nom;
-    /**
-     * @var string
+    
+   /**
+     * @var \DateTime
      *
-     * @ORM\Column(name="jour", type="string", length=255)
-     * @Assert\Choice(choices = {"Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"})
+     * @ORM\Column(name="Date_debut", type="datetime")
      */
-    private $jourseance;
+    private $datedebut;
+
     /**
-     * @var datetime $heuredebut
+     * @var \DateTime
      *
-     * @ORM\Column(name="heure_debut", type="time", nullable=true)
+     * @ORM\Column(name="Date_fin", type="datetime")
+     * 
      */
-    private $heuredebut;
-    /**
-     * @var datetime $heurefin
-     *
-     * @ORM\Column(name="heure_fin", type="time", nullable=true)
-     */
-    private $heurefin;
+    private $datefin;
+    
      public function __construct()
     {
       
@@ -68,17 +65,7 @@ class Seance
         return $this->nom;
     }
 
-    public function getJourseance() {
-        return $this->jourseance;
-    }
-
-    public function getHeuredebut() {
-        return $this->heuredebut;
-    }
-
-    public function getHeurefin() {
-        return $this->heurefin;
-    }
+    
 
     public function setId($id) {
         $this->id = $id;
@@ -91,18 +78,23 @@ class Seance
     public function setNom($nom) {
         $this->nom = $nom;
     }
-
-    public function setJourseance($jourseance) {
-        $this->jourseance = $jourseance;
+   
+    public function getDatedebut() {
+        return $this->datedebut;
     }
 
-    public function setHeuredebut(\DateTime $heuredebut) {
-        $this->heuredebut = $heuredebut;
+    public function getDatefin() {
+        return $this->datefin;
     }
 
-    public function setHeurefin(\DateTime $heurefin) {
-        $this->heurefin = $heurefin;
+    public function setDatedebut(\DateTime $datedebut) {
+        $this->datedebut = $datedebut;
     }
 
+    public function setDatefin(\DateTime $datefin) {
+        $this->datefin = $datefin;
+    }
+
+    
         //put your code here
 }

@@ -43,9 +43,13 @@ class ClubController extends Controller {
      * @Template("FrontOfficeOptimusBundle:Club:add.html.twig")
      */
     public function addClubAction() {
+          if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
         if (!$this->get('security.context')->isGranted('ROLE_ENTRAINEUR')) {
             // Sinon on déclenche une exception « Accès interdit »
-            throw new AccessDeniedException('Accès limité aux Entraîneurs.');
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
