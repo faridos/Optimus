@@ -26,22 +26,18 @@ $('#add_relation').click(function() {
 //envoyer message
 $('#envoyerMessage').click(function()
 {
-
     var id = $('.idReciever').attr('id');
-    console.log(id);
     var txt = $('#txt-message').val();
 
     $.ajax({
         url: Routing.generate('message_send', {'id': id, 'content': txt}),
-        error: function() {
-            $('#messageEch').show();
-            $('#messageEnvoyer').hide();
-        },
+//        error: function() {
+//            $('#messageEch').show();
+//            $('#messageEnvoyer').hide();
+//        },
         success: function() {
             $('#messageEch').hide();
-
             $('#messageEnvoyer').show().delay(3000).fadeOut();
-            ;
             $('textarea').val('');
         }
     });

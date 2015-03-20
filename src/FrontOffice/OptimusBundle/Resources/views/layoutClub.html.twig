@@ -165,13 +165,13 @@
 
             "use strict";
 
-            var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
-            var marker = new google.maps.Marker({
+               var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
+               var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
                 icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),
                 draggable: false,
-                animation: google.maps.Animation.DROP,
+                animation: google.maps.Animation.DROP
             });
 
             map.setZoom(14);
