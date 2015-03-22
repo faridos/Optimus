@@ -195,23 +195,31 @@
    }
 
    function getEventData() {
-      var year = new Date().getFullYear();
-      var month = new Date().getMonth();
-      var day = new Date().getDate();
-
+          {% for session in sessions %}
+      var d = new Date(Date.parse('{{session.datedebut.date}}'));
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      var heure = d.getHours();
+      var m = d.getMinutes();
+      var df = new Date(Date.parse('{{session.datefin.date}}'));
+      var heuref = df.getHours();
+      var mf = df.getMinutes();
+    
       return {
          events : [
-             {% for session in sessions %}
-           
+          
+          
             {
                "id":"{{ session.id }}",
-               "start": new Date(year, month, day - 1, 8),
-               "end": new Date(year, month, day - 1, 9, 30),
+               "start": new Date(year, month, day , heure, m),
+               "end": new Date(year, month, day , heuref, mf),
                "title":"{{ session.nom }}"
             }
-            {% endfor %}
+        
          ]
       };
+          {% endfor %}
    }
 
 

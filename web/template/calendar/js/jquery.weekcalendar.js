@@ -333,7 +333,7 @@
          for (var i = start; i < end; i++) {
 
             var bhClass = (options.businessHours.start <= i && options.businessHours.end > i) ? "wc-business-hours" : "";
-            calendarBodyHtml += "<div class=\"wc-hour-header " + bhClass + "\">"
+            calendarBodyHtml += "<div class=\"" + bhClass + "\">"
             if (options.use24Hour) {
                calendarBodyHtml += "<div class=\"wc-time-header-cell\">" + self._24HourForIndex(i) + "</div>";
             } else {
