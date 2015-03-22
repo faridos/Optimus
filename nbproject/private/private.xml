@@ -3,23 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Registration/register_content.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Registration/checkEmail.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/ResettingController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Resetting/passwordAlreadyRequested.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Resetting/reset.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/app/Resources/views/base.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Twig/Extension/OptimusExtension.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Form/UserNameType.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/UserController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Repository/NotificationRepository.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Resetting/editNotification.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Form/UserPhotoType.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Form/UserType.php</file>
             <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Entity/User.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/config/services.yml</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Registration/confirmed.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/RegistrationController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Form/Type/RegistrationFormType.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/User/index.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Resetting/checkEmail.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Form/Type/ResettingFormType.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Resetting/request_content.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/web/template/js/datus.js</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Resetting/request.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Repository/UserRepository.php</file>
         </group>
     </open-files>
 </project-private>
