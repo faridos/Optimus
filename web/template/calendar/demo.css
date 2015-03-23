@@ -3,15 +3,7 @@ body {
 	font-size: 83.33%;
 }
 
-h1 {
-	padding: 0.5em;
-	font-size: 1.6em;
-} 
 
-h2 {
-	margin: 0.5em 0;
-	font-size: 1.4em;	
-}
 
 p {
 	margin: 0.5em;	
@@ -41,7 +33,8 @@ p {
 }
 
 .wc-header td {
-	background: url(images/header-bg.png) repeat-x;
+	background-color: #C02100;
+        color: #fff;
 }
 
 label {
