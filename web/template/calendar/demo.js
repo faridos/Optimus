@@ -1,62 +1,4 @@
-{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
-{% block stylesheets %}
-   <link rel='stylesheet' type='text/css' href='{{ asset('template/calendar/reset.css') }}' />
-    <!--
-	<link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css' />
-	-->
-
-    <link rel='stylesheet' type='text/css' href='{{ asset('template/calendar/libs/css/smoothness/jquery-ui-1.8rc3.custom.css') }}' />
-
-
-	<link rel='stylesheet' type='text/css' href='{{ asset('template/calendar/jquery.weekcalendar.css') }}' />
-	<link rel='stylesheet' type='text/css' href='{{ asset('template/calendar/demo.css') }}' />
-{% endblock %}
-{% block body %}
-    <div id="wrapper">
-        <div id="content" class="max">
-            <div class="components">
-                <div class="row">
-                    <div id='calendar'></div>
-                    <div id="event_edit_container">
-                        <form>
-                            <input type="hidden" />
-                            <ul>
-                                <li>
-                                    <span>Date: </span><span class="date_holder"></span> 
-                                </li>
-                                <li>
-                                    <label for="start">Start Time: </label><select name="start"><option value="">Select Start Time</option></select>
-                                </li>
-                                <li>
-                                    <label for="end">End Time: </label><select name="end"><option value="">Select End Time</option></select>
-                                </li>
-                                <li>
-                                    <label for="title">Title: </label><input type="text" name="title" />
-                                </li>
-                                <li>
-                                    <label for="body">Body: </label><textarea name="body"></textarea>
-                                </li>
-                            </ul>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-{% endblock %}
-{% block javascriptfils %}
-
-    <!--
-    Include JQuery Core (Required for calendar plugin)
-    ** This is our IE fix version which enables drag-and-drop to work correctly in IE. See README file in js/jquery-core folder. **
-    -->
-    <script type="text/javascript" src="{{ asset('template/calendar/jquery.js') }}"></script>
-     <script type='text/javascript' src='{{ asset('template/calendar/libs/jquery-ui-1.8rc3.custom.min.js') }}'></script>
-	<script type='text/javascript' src='{{ asset('template/calendar/jquery.weekcalendar.js') }}'></script>
-	
-   <script>
-	$(document).ready(function() {
+$(document).ready(function() {
 
 
    var $calendar = $('#calendar');
@@ -98,7 +40,7 @@
 
          $dialogContent.dialog({
             modal: true,
-            title: "Nouveau Seance",
+            title: "New Calendar Event",
             close: function() {
                $dialogContent.dialog("destroy");
                $dialogContent.hide();
@@ -112,6 +54,9 @@
                   calEvent.end = new Date(endField.val());
                   calEvent.title = titleField.val();
                   calEvent.body = bodyField.val();
+				  
+				  //post to events.php
+				  $.post("events.php?action=save&start="+calEvent.start.getTime()/1000+"&end="+calEvent.end.getTime()/1000+"&title="+calEvent.title+"&body="+calEvent.body);
 
                   $calendar.weekCalendar("removeUnsavedEvents");
                   $calendar.weekCalendar("updateEvent", calEvent);
@@ -128,6 +73,7 @@
 
       },
       eventDrop : function(calEvent, $event) {
+        
       },
       eventResize : function(calEvent, $event) {
       },
@@ -188,44 +134,13 @@
       noEvents : function() {
 
       },
-      data : function(start, end, callback) {
-         callback(getEventData());
-      }
+      data : "events.php"
    });
 
    function resetForm($dialogContent) {
       $dialogContent.find("input").val("");
       $dialogContent.find("textarea").val("");
    }
-
-   function getEventData() {
-        var events = [];
-          
-          {% for session in sessions %}
-      var d = new Date(Date.parse('{{session.datedebut.date}}'));
-      var year = d.getFullYear();
-      var month = d.getMonth();
-      var day = d.getDate();
-      var heure = d.getHours();
-      var m = d.getMinutes();
-      var df = new Date(Date.parse('{{session.datefin.date}}'));
-      var heuref = df.getHours();
-      var mf = df.getMinutes();
-    
-     events.push({ "id":"{{ session.id }}",
-               "start": new Date(year, month, day , heure, m),
-               "end": new Date(year, month, day , heuref, mf),
-               "title":"{{ session.nom }}" });
-            
-              
-           
-        
-         
-     
-         {% endfor %}  
-         return events;
-   }
-
 
    /*
     * Sets up the start and end time fields in the calendar event
@@ -302,5 +217,3 @@
 
 
 });
-	</script>
-{% endblock %}

@@ -1,4 +1,5 @@
 <?php
+
 namespace FrontOffice\OptimusBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -10,9 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="seance")
  * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Repository\SeanceRepository")
  */
-class Seance 
-{
-     /**
+class Seance {
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -20,19 +21,28 @@ class Seance
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="Program", inversedBy="seances")
      * @ORM\JoinColumn(name="program_id", referencedColumnName="id")
-     **/
+     * */
     protected $program;
+
     /**
      * @var string
      *
      * @ORM\Column(name="Nom", type="string", length=255)
      */
     private $nom;
-    
-   /**
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="Date_debut", type="datetime")
@@ -46,13 +56,11 @@ class Seance
      * 
      */
     private $datefin;
-    
-     public function __construct()
-    {
-      
-      
 
+    public function __construct() {
+        
     }
+
     public function getId() {
         return $this->id;
     }
@@ -65,8 +73,6 @@ class Seance
         return $this->nom;
     }
 
-    
-
     public function setId($id) {
         $this->id = $id;
     }
@@ -78,7 +84,7 @@ class Seance
     public function setNom($nom) {
         $this->nom = $nom;
     }
-   
+
     public function getDatedebut() {
         return $this->datedebut;
     }
@@ -94,7 +100,13 @@ class Seance
     public function setDatefin(\DateTime $datefin) {
         $this->datefin = $datefin;
     }
+    public function getDescription() {
+        return $this->description;
+    }
 
-    
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+
         //put your code here
 }

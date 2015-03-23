@@ -12,10 +12,6 @@
 
 .wc-nav button {
 	margin: 0 0.5em;	
-	background-color: #c02100;
-	color: #fff;
-	border-radius:25px;
-	
 }
  
 
@@ -33,7 +29,6 @@
 	border-top: 1px solid #aaa;
 	border-bottom: 1px solid #aaa;
 	width: 100%;
-        background-color: #c02100;
 }
 
 .wc-header .wc-time-column-header {
@@ -49,7 +44,7 @@
 	padding: 0.4em;
 }
 .wc-header td {
-	background: #c02100;
+	background-color: #eee;	
 }
 
 .wc-grid-timeslot-header {
@@ -119,9 +114,9 @@ table.wc-time-slots {
 }
 
 .wc-business-hours {
-	background-color: #c02100;
+	background-color: #E6EEF1;
 	border-bottom: 1px solid #ccc;
-	color: #ffffff;
+	color: #333;
 	font-size: 1.4em;
 }
 
@@ -144,7 +139,6 @@ table.wc-time-slots {
 
 .wc-header .wc-today  {
 	font-weight: bold;
-	
 }
 
 .wc-time-slots .wc-today {
@@ -153,7 +147,7 @@ table.wc-time-slots {
 
 
 .wc-cal-event {
-	background-color: #c02100;	
+	background-color: #68a1e5;	
 	filter:alpha(opacity=80);
 	-moz-opacity:0.8;
 	-khtml-opacity: 0.8;
@@ -174,7 +168,7 @@ table.wc-time-slots {
 }
 
 .wc-cal-event .wc-time {
-	background-color: #c02100;
+	background-color: #2b72d0;
 	border: 1px solid #1b62c0;
 	color: #fff;
 	padding: 0;

@@ -20,6 +20,10 @@ p {
 .ui-widget {
 	font-size: 1em;	
 }
+.calendar{
+    margin-top: 40px;
+    margin-left: 50px;
+}
 
 #event_edit_container, #about {
 	display: none;
@@ -37,8 +41,7 @@ p {
 }
 
 .wc-header td {
-	background: #c02100;
-	color: #ffffff
+	background: url(images/header-bg.png) repeat-x;
 }
 
 label {

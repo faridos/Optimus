@@ -64,7 +64,7 @@ class ProgramController extends Controller {
         $sessions = $em->getRepository('FrontOfficeOptimusBundle:Seance')->findBy(array('program' => $programme));
         // setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
         //$date = (strftime("%A"));
-      
+     
             $seance = new Seance();
             $seance->setProgram($programme);
             $form = $this->createForm(new SeanceType(), $seance);

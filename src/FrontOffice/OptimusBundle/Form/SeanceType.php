@@ -16,10 +16,10 @@ class SeanceType extends AbstractType
     {
         $builder
             ->add('nom','text')
-           
+            ->add('description','text')
+          
             ->add('datedebut','datetime')
             ->add('datefin','datetime')
-            ->add('program')
         ;
     }
     

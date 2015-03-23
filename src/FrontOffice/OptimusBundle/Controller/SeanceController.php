@@ -13,7 +13,7 @@ use FrontOffice\OptimusBundle\Form\SeanceType;
 /**
  * Seance controller.
  *
- * @Route("/seance")
+ * @Route("/")
  */
 class SeanceController extends Controller
 {
@@ -244,4 +244,39 @@ class SeanceController extends Controller
             ->getForm()
         ;
     }
+    /**
+     * Creates a new Seance entity.
+     *
+     * @Route("club={id}/program={idp}/ajouter_seance", name="seance_create")
+     * @Method("GET|POST")
+     * @Template("FrontOfficeOptimusBundle:Seance:new.html.twig")
+     */
+    public function createSeanceAction(Request $request,$id,$idp)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity   = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        $program = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($idp);
+        $seance = new Seance();
+        $seance->setProgram($program);
+        $form = $this->createForm(new SeanceType(), $seance);
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($seance);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('program_show', array('id' => $id, 'idp' => $idp)));
+        }
+
+        return array(
+            'id' => $id,
+            'idp' => $idp,
+            'entity' => $entity,
+            'program' => $program,
+            'seance' => $seance,
+            'form'   => $form->createView(),
+        );
+    }
+
 }
