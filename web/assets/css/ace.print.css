@@ -1,0 +1,12 @@
+.sidebar, #navbar, #breadcrumbs, .breadcrumb, h4, .arrowed-in, .arrowed-right, i, footer{
+    display:none;
+}
+.main-content{
+    margin-left: 0!important;
+}
+.label-info{
+    background: #FFFFFF!important;
+}
+.tonotprint, #sample-table-2_length, #sample-table-2_filter, .pagination, #sample-table-2_info{
+    display:none;
+}
