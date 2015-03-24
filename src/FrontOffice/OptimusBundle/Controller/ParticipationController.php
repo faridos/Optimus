@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Event\HistoryEventEvent;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Participation controller.
@@ -46,24 +47,49 @@ class ParticipationController extends Controller {
         $dispatcher = $this->get('event_dispatcher');
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
+        //return $response = new Response();
     }
-
-    public function deleteAction($event_id, $route) {
-        $em = $this->getDoctrine()->getEntityManager();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($event_id);
-        $p = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findBy(array('event' => $event, 'participant' => $user));
-        if (!$p) {
-            throw $this->createNotFoundException('Erreur : Participation invalide !');
+   
+    /**
+     * Deletes a Club entity.
+     *
+     * @Route("/event={id}/quitter", name="exit_event", options={"expose"=true})
+     * 
+     */
+    public function exitEventAction($id) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
         }
-
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+        $p = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findBy(array('event' => $event, 'participant' => $user));
+        if($p != null){
         $em->remove($p[0]);
         $em->flush();
+         $etat = 0 ;
+          
+        }  else {
+              $newparticipation = new Participation();
+        $newparticipation->setParticipant($user);
+        $newparticipation->setEvent($event);
 
-        if ($route == 'accueil')
-            return $this->redirect($this->generateUrl('user_index'));
-        elseif ($route == 'event')
-            return $this->redirect($this->generateUrl('show_event_info', array('id' => $event_id)));
+        $em->persist($newparticipation);
+        $em->flush();
+         $action = 'participation';
+        $eventhistory = new HistoryEventEvent($user, $event, $action);
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        $etat = 1 ;
+         
+
+      
+        }
+          return $this->render('FrontOfficeOptimusBundle:Event:reponse.html.twig', array('etat' => $etat));
+       
     }
+    
+   
 
 }

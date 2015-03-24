@@ -57,9 +57,8 @@ class UserController extends Controller {
     public function accueilAction() {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
-        $lng = $user->getLng();
-        $lat = $user->getLat();
-        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventLoad(new \Datetime('- 1 months'), $lng, $lat);
+
+        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array(),array('dateDebut'=>'desc'));
         $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime('- 1 months'));
         $typesEv = $em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findAll();
         return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('type_events' => $typesEv, 'user' => $user, 'events' => $events, 'eventsMap' => $eventsMap));

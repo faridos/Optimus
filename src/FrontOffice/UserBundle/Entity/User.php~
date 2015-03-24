@@ -34,7 +34,7 @@ class User extends BaseUser {
     protected $prenom;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     protected $dateNaissance;
 
@@ -52,13 +52,19 @@ class User extends BaseUser {
     protected $sexe;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
      */
     protected $adresse;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * 
+     * @ORM\Column(type="phone_number", nullable=true)
+     * @AssertPhoneNumber(message="Tel invalide !")
+     * @Assert\Length(
+     *      min = "8",
+     *      max = "12",
+     *      minMessage = "Au moins {{ limit }} caractères !",
+     *      maxMessage = "Ne peut pas être plus long que {{ limit }} caractères !"
+     * )
      */
     protected $tel;
 
@@ -423,244 +429,4 @@ class User extends BaseUser {
         }
     }
 
-
-    /**
-     * Add evenements
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Event $evenements
-     * @return User
-     */
-    public function addEvenement(\FrontOffice\OptimusBundle\Entity\Event $evenements)
-    {
-        $this->evenements[] = $evenements;
-    
-        return $this;
-    }
-
-    /**
-     * Remove evenements
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Event $evenements
-     */
-    public function removeEvenement(\FrontOffice\OptimusBundle\Entity\Event $evenements)
-    {
-        $this->evenements->removeElement($evenements);
-    }
-
-    /**
-     * Add participations
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Participation $participations
-     * @return User
-     */
-    public function addParticipation(\FrontOffice\OptimusBundle\Entity\Participation $participations)
-    {
-        $this->participations[] = $participations;
-    
-        return $this;
-    }
-
-    /**
-     * Remove participations
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Participation $participations
-     */
-    public function removeParticipation(\FrontOffice\OptimusBundle\Entity\Participation $participations)
-    {
-        $this->participations->removeElement($participations);
-    }
-
-    /**
-     * Add notification_entraineur
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur
-     * @return User
-     */
-    public function addNotificationEntraineur(\FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur)
-    {
-        $this->notification_entraineur[] = $notificationEntraineur;
-    
-        return $this;
-    }
-
-    /**
-     * Remove notification_entraineur
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur
-     */
-    public function removeNotificationEntraineur(\FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur)
-    {
-        $this->notification_entraineur->removeElement($notificationEntraineur);
-    }
-
-    /**
-     * Get notification_entraineur
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getNotificationEntraineur()
-    {
-        return $this->notification_entraineur;
-    }
-
-    /**
-     * Add notificationseen
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen
-     * @return User
-     */
-    public function addNotificationseen(\FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen)
-    {
-        $this->notificationseen[] = $notificationseen;
-    
-        return $this;
-    }
-
-    /**
-     * Remove notificationseen
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen
-     */
-    public function removeNotificationseen(\FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen)
-    {
-        $this->notificationseen->removeElement($notificationseen);
-    }
-
-    /**
-     * Add clubs
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Club $clubs
-     * @return User
-     */
-    public function addClub(\FrontOffice\OptimusBundle\Entity\Club $clubs)
-    {
-        $this->clubs[] = $clubs;
-    
-        return $this;
-    }
-
-    /**
-     * Remove clubs
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Club $clubs
-     */
-    public function removeClub(\FrontOffice\OptimusBundle\Entity\Club $clubs)
-    {
-        $this->clubs->removeElement($clubs);
-    }
-
-    /**
-     * Add conversations1
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Conversation $conversations1
-     * @return User
-     */
-    public function addConversations1(\FrontOffice\OptimusBundle\Entity\Conversation $conversations1)
-    {
-        $this->conversations1[] = $conversations1;
-    
-        return $this;
-    }
-
-    /**
-     * Remove conversations1
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Conversation $conversations1
-     */
-    public function removeConversations1(\FrontOffice\OptimusBundle\Entity\Conversation $conversations1)
-    {
-        $this->conversations1->removeElement($conversations1);
-    }
-
-    /**
-     * Add conversations2
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Conversation $conversations2
-     * @return User
-     */
-    public function addConversations2(\FrontOffice\OptimusBundle\Entity\Conversation $conversations2)
-    {
-        $this->conversations2[] = $conversations2;
-    
-        return $this;
-    }
-
-    /**
-     * Remove conversations2
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Conversation $conversations2
-     */
-    public function removeConversations2(\FrontOffice\OptimusBundle\Entity\Conversation $conversations2)
-    {
-        $this->conversations2->removeElement($conversations2);
-    }
-
-    /**
-     * Add albums
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Album $albums
-     * @return User
-     */
-    public function addAlbum(\FrontOffice\OptimusBundle\Entity\Album $albums)
-    {
-        $this->albums[] = $albums;
-    
-        return $this;
-    }
-
-    /**
-     * Remove albums
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Album $albums
-     */
-    public function removeAlbum(\FrontOffice\OptimusBundle\Entity\Album $albums)
-    {
-        $this->albums->removeElement($albums);
-    }
-
-    /**
-     * Add reward
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Reward $reward
-     * @return User
-     */
-    public function addReward(\FrontOffice\OptimusBundle\Entity\Reward $reward)
-    {
-        $this->reward[] = $reward;
-    
-        return $this;
-    }
-
-    /**
-     * Remove reward
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Reward $reward
-     */
-    public function removeReward(\FrontOffice\OptimusBundle\Entity\Reward $reward)
-    {
-        $this->reward->removeElement($reward);
-    }
-
-    /**
-     * Add adherent
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Member $adherent
-     * @return User
-     */
-    public function addAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherent)
-    {
-        $this->adherent[] = $adherent;
-    
-        return $this;
-    }
-
-    /**
-     * Remove adherent
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Member $adherent
-     */
-    public function removeAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherent)
-    {
-        $this->adherent->removeElement($adherent);
-    }
 }
