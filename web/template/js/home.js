@@ -3,40 +3,9 @@
     "use strict";
 
     var options = {
-            zoom : 14,
-            mapTypeId : 'Styled',
-            disableDefaultUI: true,
-            mapTypeControlOptions : {
-                mapTypeIds : [ 'Styled' ]
-            },
-            scrollwheel: true
+            zoom : 14
         };
-    var styles = [{
-        stylers : [ {
-            hue : "#cccccc"
-        }, {
-            saturation : -100
-        }]
-    }, {
-        featureType : "road",
-        elementType : "geometry",
-        stylers : [ {
-            lightness : 100
-        }, {
-            visibility : "simplified"
-        }]
-    }, {
-        featureType : "road",
-        elementType : "labels",
-        stylers : [ {
-            visibility : "on"
-        }]
-    }, {
-        featureType: "poi",
-        stylers: [ {
-            visibility: "off"
-        }]
-    }];
+    
 
     var markers = [];
 
@@ -46,13 +15,9 @@
 
         if ($('#home-map').length > 0) {
             map = new google.maps.Map(document.getElementById('home-map'), options);
-            var styledMapType = new google.maps.StyledMapType(styles, {
-                name : 'Styled'
-            });
-
-            map.mapTypes.set('Styled', styledMapType);
             
-            map.setZoom(12);
+            
+            map.setZoom(14);
 
     
             

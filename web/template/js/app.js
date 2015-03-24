@@ -5,12 +5,7 @@
     // Custom options for map
    
     var options = {
-            zoom : 12,
-            mapTypeId : 'Styled',
-            disableDefaultUI: true,
-            mapTypeControlOptions : {
-                mapTypeIds : [ 'Styled' ]
-            }
+            zoom : 12
         };
     var styles = [{
         stylers : [ {
@@ -128,10 +123,7 @@
         $('body').removeClass('notransition');
 
         map = new google.maps.Map(document.getElementById('mapView'), options);
-        var styledMapType = new google.maps.StyledMapType(styles, {
-            name : 'Styled'
-        });
-        map.mapTypes.set('Styled', styledMapType);
+        
        
         map.setZoom(12);
 

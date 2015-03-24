@@ -227,39 +227,10 @@
                                         var map;
                                         var pos;
                                         var options = {
-                                        zoom : 12,
-                                                mapTypeId : 'Styled',
-                                                disableDefaultUI: true,
-                                                mapTypeControlOptions : {
-                                                mapTypeIds : [ 'Styled' ]
-                                                }
+                                        zoom : 14
+                                               
                                         };
-                                        var styles = [{
-                                        stylers : [ {
-                                        hue : "#cccccc"
-                                        }, {
-                                        saturation : - 100
-                                        }]
-                                        }, {
-                                        featureType : "road",
-                                                elementType : "geometry",
-                                                stylers : [ {
-                                                lightness : 100
-                                                }, {
-                                                visibility : "simplified"
-                                                }]
-                                        }, {
-                                        featureType : "road",
-                                                elementType : "labels",
-                                                stylers : [ {
-                                                visibility : "on"
-                                                }]
-                                        }, {
-                                        featureType: "poi",
-                                                stylers: [ {
-                                                visibility: "off"
-                                                }]
-                }];                                {% for event in events %}
+                                                                        {% for event in events %}
 
 
                                                     $("#btnmsg_{{event.id}}").on('click', function () {
@@ -361,11 +332,8 @@
 
 
                                                     map = new google.maps.Map(document.getElementById('mapView'), options);
-                                                            var styledMapType = new google.maps.StyledMapType(styles, {
-                                                            name : 'Styled'
-                                                            });
-                                                            map.mapTypes.set('Styled', styledMapType);
-                                                            map.setZoom(12);
+                                                            
+                                                            map.setZoom(14);
                                                             if (navigator.geolocation) {
                                                     navigator.geolocation.getCurrentPosition(function (position) {
                                                     pos = new google.maps.LatLng(position.coords.latitude,
