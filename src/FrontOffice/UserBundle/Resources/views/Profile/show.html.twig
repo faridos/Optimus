@@ -1,520 +1,460 @@
 {% extends "FrontOfficeUserBundle::layout_profile.html.twig" %}
 {% block content %}
-
     <div class="col-lg-12">
-    <div class="tabsContainer">
-    <ul class="nav nav-tabs nav-justified" role="tablist">
-        <li class="active"><a href="#env" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Events</a></li>
-        <li class=""><a href="#clubs" role="tab" data-toggle="tab"><span class="fa fa-users"></span> Clubs</a></li>
-        <li class=""><a href="#calendaree" role="tab" data-toggle="tab"><span class="navIcon fa fa-calendar"></span>
-                Calendrier</a></li>
-        <li class=""><a href="#albums" role="tab" data-toggle="tab"><span class="icon-doc"></span> Albums</a></li>
-        <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
-        <li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-badge"></span> Palmares</a></li>
-    </ul>
-    <div class="tab-content">
+        <div class="tabsContainer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li class="active"><a href="#env" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Events</a></li>
+                <li class=""><a href="#envparticip" role="tab" data-toggle="tab"><span class="icon-trophy"></span>Participation</a></li>
+                <li class=""><a href="#clubs" role="tab" data-toggle="tab"><span class="fa fa-users"></span> Clubs</a></li>
+                <li class=""><a href="#calendaree" role="tab" data-toggle="tab"><span class="navIcon fa fa-calendar"></span>Calendrier</a></li>
+                <li class=""><a href="#albums" role="tab" data-toggle="tab"><span class="icon-doc"></span> Albums</a></li>
+                <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
+                <li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-badge"></span> Palmares</a></li>
+            </ul>
+            <div class="tab-content">
+                <ul class="tab-pane fade  active in scrollbar" id="env" >
+                    {% if user.evenements|length == 0 %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                            <button type="button" class="close" data-dismiss="alert"></button>
+                            <strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
+                        </div>
+                    {% endif %}
+                    {% if app.user == user %}
+                        <div class="buttonsWrapper col-xs-12">
+                            <a class="btn btn-round btn-default btn-sm rightus" href="{{ path('add-event')}}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                            <br>
+                            <br>
+                        </div>
+                    {% endif %}
+                    {% for env in user.evenements %}
+                        <div class="userWidget-2 tooltipsContainer col-xs-12" >
+                            <div class="tooltipsContainer avatar imagus col-md-4">
+                                <a href="{{ path('show_profil',{'id': user.id}) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
+                                    <img src="{{ asset(user.WebPath)}}" alt="avatar" ></a>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info  col-md-12">
+                                    <div ><a href="{{path('show_event',{'id':env.id})}}" class="name">{{env.titre}}</a></div>
+                                    <div class="title">Créateur : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
+                                    <div class="title">Lieu : <span class="address">{{env.lieu}}</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info  col-md-12" >
+                                    <div class="title">Text descriptif : <span class="address">{{env.description}}</span></div>
+                                </div>
+                            </div>
+                            <div align="right">
+                                <a href="#modifierprogram{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
+                                <a href="#supprimuss{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    {% endfor %}
+                </ul>
+                <ul class="tab-pane fade  scrollbar" id="envparticip" >
+                    {% if user.participations|length == 0 %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                            <button type="button" class="close" data-dismiss="alert"></button>
+                            <strong>Rien à afficher dans la catégorie participation!</strong> Créer un pour commencer.
+                        </div>
+                    {% endif %}
+                    {% for part in user.participations %}
+                        <div class="userWidget-2 col-md-12" >
+                            <div class="tooltipsContainer avatar imagus col-md-4">
+                                <a href="{{ path('show_profil',{'id': user.id}) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
+                                    <img src="{{ asset(user.WebPath)}}" alt="avatar" ></a>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info">
+                                    <div ><a href="{{path('show_event',{'id':part.event.id})}}" class="name">{{part.event.titre}}</a></div>
+                                    <div class="title">Créateur : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
+                                    <div class="title">Lieu : <span class="address">{{part.event.lieu}}</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info" >
+                                    <div class="title">Text descriptif : <span class="address">{{part.event.description}}</span></div>
+                                </div>
+                            </div>
+                                <div align="right">
+                                <a href="#modifierprogram{{part.event.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
-    <ul class="tab-pane fade  active in scrollbar" id="env" >
-
-  {% if user.evenements|length == 0 %}
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-            <button type="button" class="close" data-dismiss="alert"></button>
-            <strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
-        </div>
-{% endif %}
-    {% if app.user == user %}
-
-        <div class="buttonsWrapper col-xs-12">
-            <a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
-            <br>
-        </div>
-    {% endif %}
-        {% for env in user.evenements %}
-        <div class="userWidget-2 col-md-12" >
-            <div class="tooltipsContainer avatar imagus">
-                <a href="#" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="Club Club"><img src="images/logo1.jpg" alt="avatar" ></a>
-            </div>
-
-            <div class="col-md-5">
-                <div class="info">
-                    <div class="name">Nom du Club</div>
-                    <div class="title">Créateur du club : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
-                    <div class="title">Adresse du club : <span class="address">Tunis</span></div>
-                    <div class="title">Frais d'abonnement : <span class="address">200 $</span></div>
-                </div></div>
-            <div class="col-md-4">
-                <div class="info" >
-
-                    <div class="title">Text descriptif : <span class="address">le club est un chocolat tunisien tres mauvais avec des différents gouts chiant</span></div>
-
-                </div></div>
-
-            <div class="clearfix"></div>
-        </div>
-
-{% endfor %}
-
-
-    </ul>
-
-
-
-
-    <ul class="tab-pane fade  scrollbar" id="calendaree" >
-
-
-        <div class="buttonsWrapper col-xs-12">
-            <div id="calendar">
-
-            </div> </div>
-
-
-
-
-    </ul>
-
-
-
-    <ul class="tab-pane fade scrollbar" id="clubs" >
-
-
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-            <button type="button" class="close" data-dismiss="alert"></button>
-            <strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
-        </div>
-
-
-        <div class="buttonsWrapper col-xs-12">
-            <a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
-            <br>
-        </div>
-
-        <div class="userWidget-2 col-md-12" >
-            <div class="tooltipsContainer avatar imagus">
-                <a href="#" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="Club Club"><img src="images/logo1.jpg" alt="avatar" ></a>
-            </div>
-
-            <div class="col-md-5">
-                <div class="info">
-                    <div class="name">Nom du Club</div>
-                    <div class="title">Créateur du club : <span class="address">Abweb abweb</span></div>
-                    <div class="title">Adresse du club : <span class="address">Tunis</span></div>
-                    <div class="title">Frais d'abonnement : <span class="address">200 $</span></div>
-                </div></div>
-            <div class="col-md-4">
-                <div class="info" >
-
-                    <div class="title">Text descriptif : <span class="address">le club est un chocolat tunisien tres mauvais avec des différents gouts chiant</span></div>
-
-                </div></div>
-
-            <div class="clearfix"></div>
-        </div>
-
-
-
-
-    </ul>
-
-
-
-    <ul class="tab-pane fade scrollbar" id="albums" >
-
-
-
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-            <button type="button" class="close" data-dismiss="alert"></button>
-            <strong>Rien à afficher dans la catégorie photos!</strong> Créer un pour commencer.
-        </div>
-
-
-
-        <div class="buttonsWrapper col-md-12">
-
-            <a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
-            <br>
-        </div>
-
-        <div class="row">
-            <br>
-
-
-            <div class="col-xs-6" >
-                <div data-linkto="" class="card albumus tooltipsContainer" >
-                    <div class="figure" id="main">
-                        <a href="albums.html" >
-                            <img src="images/2.jpg" />
-                        </a>
-
-                        <div class="figView"></div>
-
+                                <a href="#supprimuss{{part.event.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    {% endfor %}
+                </ul>
+                <ul class="tab-pane fade  scrollbar" id="calendaree" >
+                    <div class="buttonsWrapper col-xs-12">
+                        <div id="calendar">
+                        </div>
                     </div>
-                    <h2 align="center">Album</h2>
-
-                    <div align="center" >
-                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                </ul>
+                <ul class="tab-pane fade scrollbar" id="clubs" >
+                    {% if user.clubs|length == 0 %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                            <button type="button" class="close" data-dismiss="alert"></button>
+                            <strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
+                        </div>
+                    {% endif %}
+                    {% if app.user == user %}
+                        <div class="buttonsWrapper col-xs-12">
+                            <a class="btn btn-round btn-default btn-sm rightus" href="{{ path('add_club')}}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+                            <br>
+                        </div>
+                    {% endif %}
+                    {% for club in user.clubs %}
+                        <div class="userWidget-2 col-md-12" >
+                            <div class="tooltipsContainer avatar imagus">
+                                <a href="{{path('show_club',{'id':club.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
+                                    <img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="info">
+                                    <div class="name">{{ club.nom}}</div>
+                                    <div class="title">Créateur du club : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
+                                    <div class="title">Adresse du club : <span class="address">{{ club.adresse}}</span></div>
+                                    <div class="title">Frais d'abonnement : <span class="address">{{ club.fraisAdhesion}}£</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info" >
+                                    <div class="title">Text descriptif : <span class="address">{{ club.description}}</span></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    {% endfor %}
+                </ul>
+                <ul class="tab-pane fade scrollbar" id="albums" >
+                    {% if user.albums|length == 0 %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                            <button type="button" class="close" data-dismiss="alert"></button>
+                            <strong>Rien à afficher dans la catégorie photos!</strong> Créer un pour commencer.
+                        </div>
+                    {% endif%}
+                    {% if app.user == user %}
+                        <div class="buttonsWrapper col-md-12">
+                            <a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
+                            <br>
+                        </div>
+                    {% endif%}
+                    <div class="row">
+                        <br>
+                        {% for album in user.albums %}
+                            <div class="col-xs-3" >
+                                <div data-linkto="" class="card albumus tooltipsContainer" >
+                                    <div class="figure" id="main">
+                                        <a href="{{ path('photos_user', {'id' : user.id,'id_album' : album.id}) }}" >
+                                            <img src="{{ asset(user.WebPath) }}" />
+                                        </a>
+                                        <div class="figView"></div>
+                                    </div>
+                                    <h2 align="center">{{ album.nom }}</h2>
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <br>
-
-
-                </div>
-            </div>
-
-        </div>
-        <div class="clearfix"></div>
-
-    </ul>
-
-    <ul class="tab-pane fade scrollbar videosus" id="videos"  >
-
-
-
-    <div class="alert alert-danger alert-dismissible fade in" role="alert">
-        <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-        <button type="button" class="close" data-dismiss="alert"></button>
-        <strong>Rien à afficher dans la catégorie vidéeos!</strong> Créer un pour commencer.
-    </div>
-
-
-
-
-    <div class="row">
-    <br>
-
-
-    <div class="col-md-4" >
-        <div data-linkto="" class="card albumus" >
-            <div class="figure" id="main">
-                <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
-                    <img src="images/bg-1.jpg" />
-                </a>
-
-                <div class="figView"><span class="icon-eye"></span></div>
-
-            </div>
-            <h2 align="center">Titre de video</h2>
-
-            <div align="center" >
-                <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-            </div>
-            <br>
-
-            <div class="clearfix"></div>
-        </div>
-    </div>
-    </div>
-    <div class="clearfix"></div>
-
-    </ul>
-
-
-
-
-    <ul class="tab-pane fade scrollbar" id="palmares" >
-
-
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-            <button type="button" class="close" data-dismiss="alert"></button>
-            <strong>Rien à afficher dans la catégorie palmares!</strong> Créer un pour commencer.
-        </div>
-
-        <div class="buttonsWrapper col-md-12">
-
-            <a href="#uploadpalmares" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
-            <br>
-        </div>
-
-
-
-
-        <div class="row">
-            <br>
-            <div class="col-md-4" >
-                <div data-linkto="" class="card albumus" >
-                    <br>
-                    <div class="profile-card">
-                        <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-child palmarus"></span></a></div>
-                        <div class="pc-name">Titre</div>
-                    </div>
-                    <div align="center" >
-                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                    </div>
-                    <br>
-
                     <div class="clearfix"></div>
-                </div>
+                </ul>
+                <ul class="tab-pane fade scrollbar videosus" id="videos"  >
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                        <button type="button" class="close" data-dismiss="alert"></button>
+                        <strong>Rien à afficher dans la catégorie vidéeos!</strong> Créer un pour commencer.
+                    </div>
+                    <div class="row">
+                        <br>
+                        <div class="col-md-4" >
+                            <div data-linkto="" class="card albumus" >
+                                <div class="figure" id="main">
+                                    <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                        <img src="images/bg-1.jpg" />
+                                    </a>
+                                    <div class="figView"><span class="icon-eye"></span></div>
+                                </div>
+                                <h2 align="center">Titre de video</h2>
+                                <div align="center" >
+                                    <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                    <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                </div>
+                                <br>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </ul>
+                <ul class="tab-pane fade scrollbar" id="palmares" >
+                    {% if user.reward|length == 0 %}
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                        <button type="button" class="close" data-dismiss="alert"></button>
+                        <strong>Rien à afficher dans la catégorie palmares!</strong> Créer un pour commencer.
+                    </div>
+                    {% endif%}
+                    {% if app.user == user %}
+                    <div class="buttonsWrapper col-md-12">
+                        <a href="#uploadpalmares" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
+                        <br>
+                    </div>
+                     {% endif%}
+                    <div class="row">
+                        <br>
+                        {% for palmares in user.reward %}
+                        <div class="col-md-4" >
+                            <div data-linkto="" class="card albumus" >
+                                <br>
+                                <div class="profile-card">
+                                    <div class="pc-avatar"><a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" ><span class="fa fa-child palmarus"></span></a></div>
+                                    <div class="pc-name">Titre</div>
+                                </div>
+                                <div align="center" >
+                                    <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                    <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                </div>
+                                <br>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </ul>
+                <div class="clearfix"></div>
+                </ul>
             </div>
-
-
-
-
-
         </div>
-    </ul>
-
-
-
-
-
-    <div class="clearfix"></div>
-
-
-
-    </ul>
     </div>
+    <!---------------- upload album----------------------------->
 
+    <div class="modal fade" id="uploadalbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {{ render (controller('FrontOfficeOptimusBundle:Album:createAlbumUser',  { 'id': app.user.id })) }}
+        </div>
     </div>
-
+    <!--------------- fin upload album ------------------>
+    <!--------------- upload palmares ------------------>
+    <div class="modal fade" id="uploadpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            {{ render (controller('FrontOfficeOptimusBundle:Reward:addRewardUser',  { 'id': app.user.id })) }}
+        </div>
     </div>
-
+    <!--------------- fin upload  ------------------>
 {% endblock %}
 {% block javascriptfils %}
-
     <script type="text/javascript">
         jQuery(function ($) {
-            $(document).ready(function () {
-                //Examples of how to assign the Colorbox event to elements
-                $(".view").colorbox({overlayClose: false, close: "X", width: "68%", fadeOut: 50, scrolling: true});
-            });
-        });    </script>
+        $(document).ready(function () {
+        //Examples of how to assign the Colorbox event to elements
+        $(".view").colorbox({overlayClose: false, close: "X", width: "68%", fadeOut: 50, scrolling: true});
+        });
+        });</script>
     <script src="{{ asset('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
     <script src="{{ asset('assets/js/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootbox.min.js') }}"></script>
-
-
     <script type="text/javascript">
-    jQuery(function ($) {
+                jQuery(function ($) {
+                /* initialize the external events
+                 -----------------------------------------------------------------*/
+                $('#external-events div.external-event').each(function () {
 
-        /* initialize the external events
-         -----------------------------------------------------------------*/
-
-        $('#external-events div.external-event').each(function () {
-
-            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-            // it doesn't need to have a start or end
-            var eventObject = {
+                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                // it doesn't need to have a start or end
+                var eventObject = {
                 title: $.trim($(this).text()) // use the element's text as the event title
-            };
-
-            // store the Event Object in the DOM element so we can get to it later
-            $(this).data('eventObject', eventObject);
-
-            // make the event draggable using jQuery UI
-            $(this).draggable({
+                };
+                        // store the Event Object in the DOM element so we can get to it later
+                        $(this).data('eventObject', eventObject);
+                        // make the event draggable using jQuery UI
+                        $(this).draggable({
                 zIndex: 999,
-                revert: true,      // will cause the event to go back to its
-                revertDuration: 0  //  original position after the drag
-            });
-
-        });
-
-
-        /* initialize the calendar
-         -----------------------------------------------------------------*/
-
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-
-
-        var calendar = $('#calendar').fullCalendar({
-            buttonText: {
+                        revert: true, // will cause the event to go back to its
+                        revertDuration: 0  //  original position after the drag
+                });
+                });
+                        /* initialize the calendar
+                         -----------------------------------------------------------------*/
+                        var date = new Date();
+                        var d = date.getDate();
+                        var m = date.getMonth();
+                        var y = date.getFullYear();
+                        var calendar = $('#calendar').fullCalendar({
+                buttonText: {
                 prev: 'prev',
-                next: 'next'
-            },
-
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek'
-            },
-            events: [
-                {%for env in user.participations%}
-                {%if  "now"|date("Y-m-d") > env.event.dateFin|date('Y-m-d') %}
-                {
-                    title: '{{ env.event.titre }} (événement est terminé)',
-                    start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
-                            ,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
-                            ,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
-                    ),
-                    end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
-                            ,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
-                            ,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
-                    ),
-                    startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
-                    enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
-                    region: '{{ env.event.lieu }}',
-                    nbrp: '{{ env.event.nbrPlaces }}',
-                    prix: '{{ env.event.frais }}',
-                    createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
-                    className: 'label-danger'
+                        next: 'next'
                 },
-                {%elseif  "now"|date("Y-m-d") < env.event.dateDebut|date('Y-m-d') %}
-                {
-                    title: "{{ env.event.titre }} (l'événement n'a pas encore commencer)",
-                    start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
-                            ,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
-                            ,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
-                    ),
-                    end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
-                            ,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
-                            ,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
-                    ),
-                    startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
-                    enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
-                    region: '{{ env.event.lieu }}',
-                    nbrp: '{{ env.event.nbrPlaces }}',
-                    prix: '{{ env.event.frais }}',
-                    createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
-
-                    className: 'label-warning'
-                },
-                {% else %}
-                {
-                    title: "{{ env.event.titre }} (l'événement à déjà commencé)",
-                    start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
-                            ,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
-                            ,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
-                    ),
-                    end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
-                            ,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
-                            ,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
-                    ),
-                    startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
-                    enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
-                    region: '{{ env.event.lieu }}',
-                    nbrp: '{{ env.event.nbrPlaces }}',
-                    prix: '{{ env.event.frais }}',
-                    createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
-                    className: 'label-success'
-                },
-                {% endif %}
-                {% endfor %}
-            ],
-            editable: false,
-            droppable: false, // this allows things to be dropped onto the calendar !!!
-            drop: function (date, allDay) { // this function is called when something is dropped
-
-                // retrieve the dropped element's stored Event Object
-                var originalEventObject = $(this).data('eventObject');
-                var $extraEventClass = $(this).attr('data-class');
-
-
-                // we need to copy it, so that multiple events don't have a reference to the same object
-                var copiedEventObject = $.extend({}, originalEventObject);
-
-                // assign it the date that was reported
-                copiedEventObject.start = date;
-                copiedEventObject.allDay = allDay;
-                if ($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
-
-                // render the event on the calendar
-                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-                // is the "remove after drop" checkbox checked?
-                if ($('#drop-remove').is(':checked')) {
-                    // if so, remove the element from the "Draggable Events" list
-                    $(this).remove();
-                }
-
-            },
-            selectable: false,
-            selectHelper: false,
-            select: function (start, end, allDay) {
-
-                bootbox.prompt("New Event Title:", function (title) {
-                    if (title !== null) {
-                        calendar.fullCalendar('renderEvent',
+                        header: {
+                        left: 'prev,next today',
+                                center: 'title',
+                                right: 'month,agendaWeek'
+                        },
+                        events: [
+        {%for env in user.participations%}
+            {%if  "now"|date("Y-m-d") > env.event.dateFin|date('Y-m-d') %}
                                 {
+                                title: '{{ env.event.titre }} (événement est terminé)',
+                                        start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
+                                                ,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
+                                                ,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
+                                                ),
+                                        end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
+                                                ,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
+                                                ,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
+                                                ),
+                                        startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                        enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                        region: '{{ env.event.lieu }}',
+                                        nbrp: '{{ env.event.nbrPlaces }}',
+                                        prix: '{{ env.event.frais }}',
+                                        createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
+                                        className: 'label-danger'
+                                },{%elseif  "now"|date("Y-m-d") < env.event.dateDebut|date('Y-m-d') %}
+                                {
+                                title: "{{ env.event.titre }} (l'événement n'a pas encore commencer)",
+                                        start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
+                                                ,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
+                                                ,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
+                                                ),
+                                        end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
+                                                ,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
+                                                ,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
+                                                ),
+                                        startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                        enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                        region: '{{ env.event.lieu }}',
+                                        nbrp: '{{ env.event.nbrPlaces }}',
+                                        prix: '{{ env.event.frais }}',
+                                        createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
+                                        className: 'label-warning'
+                                },{% else %}
+                                {
+                                title: "{{ env.event.titre }} (l'événement à déjà commencé)",
+                                        start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
+                                                ,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
+                                                ,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
+                                                ),
+                                        end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
+                                                ,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
+                                                ,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
+                                                ),
+                                        startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                        enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                        region: '{{ env.event.lieu }}',
+                                        nbrp: '{{ env.event.nbrPlaces }}',
+                                        prix: '{{ env.event.frais }}',
+                                        createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
+                                        className: 'label-success'
+                                },{% endif %}
+                {% endfor %}
+                                    ],
+                                    editable: false,
+                                    droppable: false, // this allows things to be dropped onto the calendar !!!
+                                    drop: function (date, allDay) { // this function is called when something is dropped
+
+                                    // retrieve the dropped element's stored Event Object
+                                    var originalEventObject = $(this).data('eventObject');
+                                            var $extraEventClass = $(this).attr('data-class');
+                                            // we need to copy it, so that multiple events don't have a reference to the same object
+                                            var copiedEventObject = $.extend({}, originalEventObject);
+                                            // assign it the date that was reported
+                                            copiedEventObject.start = date;
+                                            copiedEventObject.allDay = allDay;
+                                            if ($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
+                                            // render the event on the calendar
+                                            // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                                            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                                            // is the "remove after drop" checkbox checked?
+                                            if ($('#drop-remove').is(':checked')) {
+                                    // if so, remove the element from the "Draggable Events" list
+                                    $(this).remove();
+                                    }
+
+                                    },
+                                    selectable: false,
+                                    selectHelper: false,
+                                    select: function (start, end, allDay) {
+
+                                    bootbox.prompt("New Event Title:", function (title) {
+                                    if (title !== null) {
+                                    calendar.fullCalendar('renderEvent',
+                                    {
                                     title: title,
-                                    start: start,
-                                    end: end,
-                                    allDay: allDay
-                                },
-                                true // make the event "stick"
-                        );
-                    }
-                });
+                                            start: start,
+                                            end: end,
+                                            allDay: allDay
+                                    },
+                                            true // make the event "stick"
+                                            );
+                                    }
+                                    });
+                                            calendar.fullCalendar('unselect');
+                                    },
+                                    eventClick: function (calEvent, jsEvent, view) {
 
+                                    var form = $("<br/><label>événement : &nbsp;</label><br/>");
+                                            form.append("" + calEvent.title + "<br/>");
+                                            form.append("<label>Créateur : &nbsp;</label>");
+                                            form.append("" + calEvent.createur + "<br/>");
+                                            form.append("<label>Region : &nbsp;</label>");
+                                            form.append("" + calEvent.region + "<br/>");
+                                            form.append("<label>Date début : &nbsp;</label>");
+                                            form.append("" + calEvent.startdate + "<br/>");
+                                            form.append("<label>Date fin : &nbsp;</label>");
+                                            form.append("" + calEvent.enddate + "<br/>");
+                                            form.append("<label>Prix : &nbsp;</label>");
+                                            form.append("" + calEvent.prix + "euro <br/>");
+                                            form.append("<label>Number des personnes : &nbsp;</label>");
+                                            form.append("" + calEvent.nbrp + "<br/>");
+                                            var div = bootbox.dialog({
+                                            message: form,
+                                                    buttons: {
+                                                    /*  "delete" : {
+                                                     "label" : "<i class='icon-trash'></i> Delete Event",
+                                                     "className" : "btn-sm btn-danger",
+                                                     "callback": function() {
+                                                     calendar.fullCalendar('removeEvents' , function(ev){
+                                                     return (ev._id == calEvent._id);
+                                                     })
+                                                     }
+                                                     } ,*/
+                                                    "close": {
+                                                    "label": "<i class='icon-remove'></i> Close",
+                                                            "className": "btn-sm"
+                                                    }
+                                                    }
 
-                calendar.fullCalendar('unselect');
+                                            });
+                                            form.on('submit', function () {
+                                            calEvent.title = form.find("input[type=text]").val();
+                                                    calendar.fullCalendar('updateEvent', calEvent);
+                                                    div.modal("hide");
+                                                    return false;
+                                            });
+                                            //console.log(calEvent.id);
+                                            //console.log(jsEvent);
+                                            //console.log(view);
 
-            },
-            eventClick: function (calEvent, jsEvent, view) {
+                                            // change the border color just for fun
+                                            //$(this).css('border-color', 'red');
 
-                var form = $("<br/><label>événement : &nbsp;</label><br/>");
-                form.append("" + calEvent.title + "<br/>");
-                form.append("<label>Créateur : &nbsp;</label>");
-                form.append("" + calEvent.createur + "<br/>");
-                form.append("<label>Region : &nbsp;</label>");
-                form.append("" + calEvent.region + "<br/>");
-                form.append("<label>Date début : &nbsp;</label>");
-                form.append("" + calEvent.startdate + "<br/>");
-                form.append("<label>Date fin : &nbsp;</label>");
-                form.append("" + calEvent.enddate + "<br/>");
-                form.append("<label>Prix : &nbsp;</label>");
-                form.append("" + calEvent.prix + "euro <br/>");
-                form.append("<label>Number des personnes : &nbsp;</label>");
-                form.append("" + calEvent.nbrp + "<br/>");
-
-                var div = bootbox.dialog({
-                    message: form,
-
-                    buttons: {
-                        /*  "delete" : {
-                         "label" : "<i class='icon-trash'></i> Delete Event",
-                         "className" : "btn-sm btn-danger",
-                         "callback": function() {
-                         calendar.fullCalendar('removeEvents' , function(ev){
-                         return (ev._id == calEvent._id);
-                         })
-                         }
-                         } ,*/
-                        "close": {
-                            "label": "<i class='icon-remove'></i> Close",
-                            "className": "btn-sm"
-                        }
-                    }
-
-                });
-
-                form.on('submit', function () {
-                    calEvent.title = form.find("input[type=text]").val();
-                    calendar.fullCalendar('updateEvent', calEvent);
-                    div.modal("hide");
-                    return false;
-                });
-
-
-                //console.log(calEvent.id);
-                //console.log(jsEvent);
-                //console.log(view);
-
-                // change the border color just for fun
-                //$(this).css('border-color', 'red');
-
-            }
-
-        });
-
-
-    })
-    </script>
-
-    <link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css') }}"/>
-
-    <link rel="stylesheet" href="{{ asset('assets/css/ace-fonts.css') }}"/>
-
-    <link rel="stylesheet" href="{{ asset('assets/css/ace-skins.min.css') }}"/>
-{% endblock %}
+                                    }
+                            });
+                            })
+                </script>
+                <link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}"/>
+                <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css') }}"/>
+                <link rel="stylesheet" href="{{ asset('assets/css/ace-fonts.css') }}"/>
+                <link rel="stylesheet" href="{{ asset('assets/css/ace-skins.min.css') }}"/>
+                {% endblock %}
