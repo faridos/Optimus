@@ -1,5 +1,22 @@
 {% extends "FrontOfficeUserBundle::layout.html.twig" %}
     {% trans_default_domain 'FOSUserBundle' %}
+    {% block nav %}
+ <li>
+        <form class="form-inline"  action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.generateCsrfToken('authenticate')}}" />
+            <div class="form-group">
+                <label class="sr-only" for="email">Email address</label>
+                <input type="text" name="_username" value="" required="required" class="form-control round" id="email" placeholder="Adresse éléctronique" autocomplete="on" >
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="password">Mot de passe</label>
+                <input type="password" name="_password" required="required" class="form-control round" id="password" placeholder="Mot de passe" >
+            </div>
+            <input type="submit" name="submit" class="btn btn-round btn-o btn-green" value="Connexion">
+        </form>
+    </li>
+    <li><a href="{{ path("fos_user_registration_register") }}" class="btn btn-round btn-o btn-green" data-target="#signup">Inscription</a></li>
+{% endblock %}
 {% block body %}
     <div id="home-map" ></div>
     {% block fos_user_content %}

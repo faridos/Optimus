@@ -50,9 +50,9 @@ registration:
     flash:
         user_created: L'utilisateur a été créé avec succès
     email:
-        subject: Bienvenue %username% !
+        subject: Bienvenue %username% 
         message: |
-            Bonjour %username% !
+            Bonjour %username% 
 
             Pour valider votre compte utilisateur, merci de vous rendre sur %confirmationUrl%
 

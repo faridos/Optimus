@@ -34,7 +34,7 @@ class User extends BaseUser {
     protected $prenom;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date", nullable=true)
      */
     protected $dateNaissance;
 
@@ -52,19 +52,13 @@ class User extends BaseUser {
     protected $sexe;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $adresse;
 
     /**
-     * @ORM\Column(type="phone_number", nullable=true)
-     * @AssertPhoneNumber(message="Tel invalide !")
-     * @Assert\Length(
-     *      min = "8",
-     *      max = "12",
-     *      minMessage = "Au moins {{ limit }} caractères !",
-     *      maxMessage = "Ne peut pas être plus long que {{ limit }} caractères !"
-     * )
+     * @ORM\Column(type="string", nullable=true)
+     * 
      */
     protected $tel;
 
