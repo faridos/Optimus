@@ -1,5 +1,6 @@
 {% extends "FrontOfficeOptimusBundle::layoutEvent.html.twig" %}
 {% block content %}
+    
 
     <div class="col-lg-12"><div class="row mb20">
 
@@ -9,9 +10,9 @@
         <div class="col-lg-12">
             <div class="tabsContainer">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
-                    <li class="active"><a href="{{ path('show_event', {'id': event.id}) }}" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
-                    <li class=""><a href="{{ path('photos_event', {'id': event.id}) }}" role="tab"><span class="icon-doc"></span> Photos</a></li>
-                    <li class=""><a href="{{ path('videos_event', {'id': event.id}) }}" role="tab"><span class="icon-film"></span> Vidéos</a></li>
+                    <li class="active"><a href="#participants" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
+                    <li class=""><a href="#photos" role="tab" data-toggle="tab"><span class="icon-doc"></span> Photos</a></li>
+                    <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
                 </ul>
                 <div class="tab-content">
 
@@ -41,10 +42,251 @@
                         <div class="clearfix"></div>
 
                     </ul>
+                    <ul class="tab-pane fade  scrollbar" id="photos" >
 
+                <div class="row" >
+                {% for photo in event.images %}
+
+                        <div class="col-sm-4" id="{{ photo.id }}">
+                            <div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
+                                <div class="fig " id="main">
+                                    <a href="{{ asset(photo.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                        <img src="{{ asset(photo.WebPath) }}" />
+                                    </a>
+                                     {% if event.createur == app.user %}
+                                    <div class="priceCap paddus">
+                                        <button href="#suppritus{{photo.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
+                                    </div>
+                                     {% endif %}
+                                    <div class="figCap">
+                                        <div class="address">Cliquez pour agrandir l'image</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                {% endfor %}
+                 </div>
+            </ul>
+                    <ul class="tab-pane fade scrollbar videosus" id="videos"  >
+                        <div class="row">
+                            <br>
+                            <div class="col-xs-4" >
+                                <div data-linkto="" class="card albumus" >
+                                    <div class="figure" id="main">
+                                        <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                            <img src="images/bg-1.jpg" />
+                                        </a>
+
+                                        <div class="figView"><span class="icon-eye"></span></div>
+
+                                    </div>
+                                    <h2 align="center">Titre de video</h2>
+
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-xs-4" >
+                                <div data-linkto="" class="card albumus" >
+                                    <div class="figure" id="main">
+                                        <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                            <img src="images/bg-1.jpg" />
+                                        </a>
+
+                                        <div class="figView"><span class="icon-eye"></span></div>
+
+                                    </div>
+                                    <h2 align="center">Titre de video</h2>
+
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-xs-4" >
+                                <div data-linkto="" class="card albumus" >
+                                    <div class="figure" id="main">
+                                        <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                            <img src="images/bg-1.jpg" />
+                                        </a>
+
+                                        <div class="figView"><span class="icon-eye"></span></div>
+
+                                    </div>
+                                    <h2 align="center">Titre de video</h2>
+
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xs-4" >
+                                <div data-linkto="" class="card albumus" >
+                                    <div class="figure" id="main">
+                                        <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                            <img src="images/bg-1.jpg" />
+                                        </a>
+
+                                        <div class="figView"><span class="icon-eye"></span></div>
+
+                                    </div>
+                                    <h2 align="center">Titre de video</h2>
+
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xs-4" >
+                                <div data-linkto="" class="card albumus" >
+                                    <div class="figure" id="main">
+                                        <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                            <img src="images/bg-1.jpg" />
+                                        </a>
+
+                                        <div class="figView"><span class="icon-eye"></span></div>
+
+                                    </div>
+                                    <h2 align="center">Titre de video</h2>
+
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-xs-4" >
+                                <div data-linkto="" class="card albumus" >
+                                    <div class="figure" id="main">
+                                        <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                            <img src="images/bg-1.jpg" />
+                                        </a>
+
+                                        <div class="figView"><span class="icon-eye"></span></div>
+
+                                    </div>
+                                    <h2 align="center">Titre de video</h2>
+
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-xs-4" >
+                                <div data-linkto="" class="card albumus" >
+                                    <div class="figure" id="main">
+                                        <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                            <img src="images/bg-1.jpg" />
+                                        </a>
+
+                                        <div class="figView"><span class="icon-eye"></span></div>
+
+                                    </div>
+                                    <h2 align="center">Titre de video</h2>
+
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-4" >
+                                <div data-linkto="" class="card albumus" >
+                                    <div class="figure" id="main">
+                                        <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                            <img src="images/bg-1.jpg" />
+                                        </a>
+
+                                        <div class="figView"><span class="icon-eye"></span></div>
+
+                                    </div>
+                                    <h2 align="center">Titre de video</h2>
+
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-xs-4" >
+                                <div data-linkto="" class="card albumus" >
+                                    <div class="figure" id="main">
+                                        <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                            <img src="images/bg-1.jpg" />
+                                        </a>
+
+                                        <div class="figView"><span class="icon-eye"></span></div>
+
+                                    </div>
+                                    <h2 align="center">Titre de video</h2>
+
+                                    <div align="center" >
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                    </div>
+                                    <br>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                    </ul>
                 </div>
                 <div class="clearfix"></div>
-
+                
             </div>
 
         </div>

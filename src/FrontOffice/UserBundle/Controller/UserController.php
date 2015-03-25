@@ -41,8 +41,8 @@ class UserController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
 
-        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findAll();
-        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime('- 1 months'));
+        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findAll(array('active' => 1));
+        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap();
 
         return $this->render('FrontOfficeUserBundle:User:redirect.html.twig', array('events' => $eventsMap));
     }
@@ -58,8 +58,8 @@ class UserController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
 
-        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array(),array('dateDebut'=>'desc'));
-        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap(new \Datetime('- 1 months'));
+        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array('active' => 1),array('dateDebut'=>'desc'));
+        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap();
         $typesEv = $em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findAll();
         return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('type_events' => $typesEv, 'user' => $user, 'events' => $events, 'eventsMap' => $eventsMap));
     }
