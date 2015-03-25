@@ -286,9 +286,8 @@
 
                             icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-position.png'),
 
-                            draggable: true,
-
-                            animation: google.maps.Animation.DROP,
+                            draggable: false,
+                            animation: google.maps.Animation.DROP
 
                         });
 

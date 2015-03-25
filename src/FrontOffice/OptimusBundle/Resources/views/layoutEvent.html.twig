@@ -97,7 +97,7 @@
                             </div>
                             <div class="info">
 
-                                <div class="name">Nombre de participants :<span class="address leftus"> {{event.participations|length}}</span></div>
+                                <div class="name">Nombre de participants :<span class="address leftus" id="nbparticip"> {{event.participations|length}}</span></div>
 
 
                             </div>
@@ -185,8 +185,28 @@
                         var test = tab[1];
                         if (test == 0){
                 $('#append2').hide();
+                var nb = parseInt($('#nbparticip').text());
+                        var nouveauNb = nb - 1;
+               $('#nbparticip').replaceWith('<span class="address leftus" id="nbparticip">'+ nouveauNb +'</span>');
+               
+               $('#particip{{app.user.id}}').replaceWith();
                 } else{
                 $('#append2').show();
+                var nb = parseInt($('#nbparticip').text());
+                        var nouveauNb = nb + 1;
+               $('#nbparticip').replaceWith('<span class="address leftus" id="nbparticip">'+ nouveauNb +'</span>');
+               $('#blockparticip').append('<div class="col-md-4" id="particip{{app.user.id}}">'+
+                                '<div class="tooltipsContainer agent notifyList">'+
+                                    '<a href="{{ path('show_profil',{'id': app.user.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{app.user.prenom}} {{app.user.nom}}">'+
+                                        '<img src="{{ asset(app.user.WebPath) }}" alt="">'+
+                                        '<div class="pulse border-green pulseoptimus"></div>'+
+                                    '</a>'+
+                                    '<div class="info">'+
+                                       '<a href="{{ path('show_profil',{'id': app.user.id}) }}"> <div class="name clubumus"><strong>{{app.user.prenom}} {{app.user.nom}}</strong></div></a>'+
+                                        '<div class="title">{{app.user.profil}}</div>'+
+                                    '</div><br>'+
+                                '</div>'+
+                            '</div>');
                 }
 
                 }

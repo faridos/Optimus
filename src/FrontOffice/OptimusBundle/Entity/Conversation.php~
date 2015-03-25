@@ -146,4 +146,37 @@ class Conversation {
     }
     
 
+
+    /**
+     * Add messages
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Message $messages
+     * @return Conversation
+     */
+    public function addMessage(\FrontOffice\OptimusBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+    
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Message $messages
+     */
+    public function removeMessage(\FrontOffice\OptimusBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
 }
