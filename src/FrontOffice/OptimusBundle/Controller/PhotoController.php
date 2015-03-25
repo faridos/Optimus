@@ -105,7 +105,7 @@ class PhotoController extends Controller
             $em->persist($photo);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('photos_event', array('id' => $id)));
+            return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
         }
         
         return array(
