@@ -62,7 +62,7 @@
                                 </div>
                                         <div class="col-md-12"></div>
                                 <div class="col-md-6 pb20" id="append">
-
+                                    {% if event.createur.id != app.user.id%}
                                     {% if not isparticipant and date(event.dateFin)>= date() %}
                                         <a class="btn btn-green btn-round eventus " href="#"  id="exit_event">
                                             <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
@@ -72,7 +72,7 @@
                                             <span class="fa icon-action-redo "></span> <span class="exitEvent">Annuler participation</span>                                          
                                         </a>
                                     {% endif %}
-                                  
+                                  {% endif %}
                                 </div>
                                 <div class="col-md-6">
                                     {% if isparticipant and date(event.dateFin)>= date() %}
@@ -96,8 +96,8 @@
 
                             </div>
                             <div class="info">
-                                {% set participants = participants(event) %}
-                                <div class="name">Nombre de participants :<span class="address leftus"> {{participants|length}}</span></div>
+                                
+                                <div class="name">Nombre de participants :<span class="address leftus"> {{event.participations|length}}</span></div>
 
 
                             </div>

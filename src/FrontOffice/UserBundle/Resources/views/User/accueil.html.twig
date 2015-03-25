@@ -88,7 +88,7 @@
                                                                     <a class="btn btn-green btn-round eventus" href="#" id="exit_event{{event.id}}">
                                                                         <span class="fa icon-action-redo "></span> <span class="exitEvent{{event.id}}">Annuler participation</span>                                          
                                                                     </a>
-                                                                    <div class="buttonsWrapper pb20 buttonleftus">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
+                                                                    <div class="buttonsWrapper pb20 buttonleftus" id="append2">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
 
                                                                 {% endif %}
 
@@ -121,6 +121,7 @@
                                                         </div>
                                                     {% endif %}
                                                 {% endfor %}
+                                               
                                             </div>
                                             <div class="loader" id="loader_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></div>
                                         </ul>
@@ -139,7 +140,7 @@
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>
-
+                                                     <br/>
                                     {%endif%}                   
                                 {% endfor %}
                             </div>
@@ -442,7 +443,12 @@
                                 success: function(msg) {
                    tab = msg.split('#');
                $("#exit_event{{event.id}}").html(tab[0]);
-              
+              var test = tab[1];
+              if(test == 0 ){
+             $('#append2').hide();
+         }else{
+              $('#append2').show();
+         }
               
         
         }

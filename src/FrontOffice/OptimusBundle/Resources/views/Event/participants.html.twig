@@ -18,18 +18,18 @@
                     <ul class="tab-pane fade  active in scrollbar" id="participants" >
 
                         <div class="row">
-                             {% set participants = participants(event) %}
-                            {% for participant in participants %}
+                             
+                            {% for participant in event.participations %}
                             <div class="col-md-4">
 
                                 <div class="tooltipsContainer agent notifyList">
-                                    <a href="{{ path('show_profil',{'id': participant.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{participant.prenom}} {{participant.nom}}">
-                                        <img src="{{ asset(participant.WebPath) }}" alt="">
+                                    <a href="{{ path('show_profil',{'id': participant.participant.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{participant.participant.prenom}} {{participant.participant.nom}}">
+                                        <img src="{{ asset(participant.participant.WebPath) }}" alt="">
                                         <div class="pulse border-green pulseoptimus"></div>
                                     </a>
                                     <div class="info">
-                                        <a href="{{ path('show_profil',{'id': participant.id}) }}"> <div class="name clubumus"><strong>{{participant.prenom}} {{participant.nom}}</strong></div></a>
-                                        <div class="title">{{participant.profil}}</div>
+                                        <a href="{{ path('show_profil',{'id': participant.participant.id}) }}"> <div class="name clubumus"><strong>{{participant.participant.prenom}} {{participant.participant.nom}}</strong></div></a>
+                                        <div class="title">{{participant.participant.profil}}</div>
 
                                     </div><br>
                                 </div>
