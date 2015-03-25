@@ -37,7 +37,7 @@ class RewardController extends Controller {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($reward);
             $em->flush();
-
+$request->getSession()->getFlashBag()->add('AjouterPalmarés', "Palmarés  a été creé avec success.");
             return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));
         }
 
@@ -69,7 +69,7 @@ class RewardController extends Controller {
 
         if ($editForm->isValid()) {
             $em->flush();
-
+$request->getSession()->getFlashBag()->add('ModifierPalmarés', "Palmarés  a été Modifier.");
             return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
         }
         return array(

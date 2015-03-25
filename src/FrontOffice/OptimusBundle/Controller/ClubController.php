@@ -42,7 +42,7 @@ class ClubController extends Controller {
 
      * @Template("FrontOfficeOptimusBundle:Club:add.html.twig")
      */
-    public function addClubAction() {
+    public function addClubAction(Request $request) {
           if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -71,6 +71,7 @@ class ClubController extends Controller {
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
             $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
+             $request->getSession()->getFlashBag()->add('AjoutClub', "Club  a été creé avec success.");
             return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
         }
         return array(
@@ -90,7 +91,7 @@ class ClubController extends Controller {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
-        $user1 = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         if (!$club || $club->getActive() == 0) {
@@ -98,16 +99,16 @@ class ClubController extends Controller {
         }
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('club' => $club));
         if ($notification) {
-            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
+            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notification));
             if (empty($notificationSeen)) {
 
-                $notifevent = new NotificationSeenEvent($user1, $notification);
+                $notifevent = new NotificationSeenEvent($user, $notification);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
        $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club));
-        return $this->render('FrontOfficeOptimusBundle:Club:show_club.html.twig', array('club' => $club, 'user1' => $user1, 'programmes' =>$progarammes) );
+        return $this->render('FrontOfficeOptimusBundle:Club:show_club.html.twig', array('club' => $club, 'user' => $user, 'programmes' =>$progarammes) );
     }
 
     /**
@@ -138,6 +139,7 @@ class ClubController extends Controller {
                 $clubevent = new HistoryClubEvent($user, $club, $action);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+                 $request->getSession()->getFlashBag()->add('ModificationClub', "Club  a été Modifier.");
                 return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
             }
             return array(
@@ -174,6 +176,7 @@ class ClubController extends Controller {
             $clubevent = new HistoryClubEvent($user, $entity, $action);
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+             $request->getSession()->getFlashBag()->add('SupprissionClub', "Club  a été supprimer.");
 
             return  new Response($id);
         }

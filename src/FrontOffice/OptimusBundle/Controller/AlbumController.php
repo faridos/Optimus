@@ -39,7 +39,7 @@ class AlbumController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('palmaresuser', "Album  a été creé avec success.");
+            $request->getSession()->getFlashBag()->add('AjouterAlbum', "Album  a été creé avec success.");
           return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));  
         }
         return array(
@@ -139,7 +139,7 @@ class AlbumController extends Controller
      * @Route("album={id}/supprimer", name="album_delete", options={"expose"=true})
      * @Method("GET|DELETE")
      */
-    public function deleteAction($id) {
+    public function deleteAction(Request $request,$id) {
         $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id);

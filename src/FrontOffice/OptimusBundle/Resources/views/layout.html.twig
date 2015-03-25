@@ -31,8 +31,8 @@
         <div class="headerUserWraper">
             <a href="#" class="userHandler dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span></a>
             <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
-                {% if user.path == null %}
-                    {% if user.sexe == 'H' %}
+                {% if app.user.path == null %}
+                    {% if app.user.sexe == 'H' %}
 
                         <img src="{{ asset('men.jpg') }}" class="avatar headerAvatar pull-left">
 
@@ -260,7 +260,19 @@
                                                                                                 {% set friends = getFriends(app.user.id) %}
                                                                                                     {% for friend in friends %}
                                                                                                         <li class="definedname"><a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
-                                                                                                                <img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
+                                                                                                                {% if friend.path == null %}
+                                                {% if friend.sexe == 'H' %}
+                                                     
+                                                <img src="{{ asset('men.jpg') }}" class="avatar headerAvatar pull-left">
+                                          
+                                                    {% else %}
+                                                  <img src="{{ asset('women.jpg') }}" class="avatar headerAvatar pull-left">
+                                          
+                                                        {% endif %}
+                                                        {% else %}
+                               <img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
+                                    {% endif %}
+                                                                                                                
                                                                                                                 <div class="userTop pull-left">
                                                                                                                     <span class="headerUserName open  box">{{ friend.prenom }} {{ friend.nom }}</span> 
                                                                                                                 </div><img class="connected" src="{{ asset('template/images/connected.png') }}" alt="en ligne" title="en ligne" >
@@ -271,7 +283,9 @@
 
                                                                                                 </ul>
                                                                                             </li>
+                                                                                            {% if app.user.profil == 'Entraineur' %}
                                                                                             <li><a href="{{ path('add_club')}}"><span class="navIcon fa fa-users"></span><span class="navLabel"> + Club</span></a></li>
+                                                                                          {% endif %}
                                                                                             <li><a href="{{ path('add-event')}}"><span class="navIcon fa fa-trophy"></span><span class="navLabel">+Evenement</span></a></li>
 
 
