@@ -36,7 +36,7 @@
                                 {% endif %}
                                 <div class="namusprofilus" ><strong>{{ club.nom }}</strong>
                                 </div>
-                                             
+
                             </div>
                             {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
                             <div class="address profilus " style="font-size:18px">
@@ -48,7 +48,7 @@
                                     {% endif %}
                                 </div>
                             </div>
-                            
+
                             <div class="buttonsWrapper profilus" > 
                                 <div class="group">
                                     <div class="row">
@@ -60,7 +60,7 @@
                                                 {% set adherents= adherents(club.id)%}
                                                 <div class="title nombrus">Nombre adhérents :<span class="address detaillus">{{adherents|length}}</span></div>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="col-md-10">
                                             <div class="pc-about osLight col-md-6">
@@ -88,12 +88,12 @@
                                                     <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
                                                 </a>
                                             </div>
-                                            
+
                                             <div class="pc-title osLight col-md-6">
                                                 <div class="buttonsWrapper pb20 ">
                                                     {% if memberconfirmed %}
-                                                  {{ socialButtons( {'pinterest' : false,'linkedin': false}) }}
-                                                  {% endif %}
+                                                        {{ socialButtons( {'pinterest' : false,'linkedin': false}) }}
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -104,10 +104,10 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="userWidget-2" >
-                           
-                            
-                                <div class="row">
-                                    <div class="col-md-12">
+
+
+                            <div class="row">
+                                <div class="col-md-12">
                                     <div class="col-md-6 pb20">
                                         <div class="pc-about osLight info" style="margin-left:20px">
                                             <div class="title eventus">Description :<span class="address detaillus">{{club.description}}</span>
@@ -119,9 +119,9 @@
                                             <div class="title eventus">Email : <span class="address ">{{club.createur.email}} </span></div>
                                         </div>
                                     </div>
-                                        </div>
                                 </div>
-                          
+                            </div>
+
                             <div class="clearfix"></div>
                         </div>
                         <div class="clearfix"></div>
@@ -165,8 +165,34 @@
 
             "use strict";
 
-               var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
-               var marker = new google.maps.Marker({
+            var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
+
+            var directionsDisplay;
+            var directionsService = new google.maps.DirectionsService()
+            directionsDisplay = new google.maps.DirectionsRenderer({
+                polylineOptions: {
+                    strokeColor: "#c02100"
+                }
+            });
+            directionsDisplay.setMap(map);
+
+            calcRoute();
+            function calcRoute() {
+
+                var request = {
+                    origin: pos,
+                    destination: myLatLng,
+                    travelMode: google.maps.TravelMode.DRIVING
+                };
+                directionsService.route(request, function (response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                        directionsDisplay.setOptions({suppressMarkers: true});
+                    }
+                });
+            }
+
+            var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
                 icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),

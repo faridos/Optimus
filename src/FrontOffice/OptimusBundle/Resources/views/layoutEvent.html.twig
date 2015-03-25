@@ -60,19 +60,19 @@
                                     </div>
 
                                 </div>
-                                        <div class="col-md-12"></div>
+                                <div class="col-md-12"></div>
                                 <div class="col-md-6 pb20" id="append">
                                     {% if event.createur.id != app.user.id%}
-                                    {% if not isparticipant and date(event.dateFin)>= date() %}
-                                        <a class="btn btn-green btn-round eventus " href="#"  id="exit_event">
-                                            <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
-                                        </a>
-                                    {% else %}
-                                        <a class="btn btn-green btn-round eventus" href="#" id="exit_event">
-                                            <span class="fa icon-action-redo "></span> <span class="exitEvent">Annuler participation</span>                                          
-                                        </a>
+                                        {% if not isparticipant and date(event.dateFin)>= date() %}
+                                            <a class="btn btn-green btn-round eventus " href="#"  id="exit_event">
+                                                <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
+                                            </a>
+                                        {% else %}
+                                            <a class="btn btn-green btn-round eventus" href="#" id="exit_event">
+                                                <span class="fa icon-action-redo "></span> <span class="exitEvent">Annuler participation</span>                                          
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
-                                  {% endif %}
                                 </div>
                                 <div class="col-md-6">
                                     {% if isparticipant and date(event.dateFin)>= date() %}
@@ -96,7 +96,7 @@
 
                             </div>
                             <div class="info">
-                                
+
                                 <div class="name">Nombre de participants :<span class="address leftus"> {{event.participations|length}}</span></div>
 
 
@@ -140,44 +140,61 @@
     <script>
         (function ($) {
 
-            "use strict";
-            
+        "use strict";
+                var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
+                var directionsDisplay;
+                var directionsService = new google.maps.DirectionsService()
+                directionsDisplay = new google.maps.DirectionsRenderer({
+                polylineOptions: {
+                strokeColor: "#c02100"
+                }
+                });
+                directionsDisplay.setMap(map);
+                calcRoute();
+                function calcRoute() {
 
-            var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
-            var marker_{{ event.id}} = new google.maps.Marker({
-                position: myLatLng,
+                var request = {
+                origin:pos,
+                        destination:myLatLng,
+                        travelMode: google.maps.TravelMode.DRIVING
+                };
+                        directionsService.route(request, function(response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                                directionsDisplay.setOptions({ suppressMarkers: true });
+                        }
+                        });
+                        }
+        var marker_{{ event.id}} = new google.maps.Marker({
+        position: myLatLng,
                 map: map,
                 icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-green.png'),
                 draggable: false,
                 animation: google.maps.Animation.DROP
-            });
-            
-         
-            map.setZoom(12);
-            map.setCenter(myLatLng);
+        });
+                map.setZoom(12);
+                map.setCenter(myLatLng);
         })(jQuery);
-        
-        
-        $('#exit_event').click(function() {
-    
-    $.ajax({
+                $('#exit_event').click(function() {
+
+        $.ajax({
         url: Routing.generate('exit_event', {'id': {{event.id}}}),
-        success: function(msg) {
-                   tab = msg.split('#');
-               $("#exit_event").html(tab[0]);
-              var test = tab[1];
-              if(test == 0 ){
-             $('#append2').hide();
-         }else{
-              $('#append2').show();
-         }
-        
-        }
-    });
-});
- 
-    
-    
-    
+                success: function(msg) {
+                tab = msg.split('#');
+                        $("#exit_event").html(tab[0]);
+                        var test = tab[1];
+                        if (test == 0){
+                $('#append2').hide();
+                } else{
+                $('#append2').show();
+                }
+
+                }
+        });
+                });
+
+
+
+
     </script>
 {% endblock %}
