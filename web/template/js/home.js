@@ -66,9 +66,9 @@
 
                             icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-position.png'),
 
-                            draggable: true,
+                            draggable: false,
 
-                            animation: google.maps.Animation.DROP,
+                            animation: google.maps.Animation.DROP
 
                         });
 

@@ -18,10 +18,10 @@
 
                     <ul class="tab-pane fade  active in scrollbar" id="participants" >
 
-                        <div class="row">
+                        <div class="row" id="blockparticip">
                              
                             {% for participant in event.participations %}
-                            <div class="col-md-4">
+                            <div class="col-md-4" id="particip{{participant.participant.id}}">
 
                                 <div class="tooltipsContainer agent notifyList">
                                     <a href="{{ path('show_profil',{'id': participant.participant.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{participant.participant.prenom}} {{participant.participant.nom}}">
