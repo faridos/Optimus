@@ -138,7 +138,7 @@ class ClubController extends Controller {
                 $clubevent = new HistoryClubEvent($user, $club, $action);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-                return $this->redirect($this->generateUrl('show_club', array('id' => $id)));
+                return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
             }
             return array(
                 'club' => $club,
@@ -151,7 +151,7 @@ class ClubController extends Controller {
     /**
      * Deletes a Club entity.
      *
-     * @Route("/club={id}/supprimer", name="club_delete")
+     * @Route("/club={id}/supprimer", name="club_delete",  options={"expose"=true})
      * 
      */
     public function deleteAction(Request $request, $id) {
@@ -175,7 +175,7 @@ class ClubController extends Controller {
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
 
-            return $this->redirect($this->generateUrl('clubs_member', array('id' => $user->getId())));
+            return  new Response($id);
         }
     }
 

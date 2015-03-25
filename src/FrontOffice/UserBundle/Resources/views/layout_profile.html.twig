@@ -15,9 +15,22 @@
                                 <div class="col-sm-4">
                                     <div class="propWidget-1 logotus tooltipsContainer ">
                                         <div class="fig salamus">
+                                            {% if user.path == null %}
+                                                {% if user.sexe == 'H' %}
+                                                     <a href="{{ asset('men.jpg') }}" data-lightbox-title="photo de profil" data-lightbox-gallery="">
+                                                <img src="{{ asset('men.jpg') }}" class="inline-block imaguss">
+                                            </a>
+                                                    {% else %}
+                                                         <a href="{{ asset('women.jpg') }}" data-lightbox-title="photo de profil" data-lightbox-gallery="">
+                                                <img src="{{ asset('women.jpg') }}" class="inline-block imaguss">
+                                            </a>
+                                                        {% endif %}
+                                                        {% else %}
+                                                            
                                             <a href="{{ asset(user.WebPath) }}" data-lightbox-title="photo de profil" data-lightbox-gallery="">
                                                 <img src="{{ asset(user.WebPath) }}" class="inline-block imaguss">
                                             </a>
+                                             {% endif %}
                                             {% if app.user.id == user.id %}
                                                 <div class="priceCap paddus">
                                                     <button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo">
@@ -142,11 +155,25 @@
                                 </div>
                             {% endif %}
                             {% for friend in friends %}
-                                <div class="tooltipsContainer avatar friendus">
+                                  <div class="tooltipsContainer avatar friendus">
+                                  {% if friend.path == null %}
+                                                {% if friend.sexe == 'H' %}
+                                                        <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
+                                                <img src="{{ asset('men.jpg') }}" class="inline-block imaguss">
+                                            </a>
+                                                    {% else %}
+                                                 <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
+                                                     <img src="{{ asset('women.jpg') }}" class="inline-block imaguss">
+                                            </a>
+                                                        {% endif %}
+                                                        {% else %}
+                               
                                     <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
                                         <img src="{{ asset(friend.WebPath) }}" >
                                     </a>
-                                </div>
+                             
+                                    {% endif %}
+                                     </div>
                             {% endfor %}               
 
                         </ul>

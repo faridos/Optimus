@@ -15,9 +15,9 @@ class RewardType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', 'datetime' ,array('attr'=>array('class'=>'some_class search-optimus','placeholder'=>'Date de creation'),'widget' => 'single_text','required' => true))
-            ->add('titre','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le titre de reward')))
-            ->add('classment', 'text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le classement')))
+            ->add('date', 'date' , array('attr'=>array('class' => 'search-optimus','placeholder'=>'Date '),'format' => 'dd/MM/yyyy', 'widget' => "single_text", 'required' => true))
+            ->add('titre','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le titre de reward'),'required' => true))
+            ->add('classment', 'text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le classement'),'required' => true))
             
         ;
     }

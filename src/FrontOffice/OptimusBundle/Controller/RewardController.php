@@ -70,7 +70,7 @@ class RewardController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('palmares_user', array('id' => $user->getId())));
+            return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
         }
         return array(
             'user' => $user,

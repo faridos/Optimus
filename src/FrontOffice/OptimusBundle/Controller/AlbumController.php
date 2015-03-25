@@ -97,7 +97,8 @@ class AlbumController extends Controller
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $em->flush();
-            return $this->redirect($this->generateUrl('albums_user', array('id' => $user->getId())));
+             $request->getSession()->getFlashBag()->add('modificationAlbum', "Album  a été Modifier.");
+            return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
         }
         return array(
            
@@ -144,6 +145,7 @@ class AlbumController extends Controller
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Album')->find($id);
         $em->remove($entity);
         $em->flush();
+        $request->getSession()->getFlashBag()->add('supprissionAlbum', "Album  a été supprimer.");
         $response = new Response($id);
          return $response;
     }
