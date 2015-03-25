@@ -96,6 +96,7 @@
                     </div>
                 </ul>
                 <ul class="tab-pane fade scrollbar" id="clubs" >
+                    {% if user.profil == Entraineur %}
                     {% if user.clubs|length == 0 %}
                         <div class="alert alert-danger alert-dismissible fade in" role="alert">
                             <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
@@ -131,6 +132,9 @@
                             <div class="clearfix"></div>
                         </div>
                     {% endfor %}
+                    {% endif %}
+                    {% if user.profil == Sportif %}
+                    {% endif %}
                 </ul>
                 <ul class="tab-pane fade scrollbar" id="albums" >
                     {% if user.albums|length == 0 %}
