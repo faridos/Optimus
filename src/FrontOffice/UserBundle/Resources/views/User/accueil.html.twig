@@ -80,7 +80,7 @@
 
                                                                 {% set participantOuNon=ParticipantOuNon(event,user) %}
                                                                 {% if participantOuNon == 0 and date(event.dateFin)>= date() %}
-                                                                    <a class="btn btn-green btn-round eventus" href="{{ path('add_participation', {'id':event.id})}}"  id="request_event{{event.id}}">
+                                                                    <a class="btn btn-green btn-round eventus" href="#"  id="exit_event{{event.id}}">
                                                                         <span class="fa icon-action-redo "></span> <span class="requestEvent{{event.id}}">Participer</span>                                          
                                                                     </a>
 
@@ -439,10 +439,13 @@
 
                         $.ajax({
                         url: Routing.generate('exit_event', {'id': {{event.id}}}),
-                                success: function() {
-                                $('#append{{event.id}}').replaceWith('<a class="btn btn-green btn-round eventus" href="{{ path('add_participation', {'id':event.id})}}">' +
-                                        '<span class="fa icon-action-redo "></span> <span class="requestEvent{{event.id}}">Participer</span></a>');
-                                }
+                                success: function(msg) {
+                   tab = msg.split('#');
+               $("#exit_event{{event.id}}").html(tab[0]);
+              
+              
+        
+        }
                         });
                         });
 
