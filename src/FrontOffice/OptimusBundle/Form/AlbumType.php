@@ -16,7 +16,8 @@ class AlbumType extends AbstractType
     {
         $builder
              ->add('nom','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le titre album')))
-             ->add('privacy', 'choice', array('choices' => array('Publique' => 'Public', 'Unique' => 'Unique', 'Amis' => 'Amis'),'attr'=>array('class'=>'search-optimus')))
+             ->add('privacy', 'choice', array('choices' => array('Publique' => 'Public', 'Unique' => 'Unique', 'Amis' => 'Amis'),'attr'=>array('class'=>'search-optimus'), 'required' => False,'empty_value' => 'Choisissez visibiliter',
+    'empty_data'  => null))
         ;
     }               
     /**

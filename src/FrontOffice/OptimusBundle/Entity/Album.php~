@@ -146,37 +146,4 @@ class Album
     }
 
 
-
-    /**
-     * Add images
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Photo $images
-     * @return Album
-     */
-    public function addImage(\FrontOffice\OptimusBundle\Entity\Photo $images)
-    {
-        $this->images[] = $images;
-    
-        return $this;
-    }
-
-    /**
-     * Remove images
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Photo $images
-     */
-    public function removeImage(\FrontOffice\OptimusBundle\Entity\Photo $images)
-    {
-        $this->images->removeElement($images);
-    }
-
-    /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
 }

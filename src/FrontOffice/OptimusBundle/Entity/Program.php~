@@ -128,34 +128,4 @@ class Program {
     }
 
     //put your code here
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->seances = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add seances
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Seance $seances
-     * @return Program
-     */
-    public function addSeance(\FrontOffice\OptimusBundle\Entity\Seance $seances)
-    {
-        $this->seances[] = $seances;
-    
-        return $this;
-    }
-
-    /**
-     * Remove seances
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Seance $seances
-     */
-    public function removeSeance(\FrontOffice\OptimusBundle\Entity\Seance $seances)
-    {
-        $this->seances->removeElement($seances);
-    }
 }

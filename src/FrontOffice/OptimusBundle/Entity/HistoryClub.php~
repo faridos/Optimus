@@ -5,12 +5,12 @@ namespace FrontOffice\OptimusBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * HistoryEvent
- * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Repository\HistoryEventRepository")
- * @ORM\Table(name="historyevent")
+ * HistoryClub
+ * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Repository\HistoryClubRepository")
+ * @ORM\Table(name="historyclub")
  * 
  */
-class HistoryEvent
+class HistoryClub
 {
     /**
      * @var integer
@@ -22,11 +22,10 @@ class HistoryEvent
     private $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Event", cascade={"persist","remove"})
+     * @ORM\ManyToOne(targetEntity="Club", cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $event;
-    
+    private $club;
     
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User",cascade={"persist","remove"})
@@ -47,13 +46,13 @@ class HistoryEvent
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
-    
+
     public function __construct()
     {
         $this->date = new \Datetime(); 
     }
-
-
+    
+    
     /**
      * Get id
      *
@@ -68,7 +67,7 @@ class HistoryEvent
      * Set action
      *
      * @param string $action
-     * @return HistoryEvent
+     * @return HistoryClub
      */
     public function setAction($action)
     {
@@ -91,7 +90,7 @@ class HistoryEvent
      * Set date
      *
      * @param \DateTime $date
-     * @return HistoryEvent
+     * @return HistoryClub
      */
     public function setDate($date)
     {
@@ -111,33 +110,33 @@ class HistoryEvent
     }
 
     /**
-     * Set event
+     * Set club
      *
-     * @param \FrontOffice\OptimusBundle\Entity\Event $event
-     * @return HistoryEvent
+     * @param \FrontOffice\OptimusBundle\Entity\Club $club
+     * @return HistoryClub
      */
-    public function setEvent(\FrontOffice\OptimusBundle\Entity\Event $event)
+    public function setClub(\FrontOffice\OptimusBundle\Entity\Club $club)
     {
-        $this->event = $event;
+        $this->club = $club;
 
         return $this;
     }
 
     /**
-     * Get event
+     * Get club
      *
-     * @return \FrontOffice\OptimusBundle\Entity\Event 
+     * @return \FrontOffice\OptimusBundle\Entity\Club 
      */
-    public function getEvent()
+    public function getClub()
     {
-        return $this->event;
+        return $this->club;
     }
 
     /**
      * Set user
      *
      * @param \FrontOffice\UserBundle\Entity\User $user
-     * @return HistoryEvent
+     * @return HistoryClub
      */
     public function setUser(\FrontOffice\UserBundle\Entity\User $user)
     {

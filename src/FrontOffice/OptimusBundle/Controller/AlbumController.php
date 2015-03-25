@@ -39,7 +39,8 @@ class AlbumController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-          return $this->redirect($this->generateUrl('albums_user', array('id' => $id)));  
+            $request->getSession()->getFlashBag()->add('palmaresuser', "Album  a été creé avec success.");
+          return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));  
         }
         return array(
             'user' => $user,

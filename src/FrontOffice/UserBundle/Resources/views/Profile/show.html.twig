@@ -1,5 +1,15 @@
 {% extends "FrontOfficeUserBundle::layout_profile.html.twig" %}
 {% block content %}
+      {% for flashMessage in app.session.flashbag.get('palmaresuser') %}
+        <br/>
+  <div class="alert alert-success">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ flashMessage }}
+        </div>
+
+
+    {% endfor %}
+      
     <div class="col-lg-12">
         <div class="tabsContainer">
             <ul class="nav nav-tabs nav-justified" role="tablist">
@@ -96,7 +106,7 @@
                     </div>
                 </ul>
                 <ul class="tab-pane fade scrollbar" id="clubs" >
-                    {% if user.profil == Entraineur %}
+                    {% if user.profil == 'Entraineur' %}
                     {% if user.clubs|length == 0 %}
                         <div class="alert alert-danger alert-dismissible fade in" role="alert">
                             <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
@@ -116,7 +126,7 @@
                                 <a href="{{path('show_club',{'id':club.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
                                     <img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="info">
                                     <div class="name">{{ club.nom}}</div>
                                     <div class="title">Créateur du club : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
@@ -129,11 +139,45 @@
                                     <div class="title">Text descriptif : <span class="address">{{ club.description}}</span></div>
                                 </div>
                             </div>
+                                 <div align="right">
+                                <a href="#modifierprogram{{club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+
+                                <a href="#supprimuss{{club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
                     {% endfor %}
                     {% endif %}
-                    {% if user.profil == Sportif %}
+                    {% if user.profil == 'Sportif' %}
+                        {% if user.adherent|length == 0 %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                            <button type="button" class="close" data-dismiss="alert"></button>
+                            <strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
+                        </div>
+                    {% endif %}
+                    {% for member in user.adherent %}
+                         <div class="userWidget-2 col-md-12" >
+                            <div class="tooltipsContainer avatar imagus">
+                                <a href="{{path('show_club',{'id':member.clubad.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
+                                    <img src="{{ asset(member.clubad.WebPath) }}" alt="avatar" ></a>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info">
+                                    <div class="name">{{ member.clubad.nom}}</div>
+                                    <div class="title">Créateur du club : <span class="address">{{ member.clubad.createur.nom ~' '~member.clubad.createur.prenom }}</span></div>
+                                    <div class="title">Adresse du club : <span class="address">{{ member.clubad.adresse}}</span></div>
+                                    <div class="title">Frais d'abonnement : <span class="address">{{ member.clubad.fraisAdhesion}}£</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="info" >
+                                    <div class="title">Text descriptif : <span class="address">{{ member.clubad.description}}</span></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        {% endfor %}
                     {% endif %}
                 </ul>
                 <ul class="tab-pane fade scrollbar" id="albums" >
@@ -153,10 +197,10 @@
                     <div class="row">
                         <br>
                         {% for album in user.albums %}
-                            <div class="col-xs-3" >
+                            <div id='albumuser{{loop.index}}' class="col-xs-3" >
                                 <div data-linkto="" class="card albumus tooltipsContainer" >
                                     <div class="figure" id="main">
-                                        <a href="{{ path('photos_user', {'id' : user.id,'id_album' : album.id}) }}" >
+                                        <a href="#" onclick="image({{album.id}})" >
                                             <img src="{{ asset(user.WebPath) }}" />
                                         </a>
                                         <div class="figView"></div>
@@ -169,7 +213,28 @@
                                     <br>
                                 </div>
                             </div>
-                        {% endfor %}
+                                    {%for image in album.images %}
+                                        
+                               <div  id="photos{{album.id}}" style="display: none;"  class="col-sm-4" id="{{ photo.id }}">
+                                    <div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
+                                        <div class="fig " id="main">
+                                            <a href="{{ asset(photo.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                                <img src="{{ asset(photo.WebPath) }}" />
+                                            </a>
+                                            {% if app.user == user %}
+                                                <div class="priceCap paddus">
+                                                    <button href="#suppritus{{photo.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
+                                                </div>
+                                            {% endif %}
+                                            <div class="figCap">
+                                                <div class="address">Cliquez pour agrandir l'image</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                          {% endfor %}
+                       {% endfor %}
                     </div>
                     <div class="clearfix"></div>
                 </ul>
@@ -240,6 +305,7 @@
                 </ul>
             </div>
         </div>
+                  
     </div>
     <!---------------- upload album----------------------------->
 
@@ -265,6 +331,17 @@
         $(".view").colorbox({overlayClose: false, close: "X", width: "68%", fadeOut: 50, scrolling: true});
         });
         });</script>
+        <script>
+        function image(id) {
+            
+              
+        {%for album in user.albums %}              
+    $('#albumuser{{loop.index}}').hide();
+    {%endfor %}
+    $('#photos'+id).show();
+    
+    }
+    </script>
     <script src="{{ asset('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
     <script src="{{ asset('assets/js/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootbox.min.js') }}"></script>

@@ -66,44 +66,4 @@ class TypeEvent
     {
         return $this->nom;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->evenement = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add evenement
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Event $evenement
-     * @return TypeEvent
-     */
-    public function addEvenement(\FrontOffice\OptimusBundle\Entity\Event $evenement)
-    {
-        $this->evenement[] = $evenement;
-    
-        return $this;
-    }
-
-    /**
-     * Remove evenement
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Event $evenement
-     */
-    public function removeEvenement(\FrontOffice\OptimusBundle\Entity\Event $evenement)
-    {
-        $this->evenement->removeElement($evenement);
-    }
-
-    /**
-     * Get evenement
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getEvenement()
-    {
-        return $this->evenement;
-    }
 }
