@@ -154,7 +154,7 @@ class EventController extends Controller {
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
-                
+                $request->getSession()->getFlashBag()->add('AjouterEvent', "Votre évènement a été ajouter avec success.");
                 return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
             }
         }
@@ -189,7 +189,7 @@ class EventController extends Controller {
             $eventhistory = new HistoryEventEvent($user, $event, $action);
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
- 
+            $request->getSession()->getFlashBag()->add('EditEvent', "Votre évènement a été modifié avec success.");
             return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
         }
         return $this->render('FrontOfficeOptimusBundle:Event:edit.html.twig', array(
