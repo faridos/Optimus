@@ -56,7 +56,7 @@ class EventController extends Controller {
             throw new AccessDeniedException('.');
         }
         $em = $this->getDoctrine()->getManager();
-        $user1 = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
        
         
@@ -65,16 +65,16 @@ class EventController extends Controller {
         }
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('event' => $event));
         if ($notification) {
-            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
+            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notification));
             if (empty($notificationSeen)) {
 
-                $notifevent = new NotificationSeenEvent($user1, $notification);
+                $notifevent = new NotificationSeenEvent($user, $notification);
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
        
-        return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array(
+        return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array('user'=> $user,
             'event' => $event,
             
             ));
