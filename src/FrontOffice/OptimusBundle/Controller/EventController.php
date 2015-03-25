@@ -189,7 +189,7 @@ class EventController extends Controller {
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
 
-            return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
+            return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
         }
         return $this->render('FrontOfficeOptimusBundle:Event:edit.html.twig', array(
                     'user' => $user,
@@ -201,7 +201,7 @@ class EventController extends Controller {
     /**
      * 
      *
-     * @Route("={id}/supprimer", name="delete-event")
+     * @Route("={id}/supprimer", name="delete-event", options={"expose"=true})
      * @Method("GET|POST|DELETE")
      * @Template()
      */
@@ -223,7 +223,7 @@ class EventController extends Controller {
         $eventhistory = new HistoryEventEvent($user, $entity, $action);
         $dispatcher = $this->get('event_dispatcher');
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
-        return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
+        return  new Response($id);
     }
     
     

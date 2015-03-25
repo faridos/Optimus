@@ -38,7 +38,8 @@
                         </div>
                     {% endif %}
                     {% for env in user.evenements %}
-                        <div class="userWidget-2 tooltipsContainer col-xs-12" >
+                        {% if env.active == 1 %}
+                        <div class="userWidget-2 tooltipsContainer col-xs-12 {{env.id}}" >
                             <div class="tooltipsContainer avatar imagus col-md-4">
                                 <a href="{{ path('show_profil',{'id': user.id}) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
                                     <img src="{{ asset(user.WebPath)}}" alt="avatar" ></a>
@@ -56,12 +57,13 @@
                                 </div>
                             </div>
                             <div align="right">
-                                <a href="#modifierprogram{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                <a href="{{ path('update-event',{id: env.id})}}"  class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
-                                <a href="#supprimuss{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                <a href="#supprimerEvent{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                             {% endif %}
                     {% endfor %}
                 </ul>
                 <ul class="tab-pane fade  scrollbar" id="envparticip" >
@@ -73,6 +75,7 @@
                         </div>
                     {% endif %}
                     {% for part in user.participations %}
+                        {% if part.event.active == 1 %}
                         <div class="userWidget-2 col-md-12" >
                             <div class="tooltipsContainer avatar imagus col-md-4">
                                 <a href="{{ path('show_profil',{'id': user.id}) }}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
@@ -90,13 +93,10 @@
                                     <div class="title">Text descriptif : <span class="address">{{part.event.description}}</span></div>
                                 </div>
                             </div>
-                            <div align="right">
-                                <a href="#modifierprogram{{part.event.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-
-                                <a href="#supprimuss{{part.event.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                            </div>
+                            
                             <div class="clearfix"></div>
                         </div>
+                                  {% endif %}
                     {% endfor %}
                 </ul>
                 <ul class="tab-pane fade  scrollbar" id="calendaree" >
@@ -140,7 +140,7 @@
                                     </div>
                                 </div>
                                 <div align="right">
-                                    <a href="#modifierprogram{{club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                    <a href="{{ path('club_update', {'id':club.id})}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
                                     <a href="#supprimuss{{club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
                                 </div>
@@ -372,7 +372,25 @@
             </div>
         </div>
        {% endfor %}
-                            <!-------------------fin modal photo------------------->
+       {% for env in user.evenements %}
+       <div class="modal" id="supprimerEvent{{env.id}}"   >
+            <div class="modal-dialog">
+                <div class="modal-content bordusbottomus">
+                    <div class="modal-header bordustopus">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Souhaitez vous vraiment supprimer l'evenement ?</p>
+                    </div>
+                    <div class="modal-footer supp-album">
+                        <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                        <a id="supprimerAlbum{{env.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+           {% endfor %}                  <!-------------------fin modal photo------------------->
                             <!---------------- upload album----------------------------->
 
                             <div class="modal fade" id="uploadalbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -412,6 +430,21 @@
  {% endfor %}
 
     </script>
+    <script>
+        {% for env in user.evenements %}
+         $('#supprimerAlbum{{env.id}}').click(function() {
+              $.ajax({
+                    url: Routing.generate('delete-event', {'id':{{env.id}}}),
+                    success: function(data) {
+                        
+                        $('.'+data).hide();
+                        $('#supprimerEvent{{env.id}}').toggle();
+                        $('.modal-backdrop').hide();
+                    }
+                });
+         });
+         {% endfor %}
+        </script>
     <script>
          {%for album in user.albums %}
             $('#supprimerAlbum{{album.id}}').click(function() {

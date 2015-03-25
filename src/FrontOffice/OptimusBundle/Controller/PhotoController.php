@@ -39,7 +39,7 @@ class PhotoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-           return $this->redirect($this->generateUrl('photos_user', array('id' => $user->getId(), 'id_album' => $ida)));
+           return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
         }
         
         return array(
