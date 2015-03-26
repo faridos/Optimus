@@ -132,26 +132,5 @@ class PhotoController extends Controller
          return $response;
     }
     
-    /**
-     * 
-     *
-     * @Route("event={id}/paramétres/photo", name="setting_event_photo", options={"expose"=true})
-     * @Method("GET|POST")
-     * @Template()
-     */
-    public function editPhotoEventAction(Request $request, $id) {
-         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            // Sinon on déclenche une exception « Accès interdit »
-            throw new AccessDeniedException('.');
-        }
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
-        $editForm = $this->createForm(new EventPhotoType(), $entity);
-        $editForm->handleRequest($request);
-        if ($editForm->isValid()) {
-            $em->flush();
-            return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
-        }
-        return $this->render('FrontOfficeOptimusBundle:Photo:editPhotoEvent.html.twig', array('form' => $editForm->createView()));
-    }
+ 
 }
