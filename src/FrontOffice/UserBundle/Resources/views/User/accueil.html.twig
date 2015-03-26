@@ -10,7 +10,7 @@
                     <div class="notificationsWidget">
                         <div class="singleTop whiteBg">
                             {% set amis = getFriends(user.id)%}
-                                {%if user.enevenements|length == 0 and amis|length == 0 %}
+                                {%if user.evenements|length == 0 and amis|length == 0 %}
                                      <div class="alert alert-danger alert-dismissible fade in" role="alert">
                                     <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
                                     <button type="button" class="close" data-dismiss="alert"></button>
