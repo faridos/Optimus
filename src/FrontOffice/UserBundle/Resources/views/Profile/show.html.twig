@@ -71,7 +71,7 @@ Evenement Supprimer
 <div class="tooltipsContainer avatar imagus col-md-4">
 <a href="{{path('show_event',{'id':env.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{env.titre}}">
 {% if env.path == null %}
-<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>
+<img src="{{ asset('event.png')}}" alt="avatar" ></a>
 
 {% else %}
 
@@ -125,7 +125,7 @@ Evenement Supprimer
 <div class="tooltipsContainer avatar imagus col-md-4">
 <a href="{{path('show_event',{'id':part.event.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{part.event.titre}}">
 {% if part.event.path == null %}
-<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>
+<img src="{{ asset('event.png')}}" alt="avatar" ></a>
 {% else %}
 <img src="{{ asset(part.event.WebPath)}}" alt="avatar" ></a>
 {% endif %}
