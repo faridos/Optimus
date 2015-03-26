@@ -1,881 +1,942 @@
 {% extends "FrontOfficeUserBundle::layout_profile.html.twig" %}
+ 
 {% block content %}
-    {% for flashMessage in app.session.flashbag.get('AjouterAlbum') %}
-        <br/>
-        <div class="alert alert-success">
-            <a class="close" data-dismiss="alert">×</a>
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
-    {% for flashMessage in app.session.flashbag.get('AjouterPalmarés') %}
-        <br/>
-        <div class="alert alert-success">
-            <a class="close" data-dismiss="alert">×</a>
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
-    {% for flashMessage in app.session.flashbag.get('ModifierPalmarés') %}
-        <br/>
-        <div class="alert alert-success">
-            <a class="close" data-dismiss="alert">×</a>
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
-    {% for flashMessage in app.session.flashbag.get('modificationAlbum') %}
-        <br/>
-        <div class="alert alert-success">
-            <a class="close" data-dismiss="alert">×</a>
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
+{% for flashMessage in app.session.flashbag.get('AjouterAlbum') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('AjouterPalmarés') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('ModifierPalmarés') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('modificationAlbum') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
 
 
 
-    <div class="col-lg-12">
-        <div class="tabsContainer">
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-                <li class="active"><a href="#env" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Events</a></li>
-                <li class=""><a href="#envparticip" role="tab" data-toggle="tab"><span class="icon-trophy"></span>Participation</a></li>
-                <li class=""><a href="#clubs" role="tab" data-toggle="tab"><span class="fa fa-users"></span> Clubs</a></li>
-                <li class=""><a href="#calendaree" role="tab" data-toggle="tab"><span class="navIcon fa fa-calendar"></span>Calendrier</a></li>
-                <li class=""><a href="#albums" role="tab" data-toggle="tab"><span class="icon-doc"></span> Albums</a></li>
-                <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
-                <li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-badge"></span> Palmares</a></li>
-            </ul>
-            <div class="tab-content">
-                <ul class="tab-pane fade  active in scrollbar" id="env" >
+<div class="col-lg-12">
+<div class="tabsContainer">
+<ul class="nav nav-tabs nav-justified" role="tablist">
+<li class="active"><a href="#env" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Events</a></li>
+<li class=""><a href="#envparticip" role="tab" data-toggle="tab"><span class="icon-trophy"></span>Participation</a></li>
+<li class=""><a href="#clubs" role="tab" data-toggle="tab"><span class="fa fa-users"></span> Clubs</a></li>
+<li class=""><a href="#calendaree" role="tab" data-toggle="tab"><span class="navIcon fa fa-calendar"></span>Calendrier</a></li>
+<li class=""><a href="#albums" role="tab" data-toggle="tab"><span class="icon-doc"></span> Albums</a></li>
+<li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
+<li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-badge"></span> Palmares</a></li>
+</ul>
+<div class="tab-content">
+<ul class="tab-pane fade  active in scrollbar" id="env" >
 
-                    <div id="supprimer-e" style="display: none;" class="alert alert-danger">
-                        <a class="close" data-dismiss="alert">×</a>
-                        Evenement Supprimer
-                    </div>
+<div id="supprimer-e" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Evenement Supprimer
+</div>
 
-                    {% if user.evenements|length == 0 %}
-                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-                            <button type="button" class="close" data-dismiss="alert"></button>
-                            <strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
-                        </div>
-                    {% endif %}
-                    {% if app.user == user %}
-                        <div class="buttonsWrapper col-xs-12">
-                            <a class="btn btn-round btn-default btn-sm rightus" href="{{ path('add-event')}}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
-                            <br>
-                            <br>
-                        </div>
-                    {% endif %}
-                    {% for env in user.evenements %}
-                        {% if env.active == 1 %}
-                            <div class="userWidget-2 tooltipsContainer col-xs-12 {{env.id}}" >
-                                <div class="tooltipsContainer avatar imagus col-md-4">
-                                    <a href="{{path('show_event',{'id':env.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{env.titre}}">
-                                    {% if env.path == null %}
-   <img src="{{ asset('event.jpg')}}" alt="avatar" ></a>
-                                     
-                                    {% else %}
-                                           
-                                  <img src="{{ asset(env.WebPath)}}" alt="avatar" ></a>
+{% if user.evenements|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
+</div>
+{% endif %}
+{% if app.user == user %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="{{ path('add-event')}}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+<br>
+</div>
+{% endif %}
+{% for env in user.evenements %}
+{% if env.active == 1 %}
+<div class="userWidget-2 tooltipsContainer col-xs-12 {{env.id}}" >
+<div class="tooltipsContainer avatar imagus col-md-4">
+<a href="{{path('show_event',{'id':env.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{env.titre}}">
+{% if env.path == null %}
+<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>
 
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="info  col-md-12">
-                                        <div ><a href="{{path('show_event',{'id':env.id})}}" class="name">{{env.titre}}</a></div>
-                                        <div class="title">Créateur : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
-                                        <div class="title">Lieu : <span class="address">{{env.lieu}}</span></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="info  col-md-12" >
-                                        <div class="title">Text descriptif : <span class="address">{{env.description}}</span></div>
-                                    </div>
-                                </div>
-                                {% if app.user == env.createur %}
-                                    <div align="right">
-                                        <a href="{{ path('update-event',{id: env.id})}}"  class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+{% else %}
 
-                                        <a href="#supprimerEvent{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                    </div>
-                                {% endif %}
-                                <div class="clearfix"></div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-                <ul class="tab-pane fade  scrollbar" id="envparticip" >
-                    {% if user.participations|length == 0 %}
-                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-                            <button type="button" class="close" data-dismiss="alert"></button>
-                            <strong>Rien à afficher dans la catégorie participation!</strong> Créer un pour commencer.
-                        </div>
-                    {% endif %}
-                    {% for part in user.participations %}
-                        {% if part.event.active == 1 %}
-                            <div class="userWidget-2 col-md-12" >
-                                <div class="tooltipsContainer avatar imagus col-md-4">
-                                   <a href="{{path('show_event',{'id':part.event.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{part.event.titre}}">
-                                    {% if part.event.path == null %}
-   <img src="{{ asset('event.jpg')}}" alt="avatar" ></a>
-                                     
-                                    {% else %}
-                                           
-                                  <img src="{{ asset(part.event.WebPath)}}" alt="avatar" ></a>
+<img src="{{ asset(env.WebPath)}}" alt="avatar" ></a>
 
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="info">
-                                        <div ><a href="{{path('show_event',{'id':part.event.id})}}" class="name">{{part.event.titre}}</a></div>
-                                        <div class="title">Créateur : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
-                                        <div class="title">Lieu : <span class="address">{{part.event.lieu}}</span></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="info" >
-                                        <div class="title">Text descriptif : <span class="address">{{part.event.description}}</span></div>
-                                    </div>
-                                </div> {% set participantOuNon=ParticipantOuNon(part.event,user) %}
-                                     {% if participantOuNon == 1 and date(part.event.dateFin)>= date() %}
- <a class="btn btn-green btn-round eventus" href="#" id="exit_event{{part.event.id}}">
-                                                                        <span class="fa icon-action-redo "></span> <span class="exitEvent{{part.event.id}}">Annuler participation</span>                                          
-                                                                    </a>
-                                                                      {% endif %}
-                                <div class="clearfix"></div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-                <ul class="tab-pane fade  scrollbar" id="calendaree" >
-                    <div class="buttonsWrapper col-xs-12">
-                        <div id="calendar">
-                        </div>
-                    </div>
-                </ul>
-                <ul class="tab-pane fade scrollbar" id="clubs" >
-                    {% if user.profil == 'Entraineur' %}
-                        <div id="supprimer-c" style="display: none;" class="alert alert-danger">
-                            <a class="close" data-dismiss="alert">×</a>
-                            Club Supprimer
-                        </div>
-                        {% if user.clubs|length == 0 %}
-                            <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                                <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-                                <button type="button" class="close" data-dismiss="alert"></button>
-                                <strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
-                            </div>
-                        {% endif %}
-                        {% if app.user == user %}
-                            <div class="buttonsWrapper col-xs-12">
-                                <a class="btn btn-round btn-default btn-sm rightus" href="{{ path('add_club')}}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
-                                <br>
-                            </div>
-                        {% endif %}
-                        {% for club in user.clubs %}
-                            {% if club.active == 1 %}
-                                <div class="userWidget-2 col-md-12 {{club.id}}" >
-                                    <div class="tooltipsContainer avatar imagus">
-                                        <a href="{{path('show_club',{'id':club.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
-                                            <img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="info">
-                                            <div class="name">{{ club.nom}}</div>
-                                            <div class="title">Créateur du club : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
-                                            <div class="title">Adresse du club : <span class="address">{{ club.adresse}}</span></div>
-                                            <div class="title">Frais d'abonnement : <span class="address">{{ club.fraisAdhesion}}£</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="info" >
-                                            <div class="title">Text descriptif : <span class="address">{{ club.description}}</span></div>
-                                        </div>
-                                    </div>
-                                    <div align="right">
-                                        <a href="{{ path('club_update', {'id':club.id})}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+{% endif %}
+</div>
+<div class="col-md-3">
+<div class="info  col-md-12">
+<div ><a href="{{path('show_event',{'id':env.id})}}" class="name">{{env.titre}}</a></div>
+<div class="title">Créateur : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
+<div class="title">Lieu : <span class="address">{{env.lieu}}</span></div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="info  col-md-12" >
+<div class="title">Text descriptif : <span class="address">{{env.description}}</span></div>
+</div>
+</div>
+<div align="right">
+        <a href="#plusInfo{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="plus info"><span class="icon-info"></span></a>
 
-                                        <a href="#supprimerclub{{club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    {% if user.profil == 'Sportif' %}
-                        {% if user.adherent|length == 0 %}
-                            <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                                <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-                                <button type="button" class="close" data-dismiss="alert"></button>
-                                <strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
-                            </div>
-                        {% endif %}
-                        {% for member in user.adherent %}
-                            {% if member.clubad.active == 1 %}
-                                <div class="userWidget-2 col-md-12" >
-                                    <div class="tooltipsContainer avatar imagus">
-                                        <a href="{{path('show_club',{'id':member.clubad.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
-                                            <img src="{{ asset(member.clubad.WebPath) }}" alt="avatar" ></a>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="info">
-                                            <div class="name">{{ member.clubad.nom}}</div>
-                                            <div class="title">Créateur du club : <span class="address">{{ member.clubad.createur.nom ~' '~member.clubad.createur.prenom }}</span></div>
-                                            <div class="title">Adresse du club : <span class="address">{{ member.clubad.adresse}}</span></div>
-                                            <div class="title">Frais d'abonnement : <span class="address">{{ member.clubad.fraisAdhesion}}£</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="info" >
-                                            <div class="title">Text descriptif : <span class="address">{{ member.clubad.description}}</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-                <ul class="tab-pane fade scrollbar" id="albums" >
-                    <div id="supprimer-a" style="display: none;" class="alert alert-danger">
-                        <a class="close" data-dismiss="alert">×</a>
-                        Album Supprimer
-                    </div>
-                    <div id="supprimer-photo" style="display: none;" class="alert alert-danger">
-                        <a class="close" data-dismiss="alert">×</a>
-                        photo Supprimer
-                    </div>
-                    {% if user.albums|length == 0 %}
-                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-                            <button type="button" class="close" data-dismiss="alert"></button>
-                            <strong>Rien à afficher dans la catégorie photos!</strong> Créer un pour commencer.
-                        </div>
-                    {% endif%}
-                    {% if app.user == user %}
-                        <div id="ajouteralbum" class="buttonsWrapper col-md-12">
-                            <a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
-                            <br>
-                        </div>
+{% if app.user == env.createur %}
+
+<a href="{{ path('update-event',{id: env.id})}}"  class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+
+<a href="#supprimerEvent{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+
+{% endif %}
+</div>
+
+<div class="clearfix"></div>
+</div>
+{% endif %}
+{% endfor %}
+</ul>
+<ul class="tab-pane fade  scrollbar" id="envparticip" >
+{% if user.participations|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Rien à afficher dans la catégorie participation!</strong> Créer un pour commencer.
+</div>
+{% endif %}
 
 
-                    {% endif%}
-                    <div class="row">
-                        <br>
-                        {%set ph = 0 %}
-                            {% for album in user.albums %}
-                                <div id='albumuser{{loop.index}}' class="col-xs-3 {{album.id}}" >
-                                    <div data-linkto="" class="card albumus tooltipsContainer" >
-                                        <div class="figure" id="main">
-                                            <a href="#" onclick="image({{album.id}})" >
-                                                {%if album.images|length == 0 %}
-                                                    <img src="{{ asset('album.png') }}" />
-                                                {%else %}
-                                                    <img src="{{ asset(album.images[0].WebPath) }}" />
+    {% for part in participations %}
 
-                                                {%endif %}
+{% if part.event.active == 1 %}
+<div class="userWidget-2 col-md-12 {{part.event.id}}" >
+<div class="tooltipsContainer avatar imagus col-md-4">
+<a href="{{path('show_event',{'id':part.event.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{part.event.titre}}">
+{% if part.event.path == null %}
+<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>
+{% else %}
+<img src="{{ asset(part.event.WebPath)}}" alt="avatar" ></a>
+{% endif %}
+</div>
+<div class="col-md-4">
+<div class="info">
+<div ><a href="{{path('show_event',{'id':part.event.id})}}" class="name">{{part.event.titre}}</a></div>
+<div class="title">Créateur : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
+<div class="title">Lieu : <span class="address">{{part.event.lieu}}</span></div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="info" >
+<div class="title">Text descriptif : <span class="address">{{part.event.description}}</span></div>
+</div>
+</div> 
+{% if app.user != part.event.createur %}
+{% set participantOuNon=ParticipantOuNon(part.event,user) %}
+{% if participantOuNon == 1 and date(part.event.dateFin)>= date() %}
+<a class="btn btn-green btn-round eventus" href="#" id="exit_event{{part.event.id}}">
+<span class="fa icon-action-redo "></span> <span class="exitEvent{{part.event.id}}">Annuler participation</span>                                          
+</a>
+  <a class="loader" id="loader_ajouter_relation">
+                                                <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
                                             </a>
-                                            <div class="figView"></div>
-                                        </div>
-                                        <h2 align="center">{{ album.nom }}</h2>
-                                        <div align="center" >
-                                            <a href="#modifieralbum"  data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                            <a href="#supprimuss{{album.id}}"  data-toggle="modal"  class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                        </div>
-                                        <br>
-                                    </div>
-                                </div>
-                                <div  id="ajouterphoto{{album.id}}" style="display: none;" class="buttonsWrapper col-xs-12">
-                                    <a id="lienphotoalbum" onclick="image2()" href="#albums">albums > {{album.nom }}</a>
-                                    <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphotoAlbum{{album.id}}" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
-                                </div>   
-                                {%for image in album.images %}
-                                    {%set  ph =  ph + 1 %}
-                                        <div  id="photos{{ph}}" style="display: none;"  class="col-sm-4 {{image.id}}">
-                                            <div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
-                                                <div class="fig " id="main">
-                                                    <a href="{{ asset(image.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
-                                                        <img src="{{ asset(image.WebPath) }}" />
-                                                    </a>
-                                                    {% if app.user == user %}
-                                                        <div class="priceCap paddus">
-                                                            <button href="#suppritus{{image.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
-                                                        </div>
-                                                    {% endif %}
-                                                    <div class="figCap">
-                                                        <div class="address">Cliquez pour agrandir l'image</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+{% endif %}
+{% endif %}
+<div class="clearfix"></div>
+</div>
+{% endif %}
+{% endfor %}
+</ul>
+<ul class="tab-pane fade  scrollbar" id="calendaree" >
+<div class="buttonsWrapper col-xs-12">
+<div id="calendar">
+</div>
+</div>
+</ul>
+<ul class="tab-pane fade scrollbar" id="clubs" >
+{% if user.profil == 'Entraineur' %}
+<div id="supprimer-c" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Club Supprimer
+</div>
+{% if user.clubs|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
+</div>
+{% endif %}
+{% if app.user == user %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="{{ path('add_club')}}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+</div>
+{% endif %}
+{% for club in user.clubs %}
+{% if club.active == 1 %}
+<div class="userWidget-2 col-md-12 {{club.id}}" >
+<div class="tooltipsContainer avatar imagus">
+<a href="{{path('show_club',{'id':club.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
+<img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
+</div>
+<div class="col-md-4">
+<div class="info">
+<div class="name">{{ club.nom}}</div>
+<div class="title">Créateur du club : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
+<div class="title">Adresse du club : <span class="address">{{ club.adresse}}</span></div>
+<div class="title">Frais d'abonnement : <span class="address">{{ club.fraisAdhesion}}£</span></div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="info" >
+<div class="title">Text descriptif : <span class="address">{{ club.description}}</span></div>
+</div>
+</div>
+<div align="right">
+<a href="{{ path('club_update', {'id':club.id})}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
-                                        {% endfor %}
-                                            {% endfor %}
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </ul>
-                                        <ul class="tab-pane fade scrollbar videosus" id="videos"  >
-                                            <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                                                <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-                                                <button type="button" class="close" data-dismiss="alert"></button>
-                                                <strong>Rien à afficher dans la catégorie vidéeos!</strong> Créer un pour commencer.
-                                            </div>
-                                            <div class="row">
-                                                <br>
-                                                <div class="col-md-4" >
-                                                    <div data-linkto="" class="card albumus" >
-                                                        <div class="figure" id="main">
-                                                            <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
-                                                                <img src="images/bg-1.jpg" />
-                                                            </a>
-                                                            <div class="figView"><span class="icon-eye"></span></div>
-                                                        </div>
-                                                        <h2 align="center">Titre de video</h2>
-                                                        <div align="center" >
-                                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                                            <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                                        </div>
-                                                        <br>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </ul>
-                                        <ul class="tab-pane fade scrollbar" id="palmares" >
-                                            <div id="supprimer-p" style="display: none;" class="alert alert-danger">
-                                                <a class="close" data-dismiss="alert">×</a>
-                                                Palmarés Supprimer
-                                            </div>
-                                            {% if user.reward|length == 0 %}
-                                                <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                                                    <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-                                                    <button type="button" class="close" data-dismiss="alert"></button>
-                                                    <strong>Rien à afficher dans la catégorie palmares!</strong> Créer un pour commencer.
-                                                </div>
-                                            {% endif%}
-                                            {% if app.user == user %}
-                                                <div class="buttonsWrapper col-md-12">
-                                                    <a href="#uploadpalmares" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
-                                                    <br>
-                                                </div>
-                                            {% endif%}
-                                            <div class="row">
-                                                <br>
-                                                {% for palmares in user.reward %}
-                                                    <div class="row {{palmares.id}}">
-                                                        <br>
-                                                        <div class="col-md-12" id="block{{ palmares.id }}">
-                                                            <div data-linkto="" class="card albumus tooltipsContainer" >
-                                                                <br>
-                                                                <div class="profile-card">
-                                                                    <div class="col-md-4">
-                                                                        <div class="pc-avatar">
-                                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Titre" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" >
-                                                                                <span class="fa fa-child palmarus"></span></a>
-                                                                        </div>
-                                                                        <div class="pc-name">{{ palmares.titre }}</div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <div class="pc-avatar">
-                                                                            <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Classement" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
-                                                                                <span class="fa fa-star palmarus"></span></a>
-                                                                        </div>
-                                                                        <div class="pc-name">{{ palmares.classment }}</div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-
-                                                                        <div class="profile-card">
-                                                                            <div class="pc-avatar">
-                                                                                <a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Date" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
-                                                                                    <span class="fa fa-calendar palmarus"></span></a>
-                                                                            </div>
-                                                                            <div class="pc-name">{{ palmares.date |date('Y-m-d')}}</div>
-                                                                        </div>
-                                                                        {% if app.user == user %}
-                                                                            <div align="right">
-                                                                                <a href="#modifierpalmares_{{palmares.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
-                                                                                <a href="#supprimerpalmares_{{palmares.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
-                                                                            </div>
-                                                                        {% endif %}
-                                                                        <br>
-
-                                                                        <div class="clearfix"></div>
-
-                                                                    </div>
-                                                                </div>
-
-                                                                <br>
-
-                                                                <div class="clearfix"></div>
-                                                            </div>
+<a href="#supprimerclub{{club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+</div>
+<div class="clearfix"></div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if user.profil == 'Sportif' %}
+{% if user.adherent|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
+</div>
+{% endif %}
+{% for member in user.adherent %}
+{% if member.clubad.active == 1 %}
+<div class="userWidget-2 col-md-12" >
+<div class="tooltipsContainer avatar imagus">
+<a href="{{path('show_club',{'id':member.clubad.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
+<img src="{{ asset(member.clubad.WebPath) }}" alt="avatar" ></a>
+</div>
+<div class="col-md-4">
+<div class="info">
+<div class="name">{{ member.clubad.nom}}</div>
+<div class="title">Créateur du club : <span class="address">{{ member.clubad.createur.nom ~' '~member.clubad.createur.prenom }}</span></div>
+<div class="title">Adresse du club : <span class="address">{{ member.clubad.adresse}}</span></div>
+<div class="title">Frais d'abonnement : <span class="address">{{ member.clubad.fraisAdhesion}}£</span></div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="info" >
+<div class="title">Text descriptif : <span class="address">{{ member.clubad.description}}</span></div>
+</div>
+</div>
+<div class="clearfix"></div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+</ul>
+<ul class="tab-pane fade scrollbar" id="albums" >
+<div id="supprimer-a" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Album Supprimer
+</div>
+<div id="supprimer-photo" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+photo Supprimer
+</div>
+{% if user.albums|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Rien à afficher dans la catégorie photos!</strong> Créer un pour commencer.
+</div>
+{% endif%}
+{% if app.user == user %}
+<div id="ajouteralbum" class="buttonsWrapper col-md-12">
+<a href="#uploadalbum" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
+<br>
+</div>
 
 
-                                                        </div>
+{% endif%}
+<div class="row">
+<br>
+{%set ph = 0 %}
+{% for album in user.albums %}
+<div id='albumuser{{loop.index}}' class="col-xs-3 {{album.id}}" >
+<div data-linkto="" class="card albumus tooltipsContainer" >
+<div class="figure" id="main">
+<a href="#" onclick="image({{album.id}})" >
+{%if album.images|length == 0 %}
+<img src="{{ asset('album.png') }}" />
+{%else %}
+<img src="{{ asset(album.images[0].WebPath) }}" />
+
+{%endif %}
+</a>
+<div class="figView"></div>
+</div>
+<h2 align="center">{{ album.nom }}</h2>
+<div align="center" >
+<a href="#modifieralbum"  data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+<a href="#supprimuss{{album.id}}"  data-toggle="modal"  class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+</div>
+<br>
+</div>
+</div>
+<div  id="ajouterphoto{{album.id}}" style="display: none;" class="buttonsWrapper col-xs-12">
+<a id="lienphotoalbum" onclick="image2()" href="#albums">albums > {{album.nom }}</a>
+<a class="btn btn-round btn-default btn-sm rightus" href="#uploadphotoAlbum{{album.id}}" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
+</div>   
+{%for image in album.images %}
+{%set  ph =  ph + 1 %}
+<div  id="photos{{ph}}" style="display: none;"  class="col-sm-4 {{image.id}}">
+<div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
+<div class="fig " id="main">
+<a href="{{ asset(image.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+<img src="{{ asset(image.WebPath) }}" />
+</a>
+{% if app.user == user %}
+<div class="priceCap paddus">
+<button href="#suppritus{{image.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
+</div>
+{% endif %}
+<div class="figCap">
+<div class="address">Cliquez pour agrandir l'image</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endfor %}
+{% endfor %}
+</div>
+<div class="clearfix"></div>
+</ul>
+<ul class="tab-pane fade scrollbar videosus" id="videos"  >
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Rien à afficher dans la catégorie vidéeos!</strong> Créer un pour commencer.
+</div>
+<div class="row">
+<br>
+<div class="col-md-4" >
+<div data-linkto="" class="card albumus" >
+<div class="figure" id="main">
+<a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+<img src="images/bg-1.jpg" />
+</a>
+<div class="figView"><span class="icon-eye"></span></div>
+</div>
+<h2 align="center">Titre de video</h2>
+<div align="center" >
+<a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+<a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+</div>
+<br>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+<div class="clearfix"></div>
+</ul>
+<ul class="tab-pane fade scrollbar" id="palmares" >
+<div id="supprimer-p" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Palmarés Supprimer
+</div>
+{% if user.reward|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Rien à afficher dans la catégorie palmares!</strong> Créer un pour commencer.
+</div>
+{% endif%}
+{% if app.user == user %}
+<div class="buttonsWrapper col-md-12">
+<a href="#uploadpalmares" data-toggle="modal" class="btn btn-round btn-default btn-sm rightus"><span class="fa icon-plus state"></span> Ajouter</a>
+<br>
+</div>
+{% endif%}
+<div class="row">
+<br>
+{% for palmares in user.reward %}
+<div class="row {{palmares.id}}">
+<br>
+<div class="col-md-12" id="block{{ palmares.id }}">
+<div data-linkto="" class="card albumus tooltipsContainer" >
+<br>
+<div class="profile-card">
+<div class="col-md-4">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Titre" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" >
+<span class="fa fa-child palmarus"></span></a>
+</div>
+<div class="pc-name">{{ palmares.titre }}</div>
+</div>
+<div class="col-md-4">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Classement" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+<span class="fa fa-star palmarus"></span></a>
+</div>
+<div class="pc-name">{{ palmares.classment }}</div>
+</div>
+<div class="col-md-4">
+
+<div class="profile-card">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Date" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+<span class="fa fa-calendar palmarus"></span></a>
+</div>
+<div class="pc-name">{{ palmares.date |date('Y-m-d')}}</div>
+</div>
+{% if app.user == user %}
+<div align="right">
+<a href="#modifierpalmares_{{palmares.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
+<a href="#supprimerpalmares_{{palmares.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
+</div>
+{% endif %}
+<br>
+
+<div class="clearfix"></div>
+
+</div>
+</div>
+
+<br>
+
+<div class="clearfix"></div>
+</div>
 
 
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        </ul>
-                                        <div class="clearfix"></div>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                            </div>
-                            {%for album in user.albums %}         
-                                {%for image in album.images %}
-                                    <div class="modal fade" id="suppritus{{image.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content bordusbottomus">
-                                                <div class="modal-header bordustopus">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                                                </div>
-                                                <form class="contactForm">
-                                                    <div class="modal-body">
-                                                        <p>Souhaitez vous vraiment supprimer cette photo {{image.id}} ?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                                                        <a id="supprimerPhoto{{image.id}}" href="#" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            {% endfor %}
-                            {% for album in user.albums %}
-                                <!------------------- modal photo------------------->
-                                <div class="modal fade" id="uploadphotoAlbum{{album.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        {{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoProfil',  { 'id': user.id, 'ida': album.id })) }}
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="modifieralbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        {{ render (controller('FrontOfficeOptimusBundle:Album:editAlbum',  { 'id': album.id })) }}
-
-                                    </div>
-                                </div>
-                                <!--------------- fin update album ------------------>
-                                <!------------------- modal supprission------------------->
-                                <div class="modal" id="supprimuss{{album.id}}"   >
-                                    <div class="modal-dialog">
-                                        <div class="modal-content bordusbottomus">
-                                            <div class="modal-header bordustopus">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Souhaitez vous vraiment supprimer l'album ?</p>
-                                            </div>
-                                            <div class="modal-footer supp-album">
-                                                <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                                                <a id="supprimerAlbum{{album.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                            {% for env in user.evenements %}
-                                <div class="modal" id="supprimerEvent{{env.id}}"   >
-                                    <div class="modal-dialog">
-                                        <div class="modal-content bordusbottomus">
-                                            <div class="modal-header bordustopus">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Souhaitez vous vraiment supprimer l'evenement ?</p>
-                                            </div>
-                                            <div class="modal-footer supp-album">
-                                                <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                                                <a id="supprimerevent{{env.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}     
-                            {% for club in user.clubs %}
-                                <div class="modal" id="supprimerclub{{club.id}}"   >
-                                    <div class="modal-dialog">
-                                        <div class="modal-content bordusbottomus">
-                                            <div class="modal-header bordustopus">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Souhaitez vous vraiment supprimer l'evenement ?</p>
-                                            </div>
-                                            <div class="modal-footer supp-album">
-                                                <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                                                <a id="supprimerClub{{club.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  
-                            {% endfor %}  
-
-                            <!-------------------fin modal photo------------------->
-                            <!---------------- upload album----------------------------->
-
-                            <div class="modal fade" id="uploadalbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    {{ render (controller('FrontOfficeOptimusBundle:Album:createAlbumUser',  { 'id': app.user.id })) }}
-                                </div>
-                            </div>
-                            <!--------------- fin upload album ------------------>
-                            <!--------------- upload palmares ------------------>
-                            <div class="modal fade" id="uploadpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    {{ render (controller('FrontOfficeOptimusBundle:Reward:addRewardUser',  { 'id': app.user.id })) }}
-                                </div>
-                            </div>
-                            <!--------------- fin upload  ------------------>
-                            {% for palmares in user.reward %}
-                                <div class="modal fade" id="modifierpalmares_{{palmares.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        {{ render (controller('FrontOfficeOptimusBundle:Reward:updateRewardUser',  { 'id': palmares.id })) }}
-                                    </div>
-                                </div>
-                                <!--------------- fin modifier  ------------------>
-
-                                <!--------------- supprimer palmares ------------------>
-                                <div class="modal" id="supprimerpalmares_{{palmares.id}}"   >
-                                    <div class="modal-dialog">
-                                        <div class="modal-content bordusbottomus">
-                                            <div class="modal-header bordustopus">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Souhaitez vous vraiment supprimer l'album ?</p>
-                                            </div>
-                                            <div class="modal-footer supp-album">
-                                                <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                                                <a id="supprimerPalmares{{palmares.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}  
-                            {% endblock %}
-                                {% block javascriptfils %}
-                                    <script src="{{asset('datemaske/jquery.maskedinput.min.js')}}" type="text/javascript"></script>
-                                    <script type="text/javascript">
-                                                $(function() {
-                                                $("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
-                                                });</script>
-                                    <script>
-                                        {%for album in user.albums %}
-                                            {%for image in album.images %}
-                                                        $('#supprimerPhoto{{image.id}}').click(function() {
+</div>
 
 
-                                                $.ajax({
-                                                url: Routing.generate('photo_delete', {'id':{{image.id}}}),
-                                                        success: function(data) {
+</div>
+{% endfor %}
+</div>
+</ul>
+<div class="clearfix"></div>
+</ul>
+</div>
+</div>
 
-                                                        $('.' + data).hide();
-                                                                $('#suppritus{{image.id}}').toggle();
-                                                                $('.modal-backdrop').hide();
-                                                                $('#supprimer-photo').show();
-                                                        }
-                                                });
-                                                });{% endfor %}                                            {% endfor %}
+</div>
+{%for album in user.albums %}         
+{%for image in album.images %}
+<div class="modal fade" id="suppritus{{image.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<form class="contactForm">
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer cette photo {{image.id}} ?</p>
+</div>
+<div class="modal-footer">
+<button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerPhoto{{image.id}}" href="#" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+{% endfor %}
+{% endfor %}
 
-                                        </script>
-                                        <script>
-                                            {% for palmares in user.reward %}
-                                                        $('#supprimerPalmares{{palmares.id}}').click(function() {
+{% for album in user.albums %}
+<!------------------- modal photo------------------->
+<div class="modal fade" id="uploadphotoAlbum{{album.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoProfil',  { 'id': user.id, 'ida': album.id })) }}
+</div>
+</div>
+<div class="modal fade" id="modifieralbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Album:editAlbum',  { 'id': album.id })) }}
+
+</div>
+</div>
+<!--------------- fin update album ------------------>
+
+<!------------------- modal supprission------------------->
+<div class="modal" id="supprimuss{{album.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer l'album ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerAlbum{{album.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+{% for env in user.evenements %}
+<div class="modal" id="supprimerEvent{{env.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer l'evenement ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerevent{{env.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+</div>
+</div>
+</div>
+</div>
+<!------------------- modal plus info------------------->
+<div class="modal" id="plusInfo{{env.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Liste des partipants </h4>
+</div>
+<div class="modal-body">
+{%for par in env.participations %}
+    
+   
+<a href="{{ path('show_profil',{'id': par.participant.id}) }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{par.participant.username}}">
+{#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
+{% if par.participant.path == null %}
+    {% if par.participant.sexe == 'H' %}
+<img style="width: 10%;" src="{{ asset('men.png') }}">
+{% else %}
+    <img style="width: 10%;" src="{{ asset('women.jpg') }}">
+    {% endif %}
+{% else %}
+<img style="width: 10%;"  src="{{ asset(par.participant.WebPath)}}" alt="avatar" ></a>
+{% endif %}
+<span style="margin-left:10%;">Pseudo: {{par.participant.username}}</span>
+<span style="margin-left:10%;">Date de participation: {{par.datePaticipation|date('d/m/Y H:i:s')}}</span>
+
+    {% endfor %}
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}     
+{% for club in user.clubs %}
+<div class="modal" id="supprimerclub{{club.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer l'evenement ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerClub{{club.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+</div>
+</div>
+</div>
+</div>  
+{% endfor %}  
+
+<!-------------------fin modal photo------------------->
+<!---------------- upload album----------------------------->
+
+<div class="modal fade" id="uploadalbum" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Album:createAlbumUser',  { 'id': app.user.id })) }}
+</div>
+</div>
+<!--------------- fin upload album ------------------>
+<!--------------- upload palmares ------------------>
+<div class="modal fade" id="uploadpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Reward:addRewardUser',  { 'id': app.user.id })) }}
+</div>
+</div>
+<!--------------- fin upload  ------------------>
+{% for palmares in user.reward %}
+<div class="modal fade" id="modifierpalmares_{{palmares.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Reward:updateRewardUser',  { 'id': palmares.id })) }}
+</div>
+</div>
+<!--------------- fin modifier  ------------------>
+
+<!--------------- supprimer palmares ------------------>
+<div class="modal" id="supprimerpalmares_{{palmares.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer l'album ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerPalmares{{palmares.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}  
+{% endblock %}
+{% block javascriptfils %}
+<script src="{{asset('datemaske/jquery.maskedinput.min.js')}}" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+$("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
+});</script>
+<script>
+{% for part in user.participations %}
+$('#exit_event{{part.event.id}}').click(function() {
+$('.loader').show();
+$.ajax({
+url: Routing.generate('exit_event', {'id': {{part.event.id}}}),
+success: function() {
+$('.loader').hide();
+$('.{{part.event.id}}').hide();
+}
+});
+});    
+
+{% endfor %}  
+</script>
+<script>
+{%for album in user.albums %}
+{%for image in album.images %}
+$('#supprimerPhoto{{image.id}}').click(function() {
 
 
-                                                $.ajax({
-                                                url: Routing.generate('delete_reward_user', {'id':{{palmares.id}}}),
-                                                        success: function(data) {
+$.ajax({
+url: Routing.generate('photo_delete', {'id':{{image.id}}}),
+success: function(data) {
 
-                                                        $('.' + data).hide();
-                                                                $('#supprimerpalmares_{{palmares.id}}').toggle();
-                                                                $('.modal-backdrop').hide();
-                                                                $('#supprimer-p').show();
-                                                        }
-                                                });
-                                                });{% endfor %}                                            </script>
-                                            <script>
-                                                {% for club in user.clubs %}
-                                                            $('#supprimerClub{{club.id}}').click(function() {
-                                                    $.ajax({
-                                                    url: Routing.generate('club_delete', {'id':{{club.id}}}),
-                                                            success: function(data) {
+$('.' + data).hide();
+$('#suppritus{{image.id}}').toggle();
+$('.modal-backdrop').hide();
+$('#supprimer-photo').show();
+}
+});
+});{% endfor %}{% endfor %}                                                                        </script>
+<script>
+{% for palmares in user.reward %}
+$('#supprimerPalmares{{palmares.id}}').click(function() {
 
-                                                            $('.' + data).hide();
-                                                                    $('#supprimerclub{{club.id}}').toggle();
-                                                                    $('.modal-backdrop').hide();
-                                                                    $('#supprimer-c').show();
-                                                            }
-                                                    });
-                                                    });{% endfor %}                                                </script>
-                                                <script>
-                                                    {% for env in user.evenements %}
-                                                                $('#supprimerevent{{env.id}}').click(function() {
-                                                        $.ajax({
-                                                        url: Routing.generate('delete-event', {'id':{{env.id}}}),
-                                                                success: function(data) {
 
-                                                                $('.' + data).hide();
-                                                                        $('#supprimerEvent{{env.id}}').toggle();
-                                                                        $('.modal-backdrop').hide();
-                                                                        $('#supprimer-e').show();
-                                                                }
-                                                        });
-                                                        });{% endfor %}                                                    </script>
-                                                    <script>
-                                                        {%for album in user.albums %}
-                                                                    $('#supprimerAlbum{{album.id}}').click(function() {
-                                                            $.ajax({
-                                                            url: Routing.generate('album_delete', {'id': {{album.id}}}),
-                                                                    success: function(data) {
-                                                                    $('.' + data).hide();
-                                                                            $("#supprimuss{{album.id}}").toggle();
-                                                                            $('.modal-backdrop').hide();
-                                                                            $('#supprimer-a').show();
-                                                                    }
-                                                            });
-                                                            });{% endfor %}                                                        </script>
-                                                        <script type="text/javascript">
-                                                                    jQuery(function ($) {
-                                                                    $(document).ready(function () {
-                                                                    //Examples of how to assign the Colorbox event to elements
-                                                                    $(".view").colorbox({overlayClose: false, close: "X", width: "68%", fadeOut: 50, scrolling: true});
-                                                                    });
-                                                                    });</script>
-                                                        <script>
-                                                                    function image(id) {
-                                                            {%set phs = 0 %}   
+$.ajax({
+url: Routing.generate('delete_reward_user', {'id':{{palmares.id}}}),
+success: function(data) {
 
-                                                                {%for album in user.albums %}              
-                                                                    $('#albumuser{{loop.index}}').hide();
-                                                                            $('#ajouteralbum').hide();
-                                                                            $('#ajouterphoto' + id).show();
+$('.' + data).hide();
+$('#supprimerpalmares_{{palmares.id}}').toggle();
+$('.modal-backdrop').hide();
+$('#supprimer-p').show();
+}
+});
+});{% endfor %}</script>
+<script>
+{% for club in user.clubs %}
+$('#supprimerClub{{club.id}}').click(function() {
+$.ajax({
+url: Routing.generate('club_delete', {'id':{{club.id}}}),
+success: function(data) {
 
-                                                                    {%for imag in album.images %}              
-                                                                        {%set phs = phs + 1  %}   
-                                                                            if ({{album.id}} == id){
-                                                                    $('#photos{{phs}}').show();
-                                                                    }
+$('.' + data).hide();
+$('#supprimerclub{{club.id}}').toggle();
+$('.modal-backdrop').hide();
+$('#supprimer-c').show();
+}
+});
+});{% endfor %}</script>
+<script>
+{% for env in user.evenements %}
+$('#supprimerevent{{env.id}}').click(function() {
+$.ajax({
+url: Routing.generate('delete-event', {'id':{{env.id}}}),
+success: function(data) {
 
-                                                                            {% endfor %}
-                                                                                {%endfor %}
-                                                                                            };
-                                                                                            function image2() {
-                                                                                    {%set phs = 0 %}   
+$('.' + data).hide();
+$('#supprimerEvent{{env.id}}').toggle();
+$('.modal-backdrop').hide();
+$('#supprimer-e').show();
+}
+});
+});{% endfor %}</script>
+<script>
+{%for album in user.albums %}
+$('#supprimerAlbum{{album.id}}').click(function() {
+$.ajax({
+url: Routing.generate('album_delete', {'id': {{album.id}}}),
+success: function(data) {
+$('.' + data).hide();
+$("#supprimuss{{album.id}}").toggle();
+$('.modal-backdrop').hide();
+$('#supprimer-a').show();
+}
+});
+});{% endfor %}</script>
+<script type="text/javascript">
+jQuery(function ($) {
+$(document).ready(function () {
+//Examples of how to assign the Colorbox event to elements
+$(".view").colorbox({overlayClose: false, close: "X", width: "68%", fadeOut: 50, scrolling: true});
+});
+});</script>
+<script>
+function image(id) {
+{%set phs = 0 %}   
 
-                                                                                        {%for album in user.albums %}              
-                                                                                            $('#albumuser{{loop.index}}').show();
-                                                                                                    $('#ajouteralbum').show();
-                                                                                                    $('#ajouterphoto{{album.id}}').hide();
+{%for album in user.albums %}              
+$('#albumuser{{loop.index}}').hide();
+$('#ajouteralbum').hide();
+$('#ajouterphoto' + id).show();
 
-                                                                                            {%for imag in album.images %}              
-                                                                                                {%set phs = phs + 1  %}   
+{%for imag in album.images %}              
+{%set phs = phs + 1  %}   
+if ({{album.id}} == id){
+$('#photos{{phs}}').show();
+}
 
-                                                                                                    $('#photos{{phs}}').hide();{% endfor %}{%endfor %}
-                                                                                            };</script>
+{% endfor %}
+{%endfor %}
+};
+function image2() {
+{%set phs = 0 %}   
 
-                                                                                                <script src="{{ asset('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
-                                                                                                <script src="{{ asset('assets/js/fullcalendar.min.js') }}"></script>
-                                                                                                <script src="{{ asset('assets/js/bootbox.min.js') }}"></script>
-                                                                                                <script type="text/javascript">
-                                                                                        jQuery(function ($) {
-                                                                                        /* initialize the external events
-                                                                                         -----------------------------------------------------------------*/
-                                                                                        $('#external-events div.external-event').each(function () {
+{%for album in user.albums %}              
+$('#albumuser{{loop.index}}').show();
+$('#ajouteralbum').show();
+$('#ajouterphoto{{album.id}}').hide();
 
-                                                                                        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-                                                                                        // it doesn't need to have a start or end
-                                                                                        var eventObject = {
-                                                                                        title: $.trim($(this).text()) // use the element's text as the event title
-                                                                                        };
-                                                                                                // store the Event Object in the DOM element so we can get to it later
-                                                                                                $(this).data('eventObject', eventObject);
-                                                                                                // make the event draggable using jQuery UI
-                                                                                                $(this).draggable({
-                                                                                        zIndex: 999,
-                                                                                                revert: true, // will cause the event to go back to its
-                                                                                                revertDuration: 0  //  original position after the drag
-                                                                                        });
-                                                                                        });
-                                                                                                /* initialize the calendar
-                                                                                                 -----------------------------------------------------------------*/
-                                                                                                var date = new Date();
-                                                                                                var d = date.getDate();
-                                                                                                var m = date.getMonth();
-                                                                                                var y = date.getFullYear();
-                                                                                                var calendar = $('#calendar').fullCalendar({
-                                                                                        buttonText: {
-                                                                                        prev: 'prev',
-                                                                                                next: 'next'
-                                                                                        },
-                                                                                                header: {
-                                                                                                left: 'prev,next today',
-                                                                                                        center: 'title',
-                                                                                                        right: 'month,agendaWeek'
-                                                                                                },
-                                                                                                events: [
-                                                                                                    {%for env in user.participations%}
-                                                                                                        {%if  "now"|date("Y-m-d") > env.event.dateFin|date('Y-m-d') %}
-                                                                                                                            {
-                                                                                                                            title: '{{ env.event.titre }} (événement est terminé)',
-                                                                                                                                    start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
-                                                                                                                                            ,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
-                                                                                                                                            ,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
-                                                                                                                                            ),
-                                                                                                                                    end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
-                                                                                                                                            ,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
-                                                                                                                                            ,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
-                                                                                                                                            ),
-                                                                                                                                    startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
-                                                                                                                                    enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
-                                                                                                                                    region: '{{ env.event.lieu }}',
-                                                                                                                                    nbrp: '{{ env.event.nbrPlaces }}',
-                                                                                                                                    prix: '{{ env.event.frais }}',
-                                                                                                                                    createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
-                                                                                                                                    className: 'label-danger'
-                                                                                                                            },{%elseif  "now"|date("Y-m-d") < env.event.dateDebut|date('Y-m-d') %}
-                                                                                                                            {
-                                                                                                                            title: "{{ env.event.titre }} (l'événement n'a pas encore commencer)",
-                                                                                                                                    start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
-                                                                                                                                            ,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
-                                                                                                                                            ,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
-                                                                                                                                            ),
-                                                                                                                                    end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
-                                                                                                                                            ,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
-                                                                                                                                            ,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
-                                                                                                                                            ),
-                                                                                                                                    startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
-                                                                                                                                    enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
-                                                                                                                                    region: '{{ env.event.lieu }}',
-                                                                                                                                    nbrp: '{{ env.event.nbrPlaces }}',
-                                                                                                                                    prix: '{{ env.event.frais }}',
-                                                                                                                                    createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
-                                                                                                                                    className: 'label-warning'
-                                                                                                                            },{% else %}
-                                                                                                                            {
-                                                                                                                            title: "{{ env.event.titre }} (l'événement à déjà commencé)",
-                                                                                                                                    start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
-                                                                                                                                            ,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
-                                                                                                                                            ,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
-                                                                                                                                            ),
-                                                                                                                                    end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
-                                                                                                                                            ,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
-                                                                                                                                            ,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
-                                                                                                                                            ),
-                                                                                                                                    startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
-                                                                                                                                    enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
-                                                                                                                                    region: '{{ env.event.lieu }}',
-                                                                                                                                    nbrp: '{{ env.event.nbrPlaces }}',
-                                                                                                                                    prix: '{{ env.event.frais }}',
-                                                                                                                                    createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
-                                                                                                                                    className: 'label-success'
-                                                                                                                            },{% endif %}{% endfor %}
-                                                                                                                            ],
-                                                                                                                            editable: false,
-                                                                                                                            droppable: false, // this allows things to be dropped onto the calendar !!!
-                                                                                                                            drop: function (date, allDay) { // this function is called when something is dropped
+{%for imag in album.images %}              
+{%set phs = phs + 1  %}   
 
-                                                                                                                            // retrieve the dropped element's stored Event Object
-                                                                                                                            var originalEventObject = $(this).data('eventObject');
-                                                                                                                                    var $extraEventClass = $(this).attr('data-class');
-                                                                                                                                    // we need to copy it, so that multiple events don't have a reference to the same object
-                                                                                                                                    var copiedEventObject = $.extend({}, originalEventObject);
-                                                                                                                                    // assign it the date that was reported
-                                                                                                                                    copiedEventObject.start = date;
-                                                                                                                                    copiedEventObject.allDay = allDay;
-                                                                                                                                    if ($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
-                                                                                                                                    // render the event on the calendar
-                                                                                                                                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                                                                                                                                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-                                                                                                                                    // is the "remove after drop" checkbox checked?
-                                                                                                                                    if ($('#drop-remove').is(':checked')) {
-                                                                                                                            // if so, remove the element from the "Draggable Events" list
-                                                                                                                            $(this).remove();
-                                                                                                                            }
+$('#photos{{phs}}').hide();{% endfor %}{%endfor %}
+};</script>
 
-                                                                                                                            },
-                                                                                                                            selectable: false,
-                                                                                                                            selectHelper: false,
-                                                                                                                            select: function (start, end, allDay) {
+<script src="{{ asset('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
+<script src="{{ asset('assets/js/fullcalendar.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootbox.min.js') }}"></script>
+<script type="text/javascript">
+jQuery(function ($) {
+/* initialize the external events
+-----------------------------------------------------------------*/
+$('#external-events div.external-event').each(function () {
 
-                                                                                                                            bootbox.prompt("New Event Title:", function (title) {
-                                                                                                                            if (title !== null) {
-                                                                                                                            calendar.fullCalendar('renderEvent',
-                                                                                                                            {
-                                                                                                                            title: title,
-                                                                                                                                    start: start,
-                                                                                                                                    end: end,
-                                                                                                                                    allDay: allDay
-                                                                                                                            },
-                                                                                                                                    true // make the event "stick"
-                                                                                                                                    );
-                                                                                                                            }
-                                                                                                                            });
-                                                                                                                                    calendar.fullCalendar('unselect');
-                                                                                                                            },
-                                                                                                                            eventClick: function (calEvent, jsEvent, view) {
+// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+// it doesn't need to have a start or end
+var eventObject = {
+title: $.trim($(this).text()) // use the element's text as the event title
+};
+// store the Event Object in the DOM element so we can get to it later
+$(this).data('eventObject', eventObject);
+// make the event draggable using jQuery UI
+$(this).draggable({
+zIndex: 999,
+revert: true, // will cause the event to go back to its
+revertDuration: 0  //  original position after the drag
+});
+});
+/* initialize the calendar
+-----------------------------------------------------------------*/
+var date = new Date();
+var d = date.getDate();
+var m = date.getMonth();
+var y = date.getFullYear();
+var calendar = $('#calendar').fullCalendar({
+buttonText: {
+prev: 'prev',
+next: 'next'
+},
+header: {
+left: 'prev,next today',
+center: 'title',
+right: 'month,agendaWeek'
+},
+events: [
+{%for env in user.participations%}
+{%if  "now"|date("Y-m-d") > env.event.dateFin|date('Y-m-d') %}
+{
+title: '{{ env.event.titre }} (événement est terminé)',
+start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
+,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
+,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
+),
+end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
+,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
+,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
+),
+startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+region: '{{ env.event.lieu }}',
+nbrp: '{{ env.event.nbrPlaces }}',
+prix: '{{ env.event.frais }}',
+createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
+className: 'label-danger'
+},{%elseif  "now"|date("Y-m-d") < env.event.dateDebut|date('Y-m-d') %}
+{
+title: "{{ env.event.titre }} (l'événement n'a pas encore commencer)",
+start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
+,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
+,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
+),
+end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
+,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
+,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
+),
+startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+region: '{{ env.event.lieu }}',
+nbrp: '{{ env.event.nbrPlaces }}',
+prix: '{{ env.event.frais }}',
+createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
+className: 'label-warning'
+},{% else %}
+{
+title: "{{ env.event.titre }} (l'événement à déjà commencé)",
+start: new Date({% if env.event.dateDebut %}{{ env.event.dateDebut|date('Y') }}{% endif %}
+,      {% if env.event.dateDebut %}{{ env.event.dateDebut|date('m ') }}{% endif %} - 1
+,{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d ') }}{% endif %}
+),
+end: new Date({% if env.event.dateFin %}{{ env.event.dateFin|date('Y') }}{% endif %}
+,  {% if env.event.dateFin %}{{ env.event.dateFin|date('m') }}{% endif %} - 1
+,{% if env.event.dateFin %}{{ env.event.dateFin|date('d') }}{% endif %}
+),
+startdate: '{% if env.event.dateDebut %}{{ env.event.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+enddate: '{% if env.event.dateFin %}{{ env.event.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+region: '{{ env.event.lieu }}',
+nbrp: '{{ env.event.nbrPlaces }}',
+prix: '{{ env.event.frais }}',
+createur: '{{ env.event.createur.nom ~' '~ env.event.createur.prenom }}',
+className: 'label-success'
+},{% endif %}{% endfor %}
+],
+editable: false,
+droppable: false, // this allows things to be dropped onto the calendar !!!
+drop: function (date, allDay) { // this function is called when something is dropped
 
-                                                                                                                            var form = $("<br/><label>événement : &nbsp;</label><br/>");
-                                                                                                                                    form.append("" + calEvent.title + "<br/>");
-                                                                                                                                    form.append("<label>Créateur : &nbsp;</label>");
-                                                                                                                                    form.append("" + calEvent.createur + "<br/>");
-                                                                                                                                    form.append("<label>Region : &nbsp;</label>");
-                                                                                                                                    form.append("" + calEvent.region + "<br/>");
-                                                                                                                                    form.append("<label>Date début : &nbsp;</label>");
-                                                                                                                                    form.append("" + calEvent.startdate + "<br/>");
-                                                                                                                                    form.append("<label>Date fin : &nbsp;</label>");
-                                                                                                                                    form.append("" + calEvent.enddate + "<br/>");
-                                                                                                                                    form.append("<label>Prix : &nbsp;</label>");
-                                                                                                                                    form.append("" + calEvent.prix + "euro <br/>");
-                                                                                                                                    form.append("<label>Number des personnes : &nbsp;</label>");
-                                                                                                                                    form.append("" + calEvent.nbrp + "<br/>");
-                                                                                                                                    var div = bootbox.dialog({
-                                                                                                                                    message: form,
-                                                                                                                                            buttons: {
-                                                                                                                                            /*  "delete" : {
-                                                                                                                                             "label" : "<i class='icon-trash'></i> Delete Event",
-                                                                                                                                             "className" : "btn-sm btn-danger",
-                                                                                                                                             "callback": function() {
-                                                                                                                                             calendar.fullCalendar('removeEvents' , function(ev){
-                                                                                                                                             return (ev._id == calEvent._id);
-                                                                                                                                             })
-                                                                                                                                             }
-                                                                                                                                             } ,*/
-                                                                                                                                            "close": {
-                                                                                                                                            "label": "<i class='icon-remove'></i> Close",
-                                                                                                                                                    "className": "btn-sm"
-                                                                                                                                            }
-                                                                                                                                            }
+// retrieve the dropped element's stored Event Object
+var originalEventObject = $(this).data('eventObject');
+var $extraEventClass = $(this).attr('data-class');
+// we need to copy it, so that multiple events don't have a reference to the same object
+var copiedEventObject = $.extend({}, originalEventObject);
+// assign it the date that was reported
+copiedEventObject.start = date;
+copiedEventObject.allDay = allDay;
+if ($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
+// render the event on the calendar
+// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+// is the "remove after drop" checkbox checked?
+if ($('#drop-remove').is(':checked')) {
+// if so, remove the element from the "Draggable Events" list
+$(this).remove();
+}
 
-                                                                                                                                    });
-                                                                                                                                    form.on('submit', function () {
-                                                                                                                                    calEvent.title = form.find("input[type=text]").val();
-                                                                                                                                            calendar.fullCalendar('updateEvent', calEvent);
-                                                                                                                                            div.modal("hide");
-                                                                                                                                            return false;
-                                                                                                                                    });
-                                                                                                                                    //console.log(calEvent.id);
-                                                                                                                                    //console.log(jsEvent);
-                                                                                                                                    //console.log(view);
+},
+selectable: false,
+selectHelper: false,
+select: function (start, end, allDay) {
 
-                                                                                                                                    // change the border color just for fun
-                                                                                                                                    //$(this).css('border-color', 'red');
+bootbox.prompt("New Event Title:", function (title) {
+if (title !== null) {
+calendar.fullCalendar('renderEvent',
+{
+title: title,
+start: start,
+end: end,
+allDay: allDay
+},
+true // make the event "stick"
+);
+}
+});
+calendar.fullCalendar('unselect');
+},
+eventClick: function (calEvent, jsEvent, view) {
 
-                                                                                                                            }
-                                                                                                                    });
-                                                                                                                    })
-                                                                                                        </script>
-                                                                                                        <link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}"/>
-                                                                                                        <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css') }}"/>
-                                                                                                        <link rel="stylesheet" href="{{ asset('assets/css/ace-fonts.css') }}"/>
-                                                                                                        <link rel="stylesheet" href="{{ asset('assets/css/ace-skins.min.css') }}"/>
-                                                                                                        {% endblock %}
+var form = $("<br/><label>événement : &nbsp;</label><br/>");
+form.append("" + calEvent.title + "<br/>");
+form.append("<label>Créateur : &nbsp;</label>");
+form.append("" + calEvent.createur + "<br/>");
+form.append("<label>Region : &nbsp;</label>");
+form.append("" + calEvent.region + "<br/>");
+form.append("<label>Date début : &nbsp;</label>");
+form.append("" + calEvent.startdate + "<br/>");
+form.append("<label>Date fin : &nbsp;</label>");
+form.append("" + calEvent.enddate + "<br/>");
+form.append("<label>Prix : &nbsp;</label>");
+form.append("" + calEvent.prix + "euro <br/>");
+form.append("<label>Number des personnes : &nbsp;</label>");
+form.append("" + calEvent.nbrp + "<br/>");
+var div = bootbox.dialog({
+message: form,
+buttons: {
+/*  "delete" : {
+"label" : "<i class='icon-trash'></i> Delete Event",
+"className" : "btn-sm btn-danger",
+"callback": function() {
+calendar.fullCalendar('removeEvents' , function(ev){
+return (ev._id == calEvent._id);
+})
+}
+} ,*/
+"close": {
+"label": "<i class='icon-remove'></i> Close",
+"className": "btn-sm"
+}
+}
+
+});
+form.on('submit', function () {
+calEvent.title = form.find("input[type=text]").val();
+calendar.fullCalendar('updateEvent', calEvent);
+div.modal("hide");
+return false;
+});
+//console.log(calEvent.id);
+//console.log(jsEvent);
+//console.log(view);
+
+// change the border color just for fun
+//$(this).css('border-color', 'red');
+
+}
+});
+})
+</script>
+<link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}"/>
+<link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css') }}"/>
+<link rel="stylesheet" href="{{ asset('assets/css/ace-fonts.css') }}"/>
+<link rel="stylesheet" href="{{ asset('assets/css/ace-skins.min.css') }}"/>
+{% endblock %}

@@ -80,6 +80,7 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
+        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findBy(array('participant'=> $user), array('datePaticipation' => 'desc'));
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('entraineur' => $user));
         if ($notification) {
             $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
@@ -90,7 +91,7 @@ class UserController extends Controller {
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
-        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->getEventUserParticipant($id, new \Datetime('- 1 months'));
+        
         return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1, 'participations' => $participation));
     }
 
