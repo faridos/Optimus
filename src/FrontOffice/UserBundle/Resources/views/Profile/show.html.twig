@@ -521,7 +521,24 @@ Palmarés Supprimer
 </div>
 <div class="modal-body">
 {%for par in env.participations %}
-    {{ par.participant }}
+   
+<div class="tooltipsContainer avatar imagus col-md-4" >
+{#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
+{% if par.participant.path == null %}
+    {% if par.participant.sexe == 'M' %}
+<img src="{{ asset('men.png') }}">
+{% else %}
+    {% endif %}
+{% else %}
+<img src="{{ asset(par.participant.WebPath)}}" alt="avatar" ></a>
+{% endif %}
+</div>
+
+
+
+
+
+    
     {% endfor %}
 </div>
 <div class="modal-footer supp-album">
