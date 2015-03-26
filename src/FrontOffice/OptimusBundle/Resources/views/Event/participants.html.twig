@@ -38,7 +38,8 @@
                 <div class="tab-content">
 
                     <ul class="tab-pane fade  active in scrollbar" id="participants" >
-
+                        <div id="msgparticipe" ></div>
+                        <br/>
                         <div class="row" id="blockparticip">
 
                             {% for participant in event.participations %}
@@ -82,6 +83,8 @@
                                     <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
                                 {% endif %}
                             </div>
+                             <div class="buttonsWrapper col-xs-12">
+                          
                             {% for photo in event.images %}
 
                                 <div class="col-sm-4" id="{{ photo.id }}">
@@ -121,7 +124,7 @@
             </div>
         </div>
                             {% endfor %}
-
+                             </div>
                             <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     {{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoEvent',  {'id': event.id })) }}

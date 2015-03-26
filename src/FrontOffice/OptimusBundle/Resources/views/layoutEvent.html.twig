@@ -146,13 +146,20 @@
                 </div>
                 <div class="modal-footer">
                     <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                    <a href="{{ path('delete-event',{'id': event.id}) }}" class="btn btn-round btn-green">Confirmer</a>
+                    <a href="{{ path('delete-event-profil',{'id': event.id}) }}" class="btn btn-round btn-green">Confirmer</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-------------------fin modal suppression-------------------> 
+    <!-------------------fin modal suppression------------------->
+    <!------------------- modal edit photo------------------->
+    <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        {{ render (controller('FrontOfficeUserBundle:User:editPhoto',  { 'id': app.user.id })) }}
+    </div>
+</div>
+        <!-------------------fin modal edit photo------------------->
 {% endblock %}
 {% block javascriptfils %}
 
@@ -208,15 +215,27 @@
                         var nouveauNb = nb - 1;
                         $('#nbparticip').replaceWith('<span class="address leftus" id="nbparticip">' + nouveauNb + '</span>');
                         $('#particip{{app.user.id}}').replaceWith();
+                        $('#msgparticipe').replaceWith('<div id="msgparticipe" style="text-align: center;color: green;">Annuler participation avec succes</div>');
                 } else{
                 $('#append2').show();
                         var nb = parseInt($('#nbparticip').text());
                         var nouveauNb = nb + 1;
+                        $('#msgparticipe').replaceWith('<div id="msgparticipe" style="text-align: center;color: green;">Participation avec succes</div>');
                         $('#nbparticip').replaceWith('<span class="address leftus" id="nbparticip">' + nouveauNb + '</span>');
                         $('#blockparticip').append('<div class="col-md-4" id="particip{{app.user.id}}">' +
                         '<div class="tooltipsContainer agent notifyList">' +
                         '<a href="{{ path('show_profil',{'id': app.user.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{app.user.prenom}} {{app.user.nom}}">' +
-                        '<img src="{{ asset(app.user.WebPath) }}" alt="">' +
+                         {% if app.user.path == null %}
+                                                {% if app.user.sexe == 'H' %}
+                                                '<img src="{{ asset('men.jpg') }}" class="inline-block imaguss">' +
+                                                    {% else %}
+                                                '<img src="{{ asset('women.jpg') }}" class="inline-block imaguss">' +
+                                                        {% endif %}
+                                                        {% else %}
+                                                   '<img src="{{ asset(app.user.WebPath) }}" alt="">'+        
+                                                
+                                             {% endif %}
+                                           
                         '<div class="pulse border-green pulseoptimus"></div>' +
                         '</a>' +
                         '<div class="info">' +

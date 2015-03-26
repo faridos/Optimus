@@ -232,6 +232,36 @@ class EventController extends Controller {
     /**
      * 
      *
+     * @Route("{id}/supprimer/event", name="delete-event-profil", options={"expose"=true})
+     * @Method("GET|POST|DELETE")
+     * @Template()
+     */
+    public function deleteEventAction(Request $request,$id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+        if (!$entity || $entity->getActive() == 0) {
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+        }
+        $entity->setActive(false);
+        $em->persist($entity);
+        $em->flush();
+        $action = 'delete';
+        $eventhistory = new HistoryEventEvent($user, $entity, $action);
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        
+        return $this->redirect($this->generateUrl('accueil'));
+    }
+    
+    
+    /**
+     * 
+     *
      * @Route("load/{last_id}", name="event_ajax", options={"expose"=true})
      * @Method("GET|POST")
      * 

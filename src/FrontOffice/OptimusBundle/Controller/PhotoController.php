@@ -146,12 +146,12 @@ class PhotoController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
-        $editForm = $this->createForm(new UserPhotoType(), $entity);
+        $editForm = $this->createForm(new EventPhotoType(), $entity);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $em->flush();
             return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
         }
-        return $this->render('FrontOfficeOptimusBundle:Photo:editPhotoProfil.html.twig', array('form' => $editForm->createView()));
+        return $this->render('FrontOfficeOptimusBundle:Photo:editPhotoEvent.html.twig', array('form' => $editForm->createView()));
     }
 }
