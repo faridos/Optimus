@@ -234,8 +234,8 @@ Club Supprimer
 {% endif %}
 {% for member in user.adherent %}
 {% if member.clubad.active == 1 %}
-<div class="userWidget-2 tooltipsContainer col-md-12" >
-<div class="tooltipsContainer avatar imagus">
+<div class="userWidget-2 tooltipsContainer col-md-12 {{member.clubad.id}}" >
+<div class="tooltipsContainer avatar imagus col-md-3">
 <a href="{{path('show_club',{'id':member.clubad.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
 <img src="{{ asset(member.clubad.WebPath) }}" alt="avatar" ></a>
 </div>
@@ -247,10 +247,22 @@ Club Supprimer
 <div class="title">Frais d'abonnement : <span class="address">{{ member.clubad.fraisAdhesion}}£</span></div>
 </div>
 </div>
-<div class="col-md-3">
+<div class="col-md-4">
 <div class="info" >
 <div class="title">Text descriptif : <span class="address">{{ member.clubad.description}}</span></div>
 </div>
+ {% set memberconfirmed = getMembreConfirmed(user,member.clubad) %}
+      {% if memberconfirmed %}
+<div   align="right">
+<a  style="margin-left: 82%; margin-top: 36%;" class="btn btn-green btn-round " href="#" id="exit_club{{member.clubad.id}}" >
+<span  class="fa icon-action-redo"></span>
+<span  class="exitClub" id="{{member.clubad.id}}">Quitter</span>
+</a>
+<a style="margin-left: 82%; margin-top: 36%;" class="loader" >
+ <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+ </a>
+</div>
+ {% endif %}
 </div>
 <div style="margin-top: 1%" align="right">
      <a href="#plusInfoClubmember{{member.clubad.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des members"><span class="icon-users"></span></a>
@@ -744,6 +756,24 @@ Palmarés Supprimer
 $(function() {
 $("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
 });</script>
+<script>
+    {% for member in user.adherent %}
+    $('#exit_club{{member.clubad.id}}').click(function() {
+        $('#exit_club{{member.clubad.id}}').hide();
+    $('.loader').show();
+  
+
+    $.ajax({
+        url: Routing.generate('exit_club', {'id': {{member.clubad.id}}}),
+        success: function() {
+            
+            $('.loader').hide();
+            $('.{{member.clubad.id}}').hide();
+        }
+    });
+});
+{% endfor %}
+</script>
 <script>
 {% for part in user.participations %}
 $('#exit_event{{part.event.id}}').click(function() {
