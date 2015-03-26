@@ -790,16 +790,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "7.0.3",
+            "version": "7.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "1d28ae5458baaf6bcad2ac5d773f6d593f02a6b3"
+                "reference": "f992e78b306563120b42ff0c8b4d957837e07e2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/1d28ae5458baaf6bcad2ac5d773f6d593f02a6b3",
-                "reference": "1d28ae5458baaf6bcad2ac5d773f6d593f02a6b3",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/f992e78b306563120b42ff0c8b4d957837e07e2a",
+                "reference": "f992e78b306563120b42ff0c8b4d957837e07e2a",
                 "shasum": ""
             },
             "require": {
@@ -846,7 +846,7 @@
                 "phonenumber",
                 "validation"
             ],
-            "time": "2015-03-03 12:48:31"
+            "time": "2015-03-25 12:53:06"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1265,17 +1265,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v2.3.11",
+            "version": "v2.3.13",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "374bbea795fa69a85b1623048798a89aebffe62b"
+                "reference": "c344892aa9f09f0005b395d79ad2531a7deaedc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/374bbea795fa69a85b1623048798a89aebffe62b",
-                "reference": "374bbea795fa69a85b1623048798a89aebffe62b",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/c344892aa9f09f0005b395d79ad2531a7deaedc9",
+                "reference": "c344892aa9f09f0005b395d79ad2531a7deaedc9",
                 "shasum": ""
             },
             "require": {
@@ -1307,7 +1307,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-02-27 12:58:18"
+            "time": "2015-03-26 11:09:17"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2011,8 +2011,12 @@
             "time": "2014-01-20 22:35:06"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
@@ -2021,9 +2025,10 @@
         "nomaya/social-bundle": 20
     },
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"
     },
-    "platform-dev": []
+    "platform-dev": [
+
+    ]
 }
