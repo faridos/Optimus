@@ -521,24 +521,22 @@ Palmarés Supprimer
 </div>
 <div class="modal-body">
 {%for par in env.participations %}
+    
    
-<div class="tooltipsContainer avatar imagus col-md-4" >
+<a href="{{ path('show_profil',{'id': par.participant.id}) }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{par.participant.username}}">
 {#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
 {% if par.participant.path == null %}
-    {% if par.participant.sexe == 'M' %}
-<img src="{{ asset('men.png') }}">
+    {% if par.participant.sexe == 'H' %}
+<img style="width: 10%;" src="{{ asset('men.png') }}">
 {% else %}
+    <img style="width: 10%;" src="{{ asset('women.jpg') }}">
     {% endif %}
 {% else %}
-<img src="{{ asset(par.participant.WebPath)}}" alt="avatar" ></a>
+<img style="width: 10%;"  src="{{ asset(par.participant.WebPath)}}" alt="avatar" ></a>
 {% endif %}
-</div>
+<span style="margin-left:10%;">Pseudo: {{par.participant.username}}</span>
+<span style="margin-left:10%;">Date de participation: {{par.datePaticipation|date('d/m/Y H:i:s')}}</span>
 
-
-
-
-
-    
     {% endfor %}
 </div>
 <div class="modal-footer supp-album">
