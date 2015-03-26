@@ -22,6 +22,7 @@ class EventType extends AbstractType
             ->add('nbrPlaces','integer',array('attr'=>array('min'=>0,'class'=>'search-optimus','placeholder'=>'Entrer le nombre de places')))
             ->add('frais','integer',array('attr'=>array('min'=>0,'class'=>'form-control round sansBorder','placeholder'=>'Entrer les frais d\'inscription')))
             ->add('description','textarea',array('attr'=>array('class'=>'form-control search-optimus','placeholder'=>'Entrer la description du votre évènement...'),'required'=>false))
+            ->add('file', 'file' ,array('attr'=>array('class'=>'btn btn-round btn-o search-optimus'),'required'=>False))
             ->add('type','entity', array(  'attr'=>array('class'=>'search-optimus'),
                                            'class' => 'FrontOfficeOptimusBundle:TypeEvent',
                                            'property'=>'nom'))

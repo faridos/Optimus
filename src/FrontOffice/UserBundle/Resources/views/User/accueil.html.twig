@@ -24,37 +24,37 @@
 
                                     </div></div>{% endif %}
                                     {% for event in events %}
-                                        {%set i = 0 %}
-                                        {%set amis = getFriends(user.id)%}
-                                        {%for env in user.evenements %}
-                                            {%if env.id == event.id %}
+                                        {% set i = 0 %}
+                                        {% set amis = getFriends(user.id)%}
+                                        {% for env in user.evenements %}
+                                            {% if env.id == event.id %}
                                                 {%set i = i+1 %}
-                                            {%endif%}
-                                        {%endfor%}
-                                        {%if i == 0 %}
-                                            {%for amipart in user.participations %}
-                                                {%if  amipart.event.id == event.id %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if i == 0 %}
+                                            {% for amipart in user.participations %}
+                                                {% if  amipart.event.id == event.id %}
                                                     {%set i = i+1 %}
-                                                {%endif%} 
-                                            {%endfor%}
-                                        {%endif%}
-                                        {%if i == 0 %}  
-                                            {%for ami in amis %}
-                                                {%for amieve in ami.evenements %}
-                                                    {%if amieve.id == event.id %}
-                                                        {%set i = i+1 %}
-                                                    {%endif%}
-                                                {%endfor%}
-                                                {%if i == 0 %}
-                                                    {%for amipart in ami.participations %}
-                                                        {%if  amipart.event.id == event.id %}
+                                                {% endif%} 
+                                            {% endfor%}
+                                        {% endif %}
+                                        {% if i == 0 %}  
+                                            {% for ami in amis %}
+                                                {% for amieve in ami.evenements %}
+                                                    {% if amieve.id == event.id %}
+                                                        {% set i = i+1 %}
+                                                    {% endif%}
+                                                {% endfor%}
+                                                {% if i == 0 %}
+                                                    {% for amipart in ami.participations %}
+                                                        {% if  amipart.event.id == event.id %}
                                                             {%set i = i+1 %}
-                                                        {%endif%} 
-                                                    {%endfor%}
-                                                {%endif%}
-                                            {%endfor%}
-                                        {%endif%}  
-                                        {%if i > 0 %}
+                                                        {% endif %} 
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}  
+                                        {% if i > 0 %}
                                         <div class="notificationsWidget">
                                             <div class="notification">
                                                 <div class="time green">
