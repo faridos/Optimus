@@ -33,7 +33,6 @@
 
 
 <div class="col-lg-12">
-    <div style="margin-top: 3%;"></div>
 <div class="tabsContainer">
 <ul class="nav nav-tabs nav-justified" role="tablist">
 <li class="active"><a href="#env" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Events</a></li>
@@ -72,7 +71,7 @@ Evenement Supprimer
 <div class="tooltipsContainer avatar imagus col-md-4">
 <a href="{{path('show_event',{'id':env.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{env.titre}}">
 {% if env.path == null %}
-<img src="{{ asset('event.png')}}" alt="avatar" ></a>
+<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>
 
 {% else %}
 
@@ -92,8 +91,8 @@ Evenement Supprimer
 <div class="title">Text descriptif : <span class="address">{{env.description}}</span></div>
 </div>
 </div>
-<div style="margin-top: 1%" align="right">
-        <a href="#plusInfo{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des members"><span class="icon-users"></span></a>
+<div align="right">
+        <a href="#plusInfo{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="plus info"><span class="icon-info"></span></a>
 
 {% if app.user == env.createur %}
 
@@ -126,7 +125,7 @@ Evenement Supprimer
 <div class="tooltipsContainer avatar imagus col-md-4">
 <a href="{{path('show_event',{'id':part.event.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{part.event.titre}}">
 {% if part.event.path == null %}
-<img src="{{ asset('event.png')}}" alt="avatar" ></a>
+<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>
 {% else %}
 <img src="{{ asset(part.event.WebPath)}}" alt="avatar" ></a>
 {% endif %}
@@ -142,10 +141,7 @@ Evenement Supprimer
 <div class="info" >
 <div class="title">Text descriptif : <span class="address">{{part.event.description}}</span></div>
 </div>
-</div>
-<div style="margin-top: 1%" align="right">
-            <a href="#plusInfo{{part.event.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des members"><span class="icon-users"></span></a>
-    </div>
+</div> 
 {% if app.user != part.event.createur %}
 {% set participantOuNon=ParticipantOuNon(part.event,user) %}
 {% if participantOuNon == 1 and date(part.event.dateFin)>= date() %}
@@ -192,11 +188,7 @@ Club Supprimer
 <div class="userWidget-2 col-md-12 {{club.id}}" >
 <div class="tooltipsContainer avatar imagus">
 <a href="{{path('show_club',{'id':club.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
-{% if club.path == null %}
-     <img src="{{ asset('club.png') }}" alt="avatar" ></a>
-    {% else %}
-    <img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
-    {% endif %}
+<img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
 </div>
 <div class="col-md-4">
 <div class="info">
@@ -211,7 +203,7 @@ Club Supprimer
 <div class="title">Text descriptif : <span class="address">{{ club.description}}</span></div>
 </div>
 </div>
-<div style="margin-top: 1%" align="right">
+<div align="right">
 <a href="{{ path('club_update', {'id':club.id})}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
 <a href="#supprimerclub{{club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
@@ -501,7 +493,6 @@ Palmarés Supprimer
 </div>
 </div>
 {% endfor %}
-
 {% for env in user.evenements %}
 <div class="modal" id="supprimerEvent{{env.id}}"   >
 <div class="modal-dialog">
@@ -520,7 +511,6 @@ Palmarés Supprimer
 </div>
 </div>
 </div>
-
 <!------------------- modal plus info------------------->
 <div class="modal" id="plusInfo{{env.id}}"   >
 <div class="modal-dialog">
@@ -532,23 +522,20 @@ Palmarés Supprimer
 <div class="modal-body">
 {%for par in env.participations %}
     
-  
+   
 <a href="{{ path('show_profil',{'id': par.participant.id}) }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{par.participant.username}}">
 {#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
 {% if par.participant.path == null %}
     {% if par.participant.sexe == 'H' %}
 <img style="width: 10%;" src="{{ asset('men.png') }}">
 {% else %}
-    <img style="width: 10%;" src="{{ asset('women.png') }}">
+    <img style="width: 10%;" src="{{ asset('women.jpg') }}">
     {% endif %}
 {% else %}
-<img style="width: 10%;"  src="{{ asset(par.participant.WebPath)}}" alt="avatar" >
-
+<img style="width: 10%;"  src="{{ asset(par.participant.WebPath)}}" alt="avatar" ></a>
 {% endif %}
-</a>
-
 <span style="margin-left:10%;">Pseudo: {{par.participant.username}}</span>
-<span style="margin-left:10%;">Date de participation: {{par.datePaticipation|date('d/m/Y H:i:s')}}</span><div style="margin-top: 3%;"></div>
+<span style="margin-left:10%;">Date de participation: {{par.datePaticipation|date('d/m/Y H:i:s')}}</span>
 
     {% endfor %}
 </div>
@@ -558,44 +545,7 @@ Palmarés Supprimer
 </div>
 </div>
 </div>
-{% endfor %} 
-{% for part in participations %}
-    <div class="modal" id="plusInfoparticipation{{part.event.id}}"   >
-<div class="modal-dialog">
-<div class="modal-content bordusbottomus">
-<div class="modal-header bordustopus">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<h4 class="modal-title" id="contactLabel">Liste des partipants </h4>
-</div>
-<div class="modal-body">
-
-    {% for par in part.event.participations %}
-    
-    
-<a href="{{ path('show_profil',{'id': par.participant.id}) }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{par.participant.username}}">
-{#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
-{% if par.participant.path == null %}
-    {% if par.participant.sexe == 'H' %}
-<img style="width: 10%;" src="{{ asset('men.png') }}">
-{% else %}
-    <img style="width: 10%;" src="{{ asset('women.png') }}">
-    {% endif %}
-{% else %}
-<img style="width: 10%;"  src="{{ asset(par.participant.WebPath)}}" alt="avatar" >
-{% endif %}
-</a>
-<span style="margin-left:10%;">Pseudo: {{par.participant.username}}</span>
-<span style="margin-left:10%;">Date de participation: {{par.datePaticipation|date('d/m/Y H:i:s')}}</span><div style="margin-top: 3%;"></div>
-
-    {% endfor %}
-</div>
-<div class="modal-footer supp-album">
-<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-</div>
-</div>
-</div>
-</div>
-  {% endfor %}   
+{% endfor %}     
 {% for club in user.clubs %}
 <div class="modal" id="supprimerclub{{club.id}}"   >
 <div class="modal-dialog">
