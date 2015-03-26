@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FrontOffice\OptimusBundle\Entity\Event;
 use FrontOffice\OptimusBundle\Form\EventType;
+use FrontOffice\OptimusBundle\Form\EventPhotoType;
 use FrontOffice\OptimusBundle\Entity\Participation;
 use FrontOffice\OptimusBundle\Entity\HistoryEvent;
 use FrontOffice\OptimusBundle\Event\HistoryEventEvent;
@@ -27,6 +28,8 @@ use \DateTime;
  * @Route("/evenement")
  */
 class EventController extends Controller {
+    
+    
 
     /**
      * 
@@ -41,6 +44,21 @@ class EventController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
 //$x=$em->getRepository("FrontOfficeOptimusBundle:Event")->get_distance_m(48.856667,2.350987, 45.767299, 4.834329);
         return $this->render('FrontOfficeOptimusBundle:Event:index.html.twig', array('events' => $events));
+    }
+    
+    
+    
+    /**
+     * 
+     *
+     * @Route("/test", name="show_event2", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function showAction() {
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find(16);
+        return $this->render('FrontOfficeOptimusBundle:Event:showEvent.html.twig',array('event'=>$event));
     }
 
     /**
@@ -74,7 +92,7 @@ class EventController extends Controller {
             }
         }
        
-        return $this->render('FrontOfficeOptimusBundle:Event:participants.html.twig', array('user'=> $user,
+        return $this->render('FrontOfficeOptimusBundle:Event:showEvent.html.twig', array('user'=> $user,
             'event' => $event,
             
             ));
@@ -256,6 +274,32 @@ class EventController extends Controller {
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         
         return $this->redirect($this->generateUrl('accueil'));
+    }
+    
+    /**
+     * 
+     *
+     * @Route("/{id}/paramétres/photo", name="setting_event_photo", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function editPhotoEventAction(Request $request, $id) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+        
+        
+            $editForm = $this->createForm(new EventPhotoType(), $event);
+            $editForm->handleRequest($request);
+            if ($editForm->isValid()) {
+                $em->flush();
+                return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
+            }
+            return $this->render('FrontOfficeOptimusBundle:Event:editPhotoEvent.html.twig', array('event' => $event, 'form' => $editForm->createView()));
+        
     }
     
     
