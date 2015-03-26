@@ -1,4 +1,5 @@
 {% extends "FrontOfficeUserBundle::layout_profile.html.twig" %}
+ 
 {% block content %}
 {% for flashMessage in app.session.flashbag.get('AjouterAlbum') %}
 <br/>
@@ -78,7 +79,7 @@ Evenement Supprimer
 
 {% endif %}
 </div>
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="info  col-md-12">
 <div ><a href="{{path('show_event',{'id':env.id})}}" class="name">{{env.titre}}</a></div>
 <div class="title">Créateur : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
@@ -90,13 +91,18 @@ Evenement Supprimer
 <div class="title">Text descriptif : <span class="address">{{env.description}}</span></div>
 </div>
 </div>
-{% if app.user == env.createur %}
 <div align="right">
+        <a href="#plusInfo{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="plus info"><span class="icon-info"></span></a>
+
+{% if app.user == env.createur %}
+
 <a href="{{ path('update-event',{id: env.id})}}"  class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
 <a href="#supprimerEvent{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-</div>
+
 {% endif %}
+</div>
+
 <div class="clearfix"></div>
 </div>
 {% endif %}
@@ -452,6 +458,7 @@ Palmarés Supprimer
 </div>
 {% endfor %}
 {% endfor %}
+
 {% for album in user.albums %}
 <!------------------- modal photo------------------->
 <div class="modal fade" id="uploadphotoAlbum{{album.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -466,6 +473,7 @@ Palmarés Supprimer
 </div>
 </div>
 <!--------------- fin update album ------------------>
+
 <!------------------- modal supprission------------------->
 <div class="modal" id="supprimuss{{album.id}}"   >
 <div class="modal-dialog">
@@ -499,6 +507,25 @@ Palmarés Supprimer
 <div class="modal-footer supp-album">
 <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
 <a id="supprimerevent{{env.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+</div>
+</div>
+</div>
+</div>
+<!------------------- modal plus info------------------->
+<div class="modal" id="plusInfo{{env.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Liste des partipants </h4>
+</div>
+<div class="modal-body">
+{%for par in env.participations %}
+    {{ par.participant }}
+    {% endfor %}
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
 </div>
 </div>
 </div>
