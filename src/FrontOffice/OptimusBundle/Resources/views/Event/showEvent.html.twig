@@ -32,8 +32,8 @@
                                     <div class="fig salamus">
 
                                         {% if event.path == null %}
-                                            <a href="/Optimus/web/event.jpg" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
-                                                <img src="{{ asset('event.jpg') }}" class="inline-block imaguss">
+                                            <a href="/Optimus/web/event.png" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+                                                <img src="{{ asset('event.png') }}" class="inline-block imaguss">
                                             </a>
                                             {% else %}
                                             <a href="{{ asset(event.WebPath) }}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
@@ -100,11 +100,11 @@
                                         {% if not isparticipant and date(event.dateFin)>= date() %}
                                             <a class="btn btn-green btn-round eventus " href="#"  id="exit_event">
                                                 <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
-                                            </a>
+                                            </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
                                         {% else %}
                                             <a class="btn btn-green btn-round eventus" href="#" id="exit_event">
                                                 <span class="fa icon-action-redo "></span> <span class="exitEvent">Annuler participation</span>                                          
-                                            </a>
+                                            </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
                                         {% endif %}
                                     {% endif %}
                                 </div>
@@ -149,9 +149,9 @@
                                             
                                             {% if participant.participant.path == null %}
                                                 {% if participant.participant.sexe == 'H' %}
-                                                <img src="{{ asset('men.jpg') }}" class="inline-block imaguss">
+                                                <img src="{{ asset('men.png') }}" class="inline-block imaguss">
                                                     {% else %}
-                                                <img src="{{ asset('women.jpg') }}" class="inline-block imaguss">
+                                                <img src="{{ asset('women.png') }}" class="inline-block imaguss">
                                                         {% endif %}
                                                         {% else %}
                                                    <img src="{{ asset(participant.participant.WebPath) }}" alt="">         
@@ -344,7 +344,8 @@
                 map.setCenter(myLatLng);
         })(jQuery);
                 $('#exit_event').click(function() {
-
+                    $('#exit_event').empty();
+                    $('#loaderPart').show();
         $.ajax({
         url: Routing.generate('exit_event', {'id': {{event.id}}}),
                 success: function(msg) {
@@ -352,6 +353,7 @@
                         $("#exit_event").html(tab[0]);
                         var test = tab[1];
                         if (test == 0){
+                  $('#loaderPart').hide();
                 $('#append2').hide();
                         var nb = parseInt($('#nbparticip').text());
                         var nouveauNb = nb - 1;
@@ -359,6 +361,7 @@
                         $('#particip{{app.user.id}}').replaceWith();
                         $('#msgparticipe').replaceWith('<div id="msgparticipe" style="text-align: center;color: green;">Annuler participation avec succes</div>');
                 } else{
+                    $('#loaderPart').hide();
                 $('#append2').show();
                         var nb = parseInt($('#nbparticip').text());
                         var nouveauNb = nb + 1;
@@ -369,9 +372,9 @@
                         '<a href="{{ path('show_profil',{'id': app.user.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{app.user.prenom}} {{app.user.nom}}">' +
                          {% if app.user.path == null %}
                                                 {% if app.user.sexe == 'H' %}
-                                                '<img src="{{ asset('men.jpg') }}" class="inline-block imaguss">' +
+                                                '<img src="{{ asset('men.png') }}" class="inline-block imaguss">' +
                                                     {% else %}
-                                                '<img src="{{ asset('women.jpg') }}" class="inline-block imaguss">' +
+                                                '<img src="{{ asset('women.png') }}" class="inline-block imaguss">' +
                                                         {% endif %}
                                                         {% else %}
                                                    '<img src="{{ asset(app.user.WebPath) }}" alt="">'+        

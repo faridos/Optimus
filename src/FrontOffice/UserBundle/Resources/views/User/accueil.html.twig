@@ -10,8 +10,8 @@
                     <div class="notificationsWidget">
                         <div class="singleTop whiteBg">
                             {% set amis = getFriends(user.id)%}
-                                {%if user.evenements|length == 0 and amis|length == 0 %}
-                                     <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            {%if user.evenements|length == 0 and amis|length == 0 %}
+                                <div class="alert alert-danger alert-dismissible fade in" role="alert">
                                     <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
                                     <button type="button" class="close" data-dismiss="alert"></button>
                                     <div align="center">    <strong >Notification Optimus</strong> </div>
@@ -57,17 +57,28 @@
                                             {% endfor %}
                                         {% endif %}  
                                         {% if i > 0 %}
-                                        <div class="notificationsWidget">
+                                        <div class="notificationsWidget tooltipsContainer">
                                             <div class="notification">
                                                 <div class="time green">
-                                                    <a href="{{ path('show_event', { 'id' : event.id }) }}" class="timeBody hidden-xs" {% if date(event.dateFin) < date() %} style="background-color: rgba(192, 33, 0, 0.2); color: #000;"{% endif %}>{{ event.titre }}</a>
+                                                    <a href="{{ path('show_event', { 'id' : event.id }) }}" class="timeBody hidden-xs" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="voir" {% if date(event.dateFin) < date() %} style="background-color: rgba(192, 33, 0, 0.2); color: #000;"{% endif %}>{{ event.titre }}</a>
                                                     <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
                                                     <div class="indicator"><span class="fa fa-circle-o"></span></div>
                                                     <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
                                                 </div>
-                                                <div class="notifyContent">
-                                                    <div class="notifyBody">
-                                                        <a href="{{ path('show_profil', {'id' : event.createur.id}) }}"> <img class="avatar pull-left" src="{{ asset(event.createur.WebPath)}}" alt="avatar"></a>
+                                                <div class="notifyContent tooltipsContainer">
+                                                    <div class=" notifyBody">
+                                                        <a href="{{ path('show_profil', {'id' : event.createur.id}) }}">
+                                                            
+                                                            {% if event.createur.path == null %}
+                                                                {% if event.createur.sexe == 'H' %}
+                                                                     <img class="avatar pull-left " src="{{ asset('men.png') }}" alt="avatar" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="voir">
+                                                                {% else %}
+                                                                     <img class="avatar pull-left" src="{{ asset('women.png') }}"  data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="voir">
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <img class="avatar pull-left" src="{{ asset(event.createur.WebPath)}}" alt="avatar">
+                                                            {% endif %}
+                                                        </a>
                                                         <div class="notify pull-left">
                                                             <div class="name">{{ event.createur.prenom }} {{ event.createur.nom }}<span class="label label-green visible-xs">Nom d'évenement</span></div>
                                                             <div class="info">
@@ -85,18 +96,19 @@
                                                                     <a class="btn btn-green btn-round eventus" href="#"  id="exit_event{{event.id}}">
                                                                         <span class="fa icon-action-redo "></span> <span class="requestEvent{{event.id}}">Participer</span>                                          
                                                                     </a>
-
+                                                                    <a class="loader" id="loaderPart_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
                                                                 {% elseif date(event.dateFin)>= date() %}
                                                                     {% if  event.createur.id != user.id %}
-                                                                    <a class="btn btn-green btn-round eventus" href="#" id="exit_event{{event.id}}">
-                                                                        <span class="fa icon-action-redo "></span> <span class="exitEvent{{event.id}}">Annuler participation</span>                                          
-                                                                    </a>
+                                                                        <a class="btn btn-green btn-round eventus" href="#" id="exit_event{{event.id}}">
+                                                                            <span class="fa icon-action-redo "></span> <span class="exitEvent{{event.id}}">Annuler participation</span>                                          
+                                                                        </a>
+                                                                        <a class="loader" id="loaderPart_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
                                                                     {% endif %}
-                                                                    
+
                                                                     <div id="appendshare{{event.id}}" class="buttonsWrapper pb20 buttonleftus" >{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
 
                                                                 {% endif %}
-
+                                                                
                                                             </div>
 
                                                         </div>
@@ -113,7 +125,18 @@
                                                     {% if key < 5 %}
                                                         <div class="comment">
                                                             <div class="commentAvatar">
+                                                                <a href="{{ path('show_profil', {'id' : comment.commenteur.id}) }}">
+                                                            {% if event.createur.path == null %}
+                                                                {% if event.createur.sexe == 'H' %}
+                                                                    <img class="avatar" src="{{ asset('men.png') }}" alt="avatar">
+                                                                {% else %}
+                                                                    <img class="avatar" src="{{ asset('women.png') }}" alt="avatar">
+                                                                {% endif %}
+                                                            {% else %}
                                                                 <img class="avatar" src="{{ asset(comment.commenteur.WebPath)}}" alt="avatar">
+                                                            {% endif %}
+                                                        </a>
+                                                                
                                                                 <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
                                                             </div>
                                                             <div class="commentContent">
@@ -126,27 +149,38 @@
                                                         </div>
                                                     {% endif %}
                                                 {% endfor %}
-                                               
+
                                             </div>
-                                            <div class="loader" id="loader_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></div>
+                                            
                                         </ul>
 
                                         <div class="commentsWidgetForm">
                                             <div class="cfAvatar">
-                                                <img class="avatar" src="{{asset(app.user.WebPath)}}" alt="avatar">
+                                                
+                                                            {% if event.createur.path == null %}
+                                                                {% if event.createur.sexe == 'H' %}
+                                                                    <img class="avatar" src="{{ asset('men.png') }}" alt="avatar">
+                                                                {% else %}
+                                                                    <img class="avatar" src="{{ asset('women.png') }}" alt="avatar">
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <img class="avatar" src="{{asset(app.user.WebPath)}}" alt="avatar">
+                                                            {% endif %}
+                                                        
                                             </div>
                                             <div class="commentsForm">
                                                 <div class="input-group">
                                                     <input id="input_{{event.id}}" type="text" class="form-control" placeholder="Ajoutez un commentaire...">
                                                     <span class="input-group-btn">
                                                         <a id="btnmsg_{{event.id}}" class="btn round btn-green">Commenter</a>
+                                                        <img id="btnlod_{{event.id}}" style="display: none;" src="{{asset('template/images/ajax-loader-comment.gif') }}">
                                                     </span>
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>
-                                                     <br/>
-                                    {%endif%}                   
+                                        <br/>
+                                    {% endif %}                   
                                 {% endfor %}
                             </div>
                         </div>
@@ -271,7 +305,20 @@
 
                             };{% for event in events %}
                             $("#btnmsg_{{event.id}}").on('click', function () {
+                                 $("#btnmsg_{{event.id}}").hide();
+                               $('#btnlod_{{event.id}}').show();
                     var comment = $("#input_{{event.id}}").val();
+                    $("#input_{{event.id}}").val("");
+                    var photo= {% if app.user.path == null %}
+                    {% if app.user.sexe == 'H' %}
+                                           "{{ asset('men.png') }}"
+                                                                            {% else %}
+                                            "{{ asset('women.png') }}"
+                                                                                    {% endif %}
+                    {% else %}
+                                       "{{ asset(app.user.WebPath)}}"
+                                                                            {% endif %}
+                                                                          
                             var oa = new Object();
                             oa.comment = comment;
                             if (comment){
@@ -284,9 +331,12 @@
                             console.log("envoi");
                             },
                             success: function () {
+                                                $("#btnmsg_{{event.id}}").show();
+                               $('#btnlod_{{event.id}}').hide();
+               
                             $("#content_msg_{{event.id}}").prepend('<div class="comment">' +
                                     '<div class="commentAvatar">' +
-                                    '<img class="avatar" src="{{ asset(app.user.WebPath)}}" alt="avatar">' +
+                                    '<img class="avatar" src="'+ photo +'" alt="avatar">' +
                                     '<div class="commentArrow"><span class="fa fa-caret-left"></span></div>' +
                                     '</div>' +
                                     '<div class="commentContent">' +
@@ -302,6 +352,10 @@
                             error: function () {
                             }
                     });
+                    }else{
+                                         $("#btnmsg_{{event.id}}").show();
+                               $('#btnlod_{{event.id}}').hide();
+               
                     }
                     });
                             var load = false;
@@ -320,7 +374,16 @@
                                     last_id_{{event.id}} += 5;
                                             for (var i in data) {
                                     var comment = data[i];
-                                            var photo = "http://www.optimus-beta.com/web/upload/profil/" + comment.commenteur.id + "/" + comment.commenteur.path;
+                                            var photo = "/web/upload/profil/" + comment.commenteur.id + "/" + comment.commenteur.path;
+                                            if(comment.commenteur.path == null){
+                                                if(comment.commenteur.sexe == "H"){
+                                                    photo ="{{ asset('men.png') }}";
+                                                }
+                                                else
+                                                {
+                                                    photo ="{{ asset('women.png') }}";
+                                                }
+                                            }
                                             $("#content2_msg_{{event.id}}").append('<div class="comment">' +
                                             '<div class="commentAvatar">' +
                                             '<img class="avatar" src="' + photo + '" alt="avatar">' +
@@ -412,7 +475,7 @@
                                         });
                                         var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
                                         '<div class="propImg">' +
-                                        '<img src="/Optimus/web/template/images/prop/1-1-thmb.png">' +
+                                        '<img class="closeInfo" src="/Optimus/web/template/images/prop/1-1-thmb.png">' +
                                         '<div class="propBg">' +
                                         '<div class="propPrice">{{event.frais}} &euro;</div>' +
                                         '<div class="propType">{{event.type.nom}}</div>' +
@@ -427,7 +490,7 @@
                                         '</div>' +
                                         '<div class="clearfix"></div>' +
                                         '<div class="infoButtons">' +
-                                        '<a class="btn btn-sm btn-round btn-gray btn-o closeInfo">Fermer</a>' +
+                                        '<a class="btn btn-sm btn-round btn-gray btn-o" >Fermer</a>' +
                                         '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
                                         '</div>' +
                                         '</div>';
@@ -442,24 +505,53 @@
                                 }, 300);
                         })(jQuery);{%for event in events %}
                                 $('#exit_event{{event.id}}').click(function() {
+                                    $("#exit_event{{event.id}}").empty();
+                                    $('#loaderPart_{{event.id}}').show();
 
                         $.ajax({
                         url: Routing.generate('exit_event', {'id': {{event.id}}}),
                                 success: function(msg) {
-                   tab = msg.split('#');
-               $("#exit_event{{event.id}}").html(tab[0]);
-              var test = tab[1];
-              if(test == 0 ){
-             $('#appendshare{{event.id}}').hide();
-         }else{
-              $('#appendshare{{event.id}}').show();
-         }
-              
-        
-        }
+                                tab = msg.split('#');
+                                        $("#exit_event{{event.id}}").html(tab[0]);
+                                        var test = tab[1];
+                                        if (test == 0){
+                                $('#appendshare{{event.id}}').hide();
+                                $('#loaderPart_{{event.id}}').hide();
+                                } else{
+                                $('#appendshare{{event.id}}').show();
+                                $('#loaderPart_{{event.id}}').hide();
+                                }
+
+
+                                }
                         });
                         });
 
+
+
+
+ $('#exit_event_map{{event.id}}').click(function() {
+                                    $("#exit_event{{event.id}}").empty();
+                                    $('#loaderPart_{{event.id}}').show();
+
+                        $.ajax({
+                        url: Routing.generate('exit_event', {'id': {{event.id}}}),
+                                success: function(msg) {
+                                tab = msg.split('#');
+                                        $("#exit_event{{event.id}}").html(tab[0]);
+                                        var test = tab[1];
+                                        if (test == 0){
+                                $('#appendshare{{event.id}}').hide();
+                                $('#loaderPart_{{event.id}}').hide();
+                                } else{
+                                $('#appendshare{{event.id}}').show();
+                                $('#loaderPart_{{event.id}}').hide();
+                                }
+
+
+                                }
+                        });
+                        });
                     {%endfor%}
                 </script>
             {% endblock %}
