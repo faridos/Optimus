@@ -110,25 +110,25 @@ Evenement Supprimer
 <strong>Rien à afficher dans la catégorie participation!</strong> Créer un pour commencer.
 </div>
 {% endif %}
-{%set counteur = user.participations|length %}
 
-    {% for part in counteur..0 %}
 
-{% if user.participations[part].event.active == 1 %}
+    {% for part in participations %}
+
+{% if part.event.active == 1 %}
 <div class="userWidget-2 col-md-12 {{part.event.id}}" >
 <div class="tooltipsContainer avatar imagus col-md-4">
-<a href="{{path('show_event',{'id':user.participations[part].event.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{user.participations[part].event.titre}}">
-{% if user.participations[part].event.path == null %}
+<a href="{{path('show_event',{'id':part.event.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{part.event.titre}}">
+{% if part.event.path == null %}
 <img src="{{ asset('event.jpg')}}" alt="avatar" ></a>
 {% else %}
-<img src="{{ asset(user.participations[part].event.WebPath)}}" alt="avatar" ></a>
+<img src="{{ asset(part.event.WebPath)}}" alt="avatar" ></a>
 {% endif %}
 </div>
 <div class="col-md-4">
 <div class="info">
-<div ><a href="{{path('show_event',{'id':user.participations[part].event.id})}}" class="name">{{user.participations[part].event.titre}}</a></div>
+<div ><a href="{{path('show_event',{'id':part.event.id})}}" class="name">{{part.event.titre}}</a></div>
 <div class="title">Créateur : <span class="address">{{ user.nom ~' '~user.prenom }}</span></div>
-<div class="title">Lieu : <span class="address">{{user.participations[part].event.lieu}}</span></div>
+<div class="title">Lieu : <span class="address">{{part.event.lieu}}</span></div>
 </div>
 </div>
 <div class="col-md-4">
@@ -136,11 +136,11 @@ Evenement Supprimer
 <div class="title">Text descriptif : <span class="address">{{part.event.description}}</span></div>
 </div>
 </div> 
-{% if app.user != user.participations[part].event.createur %}
-{% set participantOuNon=ParticipantOuNon(user.participations[part].event,user) %}
-{% if participantOuNon == 1 and date(user.participations[part].event.dateFin)>= date() %}
-<a class="btn btn-green btn-round eventus" href="#" id="exit_event{{user.participations[part].event.id}}">
-<span class="fa icon-action-redo "></span> <span class="exitEvent{{user.participations[part].event.id}}">Annuler participation</span>                                          
+{% if app.user != part.event.createur %}
+{% set participantOuNon=ParticipantOuNon(part.event,user) %}
+{% if participantOuNon == 1 and date(part.event.dateFin)>= date() %}
+<a class="btn btn-green btn-round eventus" href="#" id="exit_event{{part.event.id}}">
+<span class="fa icon-action-redo "></span> <span class="exitEvent{{part.event.id}}">Annuler participation</span>                                          
 </a>
   <a class="loader" id="loader_ajouter_relation">
                                                 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">

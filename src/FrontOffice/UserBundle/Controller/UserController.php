@@ -80,7 +80,7 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-        $participation
+        $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findBy(array('participant'=> $user), array('datePaticipation' => 'asc'));
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('entraineur' => $user));
         if ($notification) {
             $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user1, 'notifications' => $notification));
