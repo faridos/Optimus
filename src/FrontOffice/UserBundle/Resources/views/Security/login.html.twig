@@ -21,7 +21,7 @@
                         <h2 class="fs-title" style="font-weight: bold">CONNEXION OPTIMUS</h2>
 
                         <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.generateCsrfToken('authenticate')}}" />
-                        <input type="text" class="form-control"  name="_username" id="username" value="" required="required" placeholder="Adresse électronique"/>
+                        <input type="text" class="form-control"  name="_username" id="username" value="" required="required" placeholder="Email OR Pseudo "/>
                         <input type="password" class="form-control"  name="_password" id="password" required="required" placeholder="Mot de passe" autocomplete="off" />
                         <input type="submit" name="submit" class="action-button" value="Confirmer">
                         <div class="checkbox custom-checkbox"><label><a href="{{ path('fos_user_resetting_request') }}" style="color:rgba(215, 118, 0, 1)"><strong>Mot de passe oublié ?</strong></a></label></div>

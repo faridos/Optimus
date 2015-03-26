@@ -129,7 +129,7 @@ class EventController extends Controller {
      * @Method("GET|POST")
      * @Template()
      */
-    public function addAction() {
+    public function addAction(Request $request) {
          if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -154,6 +154,7 @@ class EventController extends Controller {
                 $dispatcher = $this->get('event_dispatcher');
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
+                $request->getSession()->getFlashBag()->add('AjouterEvent', "Votre évènement a été ajouter avec success.");
                 return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
             }
         }
@@ -188,8 +189,8 @@ class EventController extends Controller {
             $eventhistory = new HistoryEventEvent($user, $event, $action);
             $dispatcher = $this->get('event_dispatcher');
             $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
-
-            return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
+            $request->getSession()->getFlashBag()->add('EditEvent', "Votre évènement a été modifié avec success.");
+            return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
         }
         return $this->render('FrontOfficeOptimusBundle:Event:edit.html.twig', array(
                     'user' => $user,
@@ -205,7 +206,7 @@ class EventController extends Controller {
      * @Method("GET|POST|DELETE")
      * @Template()
      */
-    public function deleteAction($id) {
+    public function deleteAction(Request $request,$id) {
          if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -223,6 +224,7 @@ class EventController extends Controller {
         $eventhistory = new HistoryEventEvent($user, $entity, $action);
         $dispatcher = $this->get('event_dispatcher');
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        $request->getSession()->getFlashBag()->add('SupprissionEvenement', "Evenement  a été supprimer.");
         return  new Response($id);
     }
     

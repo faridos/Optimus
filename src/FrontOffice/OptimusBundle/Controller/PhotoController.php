@@ -104,7 +104,7 @@ class PhotoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($photo);
             $em->flush();
-
+            $request->getSession()->getFlashBag()->add('AjouterPohoto', "Pohoto a été ajouter avec success.");
             return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
         }
         
@@ -131,5 +131,27 @@ class PhotoController extends Controller
         $response = new Response($id);
          return $response;
     }
-
+    
+    /**
+     * 
+     *
+     * @Route("event={id}/paramétres/photo", name="setting_event_photo", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function editPhotoEventAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+        $editForm = $this->createForm(new UserPhotoType(), $entity);
+        $editForm->handleRequest($request);
+        if ($editForm->isValid()) {
+            $em->flush();
+            return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
+        }
+        return $this->render('FrontOfficeOptimusBundle:Photo:editPhotoProfil.html.twig', array('form' => $editForm->createView()));
+    }
 }

@@ -1,7 +1,28 @@
 {% extends "FrontOfficeOptimusBundle::layoutEvent.html.twig" %}
 {% block content %}
 
-
+{% for flashMessage in app.session.flashbag.get('AjouterPohoto') %}
+       
+        <div class="alert alert-success">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+{% for flashMessage in app.session.flashbag.get('AjouterEvent') %}
+       
+        <div class="alert alert-success">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+{% for flashMessage in app.session.flashbag.get('EditEvent') %}
+       
+        <div class="alert alert-success">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    
     <div class="col-lg-12"><div class="row mb20">
 
 
