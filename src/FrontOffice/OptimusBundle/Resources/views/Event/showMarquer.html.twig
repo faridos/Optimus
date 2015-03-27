@@ -1,0 +1,28 @@
+ '<div class="infoW">' +
+                                                            '<div class="propImg">' +
+                                                            '<img class="closeInfo" src="' + image + '">' +
+                                                            '<div class="propBg closeInfo">' +
+                                                            '<div class="propPrice">{{event.frais}} &euro;</div>' +
+                                                            '<div class="propType">{{event.type}}</div>' +
+                                                            '</div>' +
+                                                            '</div>' +
+                                                            '<div class="paWrapper closeInfo" >' +
+                                                            '<div class="propTitle">{{event.titre}}</div>' +
+                                                            '<div class="propAddress">{{event.lieu}}</div>' +
+                                                            '</div>' +
+                                                            '<div class="propRating">' +
+                                                            '{% include 'DCSRatingBundle:Rating:rating.html.twig' with {'id' : "E"~event.id} %}' +
+                                                            '</div>' +
+                                                            '<div class="clearfix"></div>' +
+                                                            '<div class="infoButtons">' +{% set participantOuNon=ParticipantOuNon(event,user) %}{% if participantOuNon == 0 and date(event.dateFin)>= date() %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#"  id="exit_eventm{{event.id}}">' +
+                                                            '<span id="eve_map{{event.id}}" class="requestEvent{{event.id}}">Participer</span>' +
+                                                            '</a>' +
+                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% elseif date(event.dateFin)>= date() %}{% if  event.createur.id != user.id %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#" id="exit_eventm{{event.id}}">' +
+                                                            '<span id="eve_mapp{{event.id}}" class="exitEventm{{event.id}}">Annuler</span>' +
+                                                            '</a>' +
+                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% endif %}{% endif %}
+                                                            '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
+                                                            '</div>' +
+                                                            '</div>';

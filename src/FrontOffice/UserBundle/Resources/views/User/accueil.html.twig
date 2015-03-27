@@ -171,6 +171,7 @@
         {% endblock %} 
             {% block javascriptfils %}
                 <script>
+                    var directionsDisplay;
                     (function($) {
                     "use strict";{# var load = false;
                             var last_id = 2;
@@ -397,6 +398,36 @@
 
                                             map = new google.maps.Map(document.getElementById('mapView'), options);
                                                     map.setZoom(14);
+                                                    
+                                                    var markerevent;
+        var geocoder;
+        geocoder = new google.maps.Geocoder();
+        google.maps.event.addListener(map, 'click', function(event) {
+
+
+         
+            var latlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+            //latlng = event.latLng;
+
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                       
+                        placeMarker(event.latLng);
+                    } else {
+                        alert('No results found');
+                    }
+                } else {
+                    alert('Geocoder failed due to: ' + status);
+                }
+
+            });
+
+        });
+        
+                                                    
                                                     if (navigator.geolocation) {
                                             navigator.geolocation.getCurrentPosition(function (position) {
                                             pos = new google.maps.LatLng(position.coords.latitude,
@@ -409,18 +440,20 @@
                                                             animation: google.maps.Animation.DROP,
                                                     });
                                                     map.setCenter(pos);
-                                                    $.ajax({
-                                                    url:    Routing.generate('user_coordonne', { lng: pos.D, lat: pos.k }),
-                                                            type: 'POST',
-                                                            data: null,
-                                                            contentType: "application/json; charset=ISO-8859-4",
-                                                            beforeSend: function () {
-                                                            },
-                                                            success: function () {
-                                                            },
-                                                            error: function () {
-                                                            }
+                                                    
+                                                    var myLatLng = new google.maps.LatLng(36.8698562, 10.181161100000054);
+                                                    var newMarker = new google.maps.Marker({
+                                                    position: myLatLng,
+                                                            map: map,
+                                                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
+                                                            draggable: true,
+                                                            animation: google.maps.Animation.DROP,
                                                     });
+                                                    
+                        
+                        
+        
+                                                    
                                             }, function () {
                                             handleNoGeolocation(true);
                                             });
@@ -428,7 +461,67 @@
                                             handleNoGeolocation(false);
                                             }
 
+function placeMarker(location) {
 
+            if (markerevent === undefined) {
+                
+                        var directionsService = new google.maps.DirectionsService()
+                        directionsDisplay = new google.maps.DirectionsRenderer({
+                        polylineOptions: {
+                        strokeColor: "#c02100"
+                        }
+                        });
+                        directionsDisplay.setMap(map);
+                        calcRoute();
+                        function calcRoute() {
+
+                        var request = {
+                        origin:pos,
+                                destination:location,
+                                travelMode: google.maps.TravelMode.DRIVING
+                        };
+                                directionsService.route(request, function(response, status) {
+                                if (status == google.maps.DirectionsStatus.OK) {
+                                directionsDisplay.setDirections(response);
+                                        directionsDisplay.setOptions({ suppressMarkers: true });
+                                }
+                                });
+                        }
+                markerevent = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                });
+                markerevent.setIcon('/Optimus/web/template/images/marker-green.png');
+            }
+            else {
+                
+                        var directionsService = new google.maps.DirectionsService()
+                        directionsDisplay = new google.maps.DirectionsRenderer({
+                        polylineOptions: {
+                        strokeColor: "#c02100"
+                        }
+                        });
+                        directionsDisplay.setMap(map);
+                        calcRoute();
+                        function calcRoute() {
+
+                        var request = {
+                        origin:pos,
+                                destination:location,
+                                travelMode: google.maps.TravelMode.DRIVING
+                        };
+                                directionsService.route(request, function(response, status) {
+                                if (status == google.maps.DirectionsStatus.OK) {
+                                directionsDisplay.setDirections(response);
+                                        directionsDisplay.setOptions({ suppressMarkers: true });
+                                }
+                                });
+                        }
+                markerevent.setPosition(location);
+            }
+        }
                                     {% for event in eventsMap %}
 
                                                 var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
@@ -445,7 +538,7 @@
                                     {% else %}
                                                         "{{ asset(event.WebPath)}}"
                                         {% endif %}
-                                                            var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
+                                                            var contenuInfoBulle_{{ event.id}} =  '<div class="infoW">' +
                                                             '<div class="propImg">' +
                                                             '<img class="closeInfo" src="' + image + '">' +
                                                             '<div class="propBg closeInfo">' +
@@ -463,18 +556,27 @@
                                                             '<div class="clearfix"></div>' +
                                                             '<div class="infoButtons">' +{% set participantOuNon=ParticipantOuNon(event,user) %}{% if participantOuNon == 0 and date(event.dateFin)>= date() %}
                                                             '<a class="btn btn-sm btn-round btn-gray btn-o" href="#"  id="exit_eventm{{event.id}}">' +
-                                                            '<span class="requestEvent{{event.id}}">Participer</span>' +
+                                                            '<span id="eve_map{{event.id}}" class="requestEvent{{event.id}}"></span>' +
                                                             '</a>' +
                                                             '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% elseif date(event.dateFin)>= date() %}{% if  event.createur.id != user.id %}
                                                             '<a class="btn btn-sm btn-round btn-gray btn-o" href="#" id="exit_eventm{{event.id}}">' +
-                                                            '<span class="exitEventm{{event.id}}">Annuler participation</span>' +
+                                                            '<span id="eve_mapp{{event.id}}" class="exitEventm{{event.id}}"></span>' +
                                                             '</a>' +
                                                             '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% endif %}{% endif %}
                                                             '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
                                                             '</div>' +
                                                             '</div>';
+                                                                   
                                                             google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
-
+                                                                $.ajax({
+                                                        url: Routing.generate('marquerEvent', {'id': {{event.id}}}),
+                                                                success: function(data) {
+                                                                    console.log(data.msgmap);
+                                                                    $("#eve_map{{event.id}}").html(data.msgmap);
+                                                              $("#eve_mapp{{event.id}}").html(data.msgmap);
+                                                           
+                                                                }
+                                                        });
                                                             infobox.setContent(contenuInfoBulle_{{ event.id}});
                                                                     infobox.open(map, marker_{{ event.id}});
                                                             });
@@ -482,37 +584,32 @@
                                                     infobox.open(null, null);
                                                     });
                                                             $(document).on('click', '#exit_eventm{{event.id}}', function() {
-                                                    $("#exit_event{{event.id}}").empty();
-                                                            $("#exit_eventm{{event.id}}").empty();
+                                                        $("#exit_event{{event.id}}").empty();
+                                                    
+                                                        $("#exit_eventm{{event.id}}").empty();
                                                         $('#loaderPartm_{{event.id}}').show();
                                                         
                                                         $("#exit_event{{event.id}}").empty();
                                                         $('#loaderPart_{{event.id}}').show();
                                                         $.ajax({
                                                         url: Routing.generate('exit_event', {'id': {{event.id}}}),
-                                                                success: function(msg) {
-                                                                    
-                                                                tab = msg.split('#');
-                                                                alert(tab);
-                                                                        $("#exit_event{{event.id}}").html(tab[0]);
-                                                                        $("#exit_eventm{{event.id}}").html(tab[0]);
-                                                                        var test = tab[1];
+                                                                success: function(data) {
+                                                                    $("#exit_eventm{{event.id}}").html(data.msgmap);
+                                                                        $("#exit_event{{event.id}}").html(data.msg);
+                                                                        var test = data.etat;
                                                                         if (test == 0){
+                                                                            $('#loaderPartm_{{event.id}}').hide();
                                                                 $('#appendshare{{event.id}}').hide();
                                                                 $('#loaderPart_{{event.id}}').hide();
-                                                                
-                                                                $('#loaderPartm_{{event.id}}').hide();
                                                                 } else{
+                                                                $('#loaderPartm_{{event.id}}').hide();
                                                                 $('#appendshare{{event.id}}').show();
                                                                 $('#loaderPart_{{event.id}}').hide();
-                                                                
-                                                                $('#loaderPartm_{{event.id}}').hide();
                                                                 }
-
-
                                                                 }
                                                         });
-                                                    });{% endfor %}
+                                                    });
+                                                                                                        {% endfor %}
                                                     }, 300);
                                             })(jQuery);                                                                                        {%for event in events %}
                                                         $('#exit_event{{event.id}}').click(function() {
@@ -523,11 +620,11 @@
                                                         $('#loaderPart_{{event.id}}').show();
                                                         $.ajax({
                                                         url: Routing.generate('exit_event', {'id': {{event.id}}}),
-                                                                success: function(msg) {
-                                                                tab = msg.split('#');
-                                                                        $("#exit_event{{event.id}}").html(tab[0]);
-                                                                        $("#exit_eventm{{event.id}}").html(tab[0]);
-                                                                        var test = tab[1];
+                                                                success: function(data) {
+                                                                
+                                                                        $("#exit_event{{event.id}}").html(data.msg);
+                                                                        $("#exit_eventm{{event.id}}").html(data.msgmap);
+                                                                        var test = data.etat;
                                                                         if (test == 0){
                                                                 $('#appendshare{{event.id}}').hide();
                                                                 $('#loaderPart_{{event.id}}').hide();

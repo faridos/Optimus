@@ -50,6 +50,10 @@ class ParticipationController extends Controller {
         //return $response = new Response();
     }
    
+   
+    
+   
+
     /**
      * Deletes a Club entity.
      *
@@ -69,7 +73,8 @@ class ParticipationController extends Controller {
         $em->remove($p[0]);
         $em->flush();
          $etat = 0 ;
-          
+         $msg = "Participer";
+         $msgmap="Participer";
         }  else {
               $newparticipation = new Participation();
         $newparticipation->setParticipant($user);
@@ -82,14 +87,13 @@ class ParticipationController extends Controller {
         $dispatcher = $this->get('event_dispatcher');
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         $etat = 1 ;
-         
-
-      
+        $msg = "Annuler participation";
+        $msgmap ="Annuler";
         }
-          return $this->render('FrontOfficeOptimusBundle:Event:reponse.html.twig', array('etat' => $etat));
-       
+        
+        $response = new Response();
+        $response->setContent(json_encode(array('msg' => $msg ,'etat' => $etat,'msgmap'=>$msgmap )));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
-    
-   
-
 }

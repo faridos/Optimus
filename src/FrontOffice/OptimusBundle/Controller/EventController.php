@@ -298,6 +298,32 @@ class EventController extends Controller {
         
     }
     
+    /**
+     * 
+     *
+     * @Route("/{id}/marquerEvent", name="marquerEvent", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function marquerEventAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+        $user = $this->container->get('security.context')->getToken()->getUser();
+      //  return $this->render('FrontOfficeOptimusBundle:Event:showMarquer.html.twig', array('event'=>$event,'user'=>$user));
+         $p = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findBy(array('event' => $event, 'participant' => $user));
+        if($p != null){
+             $msgmap ="Annuler";
+        
+        
+        }  else {
+            $msgmap="Participer";
+   
+}
+          $response = new Response();
+        $response->setContent(json_encode(array('msgmap'=>$msgmap )));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
     
     /**
      * 

@@ -380,10 +380,10 @@
                 $('#loaderPart').show();
                 $.ajax({
                 url: Routing.generate('exit_event', {'id': {{event.id}}}),
-                        success: function(msg) {
-                        tab = msg.split('#');
-                                $("#exit_event").html(tab[0]);
-                                var test = tab[1];
+                        success: function(data) {
+                        
+                                $("#exit_event").html(data.msg);
+                                var test = data.etat;
                                 if (test == 0){
                         $('#loaderPart').hide();
                                 $('#append2').hide();
