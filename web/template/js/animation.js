@@ -70,6 +70,27 @@ $(".next").click(function(){
 	});
         $("#fos_user_registration_form_lat").val(pos.k);
         $("#fos_user_registration_form_lng").val(pos.D);
+         geocoder = new google.maps.Geocoder();
+           var latlng = new google.maps.LatLng(pos.k, pos.D);
+            //latlng = event.latLng;
+
+            geocoder.geocode({
+                'latLng': latlng
+            },function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                       
+                           $("#fos_user_registration_form_adresse").val(results[0].formatted_address);
+                     
+                    } else {
+                        alert('No results found');
+                    }
+                } else {
+                    alert('Geocoder failed due to: ' + status);
+                }
+
+            });
+     
 });
  $(".nexte").click(function() {
         var nom = $('#fos_user_registration_form_nom').val();
