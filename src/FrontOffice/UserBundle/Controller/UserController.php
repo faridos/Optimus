@@ -60,8 +60,8 @@ class UserController extends Controller {
 
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array('active' => 1),array('dateDebut'=>'desc'));
         $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap();
-        $typesEv = $em->getRepository("FrontOfficeOptimusBundle:TypeEvent")->findAll();
-        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('type_events' => $typesEv, 'user' => $user, 'events' => $events, 'eventsMap' => $eventsMap));
+       
+        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $events, 'eventsMap' => $eventsMap));
     }
 
     /**

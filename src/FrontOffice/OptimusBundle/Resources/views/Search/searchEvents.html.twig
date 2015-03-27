@@ -18,13 +18,8 @@
                                     <input type="text" class="search-optimus" name="key" value="{{res.key}}" placeholder="Entrer le titre">
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <select name="type" value="{{res.type}}" class="search-optimus">
-                                        <option value="" selected="" disabled="">Type</option>
-                                        {% set type_events = getTypeEvent() %}
-                                        {% for type in type_events %}
-                                            <option value="{{type.id}}" {% if res.type == type.id %} selected {% endif %} >{{ type.nom }}</option>
-                                        {% endfor %}
-                                    </select>
+                                      <input type="text" class="search-optimus" name="type" value="{{res.type}}" placeholder="Entrer le type">
+
                                 </div>
                                 <div class="form-group col-md-2">
 

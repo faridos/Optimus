@@ -1,5 +1,7 @@
-{% extends "FrontOfficeUserBundle::layout_profile.html.twig" %}
- 
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+ {% block body %}
+    <div id="wrapper">
+        <div id="content" class="" >
 {% block content %}
 {% for flashMessage in app.session.flashbag.get('AjouterAlbum') %}
 <br/>
@@ -73,11 +75,8 @@ Evenement Supprimer
 <a href="{{path('show_event',{'id':env.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{env.titre}}">
 {% if env.path == null %}
 <img src="{{ asset('event.png')}}" alt="avatar" ></a>
-
 {% else %}
-
 <img src="{{ asset(env.WebPath)}}" alt="avatar" ></a>
-
 {% endif %}
 </div>
 <div class="col-md-3">
@@ -310,7 +309,7 @@ photo Supprimer
 <div class="figure" id="main">
 <a href="#" onclick="image({{album.id}})" >
 {%if album.images|length == 0 %}
-<img src="{{ asset('album.png') }}" />
+<img src="{{ asset('albumd.png') }}" />
 {%else %}
 <img src="{{ asset(album.images[0].WebPath) }}" />
 
@@ -755,6 +754,229 @@ Palmarés Supprimer
 </div>
 </div>
 {% endfor %}  
+{% endblock %}
+     </div>
+        <div id="content" class="mob-max" style="overflow: hidden;height: 100%;">
+            <div class="singleTop whiteBg" style="height:100%">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pb20">
+                        <div class="userWidget-1" id="{{ user.id }}">
+                            <div class="avatar" id="main">
+                                <div class="col-sm-4">
+                                    <div class="propWidget-1 logotus tooltipsContainer ">
+                                        <div class="fig salamus">
+                                            {% if user.path == null %}
+                                                {% if user.sexe == 'H' %}
+                                                     <a href="{{ asset('men.png') }}" data-lightbox-title="photo de profil" data-lightbox-gallery="">
+                                                <img src="{{ asset('men.png') }}" class="inline-block imaguss">
+                                            </a>
+                                                    {% else %}
+                                                         <a href="{{ asset('women.png') }}" data-lightbox-title="photo de profil" data-lightbox-gallery="">
+                                                <img src="{{ asset('women.png') }}" class="inline-block imaguss">
+                                            </a>
+                                                        {% endif %}
+                                                        {% else %}
+                                                            
+                                            <a href="{{ asset(user.WebPath) }}" data-lightbox-title="photo de profil" data-lightbox-gallery="">
+                                                <img src="{{ asset(user.WebPath) }}" class="inline-block imaguss">
+                                            </a>
+                                             {% endif %}
+                                            {% if app.user.id == user.id %}
+                                                <div class="priceCap paddus">
+                                                    <button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo">
+                                                        <span class="notifyIcon fa fa-camera-retro"></span>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ops">
+                                </div>
+                                <div class="namusprofilus" ><strong>{{ user.prenom }} {{ user.nom }}</strong>
+                                </div>
+                            </div>
+                            <div class="title profilus" >{{user.profil}}</div>
+                            <div class="address profilus">
+                                <div class="cardRating" style="color:#eab134; font-size: 18px;">
+                                    {% set isami = isAmi(app.user,user) %}
+                                    {% if isami %}
+                                        <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with { 'id' : 'U'~user.id } %}</div>
+                                    {% else %}
+                                        <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with { 'id' : 'U'~user.id } %}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="buttonsWrapper" > 
+                                {% if app.user.id != user.id %}
+                                    {% if app.user | relation_exists('friendship', user ) %}
+                                        {% set pendingInvitations = pendingInvitation(app.user,user)%}
+                                        {% if pendingInvitations is empty %}
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">
+                                                    Amis
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Retirer</a></li>
+                                                    <li><a href="#">Signaler</a></li>
+                                                </ul>
+                                            </div>
+                                        {% elseif pendingInvitations[0].object2Id == app.user.id %}
+                                            <div class="btn-group" id="replace-accepte-profil">
+                                                <a id="accept_relation_profil" class="btn btn-green btn-round btn-success" href="#"  >
+                                                    <span style="color:#fff" class="fa icon-user-follow state-active"></span> 
+                                                    <span  class="state" >Accepter l'invitation</span>
+                                                </a>
+
+                                            </div>
+                                            <a class="loader" id="loader_accept_relation">
+                                                <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                            </a>
+                                        {% elseif pendingInvitations[0].object1Id == app.user.id %}
+                                            <a id="enattente" class="btn btn-green btn-round btn-success" href="#"  >
+                                                <span style="color:#fff" class="fa icon-user-follow state-active"></span> 
+                                                <span class="state" >En attente</span>
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        
+                                        <div id="replace-enattente" class="btn-group">
+                                            <a id ="add_relation"   href="#"  class="btn btn-green btn-round">
+                                                <span class="fa icon-user-follow state"></span> 
+                                                <span  class="state"  >Ajouter</span>
+                                            </a>
+                                        </div>
+                                         <a class="loader" id="loader_ajouter_relation">
+                                                <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                            </a>
+                                    {% endif %}
+                                    <a id='envoiemessage' href="#contactAgent" data-toggle="modal" class="btn btn-green btn-round">
+                                        <span  class="fa fa-envelope-o"></span> Envoyer Message
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>   
+
+                    </div>
+                    <br><br><br>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="panel panel-default" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
+                    <div class="panel-heading optimus"> <span class="icon-user"></span><span class="navLabel"> Informations</span></div>
+
+                    <div class="userWidget-2" style="margin-bottom:0px;">
+                        <div class="col-md-6">
+                            <div class="avatar">
+                            </div>
+                            <div class="info">
+                                <div class="title">Date de naissance : <span class="address">{{ user.dateNaissance|date('Y-d-m') }} </span>
+                                </div>
+                                <div class="title">Adresse : <span class="address">{{ user.adresse }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info ">
+                                <div class="name"></div>
+                                <div class="title">Numéro de téléphone : <span class="address">{{ user.tel }}</span></div>
+                                <div class="title">Email: <span class="address">{{ user.email }}</span></div>
+                            </div></div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>    
+                <div class="clearfix"></div>
+                <div class="panel panel-default" style="box-shadow:1px 2px 10px 1px rgba(0, 0, 0, 0.13)">
+                    <div class="panel-heading optimus"> <span class="icon-users"></span><span class="navLabel"> Liste d'amis</span></div>
+
+                    <div class="userWidget-2" style="margin-bottom:0px;">
+                        <div class="avatar">
+                        </div>
+
+                        <ul class="notifyList scrollbar" >
+                            {% set friends = getFriends(user.id) %}
+                            {% if friends is empty %}
+                                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                    <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                                    <button type="button" class="close" data-dismiss="alert"></button>
+                                    <strong>Rien à afficher dans la catégorie amis!</strong> 
+                                </div>
+                            {% endif %}
+                            {% for friend in friends %}
+                                  <div class="tooltipsContainer avatar friendus">
+                                  {% if friend.path == null %}
+                                                {% if friend.sexe == 'H' %}
+                                                        <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
+                                                <img src="{{ asset('men.png') }}" class="inline-block imaguss">
+                                            </a>
+                                                    {% else %}
+                                                 <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
+                                                     <img src="{{ asset('women.png') }}" class="inline-block imaguss">
+                                            </a>
+                                                        {% endif %}
+                                                        {% else %}
+                               
+                                    <a href="{{ path('show_profil',{'id' : friend.id}) }}" class="btn avatar friendus" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="{{ friend.prenom }} {{ friend.nom }}">
+                                        <img src="{{ asset(friend.WebPath) }}" >
+                                    </a>
+                             
+                                    {% endif %}
+                                     </div>
+                            {% endfor %}               
+
+                        </ul>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+                            
+</div>
+<div class="clearfix"></div>
+</div>
+<!------------------- modal photo------------------->
+<div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        {{ render (controller('FrontOfficeUserBundle:User:editPhoto',  { 'id': app.user.id })) }}
+    </div>
+</div>
+<!-------------------fin modal photo------------------->
+<!------------------- modal Envoie message------------------->
+<div class="modal fade" id="contactAgent" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bordusbottomus">
+            <div class="modal-header bordustopus">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="contactLabel">Optimus Message</h4>
+            </div>
+            <div class="modal-body">
+                <form class="contactForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                            <label  class="idReciever" id="{{ user.id }}" type="text" placeholder="Nom et Prénom" >Envoyer Message à <b>{{ user.prenom }} {{ user.nom }}</b></label>
+                            <label  id="messageEch" class="messageEch">Envoie echoué</label>
+                            <label  id="messageEnvoyer" class="messageEnvoyer">Envoie effectué</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 cfItem">
+                            <textarea id="txt-message"  placeholder="Message" rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a id="btn-fermer-message" type="reset" href="#" data-dismiss="modal" class="btn btn-round btn-o btn-gray">Fermer</a>
+                <a id="envoyerMessage" href="#" class="btn btn-round btn-green">Envoyer message</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------- fin modal Envoie message------------------->
 {% endblock %}
 {% block javascriptfils %}
 <script src="{{asset('datemaske/jquery.maskedinput.min.js')}}" type="text/javascript"></script>

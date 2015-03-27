@@ -214,20 +214,24 @@
                                                                             </div>
                                                                             <ul id="id_invitation" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
                                                                                 {% for invitation in Invitations %}  
-
                                                                                     {% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
                                                                                         <li class="invitation{{invitation.id}}" id="{{ invitation.id }}">
                                                                                             <div class="userWidget-2" style="margin-bottom:1px">
                                                                                                 <div class="avatar">
-                                                                                                    <a href="{{ path('show_profil', { 'id': invitation.object1Id}) }}"><img alt="avatar" src="{{ asset(UsersInvitations.WebPath) }}" style="
-                                                                                                                                                                            border-radius: 40px;
-                                                                                                                                                                            width: 60px;
-                                                                                                                                                                            height: 60px;"></a>
+                                                                                                    <a href="{{ path('show_profil', { 'id': invitation.object1Id}) }}">
+                                                                                                        {% if UsersInvitations.path == null %}
+                                                                                                            {% if UsersInvitations.sexe == 'H' %}
+                                                                                                                <img alt="avatar" src="{{ asset('men.png') }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
+                                                                                                            {% else %}
+                                                                                                                <img alt="avatar" src="{{ asset('women.png') }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
+                                                                                                            {% endif %}
+                                                                                                        {% else %}
+                                                                                                            <img alt="avatar" src="{{ asset(UsersInvitations.WebPath) }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
+                                                                                                        {% endif %}
+                                                                                                    </a>
                                                                                                 </div>
                                                                                                 <div class="info">
                                                                                                     <div class="notifyName" style="line-height:40px"><a href="#" style="color:#c02100"><strong>{{ invitation.username}}</strong></a></div>
-
-
                                                                                                 </div>
                                                                                                 <div class="ops">
 
@@ -261,18 +265,18 @@
                                                                                                     {% for friend in friends %}
                                                                                                         <li class="definedname"><a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
                                                                                                                 {% if friend.path == null %}
-                                                {% if friend.sexe == 'H' %}
-                                                     
-                                                <img src="{{ asset('men.png') }}" class="avatar headerAvatar pull-left">
-                                          
-                                                    {% else %}
-                                                  <img src="{{ asset('women.png') }}" class="avatar headerAvatar pull-left">
-                                          
-                                                        {% endif %}
-                                                        {% else %}
-                               <img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
-                                    {% endif %}
-                                                                                                                
+                                                                                                                    {% if friend.sexe == 'H' %}
+
+                                                                                                                        <img src="{{ asset('men.png') }}" class="avatar headerAvatar pull-left">
+
+                                                                                                                    {% else %}
+                                                                                                                        <img src="{{ asset('women.png') }}" class="avatar headerAvatar pull-left">
+
+                                                                                                                    {% endif %}
+                                                                                                                {% else %}
+                                                                                                                    <img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
+                                                                                                                {% endif %}
+
                                                                                                                 <div class="userTop pull-left">
                                                                                                                     <span class="headerUserName open  box">{{ friend.prenom }} {{ friend.nom }}</span> 
                                                                                                                 </div><img class="connected" src="{{ asset('template/images/connected.png') }}" alt="en ligne" title="en ligne" >
@@ -284,8 +288,8 @@
                                                                                                 </ul>
                                                                                             </li>
                                                                                             {% if app.user.profil == 'Entraineur' %}
-                                                                                            <li><a href="{{ path('add_club')}}"><span class="navIcon fa fa-users"></span><span class="navLabel"> + Club</span></a></li>
-                                                                                          {% endif %}
+                                                                                                <li><a href="{{ path('add_club')}}"><span class="navIcon fa fa-users"></span><span class="navLabel"> + Club</span></a></li>
+                                                                                                        {% endif %}
                                                                                             <li><a href="{{ path('add-event')}}"><span class="navIcon fa fa-trophy"></span><span class="navLabel">+Evenement</span></a></li>
 
 
@@ -322,14 +326,8 @@
                                                                                                             <option value="semaine">Cette semaine</option>
                                                                                                             <option value="mois">Ce mois</option>
                                                                                                             <option value="an">Cette année</option>
-                                                                                                        </select><br><select id="events" name="type" class="search-optimus">
-                                                                                                            <option value="" selected="" disabled="">Type d'évenement</option>
-                                                                                                            <option value="">Tout</option>
-                                                                                                            {% set type_events = getTypeEvent() %}
-                                                                                                                {% for type in type_events %}
-                                                                                                                    <option value="{{type.id}}">{{type.nom}}</option>
-                                                                                                                {% endfor %}
-                                                                                                            </select> 
+                                                                                                        </select><br>
+                                                                                                        <input type="text" name="type" placeholder=" Type d'évenement" class="search-optimus">
                                                                                                             <input style="border-radius:25px" name="lieu" type="text" class="search-optimus" id="city" placeholder="Entrer ici votre région" autocomplete="off" size="60">
                                                                                                         </div>
                                                                                                         <div class="form-group">
@@ -414,10 +412,10 @@
 
                                                                                                                 }
                                                                                                         });
-                                                                                                        });                                                                                                    {% endfor %}
-                                                                                                                    //accept invitation
-                                                                                                    {% set invitations = getInvitations(app.user.id) %}
-                                                                                                        {% for invitation in invitations %}
+                                                                                                        });{% endfor %}
+                                                                                                                //accept invitation
+                                                                                                        {% set invitations = getInvitations(app.user.id) %}
+                                                                                                            {% for invitation in invitations %}
                                                                                                                     $('#accept_invitation{{invitation.id}}').click(function() {
 
 
@@ -442,16 +440,23 @@
                                                                                                                             ' </button>'
 
                                                                                                                             );
+                                                                                                                            $('#replace-accepte-profil').empty().append(
+                                                                                                                            '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
+                                                                                                                            'Amis' +
+                                                                                                                            '<span class="caret"></span>' +
+                                                                                                                            ' </button>'
+
+                                                                                                                            );
                                                                                                                             // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
                                                                                                                     }
                                                                                                             });
                                                                                                             });
-                                                                                                        {% endfor %}
-                                                                                                    </script>
+                                                                                                            {% endfor %}
+                                                                                                        </script>
 
 
-                                                                                                    {% block javascriptfils %}
-                                                                                                    {% endblock %}
-                                                                                                    {% block javascriptfils2 %}
-                                                                                                    {% endblock %}
-                                                                                                    {% endblock %}
+                                                                                                        {% block javascriptfils %}
+                                                                                                        {% endblock %}
+                                                                                                        {% block javascriptfils2 %}
+                                                                                                        {% endblock %}
+                                                                                                        {% endblock %}
