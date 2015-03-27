@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="602d26ee-8a96-4d02-82ca-4af61859f15d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php" afterPath="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueilS.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Controller/EventController.php" afterPath="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Controller/EventController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php" afterPath="$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig" afterPath="$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/template/css/form.css" afterPath="$PROJECT_DIR$/web/template/css/form.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/Event/showEvent.html.twig" afterPath="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/Event/showEvent.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Optimus.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,19 +31,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="accueil.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="58" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="9061">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserController.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="UserController.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="2" selection-start="1773" selection-end="5083" vertical-scroll-proportion="-9.769231" vertical-offset="2126" max-vertical-offset="10132">
+            <state line="135" column="20" selection-start="4792" selection-end="4800" vertical-scroll-proportion="0.5864811" vertical-offset="2000" max-vertical-offset="10591">
               <folding>
                 <element signature="e#53#113#0" expanded="true" />
               </folding>
@@ -45,10 +42,80 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="showEvent.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/Event/showEvent.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="122" column="38" selection-start="9154" selection-end="9154" vertical-scroll-proportion="-8.192307" vertical-offset="1648" max-vertical-offset="7582">
+              <folding>
+                <element signature="e#3409#3466#0" expanded="true" />
+                <element signature="e#4016#4058#0" expanded="true" />
+                <element signature="e#4324#4350#0" expanded="true" />
+                <element signature="e#4420#4508#0" expanded="true" />
+                <element signature="e#4652#4740#0" expanded="true" />
+                <element signature="e#4901#4989#0" expanded="true" />
+                <element signature="e#5144#5232#0" expanded="true" />
+                <element signature="e#5403#5429#0" expanded="true" />
+                <element signature="e#5572#5660#0" expanded="true" />
+                <element signature="e#5804#5892#0" expanded="true" />
+                <element signature="e#6044#6132#0" expanded="true" />
+                <element signature="e#6279#6367#0" expanded="true" />
+                <element signature="e#8378#8402#0" expanded="true" />
+                <element signature="e#8452#8489#0" expanded="true" />
+                <element signature="e#8579#8667#0" expanded="true" />
+                <element signature="e#8827#8863#0" expanded="true" />
+                <element signature="e#8985#9073#0" expanded="true" />
+                <element signature="e#9197#9221#0" expanded="true" />
+                <element signature="e#19263#19283#0" expanded="true" />
+                <element signature="e#19580#19600#0" expanded="true" />
+                <marker date="1427454164729" expanded="false" signature="25121:25153" placeholder="..." />
+                <marker date="1427454164729" expanded="false" signature="25559:25591" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="accueilS.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueilS.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="450" column="75" selection-start="33615" selection-end="33620" vertical-scroll-proportion="-3.0576923" vertical-offset="3513" max-vertical-offset="4369">
+              <folding>
+                <element signature="tag#div#2;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
+                <element signature="tag#ul#0;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
+                <element signature="tag#div#3;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
+                <element signature="e#22539#25723#0" expanded="false" />
+                <element signature="e#25907#29167#0" expanded="false" />
+                <element signature="e#29225#30217#0" expanded="false" />
+                <element signature="e#35470#36489#0" expanded="false" />
+                <element signature="e#36547#37566#0" expanded="false" />
+                <marker date="1427454275531" expanded="false" signature="24924:24942" placeholder="..." />
+                <marker date="1427454275531" expanded="false" signature="28273:28291" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="form.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/template/css/form.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="10" selection-start="555" selection-end="555" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="2125">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="standard_4.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_4.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="181" column="9" selection-start="6235" selection-end="6235" vertical-scroll-proportion="-6.923077" vertical-offset="2897" max-vertical-offset="18496">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="UserRepository.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Repository/UserRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="29" selection-start="285" selection-end="294" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="1904">
+            <state line="14" column="29" selection-start="285" selection-end="294" vertical-scroll-proportion="-0.0" vertical-offset="238" max-vertical-offset="1904">
               <folding />
             </state>
           </provider>
@@ -72,10 +139,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Event.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Event.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="139" column="18" selection-start="2825" selection-end="2825" vertical-scroll-proportion="0.5698324" vertical-offset="2006" max-vertical-offset="12631">
+            <state line="156" column="29" selection-start="3292" selection-end="3305" vertical-scroll-proportion="-4.1153846" vertical-offset="2438" max-vertical-offset="13073">
+              <folding>
+                <element signature="e#52#84#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EventController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Controller/EventController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="153" column="26" selection-start="5878" selection-end="5878" vertical-scroll-proportion="-0.90384614" vertical-offset="2248" max-vertical-offset="5321">
               <folding />
             </state>
           </provider>
@@ -96,12 +174,15 @@
       <list>
         <option value="$PROJECT_DIR$/src/FrontOffice/UserBundle/Entity/User.php" />
         <option value="$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig" />
-        <option value="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/Event/showEvent.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/baseA.html.twig" />
         <option value="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig" />
-        <option value="$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig" />
-        <option value="$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php" />
+        <option value="$PROJECT_DIR$/web/template/css/form.css" />
+        <option value="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/Event/showEvent.html.twig" />
+        <option value="$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueilS.html.twig" />
+        <option value="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Controller/EventController.php" />
+        <option value="$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php" />
+        <option value="$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig" />
       </list>
     </option>
   </component>
@@ -188,6 +269,144 @@
               <option name="myItemId" value="FrontOffice" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrontOffice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrontOffice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="User" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrontOffice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrontOffice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrontOffice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -233,7 +452,97 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Entity" />
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrontOffice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="OptimusBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrontOffice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="OptimusBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Optimus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FrontOffice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="OptimusBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -246,6 +555,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="LayoutCode.rearrangeEntriesTwig" value="false" />
     <property name="LayoutCode.rearrangeEntriesPHP" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp\www\Optimus\src\FrontOffice\UserBundle\Resources\views\User" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -273,7 +587,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -338,7 +652,10 @@
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="58" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="9061">
-          <folding />
+          <folding>
+            <marker date="1427456744504" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1427456744504" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -375,7 +692,9 @@
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="166" column="27" selection-start="3673" selection-end="3673" vertical-scroll-proportion="0.0" vertical-offset="2822" max-vertical-offset="12563">
-          <folding />
+          <folding>
+            <element signature="e#52#84#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -417,7 +736,9 @@
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="21" selection-start="1004" selection-end="1012" vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="12801">
-          <folding />
+          <folding>
+            <element signature="e#52#84#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -438,7 +759,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/layout_profile.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3553" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3553">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/Profile/palmares_user.html.twig">
@@ -463,11 +786,6 @@
         <state line="38" column="23" selection-start="399" selection-end="406" vertical-scroll-proportion="-7.2669106" vertical-offset="4621" max-vertical-offset="5168" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/Event/showEvent.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="305" column="27" selection-start="19138" selection-end="19138" vertical-scroll-proportion="-1.7530864" vertical-offset="5043" max-vertical-offset="7123" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/baseA.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="91" column="28" selection-start="4151" selection-end="4162" vertical-scroll-proportion="0.66390043" vertical-offset="1227" max-vertical-offset="1717">
@@ -477,12 +795,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="386" column="108" selection-start="38443" selection-end="38454" vertical-scroll-proportion="-1.9199085" vertical-offset="7180" max-vertical-offset="7633" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Repository/UserRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="29" selection-start="285" selection-end="294" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="1904">
+        <state line="386" column="108" selection-start="38443" selection-end="38454" vertical-scroll-proportion="-1.9199085" vertical-offset="7180" max-vertical-offset="7633">
           <folding />
         </state>
       </provider>
@@ -501,26 +814,107 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/template/css/form.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="10" selection-start="555" selection-end="555" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="2125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="156" column="29" selection-start="3292" selection-end="3305" vertical-scroll-proportion="-4.1153846" vertical-offset="2438" max-vertical-offset="13073">
+          <folding>
+            <element signature="e#52#84#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/Event/showEvent.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="122" column="38" selection-start="9154" selection-end="9154" vertical-scroll-proportion="-8.192307" vertical-offset="1648" max-vertical-offset="7582">
+          <folding>
+            <element signature="e#3409#3466#0" expanded="true" />
+            <element signature="e#4016#4058#0" expanded="true" />
+            <element signature="e#4324#4350#0" expanded="true" />
+            <element signature="e#4420#4508#0" expanded="true" />
+            <element signature="e#4652#4740#0" expanded="true" />
+            <element signature="e#4901#4989#0" expanded="true" />
+            <element signature="e#5144#5232#0" expanded="true" />
+            <element signature="e#5403#5429#0" expanded="true" />
+            <element signature="e#5572#5660#0" expanded="true" />
+            <element signature="e#5804#5892#0" expanded="true" />
+            <element signature="e#6044#6132#0" expanded="true" />
+            <element signature="e#6279#6367#0" expanded="true" />
+            <element signature="e#8378#8402#0" expanded="true" />
+            <element signature="e#8452#8489#0" expanded="true" />
+            <element signature="e#8579#8667#0" expanded="true" />
+            <element signature="e#8827#8863#0" expanded="true" />
+            <element signature="e#8985#9073#0" expanded="true" />
+            <element signature="e#9197#9221#0" expanded="true" />
+            <element signature="e#19263#19283#0" expanded="true" />
+            <element signature="e#19580#19600#0" expanded="true" />
+            <marker date="1427454164729" expanded="false" signature="25121:25153" placeholder="..." />
+            <marker date="1427454164729" expanded="false" signature="25559:25591" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueilS.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="450" column="75" selection-start="33615" selection-end="33620" vertical-scroll-proportion="-3.0576923" vertical-offset="3513" max-vertical-offset="4369">
+          <folding>
+            <element signature="tag#div#2;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
+            <element signature="tag#ul#0;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
+            <element signature="tag#div#3;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
+            <element signature="e#22539#25723#0" expanded="false" />
+            <element signature="e#25907#29167#0" expanded="false" />
+            <element signature="e#29225#30217#0" expanded="false" />
+            <element signature="e#35470#36489#0" expanded="false" />
+            <element signature="e#36547#37566#0" expanded="false" />
+            <marker date="1427454275531" expanded="false" signature="24924:24942" placeholder="..." />
+            <marker date="1427454275531" expanded="false" signature="28273:28291" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_4.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="181" column="9" selection-start="6235" selection-end="6235" vertical-scroll-proportion="-6.923077" vertical-offset="2897" max-vertical-offset="18496">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="58" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="9061">
+        <state line="27" column="27" selection-start="1914" selection-end="1914" vertical-scroll-proportion="-6.1153846" vertical-offset="300" max-vertical-offset="9061">
+          <folding>
+            <marker date="1427456744504" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1427456744504" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Controller/EventController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="153" column="26" selection-start="5878" selection-end="5878" vertical-scroll-proportion="-0.90384614" vertical-offset="2248" max-vertical-offset="5321">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Repository/UserRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="29" selection-start="285" selection-end="294" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="1904">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="2" selection-start="1773" selection-end="5083" vertical-scroll-proportion="-9.769231" vertical-offset="2126" max-vertical-offset="10132">
+        <state line="135" column="20" selection-start="4792" selection-end="4800" vertical-scroll-proportion="0.5864811" vertical-offset="2000" max-vertical-offset="10591">
           <folding>
             <element signature="e#53#113#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="18" selection-start="2825" selection-end="2825" vertical-scroll-proportion="0.5698324" vertical-offset="2006" max-vertical-offset="12631">
-          <folding />
         </state>
       </provider>
     </entry>

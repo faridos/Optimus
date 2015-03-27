@@ -66,7 +66,7 @@ class UserController extends Controller
         $frinds = $em->getRepository("FrontOfficeUserBundle:User")->getFrinds($user->getId());
         $listevents = array();
         $k = 0;
-        foreach ($events as $value) {
+         foreach ($events as $value) {
             $i = 0;
 
 
@@ -75,7 +75,7 @@ class UserController extends Controller
 
                 if ($evenuser->getId() == $value->getId()) {
                     $i = 1;
-                    $listevents['event'][$k] = $value;
+                    $listevents[$k] = $value->getId();
                     //  $listevents['datecreation'][$k] = $value->getDateCreation();
                     $k = $k + 1;
                 }
@@ -85,7 +85,7 @@ class UserController extends Controller
                 foreach ($user->getParticipations() as $participation) {
                     if ($participation->getEvent()->getId() == $value->getId()) {
                         $i = 1;
-                        $listevents['event'][$k] = $value;
+                        $listevents[$k] = $value->getId();
                         // $listevents['datecreation'][$k] = $value->getDateCreation();
                         $k = $k + 1;
                     }
@@ -100,7 +100,7 @@ class UserController extends Controller
                         if ($i == 0) {
                             if ($amieven->getId() == $value->getId()) {
                                 $i = 1;
-                                $listevents['event'][$k] = $value;
+                                $listevents[$k] = $value->getId();
                                 //      $listevents['datecreation'][$k] = $value->getDateCreation();
                                 $k = $k + 1;
                             }
@@ -112,7 +112,7 @@ class UserController extends Controller
                         foreach ($ami->getParticipations() as $participationami) {
                             if ($participationami->getEvent()->getId() == $value->getId()) {
                                 $i = 1;
-                                $listevents['event'][$k] = $value;
+                                $listevents[$k] = $value->getId();
                                 //       $listevents['datecreation'][$k] = $value->getDateCreation();
                                 $k = $k + 1;
                             }
@@ -127,15 +127,18 @@ class UserController extends Controller
 
         }
         $c = 0;
+
         $eventss = array();
-        foreach ($listevents as $ev) {
-            $id = $ev[$c];
+        foreach ($listevents as  $ev) {
+
+
+            $id = $ev;
             $eventss[$c] = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
             $c = $c + 1;
 
         }
-      //  exit;
-        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $eventss, 'eventsMap' => $eventsMap));
+
+              return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $eventss, 'eventsMap' => $eventsMap));
     }
 
     /**
@@ -586,5 +589,29 @@ class UserController extends Controller
 //       if{
         return $this->render('FrontOfficeUserBundle:Profile:showAllMessage.html.twig', array('user' => $user));
     }
+
+
+
+    /**
+     *
+     *
+     * @Route("{id}/show/accueil", name="show_accueil")
+     * @Method("GET")
+     * @Template()
+     */
+    public function accueilshowAction($id)
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+
+        $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
+        $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap();
+        $frinds = $em->getRepository("FrontOfficeUserBundle:User")->getFrinds($user->getId());
+
+
+
+           return $this->render('FrontOfficeUserBundle:User:accueilS.html.twig', array('user' => $user, 'event' => $event, 'eventsMap' => $eventsMap));
+    }
+
 
 }
