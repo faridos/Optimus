@@ -17,7 +17,7 @@ class RegistrationFormType extends BaseType {
                   ->add('dateNaissance', 'date' , array('attr'=>array('class' => 'form-control','placeholder'=>'Date de naissance'),'format' => 'dd/MM/yyyy', 'widget' => "single_text", 'required' => False))
                 ->add('sexe', 'choice', array('choices' => array('H' => 'Homme', 'F' => 'Femme'), 'attr' => array('class' => 'form-control')))
                 ->add('profil', 'choice', array('choices' => array('Sportif' => 'Sportif', 'Entraineur' => 'Entraineur')))
-              //  ->add('adresse', 'textarea', array('attr' => array('class' => 'form-control')))
+                ->add('adresse', 'textarea', array('attr' => array('class' => 'form-control'), 'required' => False))
                 ->add('tel', 'text', array('required' => false,'attr' => array('class' => 'form-control'), 'required' => False))
                 ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle', 'attr' => array('class' => 'form-control')))
                 ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle', 'attr' => array('class' => 'form-control')))

@@ -101,6 +101,7 @@ $('#accept_relation_profil').click(function() {
                     ' </button>'
 
                     );
+            
         }
     });
 });

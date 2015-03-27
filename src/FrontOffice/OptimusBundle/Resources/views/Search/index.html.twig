@@ -41,7 +41,15 @@
                                                     <a href='{{path('show_profil',{id:user.id})}}'>
                                                         <div class="notifyContent">
                                                             <div class="notifyBody">
+                                                                {% if user.path == null %}
+                                                                    {% if user.sexe == 'H' %}
+                                                                        <img class="avatar pull-left" src="{{asset('men.png')}}" alt="avatar">
+                                                                        {% else %}
+                                                                            <img class="avatar pull-left" src="{{asset('women.png')}}" alt="avatar">
+                                                                              {% endif %}
+                                                                    {% else %}
                                                                 <img class="avatar pull-left" src="{{asset(user.WebPath)}}" alt="avatar">
+                                                             {% endif %}
                                                                 <div class="col-md-3 pb20"> <div class=" pull-left">
                                                                         <div class="name">Nom et Prénom<span class="label label-green visible-xs">Sportif/ Entraineur</span></div>
                                                                         <div class="message">{{user.prenom}} {{user.nom}}</div>

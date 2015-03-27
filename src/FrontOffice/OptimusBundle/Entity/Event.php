@@ -26,9 +26,8 @@ class Event {
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="TypeEvent",inversedBy="evenement", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=false)
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $type;
 
@@ -412,28 +411,15 @@ class Event {
     public function getStatus() {
         return $this->status;
     }
-
-    /**
-     * Set type
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\TypeEvent $type
-     * @return Event
-     */
-    public function setType(\FrontOffice\OptimusBundle\Entity\TypeEvent $type = null) {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \FrontOffice\OptimusBundle\Entity\TypeEvent 
-     */
     public function getType() {
         return $this->type;
     }
 
+    public function setType($type) {
+        $this->type = $type;
+    }
+
+        
     /**
      * Set createur
      *
