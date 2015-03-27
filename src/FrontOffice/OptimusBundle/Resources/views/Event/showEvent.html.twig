@@ -2,8 +2,9 @@
 
 {% block body %}
     <div id="wrapper">
-
+  
         <div id="content" class="mob-max" >
+            
             {% for flashMessage in app.session.flashbag.get('AjouterPohoto') %}
 
                 <div class="alert alert-success">
@@ -20,11 +21,15 @@
                 </div>
             {% endfor %}
             <div class="col-lg-12"><div class="row mb20">
+ </div>
+ <div id="invitation-envoyées" style="display: none;" class="alert alert-success">
+<a class="close" id="closemessag">×</a>
+les invitations ont été envoyées 
+</div>
 
-
-
-                </div>
+               
                 <div class="col-lg-12">
+                   
                     <div class="userWidget-1 manamus">
                         <div class="avatar" id="main">
                             <div class="col-md-4">
@@ -47,8 +52,10 @@
                                     </div>
                                 </div>
                             </div>
+                                          
                             {% if event.createur == app.user %}
                                 <div class="ops">
+                                    <a class="btn btn-round btn-default btn-sm" href="#inviteramievent" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Inviter</span></a>
                                     <a class="btn btn-round btn-default btn-sm" href="{{ path('update-event',{id: event.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
                                     <a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a> 
                                 </div>
@@ -63,255 +70,350 @@
 
 
 
-                            <div class="row">
-                                <div class="cardRating" style="color:#eab134;font-size: 16px;  margin-left: -7%;"> 
-                                    {% if isparticipant %}
-                                        <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with { 'id' : 'E'~event.id } %}</div>
-                                    {% else %}
-                                        <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with { 'id' : 'E'~event.id } %}</div>
-                                    {% endif %}
-                                </div>
-                                <div class="label label-danger " style="margin-left: 30%;font-size: 14px ;">Nombre de participants : <span  id="nbparticip"> {{event.participations|length}}</span></div>
-
-                                <br/><br/>
-                                <div class="col-md-4 pb20">
-
-                                    <div class="pc-about osLight" style="margin-left: -37%;"><div class="title eventus">Créateur :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.createur}}</span></div>
-                                        <div class="title eventus">Date début :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.dateDebut|date("d/m/Y h:i")}}</span></div>
-                                        <div class="title eventus">Date fin :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.dateFin|date("d/m/Y h:i")}}</span></div>
-                                        <div class="title eventus">Lieu :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.lieu}}</span></div><br>
-
-                                    </div>
-
-                                </div>
-                                <div class="col-md-4" style=" margin-left: -7%;">
-                                    <div class="pc-title osLight"><div class="title eventus">Type d'évenement : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.type}}</span></div>
-                                        <div class="title eventus">Nombre de places : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.nbrPlaces}}</span></div>
-                                        <div class="title eventus">Frais participation : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.frais}} &euro; </span></div>
-                                        <div class="title eventus">Description : <span class="address leftus"style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.description}}</span></div>
-
-                                    </div>
-
-
-                                </div>
-                                <div class="col-md-12"></div>
-                                <div class="col-md-6  pb20" id="append">
-                                    {% if event.createur.id != app.user.id%}
-                                        {% if not isparticipant and date(event.dateFin)>= date() %}
-                                            <a class="btn btn-green btn-round eventus " href="#"  id="exit_event">
-                                                <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
-                                            </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
-                                            {% else %}
-                                            <a class="btn btn-green btn-round eventus" href="#" id="exit_event">
-                                                <span class="fa icon-action-redo "></span> <span class="exitEvent">Annuler participation</span>                                          
-                                            </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
-                                            {% endif %}
+                                <div class="row">
+                                    <div class="cardRating" style="color:#eab134;font-size: 16px;  margin-left: -7%;"> 
+                                        {% if isparticipant %}
+                                            <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with { 'id' : 'E'~event.id } %}</div>
+                                        {% else %}
+                                            <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with { 'id' : 'E'~event.id } %}</div>
                                         {% endif %}
-                                </div>
-                                <div class="col-md-6">
-                                    {% if isparticipant and date(event.dateFin)>= date() %}
-                                        <div class="buttonsWrapper pb20 buttonleftus" id="append2">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
-                                    {% endif %}
+                                    </div>
+                                    <div class="label label-danger " style="margin-left: 30%;font-size: 14px ;">Nombre de participants : <span  id="nbparticip"> {{event.participations|length}}</span></div>
 
-                                </div>
-                                <div class="col-md-12">
-                                   <div style="margin-top: 1px;"></div>
+                                    <br/><br/>
+                                    <div class="col-md-4 pb20">
 
-                                    <img style=" margin-left: 80%; width: 4%;"title="{{ event.nbrvu }} ont lu cet événement" src="{{ asset('oeil-icone.png') }}"><span  style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">({{ event.nbrvu }})</span>
-                                  <a href="{{ path('show_accueil',{'id': event.id }) }}" >
-                                    <img style=" margin-top: 2px; width: 4%;"title="{{ event.eventcomments|length }} personnes ont commenté cet événement" src="{{ asset('commentaire.png') }}"><span  style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">({{ event.eventcomments|length }})</span>
-                                  </a>
+                                        <div class="pc-about osLight" style="margin-left: -37%;"><div class="title eventus">Créateur :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.createur}}</span></div>
+                                            <div class="title eventus">Date début :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.dateDebut|date("d/m/Y h:i")}}</span></div>
+                                            <div class="title eventus">Date fin :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.dateFin|date("d/m/Y h:i")}}</span></div>
+                                            <div class="title eventus">Lieu :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.lieu}}</span></div><br>
 
-                                    <div style="margin-top: 4px;"></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4" style=" margin-left: -7%;">
+                                        <div class="pc-title osLight"><div class="title eventus">Type d'évenement : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.type}}</span></div>
+                                            <div class="title eventus">Nombre de places : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.nbrPlaces}}</span></div>
+                                            <div class="title eventus">Frais participation : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.frais}} &euro; </span></div>
+                                            <div class="title eventus">Description : <span class="address leftus"style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.description}}</span></div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    <div class="col-md-6  pb20" id="append">
+                                        {% if event.createur.id != app.user.id%}
+                                            {% if not isparticipant and date(event.dateFin)>= date() %}
+                                                <a class="btn btn-green btn-round eventus " href="#"  id="exit_event">
+                                                    <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
+                                                </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
+                                                {% else %}
+                                                <a class="btn btn-green btn-round eventus" href="#" id="exit_event">
+                                                    <span class="fa icon-action-redo "></span> <span class="exitEvent">Annuler participation</span>                                          
+                                                </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
+                                                {% endif %}
+                                            {% endif %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% if isparticipant and date(event.dateFin)>= date() %}
+                                            <div class="buttonsWrapper pb20 buttonleftus" id="append2">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div style="margin-top: 1px;"></div>
+
+                                        <img style=" margin-left: 80%; width: 4%;"title="{{ event.nbrvu }} ont lu cet événement" src="{{ asset('oeil-icone.png') }}"><span  style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">({{ event.nbrvu }})</span>
+                                        <a href="{{ path('show_accueil',{'id': event.id }) }}" >
+                                            <img style=" margin-top: 2px; width: 4%;"title="{{ event.eventcomments|length }} personnes ont commenté cet événement" src="{{ asset('commentaire.png') }}"><span  style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">({{ event.eventcomments|length }})</span>
+                                        </a>
+
+                                        <div style="margin-top: 4px;"></div>
+                                    </div>
                                 </div>
+
                             </div>
 
+
+
+
+
+
+                            <div class="clearfix"></div>
                         </div>
-
-
-
-
-
-
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="tabsContainer">
-                        <ul class="nav nav-tabs nav-justified" role="tablist">
-                            <li class="active"><a href="#participants" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
-                            <li class=""><a href="#photos" role="tab" data-toggle="tab"><span class="icon-doc"></span> Photos</a></li>
-                            <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
-                        </ul>
-                        <div class="tab-content">
-
-                            <ul class="tab-pane fade  active in scrollbar" id="participants" >
-                                <div id="msgparticipe" ></div>
-                                <br/>
-                                <div class="row" id="blockparticip">
-
-                                    {% for participant in event.participations %}
-                                        <div class="col-md-4" id="particip{{participant.participant.id}}">
-
-                                            <div class="tooltipsContainer agent notifyList">
-                                                <a href="{{ path('show_profil',{'id': participant.participant.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{participant.participant.prenom}} {{participant.participant.nom}}">
-
-                                                    {% if participant.participant.path == null %}
-                                                        {% if participant.participant.sexe == 'H' %}
-                                                            <img src="{{ asset('men.png') }}" class="inline-block imaguss">
-                                                        {% else %}
-                                                            <img src="{{ asset('women.png') }}" class="inline-block imaguss">
-                                                        {% endif %}
-                                                    {% else %}
-                                                        <img src="{{ asset(participant.participant.WebPath) }}" alt="">         
-
-                                                    {% endif %}
-
-                                                    <div class="pulse border-green pulseoptimus"></div>
-                                                </a>
-                                                <div class="info">
-                                                    <a href="{{ path('show_profil',{'id': participant.participant.id}) }}"> <div class="name clubumus"><strong>{{participant.participant.prenom}} {{participant.participant.nom}}</strong></div></a>
-                                                    <div class="title">{{participant.participant.profil}}</div>
-
-                                                </div><br>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-
-                                </div>
-
-                                <div class="clearfix"></div>
-
+                        <div class="tabsContainer">
+                            <ul class="nav nav-tabs nav-justified" role="tablist">
+                                <li class="active"><a href="#participants" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
+                                <li class=""><a href="#photos" role="tab" data-toggle="tab"><span class="icon-doc"></span> Photos</a></li>
+                                <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
                             </ul>
-                            <ul class="tab-pane fade  scrollbar" id="photos" >
+                            <div class="tab-content">
 
-                                <div class="row" >
-                                    <div class="buttonsWrapper col-xs-12">
-                                        {% if app.user.id == event.createur.id %}
-                                            <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
-                                        {% endif %}
-                                    </div>
-                                    <div class="buttonsWrapper col-xs-12">
+                                <ul class="tab-pane fade  active in scrollbar" id="participants" >
+                                    <div id="msgparticipe" ></div>
+                                    <br/>
+                                    <div class="row" id="blockparticip">
 
-                                        {% for photo in event.images %}
+                                        {% for participant in event.participations %}
+                                            <div class="col-md-4" id="particip{{participant.participant.id}}">
 
-                                            <div class="col-sm-4" id="{{ photo.id }}">
-                                                <div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
-                                                    <div class="fig " id="main">
-                                                        <a href="{{ asset(photo.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
-                                                            <img src="{{ asset(photo.WebPath) }}" />
-                                                        </a>
-                                                        {% if event.createur == app.user %}
-                                                            <div class="priceCap paddus">
-                                                                <button href="#suppritus{{photo.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
-                                                            </div>
+                                                <div class="tooltipsContainer agent notifyList">
+                                                    <a href="{{ path('show_profil',{'id': participant.participant.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{participant.participant.prenom}} {{participant.participant.nom}}">
+
+                                                        {% if participant.participant.path == null %}
+                                                            {% if participant.participant.sexe == 'H' %}
+                                                                <img src="{{ asset('men.png') }}" class="inline-block imaguss">
+                                                            {% else %}
+                                                                <img src="{{ asset('women.png') }}" class="inline-block imaguss">
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <img src="{{ asset(participant.participant.WebPath) }}" alt="">         
+
                                                         {% endif %}
-                                                        <div class="figCap">
-                                                            <div class="address">Cliquez pour agrandir l'image</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal fade" id="suppritus{{photo.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content bordusbottomus">
-                                                        <div class="modal-header bordustopus">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                            <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                                                        </div>
-                                                        <form class="contactForm">
-                                                            <div class="modal-body">
-                                                                <p>Souhaitez vous vraiment supprimer cette photo ?</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                                                                <a id="supprimerPhoto{{photo.id}}" href="#" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+
+                                                        <div class="pulse border-green pulseoptimus"></div>
+                                                    </a>
+                                                    <div class="info">
+                                                        <a href="{{ path('show_profil',{'id': participant.participant.id}) }}"> <div class="name clubumus"><strong>{{participant.participant.prenom}} {{participant.participant.nom}}</strong></div></a>
+                                                        <div class="title">{{participant.participant.profil}}</div>
+
+                                                    </div><br>
                                                 </div>
                                             </div>
                                         {% endfor %}
+
                                     </div>
-                                    <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            {{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoEvent',  {'id': event.id })) }}
+
+                                    <div class="clearfix"></div>
+
+                                </ul>
+                                <ul class="tab-pane fade  scrollbar" id="photos" >
+
+                                    <div class="row" >
+                                        <div class="buttonsWrapper col-xs-12">
+                                            {% if app.user.id == event.createur.id %}
+                                                <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
+                                            {% endif %}
+                                        </div>
+                                        <div class="buttonsWrapper col-xs-12">
+
+                                            {% for photo in event.images %}
+
+                                                <div class="col-sm-4" id="{{ photo.id }}">
+                                                    <div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
+                                                        <div class="fig " id="main">
+                                                            <a href="{{ asset(photo.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                                                <img src="{{ asset(photo.WebPath) }}" />
+                                                            </a>
+                                                            {% if event.createur == app.user %}
+                                                                <div class="priceCap paddus">
+                                                                    <button href="#suppritus{{photo.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="figCap">
+                                                                <div class="address">Cliquez pour agrandir l'image</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="suppritus{{photo.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content bordusbottomus">
+                                                            <div class="modal-header bordustopus">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                                                            </div>
+                                                            <form class="contactForm">
+                                                                <div class="modal-body">
+                                                                    <p>Souhaitez vous vraiment supprimer cette photo ?</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                                                                    <a id="supprimerPhoto{{photo.id}}" href="#" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                {{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoEvent',  {'id': event.id })) }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </ul>
-                            <ul class="tab-pane fade scrollbar" id="videos"  >
-                                <div class="row">
-                                    <br>
-                                    {#   <div class="col-xs-4" >
-                                           <div data-linkto="" class="card albumus" >
-                                               <div class="figure" id="main">
-                                                   <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
-                                                       <img src="images/bg-1.jpg" />
-                                                   </a>
-           
-                                                   <div class="figView"><span class="icon-eye"></span></div>
-           
+                                </ul>
+                                <ul class="tab-pane fade scrollbar" id="videos"  >
+                                    <div class="row">
+                                        <br>
+                                        {#   <div class="col-xs-4" >
+                                               <div data-linkto="" class="card albumus" >
+                                                   <div class="figure" id="main">
+                                                       <a href="images/bg-1.jpg" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                                           <img src="images/bg-1.jpg" />
+                                                       </a>
+               
+                                                       <div class="figView"><span class="icon-eye"></span></div>
+               
+                                                   </div>
+                                                   <h2 align="center">Titre de video</h2>
+               
+                                                   <div align="center" >
+                                                       <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+                                                       <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+                                                   </div>
+                                                   <br>
+               
+                                                   <div class="clearfix"></div>
                                                </div>
-                                               <h2 align="center">Titre de video</h2>
-           
-                                               <div align="center" >
-                                                   <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
-                                                   <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
-                                               </div>
-                                               <br>
-           
-                                               <div class="clearfix"></div>
-                                           </div>
-                                       </div>#}
+                                           </div>#}
+                                    </div>
+                                    <img src="{{ asset('154.png') }}" style='width: 100%;'>
+                                    <div class="clearfix"></div>
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
 
-
-
-                                </div>
-                                <img src="{{ asset('154.png') }}" style='width: 100%;'>
-                                <div class="clearfix"></div>
-
-                            </ul>
                         </div>
-                        <div class="clearfix"></div>
 
                     </div>
 
                 </div>
-
+            </div>
+            <div id="map-event" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
+        </div>
+        <!------------------- modal supprission------------------->
+        <div class="modal fade" id="supprimuss" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bordusbottomus">
+                    <div class="modal-header bordustopus">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Souhaitez vous vraiment supprimer ce evenement ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                        <a href="{{ path('delete-event-profil',{'id': event.id}) }}" class="btn btn-round btn-green">Confirmer</a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="map-event" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
-    </div>
-    <!------------------- modal supprission------------------->
-    <div class="modal fade" id="supprimuss" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bordusbottomus">
-                <div class="modal-header bordustopus">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                </div>
-                <div class="modal-body">
-                    <p>Souhaitez vous vraiment supprimer ce evenement ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                    <a href="{{ path('delete-event-profil',{'id': event.id}) }}" class="btn btn-round btn-green">Confirmer</a>
+        <!---------------------------- modal inviteramievent----------------------------->
+        <div class="modal" id="inviteramievent"   >
+            <div class="modal-dialog">
+                <div class="modal-content bordusbottomus">
+                    <div class="modal-header bordustopus">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="contactLabel">Liste des partipants </h4>
+                    </div>
+                    <form method="post">
+                        <input id="inviterevent" type="hidden" name="event" value="{{event.id}}"/>
+                        <div class="modal-body" >
+                        
+                            <div id="listami">
+                            {% set friends = getFriends(event.createur.id) %}
+                                {%for friend in friends %}
+{% set participantOuNon=ParticipantOuNon(event,friend) %}
+    {% if participantOuNon == 0 %}
+    
+                                    <input id="listefrirnd{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}" /><a href="#" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{friend.username}}">
+                                        {#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
+                                        {% if friend.path == null %}
+                                            {% if friend.sexe == 'H' %}
+                                                <img style="width: 10%;" src="{{ asset('men.png') }}">
+                                            {% else %}
+                                                <img style="width: 10%;" src="{{ asset('women.png') }}">
+                                            {% endif %}
+                                        {% else %}
+                                            <img style="width: 10%;"  src="{{ asset(friend.WebPath)}}" alt="avatar" ></a>
+                                        {% endif %}
+                                    <span style="margin-left:10%;">Pseudo: {{friend.username}}</span>
+
+                                    <div style="margin-top: 2%;"></div>
+                                    {% endif %}
+                                {% endfor %}
+                               
+                            </div>
+                            <div class="modal-footer supp-album">
+                               <a href="#" id="submitInvit" class="btn btn-round btn-o btn-green">Inviter</a>
+ <a class="loader" id="loader_ajouter_relation">
+                                                <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                            </a>
+                                <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+                                                        </div>
 
-    <!-------------------fin modal suppression------------------->
-    <!------------------- modal edit photo------------------->
+                                                        </div>
 
-    <div class="modal fade" id="modifierphotoevent" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            {{ render (controller('FrontOfficeOptimusBundle:Event:editPhotoEvent',  { 'id': event.id })) }}
-        </div>
-    </div>
-    <!-------------------fin modal edit photo------------------->
-{% endblock %}
-{% block javascriptfils %}
+            <!---------------------------- fin modal inviteramievent------------------------->
 
+
+
+            <!-------------------fin modal suppression------------------->
+            <!------------------- modal edit photo------------------->
+
+            <div class="modal fade" id="modifierphotoevent" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    {{ render (controller('FrontOfficeOptimusBundle:Event:editPhotoEvent',  { 'id': event.id })) }}
+                </div>
+            </div>
+            <!-------------------fin modal edit photo------------------->
+            {% endblock %}
+                {% block javascriptfils %}
+                    <script>
+                     $('#closemessag').click(function(){
+                       $('#invitation-envoyées').hide();  
+                     });
+                        $("#submitInvit").click(function(){ {% set friends = getFriends(event.createur.id) %}
+                            $("#submitInvit").hide();
+                            $('.loader').show();
+                             var event = $("#inviterevent").val();
+                        var name = new Array;
+                        test = 'false';
+                        var i = 0 ;
+                                {%for friend in friends %}
+                                    
+                                         if(document.getElementById('listefrirnd{{friend.id}}').checked){
+                                            name[i]= $("#listefrirnd{{friend.id}}").val();
+                                            i=i+1;
+                                          // test = 'true';
+                                         }
+                                    
+                                    {% endfor %}
+                       //alert(name);
+                                $.ajax({
+                                        type: "POST",
+                                        url: Routing.generate('inviter_ami_event'),
+                                        data: {name:name, event:event},
+                                        dataType: 'json',
+                                        
+                                        success: function(data) {
+                                                                              
+
+                                        $('.loader').hide();
+                                     $('#inviteramievent').toggle();
+$('.modal-backdrop').hide();
+ $("#submitInvit").show();
+                                          $('#invitation-envoyées').show();
+                                          {%for friend in friends %}
+                                    
+                                         document.getElementById('listefrirnd{{friend.id}}').checked=false;
+                                    
+                                    {% endfor %}
+                                        
+                                        }
+                                });
+                        });                                           
+                    </script>
+                 
     <script>
         "use strict";
                 function initialize() {
@@ -438,4 +540,4 @@
             </script>
 
 
-            {% endblock %}
+                        {% endblock %}

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FrontOffice\OptimusBundle\Entity\Event;
+use FrontOffice\OptimusBundle\Entity\Message;
 use FrontOffice\OptimusBundle\Form\EventType;
 use FrontOffice\OptimusBundle\Form\EventPhotoType;
 use FrontOffice\OptimusBundle\Entity\Participation;
@@ -350,4 +351,44 @@ class EventController extends Controller {
 //        return $response;
 //    }
 
+
+    /**
+     * 
+     *
+     * @Route("/inviter/ami", name="inviter_ami_event", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function inviterAmiAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+       
+     //  $name = Array();
+     
+            $name = $request->get("name");
+            
+            $id =  $request->get("event");
+            $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+            $sender = $event->getCreateur();
+          
+            foreach ($name as $friend) {
+                 $message = new Message();
+                $namefriend = $em->getRepository('FrontOfficeUserBundle:User')->find($friend);
+                $content= 'Bonjour '. $namefriend->getNom() .' '. $namefriend->getPrenom() .' je inviter amon event '. $event->getTitre();
+              
+                $message->setReciever($friend);
+                $message->setSender($sender);
+                $message->setMsgTime(new \DateTime());
+                $message->setContent($content);
+                $message->setEvent($event->getId());
+                $em->persist($message);
+                $em->flush();
+                 
+            }
+            return new Response('1'); 
+        
+       
+    }
+
 }
+
