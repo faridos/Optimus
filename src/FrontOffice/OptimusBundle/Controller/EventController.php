@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FrontOffice\OptimusBundle\Entity\Event;
+use FrontOffice\OptimusBundle\Entity\Message;
 use FrontOffice\OptimusBundle\Form\EventType;
 use FrontOffice\OptimusBundle\Form\EventPhotoType;
 use FrontOffice\OptimusBundle\Entity\Participation;
@@ -20,8 +21,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Event\NotificationSeenEvent;
 use FrontOffice\OptimusBundle\Form\UpdateEventType;
-
-
 use \DateTime;
 
 /**
@@ -30,8 +29,6 @@ use \DateTime;
  * @Route("/evenement")
  */
 class EventController extends Controller {
-    
-    
 
     /**
      * 
@@ -47,10 +44,6 @@ class EventController extends Controller {
 //$x=$em->getRepository("FrontOfficeOptimusBundle:Event")->get_distance_m(48.856667,2.350987, 45.767299, 4.834329);
         return $this->render('FrontOfficeOptimusBundle:Event:index.html.twig', array('events' => $events));
     }
-    
-    
-    
-
 
     /**
      * 
@@ -83,16 +76,15 @@ class EventController extends Controller {
         }
 
         $nbr1 = $event->getNbrvu();
-        $nbr = $nbr1 + 1 ;
+        $nbr = $nbr1 + 1;
         $event->setNbrvu($nbr);
         $em->merge($event);
         $em->flush();
-        return $this->render('FrontOfficeOptimusBundle:Event:showEvent.html.twig', array('user'=> $user,
-            'event' => $event,
-            
-            ));
+        return $this->render('FrontOfficeOptimusBundle:Event:showEvent.html.twig', array('user' => $user,
+                    'event' => $event,
+        ));
     }
-    
+
     /**
      * 
      *
@@ -107,13 +99,13 @@ class EventController extends Controller {
         }
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
-        $photos = $em->getRepository("FrontOfficeOptimusBundle:Photo")->findby(array('event' =>$event));
+        $photos = $em->getRepository("FrontOfficeOptimusBundle:Photo")->findby(array('event' => $event));
         if ($event->getActive() == false) {
-             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:photo.html.twig', array('event' => $event,'photos' => $photos));
+        return $this->render('FrontOfficeOptimusBundle:Event:photo.html.twig', array('event' => $event, 'photos' => $photos));
     }
-    
+
     /**
      * 
      *
@@ -128,9 +120,9 @@ class EventController extends Controller {
         }
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
-       
+
         if ($event->getActive() == false) {
-             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         return $this->render('FrontOfficeOptimusBundle:Event:video.html.twig', array('event' => $event));
     }
@@ -143,7 +135,7 @@ class EventController extends Controller {
      * @Template()
      */
     public function addAction(Request $request) {
-         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
@@ -183,7 +175,7 @@ class EventController extends Controller {
      * @Template()
      */
     public function updateAction(Request $request, $id) {
-         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
@@ -191,7 +183,7 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
         if (!$event || $event->getActive() == 0) {
-             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $editForm = $this->createForm(new UpdateEventType(), $event);
         $editForm->handleRequest($request);
@@ -220,8 +212,8 @@ class EventController extends Controller {
      * @Method("GET|POST|DELETE")
      * @Template()
      */
-    public function deleteAction(Request $request,$id) {
-         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+    public function deleteAction(Request $request, $id) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
@@ -229,7 +221,7 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
         if (!$entity || $entity->getActive() == 0) {
-             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $entity->setActive(false);
         $em->persist($entity);
@@ -239,10 +231,9 @@ class EventController extends Controller {
         $dispatcher = $this->get('event_dispatcher');
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         $request->getSession()->getFlashBag()->add('SupprissionEvenement', "Evenement  a été supprimer.");
-        return  new Response($id);
+        return new Response($id);
     }
-    
-    
+
     /**
      * 
      *
@@ -250,8 +241,8 @@ class EventController extends Controller {
      * @Method("GET|POST|DELETE")
      * @Template()
      */
-    public function deleteEventAction(Request $request,$id) {
-         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+    public function deleteEventAction(Request $request, $id) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
@@ -259,7 +250,7 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
         if (!$entity || $entity->getActive() == 0) {
-             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $entity->setActive(false);
         $em->persist($entity);
@@ -268,10 +259,10 @@ class EventController extends Controller {
         $eventhistory = new HistoryEventEvent($user, $entity, $action);
         $dispatcher = $this->get('event_dispatcher');
         $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
-        
+
         return $this->redirect($this->generateUrl('accueil'));
     }
-    
+
     /**
      * 
      *
@@ -286,19 +277,17 @@ class EventController extends Controller {
         }
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
-        
-        
-            $editForm = $this->createForm(new EventPhotoType(), $event);
-            $editForm->handleRequest($request);
-            if ($editForm->isValid()) {
-                $em->flush();
-                return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
-            }
-            return $this->render('FrontOfficeOptimusBundle:Event:editPhotoEvent.html.twig', array('event' => $event, 'form' => $editForm->createView()));
-        
+
+
+        $editForm = $this->createForm(new EventPhotoType(), $event);
+        $editForm->handleRequest($request);
+        if ($editForm->isValid()) {
+            $em->flush();
+            return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
+        }
+        return $this->render('FrontOfficeOptimusBundle:Event:editPhotoEvent.html.twig', array('event' => $event, 'form' => $editForm->createView()));
     }
-    
-    
+
     /**
      * 
      *
@@ -323,5 +312,43 @@ class EventController extends Controller {
 //        $response->setContent($tabevents);
 //        return $response;
 //    }
+    
+    /**
+     * 
+     *
+     * @Route("/inviter/ami", name="inviter_ami_event", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function inviterAmiAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+       
+     //  $name = Array();
+     
+            $name = $request->get("name");
+            
+            $id =  $request->get("event");
+            $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+            $sender = $event->getCreateur();
+          
+            foreach ($name as $friend) {
+                 $message = new Message();
+                $namefriend = $em->getRepository('FrontOfficeUserBundle:User')->find($friend);
+                $content= 'Bonjour '. $namefriend->getNom() .' '. $namefriend->getPrenom() .' je inviter amon event '. $event->getTitre();
+              
+                $message->setReciever($friend);
+                $message->setSender($sender);
+                $message->setMsgTime(new \DateTime());
+                $message->setContent($content);
+                $message->setEvent($event->getId());
+                $em->persist($message);
+                $em->flush();
+                 
+            }
+            return new Response('1'); 
+        
+       
+    }
 
 }

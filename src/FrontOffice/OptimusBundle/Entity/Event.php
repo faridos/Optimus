@@ -92,14 +92,14 @@ class Event {
     /**
      * @var integer
      *
-     * @ORM\Column(name="nbr_places", type="smallint")
+     * @ORM\Column(name="nbr_places", type="smallint", nullable=true)
      */
     private $nbrPlaces;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="frais", type="float")
+     * @ORM\Column(name="frais", type="float", nullable=true)
      */
     private $frais;
 
@@ -107,7 +107,7 @@ class Event {
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
