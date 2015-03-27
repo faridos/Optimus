@@ -19,6 +19,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Event\NotificationSeenEvent;
+use FrontOffice\OptimusBundle\Form\UpdateEventType;
+
 
 use \DateTime;
 
@@ -191,7 +193,7 @@ class EventController extends Controller {
         if (!$event || $event->getActive() == 0) {
              return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
-        $editForm = $this->createForm(new EventType(), $event);
+        $editForm = $this->createForm(new UpdateEventType(), $event);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $event->setDateModification(new DateTime());
