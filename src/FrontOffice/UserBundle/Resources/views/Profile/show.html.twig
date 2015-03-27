@@ -92,10 +92,11 @@ Evenement Supprimer
 </div>
 </div>
 <div style="margin-top: 1%" align="right">
-        <a href="#plusInfo{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des members"><span class="icon-users"></span></a>
+        <a href="#plusInfo{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des participant"><span class="icon-users"></span></a>
 
 {% if app.user == env.createur %}
 {% if  date(env.dateFin)>= date() %}
+     <a href="#inviterevn{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="inviter"><span class="icon-plus"></span></a>
 <a href="{{ path('update-event',{id: env.id})}}"  class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 {% endif %}
 <a href="#supprimerEvent{{env.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
@@ -579,6 +580,66 @@ Palmarés Supprimer
 </div>
 </div>
 </div>
+    <!---------------------inviterevent----------------------->
+    <div class="modal" id="inviterevn{{env.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Liste des partipants </h4>
+</div>
+<div class="modal-body">
+     <input id="inviterevent{{env.id}}" type="hidden" name="event" value="{{env.id}}"/>
+        <div id="listfriend"> 
+      {% set i = 0 %}
+{% set friends = getFriends(env.createur.id) %}
+                                  
+                                {%for friend in friends %}
+                                  
+{% set participantOuNon=ParticipantOuNon(env,friend) %}
+    {% if participantOuNon == 0 %}
+     {% set i = i+1 %}
+   
+ <input id="listeinviter{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}" /><a href="#" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{friend.username}}">
+                                        {#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
+                                        {% if friend.path == null %}
+                                            {% if friend.sexe == 'H' %}
+                                                <img style="width: 10%;" src="{{ asset('men.png') }}">
+                                            {% else %}
+                                                <img style="width: 10%;" src="{{ asset('women.png') }}">
+                                            {% endif %}
+                                        {% else %}
+                                            <img style="width: 10%;"  src="{{ asset(friend.WebPath)}}" alt="avatar" ></a>
+                                        {% endif %}
+                                    <span style="margin-left:10%;">Pseudo: {{friend.username}}</span>
+
+                                    <div style="margin-top: 2%;"></div>
+                                     {% endif %}
+    {% endfor %}
+          </div> 
+          {% if i == 0 %}                
+                                                                 
+                                                                     
+                                                                           <div id="invitation-envoyées"  class="alert alert-success">
+
+tous vos  amis sont particip
+</div>
+     {% endif %}              
+   
+</div>
+<div class="modal-footer supp-album">
+     {% if i > 0 %} 
+                               <a href="#" id="submitInvitfriend{{env.id}}" class="btn btn-round btn-o btn-green">Inviter</a>
+ <a class="loader {{env.id}}" >
+                                                <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                            </a>
+                                              {% endif %}
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+</div>
+</div>
+</div>
+</div>
+    <!----------------------fininviter------------------------->
 {% endfor %} 
 {% for part in participations %}
 <!------------------- modal plus info------------------->
@@ -985,6 +1046,57 @@ Palmarés Supprimer
 $(function() {
 $("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
 });</script>
+<script>
+    {% for env in user.evenements %}
+                    $("#submitInvitfriend{{env.id}}").click(function(){
+                                     {% set friends = getFriends(env.createur.id) %}
+                             $("#submitInvitfriend{{env.id}}").hide();
+                            $('.{{env.id}}').show();
+                             var event = $("#inviterevent{{env.id}}").val();
+                        var name = new Array;
+                        test = 'false';
+                        var i = 0 ;
+                       
+                                {%for friend in friends %}
+                                     {% set participantOuNon=ParticipantOuNon(env,friend) %}
+    {% if participantOuNon == 0 %}
+                                         if(document.getElementById('listeinviter{{friend.id}}').checked){
+                                            name[i]= $("#listeinviter{{friend.id}}").val();
+                                            i=i+1;
+                                          // test = 'true';
+                                         }
+                                         {% endif %}
+                                    
+                                    {% endfor %}
+                       //alert(name);
+                        $.ajax({
+                                        type: "POST",
+                                        url: Routing.generate('inviter_ami_event'),
+                                        data: {name:name, event:event},
+                                        dataType: 'json',
+                                        
+                                        success: function(data) {
+                                                                              
+
+                                        $('.{{env.id}}').hide();
+                                     $('#inviterevn{{env.id}}').toggle();
+$('.modal-backdrop').hide();
+ $("#submitInvitfriend{{env.id}}").show();
+                                          $('#invitation-envoyées').show();
+                                          {%for friend in friends %}
+                                     {% set participantOuNon=ParticipantOuNon(env,friend) %}
+    {% if participantOuNon == 0 %}
+                                         document.getElementById('listeinviter{{friend.id}}').checked=false;
+                                     {% endif %}
+                                    {% endfor %}
+                                        
+                                        }
+                                });
+                     
+                               
+                        }); 
+                          {% endfor %}
+    </script>
 <script>
     {% for member in user.adherent %}
     $('#exit_club{{member.clubad.id}}').click(function() {

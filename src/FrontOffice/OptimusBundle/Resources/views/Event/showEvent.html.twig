@@ -314,12 +314,15 @@ les invitations ont été envoyées
                         <input id="inviterevent" type="hidden" name="event" value="{{event.id}}"/>
                         <div class="modal-body" >
                         
-                            <div id="listami">
+                            <div id="listami"> 
+                                {% set i = 0 %}
                             {% set friends = getFriends(event.createur.id) %}
+                                  
                                 {%for friend in friends %}
+                                  
 {% set participantOuNon=ParticipantOuNon(event,friend) %}
     {% if participantOuNon == 0 %}
-    
+    {% set i = i+1 %}
                                     <input id="listefrirnd{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}" /><a href="#" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{friend.username}}">
                                         {#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
                                         {% if friend.path == null %}
@@ -336,13 +339,23 @@ les invitations ont été envoyées
                                     <div style="margin-top: 2%;"></div>
                                     {% endif %}
                                 {% endfor %}
-                               
+                    {% if i == 0 %}                
+                                                                 
+                                                                     
+                                                                           <div id="invitation-envoyées"  class="alert alert-success">
+
+tous vos  amis sont particip
+</div>
+     {% endif %}                                                                      
+
                             </div>
                             <div class="modal-footer supp-album">
+                                  {% if i > 0 %} 
                                <a href="#" id="submitInvit" class="btn btn-round btn-o btn-green">Inviter</a>
  <a class="loader" id="loader_ajouter_relation">
                                                 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
                                             </a>
+                                              {% endif %}
                                 <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
                             </div>
                         </form>
@@ -379,16 +392,20 @@ les invitations ont été envoyées
                         var name = new Array;
                         test = 'false';
                         var i = 0 ;
+                       
                                 {%for friend in friends %}
-                                    
+                                     {% set participantOuNon=ParticipantOuNon(event,friend) %}
+    {% if participantOuNon == 0 %}
                                          if(document.getElementById('listefrirnd{{friend.id}}').checked){
                                             name[i]= $("#listefrirnd{{friend.id}}").val();
                                             i=i+1;
                                           // test = 'true';
                                          }
+                                         {% endif %}
                                     
                                     {% endfor %}
                        //alert(name);
+                     
                                 $.ajax({
                                         type: "POST",
                                         url: Routing.generate('inviter_ami_event'),
@@ -404,9 +421,10 @@ $('.modal-backdrop').hide();
  $("#submitInvit").show();
                                           $('#invitation-envoyées').show();
                                           {%for friend in friends %}
-                                    
+                                     {% set participantOuNon=ParticipantOuNon(event,friend) %}
+    {% if participantOuNon == 0 %}
                                          document.getElementById('listefrirnd{{friend.id}}').checked=false;
-                                    
+                                     {% endif %}
                                     {% endfor %}
                                         
                                         }
