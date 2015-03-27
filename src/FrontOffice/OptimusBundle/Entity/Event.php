@@ -738,4 +738,27 @@ class Event {
         }
     }
 
+
+    /**
+     * Set nbrvu
+     *
+     * @param integer $nbrvu
+     * @return Event
+     */
+    public function setNbrvu($nbrvu)
+    {
+        $this->nbrvu = $nbrvu;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbrvu
+     *
+     * @return integer 
+     */
+    public function getNbrvu()
+    {
+        return $this->nbrvu;
+    }
 }

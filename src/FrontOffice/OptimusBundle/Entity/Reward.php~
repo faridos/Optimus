@@ -33,9 +33,9 @@ class Reward
    
    protected $club;
    /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="Date_reward", type="date")
+     * @ORM\Column(name="Date_reward", type="date", nullable=false)
      */
    private $date;
    /**
