@@ -19,6 +19,10 @@
 
 
                 <div class="row">
+                    <div id="notdate" style="display: none;" class="alert alert-danger">
+                        <a class="close" data-dismiss="alert">×</a>
+                        date fin ne doit pas inferieur au date debut
+                    </div>
                     <form action="{{ path("add-event") }}" {{ form_enctype(form) }} method="post">
                         {{ form_errors(form) }}
                         <div class="col-xs-12 ">
@@ -27,11 +31,11 @@
                                 <div class="panel-body">
 
                                     <div class="form-group col-xs-6">
-                                    {{ form_widget(form.titre) }}
+                                        {{ form_widget(form.titre) }}
                                     </div>
                                     <div class="form-group col-xs-6">
                                         {{ form_widget(form.type) }}
-                                     </div>
+                                    </div>
                                     <div class="form-group col-xs-6">
                                         {{ form_widget(form.nbrPlaces) }}                                      
                                     </div>
@@ -47,23 +51,23 @@
                                     <div class="form-group col-xs-6">
 
                                         {{ form_widget(form.dateDebut, { 'id': 'some_class_1' }) }}
-                                       
+
                                     </div>
                                     <div class="form-group col-xs-6">
 
                                         {{ form_widget(form.dateFin, { 'id': 'some_class_2' }) }}
-                                                                            
-                                    </div>
-                                         <div class="form-group col-xs-6">
-                                          <span>{{ form_widget(form.file) }}</span>
-                                        <p class="help-block">Télécharger le logo du club</p>
-                                             </div>
-                                        <div class="form-group col-xs-6" >
 
-                                     {{ form_widget(form.description) }}
-                                                                            
                                     </div>
-                                        
+                                    <div class="form-group col-xs-6">
+                                        <span>{{ form_widget(form.file) }}</span>
+                                        <p class="help-block">Télécharger le logo du club</p>
+                                    </div>
+                                    <div class="form-group col-xs-6" >
+
+                                        {{ form_widget(form.description) }}
+
+                                    </div>
+
 
                                 </div>
                             </div>
@@ -76,31 +80,31 @@
                                 <div class="panel-heading optimus">veuiller choisir l'emplacement d'évenement dans la map</div><div class="panel-body">
                                     <div class="form-group col-xs-12">
                                         {{ form_widget(form.lieu , { 'id': 'lieu' }) }}
-                                        
+
                                     </div>
 
 
                                     <div class="form-group col-xs-6 " style="display: none; visibility: hidden;">
                                         {{ form_widget(form.lat, { 'id': 'lat_id' }) }}
-                                       
+
                                     </div>
                                     <div class="form-group col-xs-6 " style="display: none; visibility: hidden;">
 
                                         {{ form_widget(form.lng, { 'id': 'lng_id' }) }}
                                     </div>
-                                   
 
-                                    
+
+
                                 </div></div>
                         </div>
-                                    <div style="text-align: center">
+                        <div style="text-align: center">
 
-                                        <button type="submit" value="Submit" class="btn btn-round btn-green">Enregistrer</button>
-                                        <button type="reset" value="Reset" class="btn btn-round btn-green">Reset</button>
-                                    </div>
+                            <button id="ff" type="submit" value="Submit" class="btn btn-round btn-green">Enregistrer</button>
+                            <button type="reset" value="Reset" class="btn btn-round btn-green">Reset</button>
+                        </div>
 
-    {{ form_widget(form._token) }}
-    {{ form_rest(form) }}
+                        {{ form_widget(form._token) }}
+                        {{ form_rest(form) }}
                     </form>
                 </div>
 
@@ -113,6 +117,41 @@
 
 {% endblock %}
 {% block javascriptfils %}
+    <script>
+        $("#agence_contratbundle_contrat_dater, #agence_contratbundle_contrat_dates").ready(function() {
+            var start = $('back_officebundle_evennement_dated').val();
+            var end = $('back_officebundle_evennement_datef').val();
+            if (start != '' && end != '') {
+                var tabstart = start.split("/");
+                var tabend = end.split("/");
+                diff = new Date(new Date(tabend[2], tabend[1], tabend[0]) - new Date(tabstart[2], tabstart[1], tabstart[0]));
+                days = diff / 1000 / 60 / 60 / 24;
+                if (days < 0) {
+                    $('#back_officebundle_evennement_dated').val("");
+                    $('#back_officebundle_evennement_datef').val("");
+                    var alrt = '<div id="alrt2" class="alert alert-danger"><button type="button" class="close" data-dismiss="alert"> <i class="icon-remove"></i></button> <strong> <i class="icon-remove"></i>Attention !</strong> La periode  ne peut pas étre négative. <br></div>'
+                    $("#datecontrat").prepend(alrt);
+                    $('.modal-footer').css("display", "none");
+                }
+                else {
+                    $("#alrt2").remove();
+                    $('.modal-footer').css("display", "");
+                }
+            }
+        });
+        $("#some_class_2").change(function() {
+            var start = $('#some_class_1').val();
+            var end = $('#some_class_2').val();
+            if (start != '' && end != '') {
+                var tabstart = (new Date(start).getTime() / 1000);
+                var tabend = (new Date(end).getTime() / 1000);
+                if (tabstart > tabend) {
+                    $('#notdate').show();
+                    $('#some_class_2').val("");
+                }
+            }
+        });
+    </script>
     <script>
 
         var markerevent;
@@ -133,7 +172,7 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
                         document.getElementById('lieu').value = results[0].formatted_address;
-                       placeMarker(event.latLng);
+                        placeMarker(event.latLng);
                     } else {
                         alert('No results found');
                     }
@@ -142,7 +181,7 @@
                 }
 
             });
-            
+
         });
         function placeMarker(location) {
 
