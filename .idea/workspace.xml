@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="602d26ee-8a96-4d02-82ca-4af61859f15d" name="Default" comment="" />
+    <list default="true" id="602d26ee-8a96-4d02-82ca-4af61859f15d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php" afterPath="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php" />
+    </list>
     <ignored path="Optimus.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,24 +28,18 @@
       <file leaf-file-name="accueil.html.twig" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="58" selection-start="1945" selection-end="1945" vertical-scroll-proportion="-4.9038463" vertical-offset="204" max-vertical-offset="8092">
-              <folding>
-                <element signature="tag#ul#0;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
-                <element signature="tag#div#3;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
-                <marker date="1427448325722" expanded="false" signature="25055:25073" placeholder="..." />
-                <marker date="1427448325722" expanded="false" signature="28404:28422" placeholder="..." />
-              </folding>
+            <state line="27" column="58" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="9061">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="UserController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="2" selection-start="1773" selection-end="5083" vertical-scroll-proportion="0.34136546" vertical-offset="850" max-vertical-offset="8772">
+            <state line="140" column="2" selection-start="1773" selection-end="5083" vertical-scroll-proportion="-9.769231" vertical-offset="2126" max-vertical-offset="10132">
               <folding>
                 <element signature="e#53#113#0" expanded="true" />
-                <element signature="e#1775#5079#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -52,7 +48,7 @@
       <file leaf-file-name="UserRepository.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Repository/UserRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="29" selection-start="285" selection-end="294" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="1904">
+            <state line="14" column="29" selection-start="285" selection-end="294" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="1904">
               <folding />
             </state>
           </provider>
@@ -61,7 +57,7 @@
       <file leaf-file-name="User.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Entity/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="233" column="0" selection-start="5068" selection-end="5085" vertical-scroll-proportion="-4.3846154" vertical-offset="3665" max-vertical-offset="11339">
+            <state line="233" column="0" selection-start="5068" selection-end="5085" vertical-scroll-proportion="0.0" vertical-offset="3961" max-vertical-offset="11407">
               <folding />
             </state>
           </provider>
@@ -70,16 +66,16 @@
       <file leaf-file-name="Participation.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Participation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="13" selection-start="418" selection-end="423" vertical-scroll-proportion="-10.461538" vertical-offset="34" max-vertical-offset="1887">
+            <state line="18" column="13" selection-start="418" selection-end="423" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1887">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Event.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Event.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="166" column="27" selection-start="3673" selection-end="3673" vertical-scroll-proportion="-3.0769231" vertical-offset="2611" max-vertical-offset="12512">
+            <state line="139" column="18" selection-start="2825" selection-end="2825" vertical-scroll-proportion="0.5698324" vertical-offset="2006" max-vertical-offset="12631">
               <folding />
             </state>
           </provider>
@@ -105,6 +101,7 @@
         <option value="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig" />
         <option value="$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig" />
         <option value="$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php" />
+        <option value="$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php" />
       </list>
     </option>
   </component>
@@ -276,7 +273,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -285,7 +282,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25377643" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293718" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -316,9 +313,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25377643" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -338,11 +335,53 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/config/services.yml">
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="969">
+        <state line="27" column="58" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="9061">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="140" column="2" selection-start="1773" selection-end="5083" vertical-scroll-proportion="0.0" vertical-offset="2380" max-vertical-offset="8772">
+          <folding>
+            <element signature="e#53#113#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Repository/UserRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="29" selection-start="285" selection-end="294" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="1904">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="233" column="0" selection-start="5068" selection-end="5085" vertical-scroll-proportion="0.0" vertical-offset="3961" max-vertical-offset="11407">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Participation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="13" selection-start="418" selection-end="423" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1887">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="166" column="27" selection-start="3673" selection-end="3673" vertical-scroll-proportion="0.0" vertical-offset="2822" max-vertical-offset="12563">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="969" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php">
@@ -350,7 +389,6 @@
         <state line="70" column="21" selection-start="2572" selection-end="2572" vertical-scroll-proportion="0.0" vertical-offset="1190" max-vertical-offset="8500">
           <folding>
             <element signature="e#53#113#0" expanded="true" />
-            <element signature="e#1775#5079#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -358,10 +396,7 @@
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="42" column="107" selection-start="1652" selection-end="1652" vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="16133">
-          <folding>
-            <marker date="1427448327283" expanded="true" signature="-1:-1" placeholder="{% block content ...%}" />
-            <marker date="1427448327283" expanded="true" signature="-1:-1" placeholder="{% if participantOuNon == 1 and date(part.event.dateFin)&gt;= date() ...%}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -388,16 +423,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/Profile/palmares_user.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="26" max-vertical-offset="2924">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="26" max-vertical-offset="2924" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/config/services.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="969">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="969" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/config/routing.yml">
@@ -407,47 +438,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/layout_profile.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3553">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3553" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/Profile/palmares_user.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.051181104" vertical-offset="26" max-vertical-offset="2924">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.051181104" vertical-offset="26" max-vertical-offset="2924" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="43" column="107" selection-start="1691" selection-end="1691" vertical-scroll-proportion="-0.0" vertical-offset="731" max-vertical-offset="17646">
-          <folding>
-            <marker date="1427448327283" expanded="true" signature="-1:-1" placeholder="{% block content ...%}" />
-            <marker date="1427448327283" expanded="true" signature="-1:-1" placeholder="{% if participantOuNon == 1 and date(part.event.dateFin)&gt;= date() ...%}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/template/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-4.632959" vertical-offset="2474" max-vertical-offset="16133">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-4.632959" vertical-offset="2474" max-vertical-offset="16133" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/template/js/home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="23" selection-start="399" selection-end="406" vertical-scroll-proportion="-7.2669106" vertical-offset="4621" max-vertical-offset="5168">
-          <folding />
-        </state>
+        <state line="38" column="23" selection-start="399" selection-end="406" vertical-scroll-proportion="-7.2669106" vertical-offset="4621" max-vertical-offset="5168" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/Event/showEvent.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="305" column="27" selection-start="19138" selection-end="19138" vertical-scroll-proportion="-1.7530864" vertical-offset="5043" max-vertical-offset="7123">
-          <folding />
-        </state>
+        <state line="305" column="27" selection-start="19138" selection-end="19138" vertical-scroll-proportion="-1.7530864" vertical-offset="5043" max-vertical-offset="7123" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/baseA.html.twig">
@@ -459,58 +477,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="386" column="108" selection-start="38443" selection-end="38454" vertical-scroll-proportion="-1.9199085" vertical-offset="7180" max-vertical-offset="7633">
-          <folding />
-        </state>
+        <state line="386" column="108" selection-start="38443" selection-end="38454" vertical-scroll-proportion="-1.9199085" vertical-offset="7180" max-vertical-offset="7633" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Repository/UserRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="29" selection-start="285" selection-end="294" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="1904">
+        <state line="14" column="29" selection-start="285" selection-end="294" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="1904">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="233" column="0" selection-start="5068" selection-end="5085" vertical-scroll-proportion="-4.3846154" vertical-offset="3665" max-vertical-offset="11339">
+        <state line="233" column="0" selection-start="5068" selection-end="5085" vertical-scroll-proportion="0.0" vertical-offset="3961" max-vertical-offset="11407">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Participation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="13" selection-start="418" selection-end="423" vertical-scroll-proportion="-10.461538" vertical-offset="34" max-vertical-offset="1887">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="166" column="27" selection-start="3673" selection-end="3673" vertical-scroll-proportion="-3.0769231" vertical-offset="2611" max-vertical-offset="12512">
+        <state line="18" column="13" selection-start="418" selection-end="423" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1887">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Resources/views/User/accueil.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="58" selection-start="1945" selection-end="1945" vertical-scroll-proportion="-4.9038463" vertical-offset="204" max-vertical-offset="8092">
-          <folding>
-            <element signature="tag#ul#0;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
-            <element signature="tag#div#3;tag#div#0;tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#div#0" expanded="false" />
-            <marker date="1427448325722" expanded="false" signature="25055:25073" placeholder="..." />
-            <marker date="1427448325722" expanded="false" signature="28404:28422" placeholder="..." />
-          </folding>
+        <state line="27" column="58" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="9061">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FrontOffice/UserBundle/Controller/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="2" selection-start="1773" selection-end="5083" vertical-scroll-proportion="0.34136546" vertical-offset="850" max-vertical-offset="8772">
+        <state line="140" column="2" selection-start="1773" selection-end="5083" vertical-scroll-proportion="-9.769231" vertical-offset="2126" max-vertical-offset="10132">
           <folding>
             <element signature="e#53#113#0" expanded="true" />
-            <element signature="e#1775#5079#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FrontOffice/OptimusBundle/Entity/Event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="139" column="18" selection-start="2825" selection-end="2825" vertical-scroll-proportion="0.5698324" vertical-offset="2006" max-vertical-offset="12631">
+          <folding />
         </state>
       </provider>
     </entry>

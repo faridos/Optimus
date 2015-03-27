@@ -133,6 +133,13 @@ class Event {
     private $status;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbrvu", type="integer", nullable=true)
+     */
+    private $nbrvu;
+
+    /**
      * @var boolean $activer
      * @ORM\Column(name="activation", type="boolean", nullable=false)
      */
