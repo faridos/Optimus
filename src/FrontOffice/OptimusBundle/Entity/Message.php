@@ -64,6 +64,14 @@ class Message {
      * @ORM\Column(name="is_seen", type="boolean", nullable=true)
      */
     private $is_seen;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="event", type="integer", nullable=true)
+     * 
+     */
+    private $event;
+    
 
     public function __construct() {
 
@@ -108,7 +116,15 @@ class Message {
     public function getContent() {
         return $this->content;
     }
+    public function getEvent() {
+        return $this->event;
+    }
 
+    public function setEvent($event) {
+        $this->event = $event;
+    }
+
+    
     /**
      * Set msgTime
      *
