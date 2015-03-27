@@ -443,12 +443,13 @@
                                                 animation: google.maps.Animation.DROP,
                                                 title: "Cliquez pour voir aperçu"
                                         });
+                                        
                                         var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
                                         '<div class="propImg">' +
                                         '<img class="closeInfo" src="/Optimus/web/template/images/prop/1-1-thmb.png">' +
-                                        '<div class="propBg">' +
+                                        '<div class="propBg closeInfo">' +
                                         '<div class="propPrice">{{event.frais}} &euro;</div>' +
-                                        '<div class="propType">{{event.type.nom}}</div>' +
+                                        '<div class="propType">{{event.type}}</div>' +
                                         '</div>' +
                                         '</div>' +
                                         '<div class="paWrapper">' +
