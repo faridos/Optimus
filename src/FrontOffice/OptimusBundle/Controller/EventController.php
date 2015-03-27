@@ -48,18 +48,7 @@ class EventController extends Controller {
     
     
     
-    /**
-     * 
-     *
-     * @Route("/test", name="show_event2", options={"expose"=true})
-     * @Method("GET|POST")
-     * @Template()
-     */
-    public function showAction() {
-        $em = $this->getDoctrine()->getManager();
-        $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find(16);
-        return $this->render('FrontOfficeOptimusBundle:Event:showEvent.html.twig',array('event'=>$event));
-    }
+
 
     /**
      * 
@@ -76,8 +65,7 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $event = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
-       
-        
+
         if (!$event || $event->getActive() == false) {
             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
@@ -91,7 +79,12 @@ class EventController extends Controller {
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
-       
+
+        $nbr1 = $event->getNbrvu();
+        $nbr = $nbr1 + 1 ;
+        $event->setNbrvu($nbr);
+        $em->merge($event);
+        $em->flush();
         return $this->render('FrontOfficeOptimusBundle:Event:showEvent.html.twig', array('user'=> $user,
             'event' => $event,
             
@@ -158,6 +151,7 @@ class EventController extends Controller {
         $event->setCreateur($user);
         $event->setDateModification(null);
         $event->setActive(true);
+        $event->setNbrvu(0);
         $form = $this->createForm(new EventType, $event);
         $req = $this->get('request');
         if ($req->getMethod() == "POST") {

@@ -115,7 +115,14 @@
 
                                 </div>
                                 <div class="col-md-12">
-                                    <br/>
+                                   <div style="margin-top: 1px;"></div>
+
+                                    <img style=" margin-left: 80%; width: 4%;"title="{{ event.nbrvu }} ont lu cet événement" src="{{ asset('oeil-icone.png') }}"><span  style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">({{ event.nbrvu }})</span>
+                                  <a href="{{ path('show_accueil',{'id': event.id }) }}" >
+                                    <img style=" margin-top: 2px; width: 4%;"title="{{ event.eventcomments|length }} personnes ont commenté cet événement" src="{{ asset('commentaire.png') }}"><span  style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">({{ event.eventcomments|length }})</span>
+                                  </a>
+
+                                    <div style="margin-top: 4px;"></div>
                                 </div>
                             </div>
 
