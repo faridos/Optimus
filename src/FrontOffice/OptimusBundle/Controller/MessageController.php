@@ -36,7 +36,29 @@ class MessageController extends Controller {
             'entities' => $entities,
         );
     }
-
+/**
+     * Creates a new Message entity.
+     *
+     * @Route("/{id}/seen", name="message_seen", options={"expose"=true})
+     * @Method("GET|POST")
+     * 
+     */
+    public function updateMsgAction($id) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
+        $test = $message->getIsSeen();
+        die($id.''.$test);
+        if( $test == 0)
+        {
+            $message->setIsSeen(1);
+            $em->persist($message);
+            $em->flush();
+        }
+        return new Response($test);
+             
+        
+    }
+    
     /**
      * Creates a new Message entity.
      *
@@ -226,7 +248,29 @@ class MessageController extends Controller {
             'delete_form' => $deleteForm->createView(),
         );
     }
+/**
+     * 
+     *
+     * @Route("/repondre/message", name="repondre_message", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function repondreMsgAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $content = $request->get("message");
+        $sender = $request->get("sender");
+        $message = new Message();
+        $message->setReciever($sender);
+        $message->setSender($user);
+        $message->setMsgTime(new \DateTime());
+        $message->setContent($content);
+        $em->persist($message);
+        $em->flush();
 
+        return new Response($sender);
+    }
     /**
      * Deletes a Message entity.
      *

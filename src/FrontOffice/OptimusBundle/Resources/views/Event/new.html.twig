@@ -13,7 +13,7 @@
                 </div>
                 <div class="row">
                     <div id="notdate" style="display: none;" class="alert alert-danger">
-                        <a class="close" data-dismiss="alert">×</a>
+                        {#<a class="close" data-dismiss="alert">×</a>#}
                         date fin ne doit pas inferieur au date debut
                     </div>
                     <form action="{{ path("add-event") }}" {{ form_enctype(form) }} method="post">
@@ -82,6 +82,7 @@
         </div>
         <div class="clearfix"></div>
     </div>
+                        
 {% endblock %}
 {% block javascriptfils %}
     <script>
