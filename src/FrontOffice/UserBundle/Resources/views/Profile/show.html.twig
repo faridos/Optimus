@@ -35,7 +35,12 @@
 
 
 <div class="col-lg-12">
+    
 <div style="margin-top: 2%"></div>
+<div id="invitation-envoyées" style="display: none;" class="alert alert-success">
+<a class="close" id="closemessag">×</a>
+les invitations ont été envoyées 
+</div>
 <div class="tabsContainer">
 <ul class="nav nav-tabs nav-justified" role="tablist">
 <li class="active"><a href="#env" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Events</a></li>
@@ -595,10 +600,10 @@ Palmarés Supprimer
 {% set i = 0 %}
 {% set friends = getFriends(env.createur.id) %}
 {%for friend in friends %}
-{% set participantOuNon=ParticipantOuNon(env,friend) %}
+{% set participantOuNon = ParticipantOuNon(env,friend) %}
 {% if participantOuNon == 0 %}
 {% set i = i+1 %}
-<input id="listefrirnd{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}" /><a href="#" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{friend.username}}">
+<input id="listefrirnd{{env.id}}{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}" /><a href="#" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{friend.username}}">
 {#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
 {% if friend.path == null %}
 {% if friend.sexe == 'H' %}
@@ -1041,6 +1046,9 @@ $(function() {
 $("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
 });</script>
 <script>
+    $('#closemessag').click(function(){
+$('#invitation-envoyées').hide();  
+});
 {% for env in user.evenements %}
 $("#envoyerinvitfriendsubmit{{env.id}}").click(function(){
 $("#envoyerinvitfriendsubmit{{env.id}}").hide();
@@ -1053,12 +1061,12 @@ var i = 0 ;
 {%for friend in friends %}
 {% set participantOuNon=ParticipantOuNon(env,friend) %}
 {% if participantOuNon == 0 %}
-if(document.getElementById('listefrirnd{{friend.id}}').checked){
-name[i]= $("#listefrirnd{{friend.id}}").val();
+if(document.getElementById('listefrirnd{{env.id}}{{friend.id}}').checked){
+name[i]= $("#listefrirnd{{env.id}}{{friend.id}}").val();
 i=i+1;
 test = 'true';
 }
-alert(test);
+//alert(test);
 {% endif %}
 {% endfor %}
 //alert(name);
@@ -1072,7 +1080,7 @@ $('#loader{{env.id}}').hide();
 $("#envoyerinvitfriend{{env.id}}").hide();
 $('.modal-backdrop').hide();
 $("#envoyerinvitfriendsubmit{{env.id}}").show();
-$('#invitation-envoyées{{env.id}}').show();
+$('#invitation-envoyées').show();
 {%for friend in friends %}
 {% set participantOuNon=ParticipantOuNon(env,friend) %}
 {% if participantOuNon == 0 %}
