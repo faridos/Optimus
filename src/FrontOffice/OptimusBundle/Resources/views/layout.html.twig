@@ -170,7 +170,7 @@ margin-left: 18px;"><span class="icon-magnifier"></span></button>
 {% set messages = getNonSeenMessage(app.user.id) %}
 {% set i = 0 %}
     {% for message in messages %}
-        {% if message.getIsSeen == false %}
+        {% if message.vu == 0 %}
             {% set i = i+1 %}
             {% endif %}
         {% endfor %}
@@ -182,13 +182,13 @@ margin-left: 18px;"><span class="icon-magnifier"></span></button>
 </a>
 <div class="dropdown-menu pull-right notifyMenu" role="menu">
 <div class="notifyHeader">
-<span>Messages</span>
+<span>Messages </span>
 <a href="#" class="notifySettings icon-settings"></a>
 <div class="clearfix"></div>
 </div>
 <ul id="id_message" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
 {% for message in messages %}
-{% if message.getIsSeen == false %}
+{% if message.vu == 0 %}
 <li style="background: #EFEFEF;;" class="message_{{message.id}}" id="{{ message.id }}">
 <a href="#" id="descumessage{{message.id}}" data-toggle="modal">
 {% if message.sender.path == null %}
@@ -199,6 +199,7 @@ margin-left: 18px;"><span class="icon-magnifier"></span></button>
 {% endif %}
 {% else %}
 <img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" alt="avatar">
+
 {% endif %}
 <div class="pulse border-grey "></div>
 <div id="{{ message.sender.id }}" class="notify pull-left  ">
@@ -223,7 +224,7 @@ margin-left: 18px;"><span class="icon-magnifier"></span></button>
 <div class="pulse border-grey "></div>
 <div id="{{ message.sender.id }}" class="notify pull-left  ">
 <div class="notifyName" style="font-weight: bold"> {{ message.sender.username }}</div><div class="texte">{{ message.content }}</div>
-<div class="notifyTime">{{ message.getDuréeMsg() }}</div>
+<div class="notifyTime">{{ message.getDuréeMsg() }} </div>
 </div>
 <div class="clearfix"></div>
 </a>
@@ -513,7 +514,7 @@ type: "POST",
            '<img src="' + photo + '" class="img-responsive img-circle" width="30" >' +
            '</div>' +
            '<div class="col-md-10 pull-left" style="background:white;">' +
-           '<p>' + message + '</p>' +
+           '<p>' + message  + '</p>' +
            '</div></div><hr>'
            );
            $('#newmessage{{message.id}}').val("");
@@ -533,7 +534,11 @@ $.ajax({
    
    url: Routing.generate('message_seen', {'id':{{message.id}}}),
    success: function(data) {
-       var test = {{message.getIsSeen()}}
+        {% if message.vu == 0 %}
+       var test = 0 ;
+       {%else%}
+            var test = 1 ;
+            {%endif %} 
        if(test != 1){
        var nb =  parseInt($('#samirMsg').text());
        var nouveauNb = nb - 1;
