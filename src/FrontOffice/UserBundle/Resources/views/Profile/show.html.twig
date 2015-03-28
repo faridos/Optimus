@@ -1048,16 +1048,17 @@ $('#loader{{env.id}}').show();
 var event = $("#inviterevent{{env.id}}").val();
 var name = new Array;
 test = 'false';
-
+var i = 0 ;
 {% set friends = getFriends(env.createur.id) %}
 {%for friend in friends %}
 {% set participantOuNon=ParticipantOuNon(env,friend) %}
 {% if participantOuNon == 0 %}
 if(document.getElementById('listefrirnd{{friend.id}}').checked){
 name[i]= $("#listefrirnd{{friend.id}}").val();
-
+i=i+1;
+test = 'true';
 }
-
+alert(test);
 {% endif %}
 {% endfor %}
 //alert(name);
