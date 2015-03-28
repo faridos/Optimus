@@ -93,10 +93,15 @@ les invitations ont été envoyées
 </div>
 <div class="col-md-4" style=" margin-left: -7%;">
 <div class="pc-title osLight"><div class="title eventus">Type d'évenement : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.type}}</span></div>
-<div class="title eventus">Nombre de places : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.nbrPlaces}}</span></div>
+{% if event.nbrPlaces %}
+ <div class="title eventus">Nombre de places : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.nbrPlaces}}</span></div>
+ {% endif %}
+ {% if event.frais %}
 <div class="title eventus">Frais participation : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.frais}} &euro; </span></div>
+{% endif %}
+ {% if event.description %}
 <div class="title eventus">Description : <span class="address leftus"style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.description}}</span></div>
-
+{% endif %}
 </div>
 
 
@@ -435,8 +440,11 @@ document.getElementById('listefrirnd{{friend.id}}').checked=false;
 <script>
 "use strict";
 function initialize() {
-
-var mapevent = new google.maps.Map(document.getElementById('map-event'));
+ var options = {
+                            zoom : 15,
+                            mapTypeId: google.maps.MapTypeId.HYBRID
+                            };
+var mapevent = new google.maps.Map(document.getElementById('map-event'),options);
 if (navigator.geolocation) {
 
 navigator.geolocation.getCurrentPosition(function (position) {
