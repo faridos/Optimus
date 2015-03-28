@@ -12,8 +12,8 @@
 
     var options = {
 
-            zoom : 12
-
+            zoom : 15,
+            mapTypeId: google.maps.MapTypeId.HYBRID,
         };
 
     var styles = [{
@@ -252,7 +252,7 @@
 
        
 
-        map.setZoom(12);
+        map.setZoom(15);
 
 
 

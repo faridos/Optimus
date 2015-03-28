@@ -1,8 +1,12 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 {% block body %}
     <div id="wrapper">
+      
+        <input style="width: 50%;" type="text" class="form-control" id="pac-input2" placeholder="Entrer ici votre région" autocomplete="on" size="60">
+ 
         <div id="mapView" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
         <div id="content" class="mob-max" style="height: 356px;">
+        
             <div id="content2" class="col-lg-12"><div class="row mb20">
                 </div>
 
@@ -30,7 +34,7 @@
                                     <div class="notificationsWidget tooltipsContainer">
                                         <div class="notification">
                                             <div class="time green">
-                                                <a href="{{ path('show_event', { 'id' : event.id }) }}" class="timeBody hidden-xs" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="voir" {% if date(event.dateFin) < date() %} style="background-color: rgba(192, 33, 0, 0.2); color: #000;"{% endif %}>{{ event.titre }}</a>
+                                                <a href="{{ path('show_event', { 'id' : event.id }) }}" class="timeBody hidden-xs" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="Voir profil d'évènement" {% if date(event.dateFin) < date() %} style="background-color: rgba(192, 33, 0, 0.2); color: #000;"{% endif %}>{{ event.titre }}</a>
                                                 <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
                                                 <div class="indicator"><span class="fa fa-circle-o"></span></div>
                                                 <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
@@ -41,12 +45,12 @@
 
                                                         {% if event.createur.path == null %}
                                                             {% if event.createur.sexe == 'H' %}
-                                                                <img class="avatar pull-left " src="{{ asset('men.png') }}" alt="avatar" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="voir">
+                                                                <img class="avatar pull-left " src="{{ asset('men.png') }}" alt="avatar" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="Profil">
                                                             {% else %}
-                                                                <img class="avatar pull-left" src="{{ asset('women.png') }}"  data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="voir">
+                                                                <img class="avatar pull-left" src="{{ asset('women.png') }}"  data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="Profil">
                                                             {% endif %}
                                                         {% else %}
-                                                            <img class="avatar pull-left" src="{{ asset(event.createur.WebPath)}}" alt="avatar">
+                                                            <img class="avatar pull-left" src="{{ asset(event.createur.WebPath)}}" alt="avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="Profil">
                                                         {% endif %}
                                                     </a>
                                                     <div class="notify pull-left">
@@ -54,9 +58,15 @@
                                                         <div class="info">
                                                             <div class="address">{{ event.lieu }}</div>
                                                             <div class="title">Date début :{{ event.dateDebut|date('d/m/Y à H:i')}}</div><div class="title">Date de fin :{{ event.dateFin|date('d/m/Y à H:i') }}</div>
+                                                            {% if event.nbrPlaces %}
                                                             <div class="title">Nombre de places: {{ event.nbrPlaces }} </div>
+                                                            {% endif %}
+                                                            {% if event.frais %}
                                                             <div class="title">Prix: {{ event.frais }} &euro;</div>
+                                                            {% endif %}
+                                                            {% if event.description %}
                                                             <div class="title">Déscription: {{event.description|raw}}</div>
+                                                            {% endif %}
                                                         </div>
                                                         <br/>
                                                         <div class="buttonsWrapper pb20" id="append{{event.id}}">
@@ -176,9 +186,11 @@
                             var map;
                             var pos;
                             var options = {
-                            zoom : 14
-
-                            };{% for event in events %}
+                            zoom : 15,
+                            mapTypeId: google.maps.MapTypeId.HYBRID
+                            };
+                        var markers = [];                        
+                    {% for event in events %}
                             $("#btnmsg_{{event.id}}").on('click', function () {
                     $("#btnmsg_{{event.id}}").hide();
                             $('#btnlod_{{event.id}}').show();
@@ -301,7 +313,7 @@
 
 
                                             map = new google.maps.Map(document.getElementById('mapView'), options);
-                                                    map.setZoom(14);
+                                                    map.setZoom(15);
                                                     
                                                     var markerevent;
         var geocoder;
@@ -374,7 +386,9 @@
                                                             '<div class="propImg">' +
                                                             '<img class="closeInfo" src="' + image + '">' +
                                                             '<div class="propBg closeInfo">' +
+                                                            {% if event.frais %}
                                                             '<div class="propPrice">{{event.frais}} &euro;</div>' +
+                                                            {% endif %}
                                                             '<div class="propType">{{event.type}}</div>' +
                                                             '</div>' +
                                                             '</div>' +
@@ -441,7 +455,37 @@
                                                                 }
                                                         });
                                                     });
-                                                                                                        {% endfor %}
+                                                       {% endfor %}
+                                           
+                                                       var input = (document.getElementById('pac-input2'));
+                                                       map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+                                                        var searchBox = new google.maps.places.SearchBox((input));
+                                                        google.maps.event.addListener(searchBox, 'places_changed', function () {
+                                                        var places = searchBox.getPlaces();
+                                                                if (places.length == 0) {
+                                                        return;
+                                                        }
+
+                                                        markers = [];
+                                                                var bounds = new google.maps.LatLngBounds();
+                                                                for (var i = 0, place; place = places[i]; i++) {
+                                                        var image = {
+                                                        url: place.icon,
+                                                                size: new google.maps.Size(71, 71),
+                                                                origin: new google.maps.Point(0, 0),
+                                                                anchor: new google.maps.Point(17, 34),
+                                                                scaledSize: new google.maps.Size(25, 25)
+                                                        };
+                                                                bounds.extend(place.geometry.location);
+                                                        }
+
+                                                        map.fitBounds(bounds);
+                                                                map.setZoom(15);
+                                                        });
+                                                        google.maps.event.addListener(map, 'bounds_changed', function () {
+                                                        var bounds = map.getBounds();
+                                                                searchBox.setBounds(bounds);
+                                                        });
                                                     }, 300);
                                             })(jQuery);                                                                                        {%for event in events %}
                                                         $('#exit_event{{event.id}}').click(function() {
