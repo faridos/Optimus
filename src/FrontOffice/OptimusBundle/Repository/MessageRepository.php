@@ -15,11 +15,12 @@ class MessageRepository extends EntityRepository {
     public function NonseenMsg($id) {
         $em = $this->getEntityManager();
         $query = $em->createQuery("SELECT m, u FROM FrontOfficeOptimusBundle:Message m"
-                        . " LEFT JOIN m.sender u where m.is_seen = 0 and m.reciever = :id"
+                        . " LEFT JOIN m.sender u where  m.reciever = :id"
                         . " ORDER BY m.msgTime DESC ")
                 ->setParameter('id', $id);
         return  $query->getResult();
     }
+    
 
     public function NonseenMsgAjax($id) {
           $em = $this->getEntityManager();

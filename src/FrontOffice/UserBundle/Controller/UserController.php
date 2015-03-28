@@ -158,6 +158,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
+        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findby(array('reciever' => $user1->getId()),array('is_seen' => 'asc'));
         $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findBy(array('participant' => $user), array('datePaticipation' => 'desc'));
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('entraineur' => $user));
         if ($notification) {
