@@ -64,12 +64,6 @@ class Message {
      * @ORM\Column(name="is_seen", type="boolean", nullable=true)
      */
     private $is_seen;
-      /**
-     * @var boolean
-     *
-     * @ORM\Column(name="vu", type="boolean", nullable=true)
-     */
-    private $vu;
     /**
      * @var integer
      *
@@ -230,25 +224,6 @@ class Message {
         endif;
         return $durée;
     }
-    
-    
-    public function getIs_seen() {
-        return $this->is_seen;
-    }
-
-    public function getVu() {
-        return $this->vu;
-    }
-
-    public function setIs_seen($is_seen) {
-        $this->is_seen = $is_seen;
-    }
-
-    public function setVu($vu) {
-        $this->vu = $vu;
-    }
-
-
 
 //         public function __toString()
 //    {

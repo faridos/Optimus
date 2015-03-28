@@ -46,11 +46,11 @@ class MessageController extends Controller {
     public function updateMsgAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
         $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
-        $test = $message->getVu();
+        $test = $message->getIsSeen();
         die($id.''.$test);
         if( $test == 0)
         {
-            $message->setVu(1);
+            $message->setIsSeen(1);
             $em->persist($message);
             $em->flush();
         }
