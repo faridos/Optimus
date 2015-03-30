@@ -39,18 +39,18 @@ class MessageController extends Controller {
 /**
      * Creates a new Message entity.
      *
-     * @Route("/{id}/seen", name="message_seen", options={"expose"=true})
+     * @Route("/ssssseen", name="message_seen", options={"expose"=true})
      * @Method("GET|POST")
      * 
      */
-    public function updateMsgAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
+    public function updateMsgAction() {
+        $em = $this->getDoctrine()->getEntityManager();		$id = $_POST["id"];       
         $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
-        $test = $message->getIsSeen();
-        die($id.''.$test);
+        $test =  $message->getVu();
+       
         if( $test == 0)
         {
-            $message->setIsSeen(1);
+            $message->setVu(1);
             $em->persist($message);
             $em->flush();
         }
@@ -263,6 +263,8 @@ class MessageController extends Controller {
         $sender = $request->get("sender");
         $message = new Message();
         $message->setReciever($sender);
+		
+		$message->setVu(0);
         $message->setSender($user);
         $message->setMsgTime(new \DateTime());
         $message->setContent($content);
@@ -312,22 +314,6 @@ class MessageController extends Controller {
         ;
     }
 
-    /**
-     * Creates a new Message entity.
-     *
-     * @Route("/{id}/seen", name="message_seen", options={"expose"=true})
-     * @Method("GET|POST")
-     * 
-     */
-    public function seenMsgAction($id) {
 
-        $em = $this->getDoctrine()->getManager();
-        $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
-        $message->setIsSeen(true);
-        $em->persist($message);
-        $em->flush();
-        $response = new Response($id);
-        return $response;
-    }
 
 }
