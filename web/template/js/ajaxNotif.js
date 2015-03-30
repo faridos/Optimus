@@ -28,9 +28,13 @@ $('#envoyerMessage').click(function()
 {
     var id = $('.idReciever').attr('id');
     var txt = $('#txt-message').val();
+    $('#envoyerMessage').hide();
+$('#loader_envoie_message').show();
 
     $.ajax({
-        url: Routing.generate('message_send', {'id': id, 'content': txt}),
+        type: "POST",
+        url: Routing.generate('message_send'),
+        data: {id:id, content:txt},
 //        error: function() {
 //            $('#messageEch').show();
 //            $('#messageEnvoyer').hide();
@@ -39,6 +43,8 @@ $('#envoyerMessage').click(function()
             $('#messageEch').hide();
             $('#messageEnvoyer').show().delay(3000).fadeOut();
             $('textarea').val('');
+            $('#loader_envoie_message').hide();
+            $('#envoyerMessage').show();
         }
     });
 

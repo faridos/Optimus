@@ -62,26 +62,29 @@ class MessageController extends Controller {
     /**
      * Creates a new Message entity.
      *
-     * @Route("/{id}/send/{content}", name="message_send", options={"expose"=true})
+     * @Route("/envoie/msg", name="message_send", options={"expose"=true})
      * @Method("GET|POST")
      * 
      */
-    public function createAction($id, $content, Request $request) {
+    public function createAction() {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
+         $request = $this->get('request');
         $message = new Message();
+       $id =  $request->get("id");
+        $content = $request->get('content');
         $em = $this->getDoctrine()->getEntityManager();
         $sender = $this->container->get('security.context')->getToken()->getUser();
-        $destinatair = $em->getRepository('FrontOfficeUserBundle:User')->findOneBy(array('id' => $id));
-        $conversation1 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' => $destinatair));
-        $conversation2 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $destinatair, 'user2' => $sender));
+      
+        $conversation1 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' =>  $id));
+        $conversation2 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' =>  $id, 'user2' => $sender));
         if ($conversation1 == null && $conversation2 == null) {
             $convers = new Conversation();
             $convers->setStarttime(new \Datetime());
             $convers->setUser1($sender);
-            $convers->setUser2($destinatair);
+            $convers->setUser2( $id);
             $em->persist($convers);
             $em->flush();
             $newconvers_toshow = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' => $destinatair));

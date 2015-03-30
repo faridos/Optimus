@@ -96,4 +96,47 @@ class ParticipationController extends Controller {
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+    /**
+     * Deletes a Club entity.
+     *
+     * @Route("/event/{id}/participant/{id_participant}/quitter", name="exit_event_participant", options={"expose"=true})
+     * 
+     */
+    public function exitEventamiAction($id,$id_participant) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+     
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('FrontOfficeUserBundle:User')->find($id_participant);
+        $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+        $p = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findBy(array('event' => $event, 'participant' => $user));
+        if($p != null){
+        $em->remove($p[0]);
+        $em->flush();
+         $etat = 0 ;
+         $msg = "Participer";
+         $msgmap="Participer";
+        }  else {
+              $newparticipation = new Participation();
+        $newparticipation->setParticipant($user);
+        $newparticipation->setEvent($event);
+
+        $em->persist($newparticipation);
+        $em->flush();
+         $action = 'participation';
+        $eventhistory = new HistoryEventEvent($user, $event, $action);
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        $etat = 1 ;
+        $msg = "Annuler participation";
+        $msgmap ="Annuler";
+        }
+        
+        $response = new Response();
+        $response->setContent(json_encode(array('msg' => $msg ,'etat' => $etat,'msgmap'=>$msgmap )));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
 }

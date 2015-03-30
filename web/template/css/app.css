@@ -480,15 +480,14 @@ overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 490
 
 ul.tab-pane.fade.scrollbar{
 
-overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 600px;background-color:#fff;
+overflow-wrap: break-word; max-height: 600px;background-color:#fff;
 
     }  
 
 ul.tab-pane.fade.active.in.scrollbar{
 
 
-     overflow-x: hidden;
-      overflow-y: auto;
+  
        overflow-wrap: break-word; 
        max-height: auto;
        background-color:#fff;
