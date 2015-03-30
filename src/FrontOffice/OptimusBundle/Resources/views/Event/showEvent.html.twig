@@ -30,7 +30,7 @@ les invitations ont été envoyées
 
 <div class="col-lg-12">
 
-<div class="userWidget-1 manamus">
+<div class="userWidget-1 manamus" {% if date(event.dateFin)<= date() %}style="background-color: #ddd"{% endif %}>
 <div class="avatar" id="main">
 <div class="col-md-4">
 <div class="propWidget-1 logotus tooltipsContainer ">
@@ -45,20 +45,21 @@ les invitations ont été envoyées
 <img src="{{ asset(event.WebPath) }}" class="inline-block imaguss">
 </a>
 {% endif %}
-
+{% if event.createur == app.user %}
 <div class="priceCap paddus">    <button href="#modifierphotoevent" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo"><span class="notifyIcon fa fa-camera-retro"></span></button>
 </div>
-
+{% endif %}
 </div>
 </div>
 </div>
-
+  {% if date(event.dateFin)> date() %}
 {% if event.createur == app.user %}
 <div class="ops">
 <a class="btn btn-round btn-default btn-sm" href="#inviteramievent" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Inviter</span></a>
 <a class="btn btn-round btn-default btn-sm" href="{{ path('update-event',{id: event.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
 <a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a> 
 </div>
+{% endif %}
 {% endif %}
 <div class="name osLight profilus namusclubus"><strong>{{event.titre}}</strong></div>
 </div>
@@ -78,7 +79,13 @@ les invitations ont été envoyées
 <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with { 'id' : 'E'~event.id } %}</div>
 {% endif %}
 </div>
-<div class="label label-danger " style="margin-left: 30%;font-size: 14px ;">Nombre de participants : <span  id="nbparticip"> {{event.participations|length}}</span></div>
+<div class="label label-danger " style="margin-left: 30%;font-size: 14px ;">
+    {% if date(event.dateFin)> date() %}
+    Nombre de participants : <span  id="nbparticip"> {{event.participations|length}}</span>
+    {% else %}
+        Cette évènement est depassé
+         {% endif %}
+</div>
 
 <br/><br/>
 <div class="col-md-4 pb20">
@@ -108,8 +115,9 @@ les invitations ont été envoyées
 </div>
 <div class="col-md-12"></div>
 <div class="col-md-6  pb20" id="append">
+    {% if date(event.dateFin)> date() %}
 {% if event.createur.id != app.user.id%}
-{% if not isparticipant and date(event.dateFin)>= date() %}
+{% if not isparticipant %}
 <a class="btn btn-green btn-round eventus " href="#"  id="exit_event">
     <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
 </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
@@ -121,10 +129,10 @@ les invitations ont été envoyées
 {% endif %}
 </div>
 <div class="col-md-6">
-{% if isparticipant and date(event.dateFin)>= date() %}
+{% if isparticipant %}
 <div class="buttonsWrapper pb20 buttonleftus" id="append2">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
 {% endif %}
-
+{% endif %}
 </div>
 <div class="col-md-12">
 <div style="margin-top: 1px;"></div>
