@@ -30,6 +30,7 @@ les invitations ont été envoyées
 
 <div class="col-lg-12">
 
+
 <div class="userWidget-1 manamus" {% if date(event.dateFin)<= date() %}style="background-color: #ddd"{% endif %}>
 <div class="avatar" id="main">
 <div class="col-md-4">
@@ -106,15 +107,19 @@ les invitations ont été envoyées
  {% if event.frais %}
 <div class="title eventus">Frais participation : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.frais}} &euro; </span></div>
 {% endif %}
- {% if event.description %}
+ 
+</div>
+
+</div>
+
+{% if event.description %}
+    <div class="col-md-12 pb20">
 <div class="title eventus">Description : <span class="address leftus"style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{event.description}}</span></div>
-{% endif %}
 </div>
-
-
-</div>
+    {% endif %}
+    <div style="margin-top: 10%"></div>
 <div class="col-md-12"></div>
-<div class="col-md-6  pb20" id="append">
+<div class="col-md-6  pb20" style=" margin-top: 4%;" id="append">
     {% if date(event.dateFin)> date() %}
 {% if event.createur.id != app.user.id%}
 {% if not isparticipant %}
@@ -130,7 +135,7 @@ les invitations ont été envoyées
 </div>
 <div class="col-md-6">
 {% if isparticipant %}
-<div class="buttonsWrapper pb20 buttonleftus" id="append2">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
+    <div class="buttonsWrapper pb20 buttonleftus" style="margin-top: 8%;" id="append2">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
 {% endif %}
 {% endif %}
 </div>
@@ -148,13 +153,10 @@ les invitations ont été envoyées
 
 </div>
 
-
-
-
-
-
 <div class="clearfix"></div>
 </div>
+
+
 <div class="tabsContainer">
 <ul class="nav nav-tabs nav-justified" role="tablist">
 <li class="active"><a href="#participants" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
