@@ -76,7 +76,7 @@
 
                             map: map,
 
-                            icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-position.png'),
+                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
 
                             draggable: false,
 

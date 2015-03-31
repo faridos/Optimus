@@ -5,7 +5,7 @@
             <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.generateCsrfToken('authenticate')}}" />
             <div class="form-group">
                 <label class="sr-only" for="email">Email address</label>
-                <input type="text" name="_username" value="" required="required" class="form-control round" id="email" placeholder="Email OR Pseudo " autocomplete="on" >
+                <input type="text" name="_username" value="" required="required" class="form-control round" id="email" placeholder="Email ou Pseudo " autocomplete="on" >
             </div>
             <div class="form-group">
                 <label class="sr-only" for="password">Mot de passe</label>
@@ -21,7 +21,7 @@
     <div class="search-panel">
         <form class="form-inline" role="form">
             <div class="form-group">
-                <img src="{{ asset('/Optimus/web/template/images/marker-green.png') }}">"&gt;
+                <img src="{{ asset('http://www.optimus-beta.com/web/template/images/marker-green.png') }}">
             </div>
             <div class="form-group">
                 <input style="border-radius:25px" type="text" class="form-control" id="pac-input2" placeholder="Entrer ici votre région" autocomplete="on" size="60">
@@ -91,7 +91,7 @@ var markers = [];
                             var marker_{{ event.id}} = new google.maps.Marker({
                             position: myLatLng,
                             map: map,
-                            icon: new google.maps.MarkerImage(url + '/web/template/images/marker-green.png'),
+                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-green.png'),
                             draggable: false,
                             animation: google.maps.Animation.DROP,
                             title: "Cliquez pour voir aperçu"

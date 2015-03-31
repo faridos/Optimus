@@ -126,7 +126,7 @@ var newMarker = new google.maps.Marker({
 
 position: posevent,
 map: mapAddEv,
-icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-position.png'),
+icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
 draggable: false,
 animation: google.maps.Animation.DROP
 
@@ -168,7 +168,7 @@ google.maps.event.addListener(mapAddEv, 'click', function(event) {
                     draggable: true,
                     animation: google.maps.Animation.DROP,
                 });
-                markerevent.setIcon('/Optimus/web/template/images/marker-green.png');
+                markerevent.setIcon('http://www.optimus-beta.com/web/template/images/marker-green.png');
             }
             else {
                 markerevent.setPosition(location);

@@ -46,7 +46,7 @@ Changement abouti
                                                 </div>
                                             </td>
                                             <td>
-                                             
+                                              <p id="message" style="display: none">Enregistrer<p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -87,7 +87,7 @@ Changement abouti
                 }else{
                       var test = 0;
                 }
-                 $('#modifier-setting').show();
+                
                  $('#message').fadeIn(5000);
                 $.ajax({
                     url: Routing.generate('setting_profil'),
