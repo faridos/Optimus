@@ -390,5 +390,28 @@ class EventController extends Controller {
        
     }
 
+     /**
+     * 
+     *
+     * @Route("/test", name="test", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function SetTimeAction() {
+       return $this->render('FrontOfficeOptimusBundle:Event:test.html.twig'); 
+    }
+    
+    /**
+     * 
+     *
+     * @Route("/test2", name="test2", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function SetTime2Action() {
+        $var="test";
+       
+       return new Response($var); 
+    }
 }
 

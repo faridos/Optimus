@@ -1,0 +1,14 @@
+test SetInterval
+
+
+<script>
+    setInterval(function(){ 
+          alert("ttooo");
+            $.ajax({
+                    url: Routing.generate('test2'),
+                            success: function(data) {
+                           alert("tty");
+                            }
+                    });   alert("ttiuyy");
+    }, 5000);
+</script>
