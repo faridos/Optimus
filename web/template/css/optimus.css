@@ -92,3 +92,13 @@ height:115px;
 padding-top:1px;
 
 }
+.label.labelus {
+  margin-right: 10px;
+  float: right;
+}
+
+.row.descriptus {
+  margin-left:-250px;
+  margin-right: 10px;
+  margin-top: 0px;
+}
