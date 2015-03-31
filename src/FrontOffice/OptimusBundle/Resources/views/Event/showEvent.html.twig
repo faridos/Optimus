@@ -338,11 +338,28 @@ les invitations ont été envoyées
 {% set participantOuNon=ParticipantOuNon(event,friend) %}
 {% if participantOuNon == 0 %}
 {% set i = i+1 %}
-<input id="listefrirnd{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}" /><a href="#" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{friend.username}}">
-{#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
-{% if friend.path == null %}
+     <label class="checkbox custom-checkbox">
+            <input id="listefrirnd{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}">
+            <span class="fa fa-check" style="margin-top: 3%;"></span>
+            {% if friend.path == null %}
 {% if friend.sexe == 'H' %}
-<img style="width: 10%;" src="{{ asset('men.png') }}">
+<img  style="width: 10%;margin-left: 4%;" src="{{ asset('men.png') }}">
+{% else %}
+<img  style="width: 10%;margin-left: 4%;" src="{{ asset('women.png') }}">
+{% endif %}
+{% else %}
+<img  style="width: 10%;margin-left: 4%;"  src="{{ asset(friend.WebPath)}}" alt="avatar" ></a>
+{% endif %}
+Pseudo: {{friend.username}}
+<div style="margin-top: 2%;"></div>
+</label>
+{% endif %}
+        
+{#<input id="listefrirnd{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}" /><a href="#" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{friend.username}}">
+{#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
+{#{% if friend.path == null %}
+{% if friend.sexe == 'H' %}
+{#<img style="width: 10%;" src="{{ asset('men.png') }}">
 {% else %}
 <img style="width: 10%;" src="{{ asset('women.png') }}">
 {% endif %}
@@ -351,8 +368,8 @@ les invitations ont été envoyées
 {% endif %}
 <span style="margin-left:10%;">Pseudo: {{friend.username}}</span>
 
-<div style="margin-top: 2%;"></div>
-{% endif %}
+<div style="margin-top: 2%;"></div>#}
+{#{% endif %}#}
 {% endfor %}
 {% if i == 0 %}                
 
