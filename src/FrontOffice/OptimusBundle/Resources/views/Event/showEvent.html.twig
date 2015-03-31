@@ -121,7 +121,7 @@ les invitations ont été envoyées
 <div class="col-md-12"></div>
 <div class="col-md-6  pb20" style=" margin-top: 4%;" id="append">
     {% if date(event.dateFin)> date() %}
-{% if event.createur.id != app.user.id%}
+
 {% if not isparticipant %}
 <a class="btn btn-green btn-round eventus " href="#"  id="exit_event">
     <span class="fa icon-action-redo "></span> <span >Participer</span>                                          
@@ -131,12 +131,12 @@ les invitations ont été envoyées
     <span class="fa icon-action-redo "></span> <span class="exitEvent">Annuler participation</span>                                          
 </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
 {% endif %}
-{% endif %}
+
 </div>
 <div class="col-md-6">
-{% if isparticipant %}
+
     <div class="buttonsWrapper pb20 buttonleftus" style="margin-top: 8%;" id="append2">{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
-{% endif %}
+
 {% endif %}
 </div>
 <div class="col-md-12">
