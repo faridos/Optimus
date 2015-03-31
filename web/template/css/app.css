@@ -5,7 +5,9 @@
 *::-moz-focus-inner {
     border: 0;
 }
-
+.inscri-plac::-webkit-input-placeholder {
+    color: #fff;
+}
 .cardRating{
 
     color: #eab134;
