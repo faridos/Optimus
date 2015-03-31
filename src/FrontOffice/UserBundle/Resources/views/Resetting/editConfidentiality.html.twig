@@ -4,6 +4,7 @@
         <div id="content" class="max">
             <div class="components">
                 <h4>Paramètres</h4>
+                
                 <div class="row">
                     <div class="col-md-3">
                         <ol class="breadcrumb">
@@ -17,9 +18,13 @@
                     <div class="col-md-9">
                         <div class="tabsContainer">
                             <div class="tab-content">
-                                <div class="tab-pane fade active in" id="compte">
+                                <div class="tab-pane fade active in col-sm-8" id="compte">
                                     Confidentialité
                                 </div>
+                                   <div id="modifier-setting" style="display: none;" class="alert alert-success col-sm-3">
+<a class="close" data-dismiss="alert">×</a>
+Changement abouti
+</div>
                                 <table class="table" id="{{app.user.id}}">
                                     <thead>
                                         <tr>
@@ -41,7 +46,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p id="message" style="display: none; margin-left: 60%;">Enregistrer<p>
+                                             
                                             </td>
                                         </tr>
                                         <tr>
@@ -82,7 +87,7 @@
                 }else{
                       var test = 0;
                 }
-              
+                 $('#modifier-setting').show();
                  $('#message').fadeIn(5000);
                 $.ajax({
                     url: Routing.generate('setting_profil'),
