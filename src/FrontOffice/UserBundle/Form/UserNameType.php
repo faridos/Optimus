@@ -12,7 +12,7 @@ class UserNameType extends AbstractType
     {
          $builder
                   
-                  ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle','attr'=>array('class'=>'search-optimus','style'=>'margin-top: 0px')));
+                  ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle','attr'=>array('class'=>'search-optimus','placeholder' => 'Pseudo (Obligatoire)','style'=>'margin-top: 0px')));
                   
      }
       /**

@@ -33,8 +33,8 @@ class ResettingFormType extends BaseType
         $builder->add('plainPassword', 'repeated', array(
             'type' => 'password',
             'options' => array('translation_domain' => 'FOSUserBundle'),
-            'first_options' => array('attr' => array('class' => 'search-optimus emailevus ','placeholder' => 'form.new_password')),
-            'second_options' => array('attr' => array('class' => 'search-optimus emailevus ','placeholder' => 'form.new_password_confirmation')),
+            'first_options' => array('attr' => array('class' => 'search-optimus emailevus ','placeholder' => 'form.new_password (Obligatoire)')),
+            'second_options' => array('attr' => array('class' => 'search-optimus emailevus ','placeholder' => 'form.new_password_confirmation (Obligatoire)')),
             'invalid_message' => 'fos_user.password.mismatch',
         ));
     }
