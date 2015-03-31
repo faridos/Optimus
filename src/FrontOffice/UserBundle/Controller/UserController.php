@@ -27,8 +27,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @Route("")
  */
-class UserController extends Controller
-{
+class UserController extends Controller {
 
     /**
      *
@@ -37,15 +36,10 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
-
-
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-
         $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findAll(array('active' => 1));
         $eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap();
-
         return $this->render('FrontOfficeUserBundle:User:redirect.html.twig', array('events' => $eventsMap));
     }
 
@@ -56,8 +50,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function accueilAction()
-    {
+    public function accueilAction() {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
 
@@ -66,7 +59,7 @@ class UserController extends Controller
         $frinds = $em->getRepository("FrontOfficeUserBundle:User")->getFrinds($user->getId());
         $listevents = array();
         $k = 0;
-         foreach ($events as $value) {
+        foreach ($events as $value) {
             $i = 0;
 
 
@@ -90,7 +83,6 @@ class UserController extends Controller
                         $k = $k + 1;
                     }
                 }
-
             }
 
             if ($i == 0) {
@@ -117,28 +109,22 @@ class UserController extends Controller
                                 $k = $k + 1;
                             }
                         }
-
                     }
-
-
                 }
-
             }
-
         }
         $c = 0;
 
         $eventss = array();
-        foreach ($listevents as  $ev) {
+        foreach ($listevents as $ev) {
 
 
             $id = $ev;
             $eventss[$c] = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
             $c = $c + 1;
-
         }
 
-              return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $eventss, 'eventsMap' => $eventsMap));
+        return $this->render('FrontOfficeUserBundle:User:accueil.html.twig', array('user' => $user, 'events' => $eventss, 'eventsMap' => $eventsMap));
     }
 
     /**
@@ -148,8 +134,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function getProfileUserAction($id)
-    {
+    public function getProfileUserAction($id) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -158,7 +143,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
-        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findby(array('reciever' => $user1->getId()),array('is_seen' => 'asc'));
+        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findby(array('reciever' => $user1->getId()), array('is_seen' => 'asc'));
         $participation = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findBy(array('participant' => $user), array('datePaticipation' => 'desc'));
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('entraineur' => $user));
         if ($notification) {
@@ -181,8 +166,7 @@ class UserController extends Controller
      * @Method("GET|POST")
      *
      */
-    public function addFriendAction($id)
-    {
+    public function addFriendAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user1 = $this->container->get('security.context')->getToken()->getUser();
         $user = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
@@ -207,8 +191,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template("FrontOfficeUserBundle:Profile:clubs_user.html.twig")
      */
-    public function clubsMemberAction($id)
-    {
+    public function clubsMemberAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user1 = $this->container->get('security.context')->getToken()->getUser();
         $userManager = $this->container->get('fos_user.user_manager');
@@ -233,8 +216,7 @@ class UserController extends Controller
      * @Method("GET|POST")
      *
      */
-    public function acceptAction($id)
-    {
+    public function acceptAction($id) {
         $em = $this->getDoctrine()->getManager();
         $Invitation = $em->getRepository('SlyRelationBundle:Relation')->find($id);
         $Invitation->setConfirmed(true);
@@ -251,8 +233,7 @@ class UserController extends Controller
      * @Method("GET|POST")
      *
      */
-    public function acceptprofilAction($id)
-    {
+    public function acceptprofilAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user1 = $this->container->get('security.context')->getToken()->getUser();
         $Invitation = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $id, 'object2Id' => $user1->getId()));
@@ -270,8 +251,7 @@ class UserController extends Controller
      * @Method("GET|POST")
      *
      */
-    public function deleteInvitationAction($id)
-    {
+    public function deleteInvitationAction($id) {
         $em = $this->getDoctrine()->getManager();
         $Invitation = $em->getRepository('SlyRelationBundle:Relation')->find($id);
         $em->remove($Invitation);
@@ -283,19 +263,18 @@ class UserController extends Controller
     /**
      *
      *
-     * @Route("profil={id}/retirer", name="delete_relation")
+     * @Route("retirer/ami", name="delete_relation", options={"expose"=true})
      * @Method("GET|POST")
      * @Template()
      */
-    public function deleteFriendAction($id)
-    {
+    public function deleteFriendAction() {
         $em = $this->getDoctrine()->getManager();
         $user1 = $this->container->get('security.context')->getToken()->getUser();
-        $user = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
-        $userManager = $this->container->get('fos_user.user_manager');
-        $user2 = $userManager->findUserByUsername($user->getUsername());
-        $relationLeft = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $user1->getId(), 'object2Id' => $user2->getId()));
-        $relationRight = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $user2->getId(), 'object2Id' => $user1->getId()));
+        $request = $this->get('request');
+        $id = $request->get("id");
+
+        $relationLeft = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $user1->getId(), 'object2Id' => $id));
+        $relationRight = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $id, 'object2Id' => $user1->getId()));
         if ($relationLeft) {
             $em->remove($relationLeft);
             $em->flush();
@@ -304,7 +283,8 @@ class UserController extends Controller
             $em->remove($relationRight);
             $em->flush();
         }
-        return $this->redirect($this->generateUrl('show_profil', array('id' => $id)));
+        $response = new Response($id);
+        return $response;
     }
 
     /**
@@ -314,8 +294,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function getClubUserAction($id)
-    {
+    public function getClubUserAction($id) {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
@@ -329,8 +308,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function getAlbumsUserAction($id)
-    {
+    public function getAlbumsUserAction($id) {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
@@ -345,8 +323,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function getPhotosUserAction($id, $id_album)
-    {
+    public function getPhotosUserAction($id, $id_album) {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
@@ -362,8 +339,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function getPalmaresUserAction($id)
-    {
+    public function getPalmaresUserAction($id) {
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserBy(array('id' => $id));
@@ -378,8 +354,7 @@ class UserController extends Controller
      * @Method("GET|POST")
      *
      */
-    public function CoordonneAction($lng, $lat)
-    {
+    public function CoordonneAction($lng, $lat) {
         $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
@@ -399,8 +374,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function editAccountAction($id)
-    {
+    public function editAccountAction($id) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -417,8 +391,7 @@ class UserController extends Controller
      * @Method("GET|POST")
      * @Template()
      */
-    public function editPhotoAction(Request $request, $id)
-    {
+    public function editPhotoAction(Request $request, $id) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -441,8 +414,7 @@ class UserController extends Controller
      * @Method("POST|GET")
      * @Template()
      */
-    public function editUserNameAction(Request $request, $id)
-    {
+    public function editUserNameAction(Request $request, $id) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -465,8 +437,7 @@ class UserController extends Controller
      * @Method("POST|GET|HEAD")
      * @Template("FrontOfficeUserBundle:Resetting:editEmail.html.twig")
      */
-    public function editEmailAction(Request $request, $id)
-    {
+    public function editEmailAction(Request $request, $id) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -489,8 +460,7 @@ class UserController extends Controller
      * @Method("POST|GET|HEAD")
      * @Template("FrontOfficeUserBundle:Resetting:editNotification.html.twig")
      */
-    public function editNoificationAction(Request $request, $id)
-    {
+    public function editNoificationAction(Request $request, $id) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -509,7 +479,6 @@ class UserController extends Controller
         }
         return array(
             'entity' => $entity,
-
             'edit_form' => $editForm->createView(),
         );
     }
@@ -521,8 +490,7 @@ class UserController extends Controller
      * @Method("POST|GET|HEAD")
      *
      */
-    public function editConfidentialityAction($id)
-    {
+    public function editConfidentialityAction($id) {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -540,8 +508,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function getAllNotificationAction()
-    {
+    public function getAllNotificationAction() {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -559,8 +526,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function getAllInvitationAction()
-    {
+    public function getAllInvitationAction() {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -578,8 +544,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function getAllMessageAction()
-    {
+    public function getAllMessageAction() {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
@@ -591,8 +556,6 @@ class UserController extends Controller
         return $this->render('FrontOfficeUserBundle:Profile:showAllMessage.html.twig', array('user' => $user));
     }
 
-
-
     /**
      *
      *
@@ -600,8 +563,7 @@ class UserController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function accueilshowAction($id)
-    {
+    public function accueilshowAction($id) {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
 
@@ -611,8 +573,53 @@ class UserController extends Controller
 
 
 
-           return $this->render('FrontOfficeUserBundle:User:accueilS.html.twig', array('user' => $user, 'event' => $event, 'eventsMap' => $eventsMap));
+        return $this->render('FrontOfficeUserBundle:User:accueilS.html.twig', array('user' => $user, 'event' => $event, 'eventsMap' => $eventsMap));
     }
 
-
+    /**
+     *
+     *
+     * @Route("settings/confidentialite/profil", name="setting_profil", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function activeProfilAction() {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+        $test = $request->get("test");
+           $user->setCompte($test);
+            $em->persist($user);
+            $em->flush();
+        
+        
+        return $response = new Response($test);
+    }
+/**
+     *
+     *
+     * @Route("settings/confidentialite/amis", name="setting_amis", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function activeAmisAction() {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+        $test = $request->get("test");
+           $user->setAmis($test);
+            $em->persist($user);
+            $em->flush();
+        
+        
+        return $response = new Response($test);
+    }
 }

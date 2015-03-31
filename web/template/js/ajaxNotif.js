@@ -23,6 +23,23 @@ $('#add_relation').click(function() {
         
     });
 });
+$('#add_relation_ami').click(function() {
+    
+    $('#loader_ajouter_ami').show();
+    $('#replace-bt-amis').empty();
+    var id = $('.userWidget-1').attr('id');
+    console.log(id);
+    $.ajax({
+        url: Routing.generate('add_relation', {'id': id}),
+        success: function() {
+            $('#loader_ajouter_ami').hide();
+            $('#enattente-ami').show();
+        
+        }
+        
+    });
+});
+
 //envoyer message
 $('#envoyerMessage').click(function()
 {
