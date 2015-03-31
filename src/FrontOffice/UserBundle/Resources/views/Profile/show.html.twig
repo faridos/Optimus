@@ -35,7 +35,7 @@
 
 
 <div class="col-lg-12">
-
+    
 <div style="margin-top: 2%"></div>
 <div id="invitation-envoyées" style="display: none;" class="alert alert-success">
 <a class="close" id="closemessag">×</a>
@@ -52,9 +52,6 @@ les invitations ont été envoyées
 <li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-badge"></span> Palmares</a></li>
 </ul>
 <div class="tab-content">
-    {% if user.compte == 0 and user != app.user %}
-        <img style="width: 100%" src="{{ asset('prive.png') }}">
-        {% else %}
 <ul class="tab-pane fade  active in scrollbar" id="env" >
 
 <div id="supprimer-e" style="display: none;" class="alert alert-danger">
@@ -78,7 +75,7 @@ Evenement Supprimer
 {% endif %}
 {% for env in user.evenements %}
 {% if env.active == 1 %}
-
+  
 <div {% if date(env.dateFin)<= date() %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-xs-12 {{env.id}}" >
 <div class="tooltipsContainer avatar imagus col-md-4">
 <a href="{{path('show_event',{'id':env.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{env.titre}}">
@@ -114,8 +111,8 @@ Evenement Supprimer
 </div>
 {% if date(env.dateFin)<= date() %}
 <div class="label label-danger" style="margin-left: 40%; font-size: 12px; background-color: #c02100 !important;">
-Cette évènement est depassé
-</div>
+            Cette évènement est depassé
+         </div>
 {% endif %}
 <div class="clearfix"></div>
 </div>
@@ -175,8 +172,8 @@ Cette évènement est depassé
 </div>
 {% if date(part.event.dateFin)<= date() %}
 <div class="label label-danger" style="margin-left: 40%; font-size: 12px; background-color: #c02100 !important;">
-Cette évènement est depassé
-</div>
+            Cette évènement est depassé
+         </div>
 {% endif %}
 <div class="clearfix"></div>
 </div>
@@ -201,7 +198,7 @@ Club Supprimer
 <button type="button" class="close" data-dismiss="alert"></button>
 <strong>Rien à afficher dans la catégorie clubs!</strong> Créer un pour commencer.
 </div>
-
+<img src="{{ asset('compte.png') }}">
 {% endif %}
 {% if app.user == user %}
 <div class="buttonsWrapper col-xs-12">
@@ -479,7 +476,7 @@ Palmarés Supprimer
 </div>
 </ul>
 <div class="clearfix"></div>
-{% endif %}
+</ul>
 </div>
 </div>
 
@@ -575,7 +572,7 @@ Palmarés Supprimer
 <div class="modal-body">
 {%for par in env.participations %}
 
-<div id="participantenv{{env.id}}{{par.participant.id}}">
+    <div id="participantenv{{env.id}}{{par.participant.id}}">
 <a href="{{ path('show_profil',{'id': par.participant.id}) }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{par.participant.username}}">
 {#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
 {% if par.participant.path == null %}
@@ -592,7 +589,7 @@ Palmarés Supprimer
 
 {% if app.user == env.createur and app.user != par.participant %}<a style="margin-left: 5%;" href="#supprimerpartcipantt{{env.id}}{{par.participant.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>{% endif %}
 <div style="margin-top: 2%;"></div>
-</div>
+    </div>
 {% endfor %}
 
 </div>
@@ -606,24 +603,24 @@ Palmarés Supprimer
 <div class="modal" id="supprimerpartcipantt{{env.id}}{{par.participant.id}}"   >
 <div class="modal-dialog">
 <div class="modal-content bordusbottomus">
-<div class="modal-header bordustopus">
+    <div class="modal-header bordustopus">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 <h4 class="modal-title" id="contactLabel">Suppression </h4>
 </div>
-<div class="modal-body">
-<p>Souhaitez vous vraiment supprimer cet participant?</p>
-</div>
-<div class="modal-footer supp-album">
+    <div class="modal-body">
+        <p>Souhaitez vous vraiment supprimer cet participant?</p>
+    </div>
+    <div class="modal-footer supp-album">
 <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
 <a id="supprimerparticipantevent{{env.id}}{{par.participant.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
 <a class="loader" id="loader{{env.id}}{{par.participant.id}}" >
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
 </a>
+    </div>
+       </div>
 </div>
 </div>
-</div>
-</div>
-{% endfor %}
+    {% endfor %}
 <!-------modal supp participant ---------->
 
 <!---------------------inviterevent----------------------->
@@ -645,10 +642,10 @@ Palmarés Supprimer
 {% if participantOuNon == 0 %}
 {% set i = i+1 %}
 
-<label class="checkbox custom-checkbox">
-<input id="listefrirnd{{env.id}}{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}">
-<span class="fa fa-check" style="margin-top: 3%;"></span>
-{% if friend.path == null %}
+        <label class="checkbox custom-checkbox">
+            <input id="listefrirnd{{env.id}}{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}">
+            <span class="fa fa-check" style="margin-top: 3%;"></span>
+            {% if friend.path == null %}
 {% if friend.sexe == 'H' %}
 <img  style="width: 10%;margin-left: 4%;" src="{{ asset('men.png') }}">
 {% else %}
@@ -660,8 +657,8 @@ Palmarés Supprimer
 Pseudo: {{friend.username}}
 <div style="margin-top: 2%;"></div>
 {% endif %}
-</label>
-
+        </label>
+  
 {#<input class="checkbox custom-checkbox" id="listefrirnd{{env.id}}{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}" /><a href="#" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{friend.username}}">
 <img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
 
@@ -700,7 +697,7 @@ tous vos  amis sont particip
 <div class="modal-body">
 {%for par in part.event.participations %}
 
-<div id="participanteventparticipation{{par.event.id}}{{par.participant.id}}">
+ <div id="participanteventparticipation{{par.event.id}}{{par.participant.id}}">
 <a href="{{ path('show_profil',{'id': par.participant.id}) }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{par.participant.username}}">
 {#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
 {% if par.participant.path == null %}
@@ -731,21 +728,21 @@ tous vos  amis sont particip
 <div class="modal" id="supprimerpartcipantpart{{part.event.id}}{{par.participant.id}}"   >
 <div class="modal-dialog">
 <div class="modal-content bordusbottomus">
-<div class="modal-header bordustopus">
+    <div class="modal-header bordustopus">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 <h4 class="modal-title" id="contactLabel">Suppression </h4>
 </div>
-<div class="modal-body">
-<p>Souhaitez vous vraiment supprimer cet participant?</p>
-</div>
-<div class="modal-footer supp-album">
+    <div class="modal-body">
+        <p>Souhaitez vous vraiment supprimer cet participant?</p>
+    </div>
+    <div class="modal-footer supp-album">
 <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
 <a id="supprimerparticipantpart{{part.event.id}}{{par.participant.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
 <a class="loader" id="loadersuppaprt{{par.participant.id}}" >
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
 </a>
-</div>
-</div>
+    </div>
+       </div>
 </div>
 </div>
 {% endfor %}
@@ -945,14 +942,13 @@ tous vos  amis sont particip
 {% if app.user | relation_exists('friendship', user ) %}
 {% set pendingInvitations = pendingInvitation(app.user,user)%}
 {% if pendingInvitations is empty %}
-<div id="relation-courant" class="btn-group">
+<div class="btn-group">
 <button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">
 Amis
 <span class="caret"></span>
 </button>
 <ul class="dropdown-menu" role="menu">
-<li>
-<a href="#deleteRelation" data-toggle="modal">Retirer</a></li>
+<li><a href="#">Retirer</a></li>
 {#<li><a href="#">Signaler</a></li>#}
 </ul>
 </div>
@@ -981,24 +977,10 @@ Amis
 <span  class="state"  >Ajouter</span>
 </a>
 </div>
-
 <a class="loader" id="loader_ajouter_relation">
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
 </a>
 {% endif %}
-    <div id="replace-bt-amis" class="btn-group" style="display: none;">
-<a id ="add_relation_ami"   href="#"  class="btn btn-green btn-round">
-<span class="fa icon-user-follow state"></span> 
-<span  class="state"  >Ajouter</span>
-</a>
-</div>
-    <a class="loader" id="loader_ajouter_ami">
-<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
-</a>
-<a id="enattente-ami" class="btn btn-green btn-round btn-success" href="#"  style="display: none;">
-<span style="color:#fff" class="fa icon-user-follow state-active"></span> 
-<span class="state" >En attente</span>
-</a>
 <a id='envoiemessage' href="#contactAgent" data-toggle="modal" class="btn btn-green btn-round">
 <span  class="fa fa-envelope-o"></span> Envoyer Message
 </a>
@@ -1020,7 +1002,7 @@ Amis
 <div class="avatar">
 </div>
 <div class="info">
-
+    
 <div class="title">Date de naissance : <span class="address">{% if user.dateNaissance != null %}{{ user.dateNaissance|date('d/m/Y') }}{% else %}--{% endif %} </span>
 
 </div>
@@ -1042,13 +1024,11 @@ Amis
 <div class="panel-heading optimus"> <span class="icon-users"></span><span class="navLabel"> Liste d'amis</span></div>
 
 <div class="userWidget-2" style="margin-bottom:0px;">
-
+<div class="avatar">
+</div>
 {#<img style="width: 100%" src="{{ asset('amisprive.png') }}">#}
 
 <ul class="notifyList scrollbar" >
-    {% if user.amis == 0 and user != app.user  %}
-       <img style="width: 100%" src="{{ asset('amisprive.png') }}">
-        {% else %}
 {% set friends = getFriends(user.id) %}
 {% if friends is empty %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -1078,7 +1058,7 @@ Amis
 {% endif %}
 </div>
 {% endfor %}               
-{% endif %}
+
 </ul>
 
 <div class="clearfix"></div>
@@ -1100,27 +1080,6 @@ Amis
 </div>
 </div>
 <!-------------------fin modal photo------------------->
-<!--------------- supprimer relation ------------------>
-<div class="modal" id="deleteRelation"   >
-<div class="modal-dialog">
-<div class="modal-content bordusbottomus">
-<div class="modal-header bordustopus">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<h4 class="modal-title" id="contactLabel">Suppression </h4>
-</div>
-<div class="modal-body">
-<p class="idrelationsupprimer" id="{{user.id}}">Souhaitez vous vraiment supprimer de la liste des amis ?</p>
-</div>
-<div class="modal-footer supp-album">
-<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-<a id="supprimerRelation" href="#" class="btn btn-round btn-green">Confirmer</a>
-<a class="loader" id="loader_delete_relation">
-<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
-</a>
-</div>
-</div>
-</div>
-</div>
 <!------------------- modal Envoie message------------------->
 <div class="modal fade" id="contactAgent" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 <div class="modal-dialog">
@@ -1162,60 +1121,43 @@ $(function() {
 $("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
 });</script>
 <script>
-$('#supprimerRelation').click(function(){
-var id = $('.idrelationsupprimer').attr('id');
-$('#supprimerRelation').hide();
-$('#loader_delete_relation').show();
-$.ajax({
-type: "POST",
-url: Routing.generate('delete_relation'),
-data: {id:id},
-dataType: 'json',
-success: function(data) {
-$('#loader_delete_relation').hide();
-$('#supprimerRelation').show();
-$("#deleteRelation").hide();
-$('.modal-backdrop').hide();
-$('#relation-courant').hide();
-$('#replace-bt-amis').show();
-}
+    $('#closemessag').click(function(){
+$('#invitation-envoyées').hide();  
 });
-});                                                                                                                                                                    </script>
-<script>
-$('#closemessag').click(function(){
-$('#invitation-envoyées').hide();
-});                                                                                                                                                                        {% for env in user.evenements %}
-{% for par in env.participations %}
-$("#supprimerparticipantevent{{env.id}}{{par.participant.id}}").click(function(){
-
-$('#loader{{env.id}}{{par.participant.id}}').show();
-$("#supprimerparticipantevent{{env.id}}{{par.participant.id}}").hide();
-$.ajax({
-url: Routing.generate('exit_event_participant', {'id':{{env.id}}, 'id_participant' : {{par.participant.id}}}),
-success: function() {
-$('#loader{{env.id}}{{par.participant.id}}').hide();
-$("#supprimerpartcipantt{{env.id}}{{par.participant.id}}").hide();
-$('#participanteventparticipation{{env.id}}{{par.participant.id}}').hide();
-$("#participantenv{{env.id}}{{par.participant.id}}").hide();
-$('.modal-backdrop').hide();
-
-}
-});
-});                                                                                                                                                                            {% endfor %}
-
+{% for env in user.evenements %}
+    {% for par in env.participations %}
+        $("#supprimerparticipantevent{{env.id}}{{par.participant.id}}").click(function(){
+          
+             $('#loader{{env.id}}{{par.participant.id}}').show();
+            $("#supprimerparticipantevent{{env.id}}{{par.participant.id}}").hide();
+           
+            $.ajax({
+             url: Routing.generate('exit_event_participant', {'id': {{env.id}},'id_participant' : {{par.participant.id}}}),
+             success: function() {
+             $('#loader{{env.id}}{{par.participant.id}}').hide();
+            $("#supprimerpartcipantt{{env.id}}{{par.participant.id}}").hide();
+            $("#participantenv{{env.id}}{{par.participant.id}}").hide();
+            $('.modal-backdrop').hide();
+            
+           }
+         });
+        });
+        {% endfor %}
+   
 $("#envoyerinvitfriendsubmit{{env.id}}").click(function(){
 $("#envoyerinvitfriendsubmit{{env.id}}").hide();
 $('#loader{{env.id}}').show();
 var event = $("#inviterevent{{env.id}}").val();
 var name = new Array;
 test = 'false';
-var i = 0;                                                                                                                                                                            {% set friends = getFriends(env.createur.id) %}
+var i = 0 ;
+{% set friends = getFriends(env.createur.id) %}
 {%for friend in friends %}
 {% set participantOuNon=ParticipantOuNon(env,friend) %}
 {% if participantOuNon == 0 %}
-if (document.getElementById('listefrirnd{{env.id}}{{friend.id}}').checked){
-name[i] = $("#listefrirnd{{env.id}}{{friend.id}}").val();
-i = i + 1;
+if(document.getElementById('listefrirnd{{env.id}}{{friend.id}}').checked){
+name[i]= $("#listefrirnd{{env.id}}{{friend.id}}").val();
+i=i+1;
 test = 'true';
 }
 //alert(test);
@@ -1232,15 +1174,19 @@ $('#loader{{env.id}}').hide();
 $("#envoyerinvitfriend{{env.id}}").hide();
 $('.modal-backdrop').hide();
 $("#envoyerinvitfriendsubmit{{env.id}}").show();
-$('#invitation-envoyées').show();                                                                                                                                                                                            {%for friend in friends %}
+$('#invitation-envoyées').show();
+{%for friend in friends %}
 {% set participantOuNon=ParticipantOuNon(env,friend) %}
 {% if participantOuNon == 0 %}
-document.getElementById('listefrirnd{{env.id}}{{friend.id}}').checked = false;                                                                                                                                                                                                    {% endif %}
+document.getElementById('listefrirnd{{env.id}}{{friend.id}}').checked=false;
+{% endif %}
 {% endfor %}
 
 }
 });
-});                                                                                                                                                                                                        {% endfor %}
+
+});
+{% endfor %}
 </script>
 <script>
 {% for member in user.adherent %}
@@ -1255,25 +1201,28 @@ $('.loader').hide();
 $('.{{member.clubad.id}}').hide();
 }
 });
-});                                                                                                                                                                                                        {% endfor %}
+});
+{% endfor %}
 </script>
 <script>
 {% for part in user.participations %}
-{%for par in part.event.participations %}
-$('#supprimerparticipantpart{{part.event.id}}{{par.participant.id}}').click(function(){
-$('#supprimerparticipantpart{{part.event.id}}{{par.participant.id}}').hide();
-$('#loadersuppaprt{{par.participant.id}}').show();
-$.ajax({
-url: Routing.generate('exit_event_participant', {'id':{{par.event.id}}, 'id_participant' : {{par.participant.id}}}),
-success: function() {
-$('#loadersuppaprt{{part.event.id}}{{par.participant.id}}').hide();
-$("#supprimerpartcipantpart{{par.event}}{{par.participant.id}}").hide();
-$("#participanteventparticipation{{par.event.id}}{{par.participant.id}}").hide();
-("#participantenv{{par.event.id}}{{par.participant.id}}").hide();
-$('.modal-backdrop').hide();
-}
-});
-});                                                                                                                                                                                                        {% endfor %}
+    {%for par in part.event.participations %}
+        $('#supprimerparticipantpart{{part.event.id}}{{par.participant.id}}').click(function(){
+            $('#supprimerparticipantpart{{part.event.id}}{{par.participant.id}}').hide();
+            $('#loadersuppaprt{{par.participant.id}}').show();
+       
+              $.ajax({
+                url: Routing.generate('exit_event_participant', {'id': {{par.event.id}},'id_participant' : {{par.participant.id}}}),
+                success: function() {
+                $('#loadersuppaprt{{part.event.id}}{{par.participant.id}}').hide();
+                $("#supprimerpartcipantpart{{par.event}}{{par.participant.id}}").hide();
+                $("#participanteventparticipation{{par.event.id}}{{par.participant.id}}").hide();
+                $('.modal-backdrop').hide();
+            
+           }
+         });
+        });
+        {% endfor %}
 $('#exit_event{{part.event.id}}').click(function() {
 $('.loader').show();
 $.ajax({
@@ -1283,7 +1232,9 @@ $('.loader').hide();
 $('.{{part.event.id}}').hide();
 }
 });
-});                                                                                                                                                                                                        {% endfor %}
+});
+
+{% endfor %}
 </script>
 <script>
 {%for album in user.albums %}
@@ -1335,8 +1286,8 @@ $('#supprimer-c').show();
 <script>
 {% for env in user.evenements %}
 $('#supprimerevent{{env.id}}').click(function() {
-$('#supprimerevent{{env.id}}').hide();
-$("#loaderSuppEvent{{env.id}}").show();
+   $('#supprimerevent{{env.id}}').hide();
+ $("#loaderSuppEvent{{env.id}}").show();
 $.ajax({
 url: Routing.generate('delete-event', {'id':{{env.id}}}),
 success: function(data) {
@@ -1375,7 +1326,9 @@ function image(id) {
 {%for album in user.albums %}
 $('#albumuser{{loop.index}}').hide();
 $('#ajouteralbum').hide();
-$('#ajouterphoto' + id).show();                                                                                                                                                                                                        {%for imag in album.images %}
+$('#ajouterphoto' + id).show();
+
+{%for imag in album.images %}
 {%set phs = phs + 1  %}
 if ({{album.id}} == id){
 $('#photos{{phs}}').show();
@@ -1390,7 +1343,9 @@ function image2() {
 {%for album in user.albums %}
 $('#albumuser{{loop.index}}').show();
 $('#ajouteralbum').show();
-$('#ajouterphoto{{album.id}}').hide();                                                                                                                                                                                                        {%for imag in album.images %}
+$('#ajouterphoto{{album.id}}').hide();
+
+{%for imag in album.images %}
 {%set phs = phs + 1  %}
 
 $('#photos{{phs}}').hide();{% endfor %}{%endfor %}
