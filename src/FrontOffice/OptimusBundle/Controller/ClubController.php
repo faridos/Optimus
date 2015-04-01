@@ -57,6 +57,7 @@ class ClubController extends Controller {
         $club = new Club();
         $club->setCreateur($user);
         $club->setActive(1);
+        $club->setIsPayant(0);
         $club->setLienWeb('http://www.sport.com');
         $form = $this->createForm(new ClubType(), $club);
         $req = $this->get('request');
@@ -175,6 +176,37 @@ class ClubController extends Controller {
              $request->getSession()->getFlashBag()->add('SupprissionClub', "Club  a été supprimer.");
 
             return  new Response($id);
+        }
+    }
+    /**
+     * Deletes a Club entity.
+     *
+     * @Route("/club={id}/delete", name="club_supprimer",  options={"expose"=true})
+     * 
+     */
+    public function deleteclubAction(Request $request, $id) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        if (!$entity || $entity->getActive() == 0) {
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+        }
+        if ($entity->getCreateur() == $user) {
+            $entity->setActive(false);
+            $em->persist($entity);
+            $em->flush();
+            // add History 
+            $action = 'delete';
+            $clubevent = new HistoryClubEvent($user, $entity, $action);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+             $request->getSession()->getFlashBag()->add('SupprissionClub', "Club  a été supprimer.");
+
+             return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
         }
     }
 

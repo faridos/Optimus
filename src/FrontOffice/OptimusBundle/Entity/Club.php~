@@ -95,6 +95,13 @@ class Club {
      * @ORM\Column(name="activation", type="boolean", nullable=false)
      */
     protected $active;
+    
+     /**
+     * @var boolean $isPayant
+     * @ORM\Column(name="payant", type="boolean", nullable=false)
+     */
+    protected $isPayant;
+
 
     /**
      * @var float
