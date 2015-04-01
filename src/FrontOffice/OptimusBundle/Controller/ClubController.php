@@ -108,7 +108,7 @@ class ClubController extends Controller {
             }
         }
        $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club));
-        return $this->render('FrontOfficeOptimusBundle:Club:show_club.html.twig', array('club' => $club, 'user' => $user, 'programmes' =>$progarammes) );
+        return $this->render('FrontOfficeOptimusBundle:Club:showClub.html.twig', array('club' => $club, 'user' => $user, 'programmes' =>$progarammes) );
     }
 
     /**
@@ -142,11 +142,7 @@ class ClubController extends Controller {
                  $request->getSession()->getFlashBag()->add('ModificationClub', "Club  a été Modifier.");
                 return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
             }
-            return array(
-                'club' => $club,
-                'form' => $editForm->createView(),
-                'user' => $user,
-            );
+            return array('club' => $club,'form' => $editForm->createView(),'user' => $user);
         }
     }
 
