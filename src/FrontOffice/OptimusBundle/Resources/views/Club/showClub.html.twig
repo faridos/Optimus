@@ -1,204 +1,234 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 {% block body %}
-<div id="wrapper">
-<div id="content" class="mob-max" >
-<div class="col-lg-12"><div class="row mb20">
-</div>
-<div class="col-lg-12"><div class="panel panel-default dd">
-<a href="#ddPanel" class="btn btn-default btn-lg btn-block" data-toggle="collapse"style="background-color:#c02100;color:#fff;border-color:#c02100;">Menu Club<span class="fa fa-bars pull-right"></span></a>
-<div id="ddPanel" class="panel-collapse collapse" style="height: 0px;">
-<div class="panel-body" style="padding:0px;"><div class="userWidget-1 manamus" style="margin-bottom:0px;margin-top:-2px;">
-<div class="avatar novus" id="main">
-<div class="col-md-4">
-<div class="propWidget-1 logotus tooltipsContainer " >
-<div class="fig salamus">
+    <div id="wrapper">
+        <div id="content" class="mob-max" >
+            <div class="col-lg-12"><div class="row mb20">
+                </div>
+                <div class="col-lg-12">
+                    <!--********************************************************-->
+                    <div class="userWidget-1 manamus" >
+                        <div class="avatar" id="main">
+                            <div class="col-md-4">
+                                <div class="propWidget-1 logotus tooltipsContainer ">
+                                     <div class="fig salamus">
 
-        <a href="images/logo1.jpg" data-lightbox-title="photo de profil" data-lightbox-gallery=""><img src="images/logo1.jpg" class="inline-block"></a>
+                                        {% if club.path == null %}
+                                            <a href="{{ asset('club.png')}}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+                                                <img src="{{ asset('club.png') }}" class="inline-block imaguss">
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ asset(club.WebPath) }}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+                                                <img src="{{ asset(club.WebPath) }}" class="inline-block imaguss">
+                                            </a>
+                                        {% endif %}
+                                        {% if club.createur == app.user %}
+                                            <div class="priceCap paddus">    <button href="#modifierphotoevent" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo"><span class="notifyIcon fa fa-camera-retro"></span></button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                                 
+                                {% if club.createur == app.user %}
+                                    <div class="ops">
+                                        <a class="btn btn-round btn-default btn-sm" href="#inviteramievent" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Inviter</span></a>
+                                        <a class="btn btn-round btn-default btn-sm" href="#" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
+                                        <a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a> 
+                                    </div>
+                                {% endif %}
+                           <div class="name osLight profilus namusclubus"><strong>{{club.nom}}</strong></div>
+                        </div>
+                            <div class=" address profilus" style="font-size:18px;"> 
 
-<div class="priceCap paddus">    <button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo"><span class="notifyIcon fa fa-camera-retro"></span></button>
-</div>
-
-</div>
-</div>
-</div>
-<div class="row">
-<div class="ops">
-<a class="btn btn-round btn-default btn-sm" href="#"><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
-<a class="btn btn-round btn-default btn-sm" href="#supprimuss" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a>
-
-</div>
-<div class="name osLight profilus namusclubus"><strong>Nom Club nom event nom event nom event nom event nom event</strong></div>
-</div></div>
-<div class="address profilus " style="font-size:18px;"><div class="cardRating col-md-4" style="margin-left:-11px">
-<span class="fa fa-star"></span>
-<span class="fa fa-star"></span>
-<span class="fa fa-star"></span>
-<span class="fa fa-star"></span>
-<span class="fa fa-star-o"></span>    </div><div class="cardRating col-md-7">
-<span class="label labelus label-danger "> Nombre participants: 500</span></div>
-</div>
-
-<div class="title profilus"></div>
-
-<div class="buttonsWrapper profilus"> 
-
-<div class="row">
-<div class="col-md-5 pb20">
-
-<div class="pc-about osLight">
-<div class="title nombrus ">Créateur :<span class="address detaillus">Foulén ben foulén</span></div>
-        <div class="title nombrus ">Date début :<span class="address detaillus">31-03-2015</span></div>
-        <div class="title nombrus ">Date fin :<span class="address detaillus">28-04-2015</span></div>
-        <div class="title nombrus ">Lieu :<span class="address detaillus">Tunis Tunisia Tunisie</span></div>
-
-</div>
-
-</div>
-<div class="col-md-5">
-<div class="pc-title osLight">
-
-<div class="title nombrus">Type d'évenement :<span class="address detaillus">Type 2</span></div>
-        <div class="title nombrus">Nombre de place :<span class="address detaillus">500</span></div>
-        <div class="title nombrus">Frais participation :<span class="address detaillus">50$</span></div>
-
-</div>
-
-</div>
-</div>
+                          
 
 
 
-</div>
+                            <div class="row">
+                                <div class="cardRating col-md-5" style="color:#eab134;margin-left: -40px;"> 
+                                    
+                                </div>
+                                
+                                <br><br>
+                                <div class="title profilus"></div>
+                                <div class="buttonsWrapper"> 
 
-<div class="row descriptus">
-<div class="col-md-12 pb20">
+                                    <div class="row">
+                                        <div class="col-md-5 pb20">
 
-<div class="pc-about osLight">
-<div class="title nombrus ">Description :<span class="address detaillus">tala3 na5la habet na5la fi idi ma5la dra chnowa lo5ra nsit'ha ffsdf df dsfgdfsg sdfgdfgds echki lil 3erwi a7ki slfksdlf sldfk sdmlfk sdfkpoef sdjfs dmfjk zmiejf qskldfj mzeoif j</span></div>
+                                            <div class="pc-about osLight" style="margin-left: -37%;"><div class="title eventus">Propriétaire :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.createur}}</span></div>
+                                                <div class="title eventus">Date Creation :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.dateCreation|date("d/m/Y ")}}</span></div>
+                                
+                                                <div class="title eventus">Adresse :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.adresse}}</span></div><br>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-5" style=" margin-left: -20px;">
+                                            <div class="pc-title osLight">
+                                               
+                                                   
+                                                    <div class="title eventus">Displine : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.discpline}}</span></div>
+                                                   
+                                                   
+                                                    <div class="title eventus">Frais participation : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.fraisAdhesion}} &euro; </span></div>
+                                                
+
+                                            </div>
+
+                                        </div></div></div>
+
+                                {% if club.description %}
+                                    <div class="row descriptus">
+                                        <div class="col-md-12 pb20">
+                                            <div class="pc-about osLight">
+                                                <div class="title">Description : <span class="address detaillus"style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.description}}</span></div>
+                                            </div></div></div>
+                                        {% endif %}
+
+                                <div class="row tooltipsContainer" style="margin-left:-140px">
+                                    
+                                        <div class="col-md-4 pb20">
+                                            
+                                            {% if club.createur != app.user %}
+                                                <div class="pc-about osLight" id="append">
+                                                  
+                                                        <a class="btn btn-green btn-round " href="#"  id="exit_event">
+                                                            <span class="fa fa-plus-circle" data-toggle="tooltip" data-tooltip-class="green" data-placement="top" title="" data-original-title="Participer"></span> <span >Rejoindre</span>                                          
+                                                        </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
+                                                       
+                                                        <a class="btn btn-green btn-round " href="#" id="exit_event">
+                                                            <span class="fa fa-plus-circle " data-toggle="tooltip" data-tooltip-class="green" data-placement="top" title="" data-original-title="Participer"></span> <span class="exitEvent">Quitter</span>                                          
+                                                        </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
+                                                       
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="pc-title osLight" id="append2">
+
+                                                <div class="buttonsWrapper pb20 ">
+                                                    
+                                                        {{ socialButtons( {'pinterest' : false,'linkedin': false}) }}
+                                                   
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                   
+                                   
+                                </div>
 
 
-</div></div>
+                            </div>
 
-</div>
-<div class="row descriptus">
-<div class="col-md-4 pb20">
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!--********************************************************-->
+                    <div class="tabsContainer">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li class="active"><a href="#participants" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
+                            <li class=""><a href="#photos" role="tab" data-toggle="tab"><span class="icon-doc"></span> Photos</a></li>
+                            <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <ul class="tab-pane fade  active in scrollbar" id="participants" >
+                                <div id="msgparticipe" ></div>
+                                <br/>
+                                <div class="row" id="blockparticip">
+                                </div>
+                                <div class="clearfix"></div>
+                            </ul>
+                            <ul class="tab-pane fade  scrollbar" id="photos" >
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
 
-<div class="pc-about osLight">
-<a class="btn btn-green btn-round " href="#">
-<span class="fa fa-plus-circle"></span> <span>Rejoindre</span>
-
-</a>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-<div class="pc-title osLight">
-
-<div class="buttonsWrapper pb20 ">    <a href="#" class="btn btn-icon btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-round btn-o btn-google"><span class="fa fa-google-plus"></span></a></div>
-
-</div>
-
-</div>
-<div class="col-md-4">
-<div class="pc-title osLight">
-<a href="#" class="btn btn-round btn-o btn-yellow"><span class="icon-action-redo"></span> 200</a>
-<a href="#" class="btn btn-round btn-o btn-yellow"><span class="fa fa-eye"></span> 4205</a>
-<a href="#" style="color:#c02100"></a>
-<a href="#" style="color:#c02100"></a>
-
-</div>
-
-</div>
-</div>
+            </div>
+        </div>
+        <div id="map-club" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
+    </div>
 
 
-
-
-
-
-<div class="clearfix"></div>
-</div></div>
-</div>
-</div></div>
-
-</div>
-</div>
-<div id="map-club" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
-</div>
 {% endblock %}
 {% block javascriptfils %}
-<script>
-"use strict";
-function initialize() {
-var options = {
-zoom : 15,
-mapTypeId: google.maps.MapTypeId.HYBRID
-};
-var mapclub = new google.maps.Map(document.getElementById('map-club'), options);
-if (navigator.geolocation) {
+    
 
-navigator.geolocation.getCurrentPosition(function (position) {
+                <script>
+                            "use strict";
+                            function initialize() {
+                            var options = {
+                            zoom : 15,
+                                    mapTypeId: google.maps.MapTypeId.HYBRID
+                            };
+                                    var mapclub = new google.maps.Map(document.getElementById('map-club'), options);
+                                    if (navigator.geolocation) {
 
-var posevent = new google.maps.LatLng(position.coords.latitude,
-position.coords.longitude);
-var newMarker = new google.maps.Marker({
+                            navigator.geolocation.getCurrentPosition(function (position) {
 
-position: posevent,
-map: mapclub,
-icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
-draggable: false,
-animation: google.maps.Animation.DROP
+                            var posevent = new google.maps.LatLng(position.coords.latitude,
+                                    position.coords.longitude);
+                                    var newMarker = new google.maps.Marker({
 
-});
-var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
-var markerclub = new google.maps.Marker({
-position: myLatLng,
-map: mapclub,
-icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-green.png'),
-draggable: false,
-animation: google.maps.Animation.DROP
-});
-var directionsDisplay;
-var directionsService = new google.maps.DirectionsService()
-directionsDisplay = new google.maps.DirectionsRenderer({
-polylineOptions: {
-strokeColor: "#c02100"
-}
-});
-directionsDisplay.setMap(mapclub);
-calcRoute();
-function calcRoute() {
+                                    position: posevent,
+                                            map: mapclub,
+                                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
+                                            draggable: false,
+                                            animation: google.maps.Animation.DROP
 
-var request = {
-origin:posevent,
-destination:myLatLng,
-travelMode: google.maps.TravelMode.DRIVING
-};
-directionsService.route(request, function(response, status) {
-if (status == google.maps.DirectionsStatus.OK) {
-directionsDisplay.setDirections(response);
-directionsDisplay.setOptions({ suppressMarkers: true });
-}
-});
-}
-}, function () {
-handleNoGeolocation(true);
-});
-} else {
-handleNoGeolocation(false);
-}
+                                    });
+                                    var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
+                                    var markerclub = new google.maps.Marker({
+                                    position: myLatLng,
+                                            map: mapclub,
+                                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-green.png'),
+                                            draggable: false,
+                                            animation: google.maps.Animation.DROP
+                                    });
+                                    var directionsDisplay;
+                                    var directionsService = new google.maps.DirectionsService()
+                                    directionsDisplay = new google.maps.DirectionsRenderer({
+                                    polylineOptions: {
+                                    strokeColor: "#c02100"
+                                    }
+                                    });
+                                    directionsDisplay.setMap(mapclub);
+                                    calcRoute();
+                                    function calcRoute() {
 
-
-
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
+                                    var request = {
+                                    origin:posevent,
+                                            destination:myLatLng,
+                                            travelMode: google.maps.TravelMode.DRIVING
+                                    };
+                                            directionsService.route(request, function(response, status) {
+                                            if (status == google.maps.DirectionsStatus.OK) {
+                                            directionsDisplay.setDirections(response);
+                                                    directionsDisplay.setOptions({ suppressMarkers: true });
+                                            }
+                                            });
+                                    }
+                            }, function () {
+                            handleNoGeolocation(true);
+                            });
+                            } else {
+                            handleNoGeolocation(false);
+                            }
 
 
 
-</script>
+                            }
+
+                    google.maps.event.addDomListener(window, 'load', initialize);
+                            
+                   
+
+                    </script>
 
 
-{% endblock %}
+                    {% endblock %}
