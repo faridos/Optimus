@@ -43,7 +43,7 @@
                                     <div class="fig salamus">
 
                                         {% if event.path == null %}
-                                            <a href="/Optimus/web/event.png" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+                                            <a href="{{ asset('event.png') }}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
                                                 <img src="{{ asset('event.png') }}" class="inline-block imaguss">
                                             </a>
                                         {% else %}
