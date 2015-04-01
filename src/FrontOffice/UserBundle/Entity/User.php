@@ -99,20 +99,20 @@ class User extends BaseUser {
     /**
      * @var integer
      * 
-     * @ORM\Column(name="amis", type="integer")
+     * @ORM\Column(name="amis", type="integer", nullable=true)
      * 
      */
     protected $amis;
     /**
      * @var integer
      * 
-     * @ORM\Column(name="compte", type="integer")
+     * @ORM\Column(name="compte", type="integer", nullable=true)
      */
     protected $compte;
     /**
      * @var integer
      * 
-     * @ORM\Column(name="connected", type="integer")
+     * @ORM\Column(name="connected", type="integer", nullable=true)
      */
     protected $connected;
 

@@ -139,4 +139,30 @@ class ParticipationController extends Controller {
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+    /**
+     * Deletes a Club entity.
+     *
+     * @Route("supprimer/participant", name="supprimer-participant", options={"expose"=true})
+     * 
+     */
+    public function supprimerParticipantAction() {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $request = $this->get('request');
+         $events = $request->get("event");
+          $participantt = $request->get("participant");
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('FrontOfficeUserBundle:User')->find($participantt);
+        $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($events);
+        $p = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findOneBy(array('event' => $event, 'participant' => $user));
+        $em->remove($p);
+        $em->flush();
+               
+        
+        $response = new Response($events);
+   
+        return $response;
+    }
 }

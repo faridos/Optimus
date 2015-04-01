@@ -32,6 +32,8 @@ class RegistrationController extends BaseController {
 
         $user = $userManager->createUser();
         $user->setEnabled(true);
+        $user->setAmis(1);
+        $user->setCompte(1);
         $user->setTypeNotification('All');
         $user->setCreatedAt(new DateTime());
 

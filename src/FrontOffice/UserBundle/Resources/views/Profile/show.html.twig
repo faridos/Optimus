@@ -52,9 +52,9 @@ les invitations ont été envoyées
 <li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-badge"></span> Palmares</a></li>
 </ul>
 <div class="tab-content">
-    {% if user.compte == 0 and user != app.user %}
-        <img style="width: 100%" src="{{ asset('prive.png') }}">
-        {% else %}
+{% if user.compte == 0 and user != app.user %}
+<img style="width: 100%" src="{{ asset('prive.png') }}">
+{% else %}
 <ul class="tab-pane fade  active in scrollbar" id="env" >
 
 <div id="supprimer-e" style="display: none;" class="alert alert-danger">
@@ -717,7 +717,7 @@ tous vos  amis sont particip
 </a>
 <span style="margin-left:10%;">{{par.participant.username}}</span>
 <span style="margin-left:10%;">Date de participation: {{par.datePaticipation|date('d/m/Y H:i:s')}}</span>
-{% if app.user == part.event.createur and app.user != par.participant %}<a style="margin-left: 5%;" href="#supprimerpartcipantpart{{part.event.id}}{{par.participant.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>{% endif %}
+{% if app.user == part.event.createur and app.user != par.participant %}<a style="margin-left: 5%;" href="#poupUp{{par.event.id}}{{par.participant.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>{% endif %}
 <div style="margin-top: 2%;"></div>
 </div>
 {% endfor %}
@@ -730,7 +730,7 @@ tous vos  amis sont particip
 </div>
 </div>
 {%for par in part.event.participations %}
-<div class="modal" id="supprimerpartcipantpart{{part.event.id}}{{par.participant.id}}"   >
+<div class="modal" id="poupUp{{par.event.id}}{{par.participant.id}}"   >
 <div class="modal-dialog">
 <div class="modal-content bordusbottomus">
 <div class="modal-header bordustopus">
@@ -742,8 +742,8 @@ tous vos  amis sont particip
 </div>
 <div class="modal-footer supp-album">
 <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-<a id="supprimerparticipantpart{{part.event.id}}{{par.participant.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
-<a class="loader" id="loadersuppaprt{{par.participant.id}}" >
+<a id="supprimerparticipantpart{{par.event.id}}{{par.participant.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+<a class="loader" id="loadersuppaprt{{par.event.id}}{{par.participant.id}}" >
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
 </a>
 </div>
@@ -988,13 +988,13 @@ Amis
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
 </a>
 {% endif %}
-    <div id="replace-bt-amis" class="btn-group" style="display: none;">
+<div id="replace-bt-amis" class="btn-group" style="display: none;">
 <a id ="add_relation_ami"   href="#"  class="btn btn-green btn-round">
 <span class="fa icon-user-follow state"></span> 
 <span  class="state"  >Ajouter</span>
 </a>
 </div>
-    <a class="loader" id="loader_ajouter_ami">
+<a class="loader" id="loader_ajouter_ami">
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
 </a>
 <a id="enattente-ami" class="btn btn-green btn-round btn-success" href="#"  style="display: none;">
@@ -1048,9 +1048,9 @@ Amis
 {#<img style="width: 100%" src="{{ asset('amisprive.png') }}">#}
 
 <ul class="notifyList scrollbar" >
-    {% if user.amis == 0 and user != app.user  %}
-       <img style="width: 100%" src="{{ asset('amisprive.png') }}">
-        {% else %}
+{% if user.amis == 0 and user != app.user  %}
+<img style="width: 100%" src="{{ asset('amisprive.png') }}">
+{% else %}
 {% set friends = getFriends(user.id) %}
 {% if friends is empty %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -1182,28 +1182,37 @@ $('#relation-courant').hide();
 $('#replace-bt-amis').show();
 }
 });
-});                                                                                                                                                                    </script>
+});
+</script>
 <script>
 $('#closemessag').click(function(){
 $('#invitation-envoyées').hide();
-});                                                                                                                                                                        {% for env in user.evenements %}
+});
+{% for env in user.evenements %}
 {% for par in env.participations %}
 $("#supprimerparticipantevent{{env.id}}{{par.participant.id}}").click(function(){
 
 $('#loader{{env.id}}{{par.participant.id}}').show();
 $("#supprimerparticipantevent{{env.id}}{{par.participant.id}}").hide();
+var idevent = {{par.event.id}};
+var idparticipant = {{par.participant.id}};
 $.ajax({
-url: Routing.generate('exit_event_participant', {'id':{{env.id}}, 'id_participant' : {{par.participant.id}}}),
+type: "POST",
+url: Routing.generate('supprimer-participant'),
+data: {event:idevent, participant:idparticipant},
+dataType: 'json',
 success: function() {
 $('#loader{{env.id}}{{par.participant.id}}').hide();
 $("#supprimerpartcipantt{{env.id}}{{par.participant.id}}").hide();
 $('#participanteventparticipation{{env.id}}{{par.participant.id}}').hide();
 $("#participantenv{{env.id}}{{par.participant.id}}").hide();
+
 $('.modal-backdrop').hide();
 
 }
 });
-});                                                                                                                                                                            {% endfor %}
+});
+{% endfor %}
 
 $("#envoyerinvitfriendsubmit{{env.id}}").click(function(){
 $("#envoyerinvitfriendsubmit{{env.id}}").hide();
@@ -1260,19 +1269,27 @@ $('.{{member.clubad.id}}').hide();
 });                                                                                                                                                                                                        {% endfor %}
 </script>
 <script>
-{% for part in user.participations %}
+{% for part in participations %}
 {%for par in part.event.participations %}
-$('#supprimerparticipantpart{{part.event.id}}{{par.participant.id}}').click(function(){
-$('#supprimerparticipantpart{{part.event.id}}{{par.participant.id}}').hide();
-$('#loadersuppaprt{{par.participant.id}}').show();
+$('#supprimerparticipantpart{{par.event.id}}{{par.participant.id}}').click(function(){
+$('#supprimerparticipantpart{{par.event.id}}{{par.participant.id}}').hide();
+$('#loadersuppaprt{{par.event.id}}{{par.participant.id}}').show();
+var idevent = {{par.event.id}};
+var idparticipant = {{par.participant.id}};
+
+
 $.ajax({
-url: Routing.generate('exit_event_participant', {'id':{{par.event.id}}, 'id_participant' : {{par.participant.id}}}),
+type: "POST",
+url: Routing.generate('supprimer-participant'),
+data: {event:idevent, participant:idparticipant},
+dataType: 'json',
 success: function() {
-$('#loadersuppaprt{{part.event.id}}{{par.participant.id}}').hide();
-$("#supprimerpartcipantpart{{par.event}}{{par.participant.id}}").hide();
-$("#participanteventparticipation{{par.event.id}}{{par.participant.id}}").hide();
-("#participantenv{{par.event.id}}{{par.participant.id}}").hide();
+
+$('#loadersuppaprt{{par.event.id}}{{par.participant.id}}').hide();
+$('#poupUp{{par.event.id}}{{par.participant.id}}').hide();
 $('.modal-backdrop').hide();
+$('#participanteventparticipation{{par.event.id}}{{par.participant.id}}').hide();
+$('#participantenv{{par.event.id}}{{par.participant.id}}').hide();
 }
 });
 });                                                                                                                                                                                                        {% endfor %}
