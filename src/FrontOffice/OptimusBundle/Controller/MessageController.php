@@ -317,6 +317,19 @@ class MessageController extends Controller {
         ;
     }
 
-
+/**
+     * 
+     *
+     * @Route("/test", name="notif_test", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function notifEventAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+      //  $notifs = $em->getRepository('FrontOfficeOptimusBundle:Message')->findAll();
+        
+        return new Response('s');
+    }
 
 }

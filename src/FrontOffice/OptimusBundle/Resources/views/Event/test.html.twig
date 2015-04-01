@@ -1,14 +1,22 @@
-test SetInterval
+{% extends '::base.html.twig' %}
 
 
-<script>
-    setInterval(function(){ 
-          alert("ttooo");
+
+{% block javascripts %}
+
+    <script>
+
+        setInterval(function(){ 
+           alert("ttzzzy");
             $.ajax({
                     url: Routing.generate('test2'),
                             success: function(data) {
                            alert("tty");
                             }
-                    });   alert("ttiuyy");
+                    });   alert("taaaaatzzzy");
     }, 5000);
-</script>
+
+    </script>
+{% endblock %}
+
+

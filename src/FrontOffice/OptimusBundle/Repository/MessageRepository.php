@@ -31,6 +31,23 @@ class MessageRepository extends EntityRepository {
         return  $query->getArrayResult();
         
     }
+    
+    public function getNotif($id) {
+          $em = $this->getEntityManager();
+          $time=New \DateTime();
+          $time=$time->modify('+5 second');
+          $time2=New \DateTime();
+          $time2=$time2->modify('-5 second');
+          $query = $this->createQueryBuilder('e')
+            ->select('e')
+            ->where(" m.vu = 0 and m.reciever = :id and m.event <> NULL and ( m.msgTime BETWEEN '".$time2->format("Y-m-d H:i:s") ."' AND '".$time->format("Y-m-d H:i:s")."' )")
+                  ->setParameter('id', $id);
+         echo "<pre>";print_r($query->getQuery());
+        return $query->getQuery()->getResult();
+       
+        
+    }
+    
 
 //
 //    public function findMsgDestinataires($idprofil) {
