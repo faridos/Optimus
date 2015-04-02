@@ -3,16 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Twig/Extension/OptimusExtension.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Form/UserNameType.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Controller/PaymentController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Entity/Order.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Model/PaymentDetails.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Controller/DetailsController.php</file>
+            <file>file:/C:/wamp/www/Optimus/app/config/config.yml</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Entity/PaymentToken.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Controller/OrderPurchaseController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Entity/PaymentDetails.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/AlbumController.php</file>
+            <file>file:/C:/wamp/www/Optimus/app/config/routing.yml</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Resources/views/Details/viewOrder.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Resources/views/Details/view.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/app/AppKernel.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Resources/views/Purchase/prepare.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Resources/config/routing.yml</file>
             <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/UserController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Repository/NotificationRepository.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Resetting/editNotification.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Form/UserPhotoType.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Form/UserType.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Entity/User.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Repository/UserRepository.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/showClub.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/PaymentBundle/Resources/views/OrderPurchase/prepare.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Club.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Form/EventType.php</file>
         </group>
     </open-files>
 </project-private>

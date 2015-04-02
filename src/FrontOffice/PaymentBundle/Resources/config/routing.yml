@@ -1,0 +1,16 @@
+front_office_payment_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: FrontOfficePaymentBundle:Default:index }
+front_office_paypal_express_checkout:
+    resource:   "@FrontOfficePaymentBundle/Controller/"
+    type:       annotation
+    prefix:     /paypal/express-checkout
+front_office_payment_details_view:
+    pattern:  /payment/details
+    defaults: { _controller: FrontOfficePaymentBundle:Details:view }
+front_office_payment_prepare_order_purchase:
+    pattern:  /{id}/payment/order_purchase/prepare
+    defaults: { _controller: FrontOfficePaymentBundle:OrderPurchase:prepare }
+front_office_payment_order_done:
+    pattern:  /payment/order/done
+    defaults: { _controller: FrontOfficePaymentBundle:Details:viewOrder }    

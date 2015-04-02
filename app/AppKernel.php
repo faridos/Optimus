@@ -26,6 +26,8 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Sly\RelationBundle\SlyRelationBundle(),
             new Nomaya\SocialBundle\NomayaSocialBundle(),
+            new FrontOffice\PaymentBundle\FrontOfficePaymentBundle(),
+            new Payum\Bundle\PayumBundle\PayumBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

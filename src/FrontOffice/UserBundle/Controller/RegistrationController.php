@@ -34,6 +34,7 @@ class RegistrationController extends BaseController {
         $user->setEnabled(true);
         $user->setAmis(1);
         $user->setCompte(1);
+        $user->setConnected(0);
         $user->setTypeNotification('All');
         $user->setCreatedAt(new DateTime());
 
@@ -72,6 +73,37 @@ class RegistrationController extends BaseController {
         return $this->render('FOSUserBundle:Registration:register.html.twig', array(
                     'form' => $form->createView(),
         ));
+    }
+     public function confirmAction(Request $request, $token)
+    {
+        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+        $userManager = $this->get('fos_user.user_manager');
+
+        $user = $userManager->findUserByConfirmationToken($token);
+
+        if (null === $user) {
+            throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
+        }
+
+        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+        $dispatcher = $this->get('event_dispatcher');
+
+        $user->setConfirmationToken(null);
+        $user->setEnabled(true);
+        $user->setConnected(1);
+        $event = new GetResponseUserEvent($user, $request);
+        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRM, $event);
+
+        $userManager->updateUser($user);
+
+        if (null === $response = $event->getResponse()) {
+            $url = $this->generateUrl('fos_user_registration_confirmed');
+            $response = new RedirectResponse($url);
+        }
+
+        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRMED, new FilterUserResponseEvent($user, $request, $response));
+
+        return $response;
     }
 
 }

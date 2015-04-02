@@ -21,8 +21,16 @@ services:
         class: FrontOffice\UserBundle\EventListener\RegistrationListener
         arguments: []
         tags:
-            - { name: kernel.event_subscriber }      
-            
+            - { name: kernel.event_subscriber }
+   
+    login_listener:
+        class: FrontOffice\UserBundle\EventListener\LoginListener
+        arguments: ['@security.context', '@doctrine']
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+   
+    
+    
     kernel.listener.onCreateUserNotification:
         class: FrontOffice\UserBundle\EventListener\RegisterEntraineurListner
         arguments:

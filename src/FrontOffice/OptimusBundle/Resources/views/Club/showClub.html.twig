@@ -52,9 +52,7 @@
 </div>
 <div class="cardRating col-md-6" style="margin-left: 57px;">
 <div class="label labelus label-yellow " >
-
 Nombre des members : <span  id="nbparticip">500</span>
-
 </div>
 </div>
 {% endif %}
@@ -126,24 +124,96 @@ Nombre des members : <span  id="nbparticip">500</span>
 
 
 <ul class="nav nav-tabs nav-justified" role="tablist">
-<li class="active"><a href="#participants" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
-<li class=""><a href="#photos" role="tab" data-toggle="tab"><span class="icon-doc"></span> Photos</a></li>
+<li class="active"><a href="#programmes" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Programmes</a></li>
+<li class=""><a href="#members" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Member</a></li>
+<li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Palmares</a></li>
+<li class=""><a href="#albums" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Album</a></li>
+<li class=""><a href="#demande" role="tab" data-toggle="tab"><span class="icon-doc"></span> Demande</a></li>
 <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
 </ul>
 <div class="tab-content">
     {% if club.isPayant == 1%}
-<ul class="tab-pane fade  active in scrollbar" id="participants" >
+<ul class="tab-pane fade  active in scrollbar" id="programmes" >
+    {% if club.programs|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Rien à afficher dans la catégorie programmes!</strong> Créer un pour commencer.
+</div>
+{% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+</div>
+{% endif %}
+{% endif %}
 <div id="msgparticipe" ></div>
 <br/>
 <div class="row" id="blockparticip">
 </div>
 <div class="clearfix"></div>
 </ul>
-<ul class="tab-pane fade  scrollbar" id="photos" >
+<ul class="tab-pane fade  scrollbar" id="members" >
+     {% if club.adherents|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Liste vide!</strong> Inviter.
+</div>
+
+{% endif %}
+{% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Inviter Amis </span></a><br>
+<br>
+</div>
+{% endif %}
+
 </ul>
+<ul class="tab-pane fade  scrollbar" id="palmares" >
+      {% if club.reward|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Liste vide!</strong>  Créer un pour commencer.
+</div>
+
+{% endif %}
+{% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+</div>
+{% endif %}
+</ul>
+<ul class="tab-pane fade  scrollbar" id="albums" >
+     {% if club.album|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Liste vide!</strong>  Créer un pour commencer.
+</div>
+
+{% endif %}
+{% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+</div>
+{% endif %}
+</ul>
+{% if app.user == club.createur %}
+<ul class="tab-pane fade  scrollbar" id="demande" >
+</ul>
+{% endif %}
+<ul class="tab-pane fade  scrollbar" id="videos" >
+    <img style="width: 100%" src="{{ asset('154.png') }}">
+    <div class="clearfix"></div>
+</ul>
+        
 {% else %}
     <ul class="tab-pane fade  active in scrollbar" id="nonPayer" >
-        <img style="width: 100%" src="{{ asset('154.png') }}">
+        <a href="{{ path('front_office_payment_prepare_order_purchase',{'id' : club.id }) }}">    <img style="width: 100%" src="{{ asset('payment.png') }}"></a>
 </ul>
     {% endif %}
 </div>

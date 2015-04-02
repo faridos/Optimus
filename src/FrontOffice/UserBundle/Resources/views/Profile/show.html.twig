@@ -215,6 +215,7 @@ Club Supprimer
 <div class="tooltipsContainer avatar imagus">
 <a href="{{path('show_club',{'id':club.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ club.nom }}">
 {% if club.path == null %}
+    
 <img src="{{ asset('club.png') }}" alt="avatar" ></a>
 {% else %}
 <img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
@@ -256,7 +257,11 @@ Club Supprimer
 <div class="userWidget-2 tooltipsContainer col-md-12 {{member.clubad.id}}" >
 <div class="tooltipsContainer avatar imagus col-md-3">
 <a href="{{path('show_club',{'id':member.clubad.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
+{% if member.clubad.path == null %}
+<img src="{{ asset('club.png') }}" alt="avatar" ></a>
+{% else %}
 <img src="{{ asset(member.clubad.WebPath) }}" alt="avatar" ></a>
+{% endif %}
 </div>
 <div class="col-md-4">
 <div class="info">

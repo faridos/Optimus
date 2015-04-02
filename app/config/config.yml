@@ -152,3 +152,18 @@ nomaya_social:
         facebook:           "http://www.facebook.com"
         googleplus:         "https://plus.google.com"
     theme:                  'default' # optional
+
+payum:
+    security:
+        token_storage:
+            FrontOffice\PaymentBundle\Entity\PaymentToken: { doctrine: orm }
+
+    storages:
+        FrontOffice\PaymentBundle\Entity\Order: { doctrine: orm }
+    payments:
+        paypal_express_checkout_nvp:
+            paypal_express_checkout_nvp:
+                username:  mouhamedchandoul7-facilitator_api1.gmail.com
+                password: U5JWKVNWRZYAF7SQ
+                signature: ARkk.oi6N.mXtKSCBQU1lYkf0DrxAhkggyxWKfgsBKG.OBGgTHeRKOqf
+                sandbox: true
