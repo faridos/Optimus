@@ -390,16 +390,7 @@ class EventController extends Controller {
        
     }
 
-     /**
-     * 
-     *
-     * @Route("/test", name="test", options={"expose"=true})
-     * @Method("GET|POST")
-     * @Template()
-     */
-    public function SetTimeAction() {
-       return $this->render('FrontOfficeOptimusBundle:Event:test.html.twig'); 
-    }
+   
     
     /**
      * 
@@ -412,6 +403,53 @@ class EventController extends Controller {
         $var="test";
        
        return new Response($var); 
+    }
+    
+    
+    /**
+     * Deletes a Club entity.
+     *
+     * @Route("/testdrr", name="notif_test", options={"expose"=true})
+     * 
+     */
+    public function MessageNotifAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $messages = new ArrayCollection();
+        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->getNotif($user->getId());
+       
+        $response = new Response();
+        $tabcomments = json_encode($messages);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($tabcomments);
+        return $response;
+    }
+     /**
+     * 
+     *
+     * @Route("/testdrrir", name="notif_testt", options={"expose"=true})
+     * 
+     */
+    public function MessagecountAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+       $nbr = $em->getRepository('FrontOfficeOptimusBundle:Message')->getcount($user->getId());
+    
+        $response = new Response($nbr[0]['nbrmsg']);
+          return $response;
+    }
+    
+    /**
+     * 
+     *
+     * @Route("/message_menu", name="message_menu", options={"expose"=true})
+     * 
+     */
+    public function MessageMenuAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+       $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findBy(array('reciever'=>$user->getId()),array('msgTime'=>'DESC'));
+          return $this->render('FrontOfficeOptimusBundle:Message:MessageMenu.html.twig', array('messages' => $messages));
     }
 }
 

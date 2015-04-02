@@ -31,23 +31,40 @@ class MessageRepository extends EntityRepository {
         return  $query->getArrayResult();
         
     }
+  
     
-    public function getNotif($id) {
-          $em = $this->getEntityManager();
-          $time=New \DateTime();
-          $time=$time->modify('+5 second');
+     public function getNotif($id) {
+      
+
+        $em = $this->getEntityManager();
+        $time=New \DateTime();
+          $time=$time->modify('+0 second');
           $time2=New \DateTime();
           $time2=$time2->modify('-5 second');
-          $query = $this->createQueryBuilder('e')
-            ->select('e')
-            ->where(" m.vu = 0 and m.reciever = :id and m.event <> NULL and ( m.msgTime BETWEEN '".$time2->format("Y-m-d H:i:s") ."' AND '".$time->format("Y-m-d H:i:s")."' )")
-                  ->setParameter('id', $id);
-         echo "<pre>";print_r($query->getQuery());
-        return $query->getQuery()->getResult();
+            $query = $em->createQuery("SELECT message, e "
+                        . "FROM FrontOfficeOptimusBundle:Message message LEFT JOIN message.sender e"
+                        . " where message.reciever = :id and message.event is NOT NULL and message.vu = 0 and ( message.msgTime BETWEEN '".$time2->format("Y-m-d H:i:s") ."' AND '".$time->format("Y-m-d H:i:s")."' )"
+                )->setParameter('id', $id);
+        return $events = $query->getArrayResult();
+    
+       
+        
+    }
+    public function getcount($id) {
+      
+
+        $em = $this->getEntityManager();
+            $query = $em->createQuery("SELECT count(message) as nbrmsg "
+                        . "FROM FrontOfficeOptimusBundle:Message message LEFT JOIN message.sender e"
+                        . " where message.reciever = :id and message.vu = 0"
+                )->setParameter('id', $id);
+        return  $query->getResult();
+    
        
         
     }
     
+   
 
 //
 //    public function findMsgDestinataires($idprofil) {

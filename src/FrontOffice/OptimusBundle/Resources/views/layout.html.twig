@@ -1,607 +1,652 @@
 {% extends "::baseA.html.twig" %}
 
 {% block navigation %}
-<div id="header" >
-<div class="home-logo osLight"><a href="{{ path('accueil') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
-<a href="#" class="navHandler" ><span class="fa fa-navicon"></span></a>
-<div class="search">
+    <div id="header" >
+        <div class="home-logo osLight"><a href="{{ path('accueil') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
+        <a href="#" class="navHandler" ><span class="fa fa-navicon"></span></a>
+        <div class="search">
 
-<form action="{{ path('search_index') }}" class="search-form" name="formsearch">
-<input type="hidden" name="kwtype" value="0">
-<input class="search-optimus" name="key" type="text" id="search-text" placeholder="Recherche Optimus..." style="
-text-indent:20px;
-border-radius: 25px;      
-height: 37px;      
-border: 1.5px solid #C02100;      
-width: 510px;      
-margin: 12px -2px 0 5px;
+            <form action="{{ path('search_index') }}" class="search-form" name="formsearch">
+                <input type="hidden" name="kwtype" value="0">
+                <input class="search-optimus" name="key" type="text" id="search-text" placeholder="Recherche Optimus..." style="
+                       text-indent:20px;
+                       border-radius: 25px;      
+                       height: 37px;      
+                       border: 1.5px solid #C02100;      
+                       width: 510px;      
+                       margin: 12px -2px 0 5px;
 
-">
-<a href="#" data-toggle="modal" data-target="#signin" style="margin-left: -22px;">
-<span class="notifyIcon fa fa-sort-down" style="color:#c02100"></span></a>
-<button type="submit" class="btn btn-sm btn-green" style="border-radius: 25px;
-height: 37px;
-margin-left: 18px;"><span class="icon-magnifier"></span></button>
-</form>
-
-
-</div>
+                       ">
+                <a href="#" data-toggle="modal" data-target="#signin" style="margin-left: -22px;">
+                    <span class="notifyIcon fa fa-sort-down" style="color:#c02100"></span></a>
+                <button type="submit" class="btn btn-sm btn-green" style="border-radius: 25px;
+                        height: 37px;
+                        margin-left: 18px;"><span class="icon-magnifier"></span></button>
+            </form>
 
 
-<div class="headerUserWraper">
-<a href="#" class="userHandler dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span></a>
-<a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
-{% if app.user.path == null %}
-{% if app.user.sexe == 'H' %}
-
-<img src="{{ asset('men.png') }}" class="avatar headerAvatar pull-left">
-
-{% else %}
-
-<img src="{{ asset('women.png') }}" class="avatar headerAvatar pull-left">
-
-{% endif %}
-{% else %}
-
-<img class="avatar headerAvatar pull-left" src="{{ asset( app.user.getWebPath ) }}" alt="avatar">
-{% endif %}
+        </div>
 
 
-<div class="userTop pull-left" >
-<span class="headerUserName">{{ app.user.nom }} {{ app.user.prenom }}</span> <span class="fa fa-angle-down"></span>
-<div class="cardRating" style="color:#eab134">
-<div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'U'~app.user.id} %}</div>
-</div>
+        <div class="headerUserWraper">
+            <a href="#" class="userHandler dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span></a>
+            <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+                {% if app.user.path == null %}
+                    {% if app.user.sexe == 'H' %}
+
+                        <img src="{{ asset('men.png') }}" class="avatar headerAvatar pull-left">
+
+                    {% else %}
+
+                        <img src="{{ asset('women.png') }}" class="avatar headerAvatar pull-left">
+
+                    {% endif %}
+                {% else %}
+
+                    <img class="avatar headerAvatar pull-left" src="{{ asset( app.user.getWebPath ) }}" alt="avatar">
+                {% endif %}
+
+
+                <div class="userTop pull-left" >
+                    <span class="headerUserName">{{ app.user.nom }} {{ app.user.prenom }}</span> <span class="fa fa-angle-down"></span>
+                    <div class="cardRating" style="color:#eab134">
+                        <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with {'id' : 'U'~app.user.id} %}</div>
+                    </div>
 
 
 
-</div>
-<div class="clearfix"></div>
-</a>
-<div class="dropdown-menu pull-right userMenu" role="menu">
-<div class="mobAvatar">
-<img class="avatar mobAvatarImg" src="{{ asset( app.user.getWebPath ) }}">
-<div class="mobAvatarName">{{ app.user.nom }} {{ app.user.prenom }}</div>
-</div>
-<ul>
-<li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-<li><a href="{{ path('clubs_member',{'id': app.user.id}) }}"><span class="fa fa-users"></span>Mes clubs</a></li>
-<li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="fa fa-trophy"></span>Mes évenements</a></li>
-<li><a href="{{ path('setting_user',{'id': app.user.id}) }}"><span class="icon-settings"></span>Settings</a></li>
-<li><a href="{{ path('history_event',{'id': app.user.id}) }}"><span class="glyphicon glyphicon-globe"></span>Historique</a></li>
-<li class="divider"></li>
-<li><a href="{{ path('fos_user_security_logout') }}"><span class="icon-power"></span>Deconnexion</a></li>
-</ul>
-</div>
-</div>
-<div class="headerNotifyWraper">
+                </div>
+                <div class="clearfix"></div>
+            </a>
+            <div class="dropdown-menu pull-right userMenu" role="menu">
+                <div class="mobAvatar">
+                    <img class="avatar mobAvatarImg" src="{{ asset( app.user.getWebPath ) }}">
+                    <div class="mobAvatarName">{{ app.user.nom }} {{ app.user.prenom }}</div>
+                </div>
+                <ul>
+                    <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                    <li><a href="{{ path('clubs_member',{'id': app.user.id}) }}"><span class="fa fa-users"></span>Mes clubs</a></li>
+                    <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="fa fa-trophy"></span>Mes évenements</a></li>
+                    <li><a href="{{ path('setting_user',{'id': app.user.id}) }}"><span class="icon-settings"></span>Settings</a></li>
+                    <li><a href="{{ path('history_event',{'id': app.user.id}) }}"><span class="glyphicon glyphicon-globe"></span>Historique</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}"><span class="icon-power"></span>Deconnexion</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="headerNotifyWraper">
 
-<a href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
-<span class="notifyIcon icon-bell"></span>
-{% set nbsNotification = getNombreNotification(app.user, app.user.createdAt) %}
-{% for nbNotification in nbsNotification  %}
-<span class="counter">{{ nbsNotification |length }}</span>
-{% endfor %}
-</a>
-<div class="dropdown-menu pull-right notifyMenu" role="menu">
-{% set notifications = getNotifications(app.user, app.user.createdAt)%}
-<div class="notifyHeader">
-<span>Notifications</span>
-<a href="{{ path('setting_user_notifications',{'id': app.user.id}) }}" class="notifySettings icon-settings"></a>
-<div class="clearfix"></div>
-</div>
-<ul class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
-{% for notification in notifications  %}
-{% set notificateur = getUser(notification.notificateur) %}
-{% if notification.event != null  %}
-{% set participations = getParicipationEventNotification(notification.event.id,app.user.id, notification.datenotification) %}
-{% if notification.type == 'add' %}
-<li class="notification" id="{{ notification.id }}">
-<a id="show_notification" href="{{ path('show_event', { 'id' : notification.event.id }) }}">
-<img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
-<div class="pulse border-grey"></div>
-<div class="notify pull-left">
-<div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a publié l'évenement {{ notification.event.titre }}</div>
-<div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-</div>
-<div class="clearfix"></div>
-</a>
-</li>
-{% elseif notification.type == 'Update' %}
-{% if participations is not empty %}
-<li>
-<a href="{{ path('show_event', { 'id' : notification.event.id }) }}">
-<img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
-<div class="pulse border-grey"></div>
-<div class="notify pull-left">
-<div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a modifier l'évenement {{ notification.event.titre }}</div>
-<div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-</div>
-<div class="clearfix"></div>
-</a>
-</li>
-{% endif %}
-{% elseif notification.type == 'delete' %}
-{% if participations is not empty %}
-<li>
-<a href="#">
-<img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
-<div class="pulse border-grey"></div>
-<div class="notify pull-left">
-<div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a annuler l'évenement {{ notification.event.titre }}</div>
-<div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-</div>
-<div class="clearfix"></div>
-</a>
-</li>
-{% endif %}
-{% endif %}
-{% elseif notification.club != null  %}
-<li>
-<a href="{{ path('show_club', { 'id' : notification.club.id }) }}">
-<img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
-<div class="pulse border-grey"></div>
-<div class="notify pull-left">
-<div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a publié le club {{ notification.club.nom }}</div>
-<div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-</div>
-<div class="clearfix"></div>
-</a>
-</li>
-{% elseif notification.entraineur != null  %}
-<li>
-<a href="{{ path('show_profil',{ 'id': notification.entraineur.id})}}">
-<img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}">
-<div class="pulse border-grey"></div>
-<div class="notify pull-left">
-<div class="notifyName">l'entraineur {{ notificateur.prenom }} {{ notificateur.nom }} inscrit</div>
-<div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-</div>
-<div class="clearfix"></div>
-</a>
-</li>
-{% endif %}
-{% endfor %}
-</ul>
-<a href="{{ path('all_notifications_user',{'id' : app.user.id}) }}" class="notifyAll">Afficher tout</a>
-</div>
-</div>
-<div class="headerNotifyWraper">
-{% set messages = getNonSeenMessage(app.user.id) %}
-{% set i = 0 %}
+            <a href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
+                <span class="notifyIcon icon-bell"></span>
+                {% set nbsNotification = getNombreNotification(app.user, app.user.createdAt) %}
+                {% for nbNotification in nbsNotification  %}
+                    <span class="counter">{{ nbsNotification |length }}</span>
+                {% endfor %}
+            </a>
+            <div class="dropdown-menu pull-right notifyMenu" role="menu">
+                {% set notifications = getNotifications(app.user, app.user.createdAt)%}
+                <div class="notifyHeader">
+                    <span>Notifications</span>
+                    <a href="{{ path('setting_user_notifications',{'id': app.user.id}) }}" class="notifySettings icon-settings"></a>
+                    <div class="clearfix"></div>
+                </div>
+                <ul class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
+                    {% for notification in notifications  %}
+                        {% set notificateur = getUser(notification.notificateur) %}
+                        {% if notification.event != null  %}
+                            {% set participations = getParicipationEventNotification(notification.event.id,app.user.id, notification.datenotification) %}
+                            {% if notification.type == 'add' %}
+                                <li class="notification" id="{{ notification.id }}">
+                                    <a id="show_notification" href="{{ path('show_event', { 'id' : notification.event.id }) }}">
+                                        <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
+                                        <div class="pulse border-grey"></div>
+                                        <div class="notify pull-left">
+                                            <div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a publié l'évenement {{ notification.event.titre }}</div>
+                                            <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </a>
+                                </li>
+                            {% elseif notification.type == 'Update' %}
+                                {% if participations is not empty %}
+                                    <li>
+                                        <a href="{{ path('show_event', { 'id' : notification.event.id }) }}">
+                                            <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
+                                            <div class="pulse border-grey"></div>
+                                            <div class="notify pull-left">
+                                                <div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a modifier l'évenement {{ notification.event.titre }}</div>
+                                                <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% elseif notification.type == 'delete' %}
+                                {% if participations is not empty %}
+                                    <li>
+                                        <a href="#">
+                                            <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
+                                            <div class="pulse border-grey"></div>
+                                            <div class="notify pull-left">
+                                                <div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a annuler l'évenement {{ notification.event.titre }}</div>
+                                                <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% elseif notification.club != null  %}
+                            <li>
+                                <a href="{{ path('show_club', { 'id' : notification.club.id }) }}">
+                                    <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
+                                    <div class="pulse border-grey"></div>
+                                    <div class="notify pull-left">
+                                        <div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a publié le club {{ notification.club.nom }}</div>
+                                        <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.entraineur != null  %}
+                            <li>
+                                <a href="{{ path('show_profil',{ 'id': notification.entraineur.id})}}">
+                                    <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}">
+                                    <div class="pulse border-grey"></div>
+                                    <div class="notify pull-left">
+                                        <div class="notifyName">l'entraineur {{ notificateur.prenom }} {{ notificateur.nom }} inscrit</div>
+                                        <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <a href="{{ path('all_notifications_user',{'id' : app.user.id}) }}" class="notifyAll">Afficher tout</a>
+            </div>
+        </div>
+        <div class="headerNotifyWraper">
+            {% set messages = getNonSeenMessage(app.user.id) %}
+            {% set i = 0 %}
+            {% for message in messages %}
+                {% if message.vu == 0 %}
+                    {% set i = i+1 %}
+                {% endif %}
+            {% endfor %}
+            <a id="nb_message" href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
+                <span class="notifyIcon fa fa-envelope-o"></span>
+                {% if  i != 0 %}
+                    <span class="counter" id="nombre_message"><span id="samirMsg">{{ i }}</span></span>
+                    {% endif %}
+            </a>
+            <div class="dropdown-menu pull-right notifyMenu" role="menu">
+                <div class="notifyHeader">
+                    <span>Messages </span>
+                    <a href="#" class="notifySettings icon-settings"></a>
+                    <div class="clearfix"></div>
+                </div>
+                <ul id="id_message" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
+                    {% for message in messages %}
+                        {% if message.vu == 0 %}
+                            <li style="background: #EFEFEF;;" class="message_{{message.id}}" id="{{ message.id }}">
+                                <a href="#" id="descumessage{{message.id}}" data-toggle="modal">
+                                    {% if message.sender.path == null %}
+                                        {% if message.sender.sexe == 'H' %}
+                                            <img  class="avatar pull-left" src="{{ asset('men.png') }}" alt="avatar">
+                                        {% else %}
+                                            <img  class="avatar pull-left" src="{{ asset('women.png') }}" alt="avatar">
+                                        {% endif %}
+                                    {% else %}
+                                        <img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" alt="avatar">
+
+                                    {% endif %}
+                                    <div class="pulse border-grey "></div>
+                                    <div id="{{ message.sender.id }}" class="notify pull-left  ">
+                                        <div class="notifyName" style="font-weight: bold"> {{ message.sender.username }}</div><div class="texte">{{ message.content }}</div>
+                                        <div class="notifyTime">{{ message.getDuréeMsg() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="message_{{message.id}}" id="{{ message.id }}">
+                                <a href="#" id="descumessage{{message.id}}" data-toggle="modal">
+                                    {% if message.sender.path == null %}
+                                        {% if message.sender.sexe == 'H' %}
+                                            <img  class="avatar pull-left" src="{{ asset('men.png') }}" alt="avatar">
+                                        {% else %}
+                                            <img  class="avatar pull-left" src="{{ asset('women.png') }}" alt="avatar">
+                                        {% endif %}
+                                    {% else %}
+                                        <img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" alt="avatar">
+                                    {% endif %}
+                                    <div class="pulse border-grey "></div>
+                                    <div id="{{ message.sender.id }}" class="notify pull-left  ">
+                                        <div class="notifyName" style="font-weight: bold"> {{ message.sender.username }}</div><div class="texte">{{ message.content }}</div>
+                                        <div class="notifyTime">{{ message.getDuréeMsg() }} </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <a href="#" class="notifyAll">Afficher tout</a>
+            </div>
+        </div>
+        <div class="headerNotifyWraper">
+            {% set Invitations = getInvitations(app.user.id) %}
+            <a href="#"  class="headerNotify dropdown-toggle" id="nb_invitation" data-toggle="dropdown">
+                <span class="notifyIcon icon-users"></span>
+                {% if Invitations is not empty %}  <span class="counter" id="nombre_invitation"  ><span id="nbInvitation">{{ Invitations|length  }}</span></span>{% endif %}
+            </a>
+            <div class="dropdown-menu pull-right notifyMenu" role="menu" style="width:380px">
+
+                <div class="notifyHeader">
+                    <span>Demandes d'ajout</span>
+                    <a href="#" class="notifySettings icon-settings"></a>
+                    <div class="clearfix"></div>
+                </div>
+                <ul id="id_invitation" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
+                    {% for invitation in Invitations %}  
+                        {% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
+                        <li class="invitation{{invitation.id}}" id="{{ invitation.id }}">
+                            <div class="userWidget-2" style="margin-bottom:1px">
+                                <div class="avatar">
+                                    <a href="{{ path('show_profil', { 'id': invitation.object1Id}) }}">
+                                        {% if UsersInvitations.path == null %}
+                                            {% if UsersInvitations.sexe == 'H' %}
+                                                <img alt="avatar" src="{{ asset('men.png') }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
+                                            {% else %}
+                                                <img alt="avatar" src="{{ asset('women.png') }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
+                                            {% endif %}
+                                        {% else %}
+                                            <img alt="avatar" src="{{ asset(UsersInvitations.WebPath) }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <div class="notifyName" style="line-height:40px"><a href="#" style="color:#c02100"><strong>{{ invitation.username}}</strong></a></div>
+                                </div>
+                                <div class="ops">
+
+                                    <a id="accept_invitation{{invitation.id}}" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
+                                    <a id="delete_invitation" href="{{ path('delete_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
+                                    <div class="loader"> <img src="{{asset('template/images/ajax-loader3.gif') }}"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                        </li>
+
+                    {% endfor %}
+                </ul>
+                <a href="{{ path('all_invitations_user',{'id': app.user.id}) }}" class="notifyAll">Afficher tout</a>
+            </div>
+        </div>
+        <a href="#" class="mapHandler"><span class="icon-map"></span></a>
+        <div class="clearfix"></div>
+    </div>
+    <div id="leftSide" >
+        <nav class="leftNav scrollable">
+            <div class="search">
+                <span class="searchIcon icon-magnifier"></span>
+                <input type="text" placeholder="Recherche Optimus...">
+            </div>
+            <ul><li class="hasSub">
+                    <a href="#"><span class="navIcon fa fa-comment"></span><span class="navLabel">Tchat</span><span class="fa fa-angle-left arrowRight"></span></a>
+                    <ul class="dropdown-menu scrollbar" role="menu" >
+                        {% set friends = getFriends(app.user.id) %}
+                        {% for friend in friends %}
+                            <li class="definedname"><a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+                                    {% if friend.path == null %}
+                                        {% if friend.sexe == 'H' %}
+
+                                            <img src="{{ asset('men.png') }}" class="avatar headerAvatar pull-left">
+
+                                        {% else %}
+                                            <img src="{{ asset('women.png') }}" class="avatar headerAvatar pull-left">
+
+                                        {% endif %}
+                                    {% else %}
+                                        <img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
+                                    {% endif %}
+
+                                    <div class="userTop pull-left">
+                                        <span class="headerUserName open  box">{{ friend.prenom }} {{ friend.nom }}</span> 
+                                    </div><img class="connected" src="{{ asset('template/images/connected.png') }}" alt="en ligne" title="en ligne" >
+                                    <div class="clearfix"></div>
+                                </a></li>
+                            {% endfor %}
+                        <li class="divider"></li>
+
+                    </ul>
+                </li>
+                {% if app.user.profil == 'Entraineur' %}
+                    <li><a href="{{ path('add_club')}}"><span class="navIcon fa fa-users"></span><span class="navLabel"> + Club</span></a></li>
+                            {% endif %}
+                <li><a href="{{ path('add-event')}}"><span class="navIcon fa fa-trophy"></span><span class="navLabel">+Evenement</span></a></li>
+
+
+
+            </ul>
+        </nav>
+
+
+    </div>
+    <div class="closeLeftSide"></div>
+    <div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content bordusbottomus">
+                <div class="modal-header bordustopus">
+                    <h4 class="modal-title" id="signinLabel">Recherche Optimus</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ path('search_events') }}" method="get">               
+                        <div class="form-group">
+                            <input type="text" name="key" placeholder=" Nom d'évenement" class="search-optimus">
+
+                            <input type="hidden" name="kwtype" value="0">
+                            <div >
+                                <input list="createurlist" type="text" name="createur" class="search-optimus" placeholder="Ecrire votre créateur ou bien sélectionner">
+                                <datalist id="createurlist" class="select">
+                                    <option value="tous">
+                                    <option value="amis">
+
+                                </datalist>
+                            </div>
+                            <select id="date" name="date" class="search-optimus">
+                                <option value="" selected="" disabled="">Date</option>
+                                <option value="aujourdhui">Aujourd'hui</option>
+                                <option value="semaine">Cette semaine</option>
+                                <option value="mois">Ce mois</option>
+                                <option value="an">Cette année</option>
+                            </select><br>
+                            <input type="text" name="type" placeholder=" Type d'évenement" class="search-optimus">
+                            <input style="border-radius:25px" name="lieu" type="text" class="search-optimus" id="city" placeholder="Entrer ici votre région" autocomplete="off" size="60">
+                        </div>
+                        <div class="form-group">
+                            <div class="btn-group-justified">
+                                <button type="submit" class="btn btn-round btn-green btn-m" style="width: 100%"><span class="icon-magnifier"></span></button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="descu" style="display:none;">
+        <div class="col-lg-3  navbar-fixed-bottom">
+            <div class="well well-sm " >
+                <div class="affiche_nom" >
+                    <b class="pull-left affiche_personne"></b>
+                    <i id="close" class="glyphicon glyphicon-remove pull-right"></i>
+                </div>
+                <div class="affichage " >
+                    <ul class="well well-sm scrollbar chat-thread"  >
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
+                            </div>
+                            <div class="col-md-10 tchat" >
+                                <p>
+                                    Bonjour , comment vas-tu? ça fait un bail que je t'ai pas vu !
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-2 pull-right">
+                                <img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
+                            </div>
+                            <div class="col-md-10 pull-left" style="background:white;">
+                                <p>
+                                    bjr, ça va mon frere tout va bien ... quoi de neuf chez toi?
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                    </ul>
+                </div>
+                <form class="chat-window">
+                    <input class="form-control chat-window-message" name="chat-window-message" type="text" autocomplete="off" autofocus />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% set messages = getNonSeenMessage(app.user.id) %}
+    <div id="repondremsg">
     {% for message in messages %}
-        {% if message.vu == 0 %}
-            {% set i = i+1 %}
-            {% endif %}
-        {% endfor %}
-<a id="nb_message" href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
-<span class="notifyIcon fa fa-envelope-o"></span>
-{% if  i != 0 %}
-<span class="counter" id="nombre_message"><span id="samirMsg">{{ i }}</span></span>
-{% endif %}
-</a>
-<div class="dropdown-menu pull-right notifyMenu" role="menu">
-<div class="notifyHeader">
-<span>Messages </span>
-<a href="#" class="notifySettings icon-settings"></a>
-<div class="clearfix"></div>
-</div>
-<ul id="id_message" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
-{% for message in messages %}
-{% if message.vu == 0 %}
-<li style="background: #EFEFEF;;" class="message_{{message.id}}" id="{{ message.id }}">
-<a href="#" id="descumessage{{message.id}}" data-toggle="modal">
-{% if message.sender.path == null %}
-{% if message.sender.sexe == 'H' %}
-<img  class="avatar pull-left" src="{{ asset('men.png') }}" alt="avatar">
-{% else %}
-<img  class="avatar pull-left" src="{{ asset('women.png') }}" alt="avatar">
-{% endif %}
-{% else %}
-<img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" alt="avatar">
+        <div class="row" id="modaldescumessage{{message.id}}" style="display:none;">
+            <div class="col-lg-3  navbar-fixed-bottom" style="margin-left: 74%;">
+                <div class="well well-sm ">
+                    <div class="affiche_nom">
+                        <b class="pull-left affiche_personne">{{message.sender.username}}</b>
+                        <a id="close{{message.id}}" class="glyphicon glyphicon-remove pull-right"></a>
+                    </div>
+                    <div class="affichage">
+                        <ul id="appendmessage" class="well well-sm scrollbar chat-thread" style="height:200px;">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    {% if message.sender.path == null %}
+                                        {% if message.sender.sexe == 'H' %}
+                                            <img  class="avatar pull-left" src="{{ asset('men.png') }}" class="img-responsive img-circle" width="30">
+                                        {% else %}
+                                            <img  class="avatar pull-left" src="{{ asset('women.png') }}" class="img-responsive img-circle" width="30">
+                                        {% endif %}
+                                    {% else %}
+                                        <img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" class="img-responsive img-circle" width="30">
+                                    {% endif %}
 
-{% endif %}
-<div class="pulse border-grey "></div>
-<div id="{{ message.sender.id }}" class="notify pull-left  ">
-<div class="notifyName" style="font-weight: bold"> {{ message.sender.username }}</div><div class="texte">{{ message.content }}</div>
-<div class="notifyTime">{{ message.getDuréeMsg() }}</div>
-</div>
-<div class="clearfix"></div>
-</a>
-</li>
-{% else %}
-    <li class="message_{{message.id}}" id="{{ message.id }}">
-<a href="#" id="descumessage{{message.id}}" data-toggle="modal">
-{% if message.sender.path == null %}
-{% if message.sender.sexe == 'H' %}
-<img  class="avatar pull-left" src="{{ asset('men.png') }}" alt="avatar">
-{% else %}
-<img  class="avatar pull-left" src="{{ asset('women.png') }}" alt="avatar">
-{% endif %}
-{% else %}
-<img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" alt="avatar">
-{% endif %}
-<div class="pulse border-grey "></div>
-<div id="{{ message.sender.id }}" class="notify pull-left  ">
-<div class="notifyName" style="font-weight: bold"> {{ message.sender.username }}</div><div class="texte">{{ message.content }}</div>
-<div class="notifyTime">{{ message.getDuréeMsg() }} </div>
-</div>
-<div class="clearfix"></div>
-</a>
-</li>
-{% endif %}
-{% endfor %}
-</ul>
-<a href="#" class="notifyAll">Afficher tout</a>
-</div>
-</div>
-<div class="headerNotifyWraper">
-{% set Invitations = getInvitations(app.user.id) %}
-<a href="#"  class="headerNotify dropdown-toggle" id="nb_invitation" data-toggle="dropdown">
-<span class="notifyIcon icon-users"></span>
-{% if Invitations is not empty %}  <span class="counter" id="nombre_invitation"  ><span id="nbInvitation">{{ Invitations|length  }}</span></span>{% endif %}
-</a>
-<div class="dropdown-menu pull-right notifyMenu" role="menu" style="width:380px">
-
-<div class="notifyHeader">
-<span>Demandes d'ajout</span>
-<a href="#" class="notifySettings icon-settings"></a>
-<div class="clearfix"></div>
-</div>
-<ul id="id_invitation" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
-{% for invitation in Invitations %}  
-{% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
-<li class="invitation{{invitation.id}}" id="{{ invitation.id }}">
-<div class="userWidget-2" style="margin-bottom:1px">
-<div class="avatar">
-<a href="{{ path('show_profil', { 'id': invitation.object1Id}) }}">
-{% if UsersInvitations.path == null %}
-{% if UsersInvitations.sexe == 'H' %}
-<img alt="avatar" src="{{ asset('men.png') }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
-{% else %}
-<img alt="avatar" src="{{ asset('women.png') }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
-{% endif %}
-{% else %}
-<img alt="avatar" src="{{ asset(UsersInvitations.WebPath) }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
-{% endif %}
-</a>
-</div>
-<div class="info">
-<div class="notifyName" style="line-height:40px"><a href="#" style="color:#c02100"><strong>{{ invitation.username}}</strong></a></div>
-</div>
-<div class="ops">
-
-<a id="accept_invitation{{invitation.id}}" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
-<a id="delete_invitation" href="{{ path('delete_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
-<div class="loader"> <img src="{{asset('template/images/ajax-loader3.gif') }}"></div>
-</div>
-<div class="clearfix"></div>
-</div>
-
-</li>
-
-{% endfor %}
-</ul>
-<a href="{{ path('all_invitations_user',{'id': app.user.id}) }}" class="notifyAll">Afficher tout</a>
-</div>
-</div>
-<a href="#" class="mapHandler"><span class="icon-map"></span></a>
-<div class="clearfix"></div>
-</div>
-<div id="leftSide" >
-<nav class="leftNav scrollable">
-<div class="search">
-<span class="searchIcon icon-magnifier"></span>
-<input type="text" placeholder="Recherche Optimus...">
-</div>
-<ul><li class="hasSub">
-<a href="#"><span class="navIcon fa fa-comment"></span><span class="navLabel">Tchat</span><span class="fa fa-angle-left arrowRight"></span></a>
-<ul class="dropdown-menu scrollbar" role="menu" >
-{% set friends = getFriends(app.user.id) %}
-{% for friend in friends %}
-<li class="definedname"><a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
-{% if friend.path == null %}
-{% if friend.sexe == 'H' %}
-
-<img src="{{ asset('men.png') }}" class="avatar headerAvatar pull-left">
-
-{% else %}
-<img src="{{ asset('women.png') }}" class="avatar headerAvatar pull-left">
-
-{% endif %}
-{% else %}
-<img class="avatar headerAvatar pull-left" src="{{ asset(friend.getWebPath) }}" alt="avatar">
-{% endif %}
-
-<div class="userTop pull-left">
-<span class="headerUserName open  box">{{ friend.prenom }} {{ friend.nom }}</span> 
-</div><img class="connected" src="{{ asset('template/images/connected.png') }}" alt="en ligne" title="en ligne" >
-<div class="clearfix"></div>
-</a></li>
-{% endfor %}
-<li class="divider"></li>
-
-</ul>
-</li>
-{% if app.user.profil == 'Entraineur' %}
-<li><a href="{{ path('add_club')}}"><span class="navIcon fa fa-users"></span><span class="navLabel"> + Club</span></a></li>
-{% endif %}
-<li><a href="{{ path('add-event')}}"><span class="navIcon fa fa-trophy"></span><span class="navLabel">+Evenement</span></a></li>
+                                </div>
+                                <div class="col-md-10" style="background:white;">
+                                    <p>
+                                        {% if message.event == null %}
+                                            {{ message.content }}
+                                        {% else %}
+                                            {{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
 
 
+                        </ul>
+                    </div>
+                    <form method="post">
+                        <div class="input-group">
+                            <input id="newmessage{{message.id}}" type="text" class="form-control" placeholder="Repondre au message...">
+                            <span class="input-group-btn">
+                                <a id="repondre{{message.id}}" class="btn btn-green">Repondre</a>
+                                <a class="loader" id="loader_reponder">
+                                    <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                </a>
+                            </span>
 
-</ul>
-</nav>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-
-</div>
-<div class="closeLeftSide"></div>
-<div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
-<div class="modal-dialog modal-md">
-<div class="modal-content bordusbottomus">
-<div class="modal-header bordustopus">
-<h4 class="modal-title" id="signinLabel">Recherche Optimus</h4>
-</div>
-<div class="modal-body">
-<form action="{{ path('search_events') }}" method="get">               
-<div class="form-group">
-<input type="text" name="key" placeholder=" Nom d'évenement" class="search-optimus">
-
-<input type="hidden" name="kwtype" value="0">
-<div >
-<input list="createurlist" type="text" name="createur" class="search-optimus" placeholder="Ecrire votre créateur ou bien sélectionner">
-<datalist id="createurlist" class="select">
-<option value="tous">
-<option value="amis">
-
-</datalist>
-</div>
-<select id="date" name="date" class="search-optimus">
-<option value="" selected="" disabled="">Date</option>
-<option value="aujourdhui">Aujourd'hui</option>
-<option value="semaine">Cette semaine</option>
-<option value="mois">Ce mois</option>
-<option value="an">Cette année</option>
-</select><br>
-<input type="text" name="type" placeholder=" Type d'évenement" class="search-optimus">
-<input style="border-radius:25px" name="lieu" type="text" class="search-optimus" id="city" placeholder="Entrer ici votre région" autocomplete="off" size="60">
-</div>
-<div class="form-group">
-<div class="btn-group-justified">
-<button type="submit" class="btn btn-round btn-green btn-m" style="width: 100%"><span class="icon-magnifier"></span></button>
-</div>
-
-</div>
-</form>
-</div>
-</div>
-</div>
-</div>
-<div class="row" id="descu" style="display:none;">
-<div class="col-lg-3  navbar-fixed-bottom">
-<div class="well well-sm " >
-<div class="affiche_nom" >
-<b class="pull-left affiche_personne"></b>
-<i id="close" class="glyphicon glyphicon-remove pull-right"></i>
-</div>
-<div class="affichage " >
-<ul class="well well-sm scrollbar chat-thread"  >
-<div class="row">
-<div class="col-md-2">
-<img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
-</div>
-<div class="col-md-10 tchat" >
-<p>
-Bonjour , comment vas-tu? ça fait un bail que je t'ai pas vu !
-</p>
-</div>
-</div>
-<hr>
-<div class="row">
-<div class="col-md-2 pull-right">
-<img src="images/hayfa.jpg" class="img-responsive img-circle" width="30">
-</div>
-<div class="col-md-10 pull-left" style="background:white;">
-<p>
-bjr, ça va mon frere tout va bien ... quoi de neuf chez toi?
-</p>
-</div>
-</div>
-<hr>
-</ul>
-</div>
-<form class="chat-window">
-<input class="form-control chat-window-message" name="chat-window-message" type="text" autocomplete="off" autofocus />
-</form>
-</div>
-</div>
-</div>
-
-{% set messages = getNonSeenMessage(app.user.id) %}
-{% for message in messages %}
-<div class="row" id="modaldescumessage{{message.id}}" style="display:none;">
-<div class="col-lg-3  navbar-fixed-bottom" style="margin-left: 74%;">
-<div class="well well-sm ">
-<div class="affiche_nom">
-<b class="pull-left affiche_personne">{{message.sender.username}}</b>
-<a id="close{{message.id}}" class="glyphicon glyphicon-remove pull-right"></a>
-</div>
-<div class="affichage">
-<ul id="appendmessage" class="well well-sm scrollbar chat-thread" style="height:200px;">
-<div class="row">
-<div class="col-md-2">
-{% if message.sender.path == null %}
-{% if message.sender.sexe == 'H' %}
-<img  class="avatar pull-left" src="{{ asset('men.png') }}" class="img-responsive img-circle" width="30">
-{% else %}
-<img  class="avatar pull-left" src="{{ asset('women.png') }}" class="img-responsive img-circle" width="30">
-{% endif %}
-{% else %}
-<img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" class="img-responsive img-circle" width="30">
-{% endif %}
-
-</div>
-<div class="col-md-10" style="background:white;">
-<p>
-{% if message.event == null %}
-{{ message.content }}
-{% else %}
-{{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
-{% endif %}
-</p>
-</div>
-</div>
-<hr>
-
-
-</ul>
-</div>
-<form method="post">
-<div class="input-group">
-<input id="newmessage{{message.id}}" type="text" class="form-control" placeholder="Repondre au message...">
-<span class="input-group-btn">
-<a id="repondre{{message.id}}" class="btn btn-green">Repondre</a>
-<a class="loader" id="loader_reponder">
-<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
-</a>
-</span>
-
-</div>
-</form>
-</div>
-</div>
-
-</div>
-{% endfor %}
+        </div>
+    {% endfor %}
+    
+    </div>
 {% endblock %}
 
 {% block javascripts %}
 
-<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-<script src="{{ asset('template/js/plugin.js') }}" type="text/javascript" ></script>
-<script src="{{ asset('template/js/agenda.js') }}" type="text/javascript"></script>
-<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-<script src="{{ asset('template/js/ajaxNotif.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ asset('template/js/plugin.js') }}" type="text/javascript" ></script>
+    <script src="{{ asset('template/js/agenda.js') }}" type="text/javascript"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script src="{{ asset('template/js/ajaxNotif.js') }}" type="text/javascript"></script>
 
-<script>
+    <script>
 
-{% set messages = getNonSeenMessage(app.user.id) %}
-{% for message in messages %}
-$('#repondre{{message.id}}').on('click', function()
-{
-    var sender = {{message.sender.id}};
-var message = $('#newmessage{{message.id}}').val();
-if (message != "")
-{
-    $('#repondre{{message.id}}').hide();
-$('#loader_reponder').show();
-var photo = "";                                                                                    {% if app.user.path == null %}
-{% if app.user.sexe == 'H' %}
-photo = "{{ asset('men.png') }}";            {% else %}
-photo = "{{ asset('women.png') }}";                {% endif %}
-{% else %}
-photo = "{{asset(app.user.WebPath) }}"; {% endif %}
-$.ajax({
-type: "POST",
-   url: Routing.generate('repondre_message'),
-   data: {message: message, sender:sender},
-   dataType: 'json',
-   success: function(data) {
-       $('#loader_reponder').hide();
-       $('#repondre{{message.id}}').show();
-   $('#appendmessage').append('<div class="row">' +
-           '<div class="col-md-2 pull-right">' +
-           '<img src="' + photo + '" class="img-responsive img-circle" width="30" >' +
-           '</div>' +
-           '<div class="col-md-10 pull-left" style="background:white;">' +
-           '<p>' + message  + '</p>' +
-           '</div></div><hr>'
-           );
-           $('#newmessage{{message.id}}').val("");
-           }
+        {% set messages = getNonSeenMessage(app.user.id) %}
+        {% for message in messages %}
+                    $('#repondre{{message.id}}').on('click', function()
+            {
+            var sender = {{message.sender.id}};
+                    var message = $('#newmessage{{message.id}}').val();
+                    if (message != "")
+            {
+            $('#repondre{{message.id}}').hide();
+                    $('#loader_reponder').show();
+                    var photo = "";{% if app.user.path == null %}{% if app.user.sexe == 'H' %}
+                    photo = "{{ asset('men.png') }}";{% else %}
+                    photo = "{{ asset('women.png') }}";{% endif %}{% else %}
+                    photo = "{{asset(app.user.WebPath) }}";{% endif %}
+                    $.ajax({
+                    type: "POST",
+                            url: Routing.generate('repondre_message'),
+                            data: {message: message, sender:sender},
+                            dataType: 'json',
+                            success: function(data) {
+                            $('#loader_reponder').hide();
+                                    $('#repondre{{message.id}}').show();
+                                    $('#appendmessage').append('<div class="row">' +
+                                    '<div class="col-md-2 pull-right">' +
+                                    '<img src="' + photo + '" class="img-responsive img-circle" width="30" >' +
+                                    '</div>' +
+                                    '<div class="col-md-10 pull-left" style="background:white;">' +
+                                    '<p>' + message + '</p>' +
+                                    '</div></div><hr>'
+                                    );
+                                    $('#newmessage{{message.id}}').val("");
+                            }
 
-});
-}
+                    });
+            }
 
-});
-$('#close{{message.id}}').click(function() {
-$('#modaldescumessage{{message.id}}').hide();
-});
-$('#descumessage{{message.id}}').click(function() {
-$('#modaldescumessage{{message.id}}').show();
-
-$.ajax({
-    type: "POST",
-                url: '{{ path('message_seen') }}',
-                data: 'id=' + {{message.id }},
-               
-   success: function(data) {
-        {% if message.vu == 0 %}
-       var test = 0 ;
-       {%else%}
-            var test = 1 ;
+            });
+                    $('#close{{message.id}}').click(function() {
+            $('#modaldescumessage{{message.id}}').hide();
+            });
+                    $('#descumessage{{message.id}}').click(function() {
+                       
+            $('#modaldescumessage{{message.id}}').show();
+                    $.ajax({
+                    type: "POST",
+                            url: '{{ path('message_seen') }}',
+                            data: 'id=' + {{message.id }},
+                            success: function(data) {
+            {% if message.vu == 0 %}
+                                var test = 0;{%else%}
+                                        var test = 1;
             {%endif %} 
-       if(test != 1){
-       var nb =  parseInt($('#samirMsg').text());
-       var nouveauNb = nb - 1;
-       if (nouveauNb > 0)
-            {
-                $('#samirMsg').text(nouveauNb);
-            }
-            else
-            {
-                $('#nombre_message').hide();
-            }
-        }
-   }
-   
-}); 
-}); 
-{% endfor %}
-//accept invitation
-{% set invitations = getInvitations(app.user.id) %}
-{% for invitation in invitations %}
-$('#accept_invitation{{invitation.id}}').click(function() {
+                                        if (test != 1){
+                                var nb = parseInt($('#samirMsg').text());
+                                        var nouveauNb = nb - 1;
+                                        if (nouveauNb > 0)
+                                {
+                                $('#samirMsg').text(nouveauNb);
+                                }
+                                else
+                                {
+                                $('#nombre_message').hide();
+                                }
+                                }
+                                }
+
+                        });
+                });{% endfor %}
+                        //accept invitation
+            {% set invitations = getInvitations(app.user.id) %}
+            {% for invitation in invitations %}
+                        $('#accept_invitation{{invitation.id}}').click(function() {
 
 
-$.ajax({
-url: Routing.generate('accept_relation', {'id':{{invitation.id}}}),
-success: function(data) {
-var nb = parseInt($('#nbInvitation').text());
-var nouveauNb = nb - 1;
-if (nouveauNb > 0)
-{
-$('#nbInvitation').replaceWith(nouveauNb);
-}
-else
-{
-$('#nombre_invitation').hide();
-}
-$('.invitation' + data).empty();
-$('#replace-accepte-profil').empty().append(
-'<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
-'Amis' +
-'<span class="caret"></span>' +
-' </button>'
+                $.ajax({
+                url: Routing.generate('accept_relation', {'id':{{invitation.id}}}),
+                        success: function(data) {
+                        var nb = parseInt($('#nbInvitation').text());
+                                var nouveauNb = nb - 1;
+                                if (nouveauNb > 0)
+                        {
+                        $('#nbInvitation').replaceWith(nouveauNb);
+                        }
+                        else
+                        {
+                        $('#nombre_invitation').hide();
+                        }
+                        $('.invitation' + data).empty();
+                                $('#replace-accepte-profil').empty().append(
+                                '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
+                                'Amis' +
+                                '<span class="caret"></span>' +
+                                ' </button>'
 
-);
-$('#replace-accepte-profil').empty().append(
-'<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
-'Amis' +
-'<span class="caret"></span>' +
-' </button>'
+                                );
+                                $('#replace-accepte-profil').empty().append(
+                                '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
+                                'Amis' +
+                                '<span class="caret"></span>' +
+                                ' </button>'
 
-);
-// .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
-}
-});
-});
-{% endfor %}
-</script>
+                                );
+                                // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+                        }
+                });
+                });{% endfor %}
+                        setInterval(function(){
+                        $.ajax({
+                        url: Routing.generate('notif_test'),
+                                success: function(data) {
+                                for (var i in data) {
+                                var message = data[i];
+                                        toastr8.googlePlus({
+                                        message:message.content,
+                                                title: message.sender.nom + ' ' + message.sender.prenom,
+                                                imgURI: ["http://abweb.tn/newoptimus/images/avatar-3.png"]
+                                        });
+                                }
+                                }
+                        });
+                                $.ajax({
+                                url: Routing.generate('notif_testt'),
+                                        success: function(data) {
+                                        if (data == 0){
+                                        $('#nombre_message').hide();
+                                        } else{
+
+                                        $('#samirMsg').html(data);
+                                                $('#nombre_message').show();
+                                        }
+                                        $('#samirMsg').html(data);
+                                        }
+                                });
+                                $.ajax({
+                                url: Routing.generate('notif_invit'),
+                                        success: function(data) {
+                                        if (data == 0){
+                                        $('#nombre_invitation').hide();
+                                        } else{
+                                        $('#nbInvitation').html(data);
+                                                $('#nombre_invitation').show();
+                                        }
+                                        }
+                                });
+                                $.ajax({
+                                url: Routing.generate('message_menu'),
+                                        success: function(data) {
+                                               tab = data.split('*');
+                                        $('#id_message').html(tab[0]);
+                                          $('#repondremsg').html(tab[1]);
+                                        }
+                                });
+                        }, 5000);
+
+            </script>
 
 
-{% block javascriptfils %}
-{% endblock %}
-{% block javascriptfils2 %}
-{% endblock %}
-{% endblock %}
+            {% block javascriptfils %}
+            {% endblock %}
+            {% block javascriptfils2 %}
+            {% endblock %}
+            {% endblock %}

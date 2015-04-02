@@ -623,4 +623,18 @@ class UserController extends Controller {
         return $response = new Response($test);
     }
    
+    /**
+     * 
+     *
+     * @Route("/testinvit", name="notif_invit", options={"expose"=true})
+     * 
+     */
+    public function InvitationcountAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+       $nbr = $em->getRepository('FrontOfficeUserBundle:User')->getcountInvit($user->getId());
+    
+        $response = new Response($nbr[0]['nbrinvit']);
+          return $response;
+    }
 }
