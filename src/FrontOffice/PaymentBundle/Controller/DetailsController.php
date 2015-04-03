@@ -58,32 +58,21 @@ class DetailsController extends PayumController {
         /** @var OrderInterface $order */
         $order = $status->getFirstModel();
         $idclub = $this->get('session')->get('idclub');
-        echo 'eee'.$idclub;
+       
         $em = $this->getDoctrine()->getManager();
         if ($status->getValue() == 'captured') {
             $club = $em->getRepository("FrontOfficeOptimusBundle:Club")->find($idclub);
             $club->setIsPayant(1);
             $em->merge($club);
             $em->flush();
+           
+           $request->getSession()->getFlashBag()->add('ActivationClub', " Payment Complete : Votre Club  est Maintenant Activé ."); 
         }
-        return $this->render('FrontOfficePaymentBundle:Details:viewOrder.html.twig', array(
-                    'status' => $status->getValue(),
-                    'order' => htmlspecialchars(json_encode(
-                                    array(
-                        'client' => array(
-                            'id' => $order->getClientId(),
-                            'email' => $order->getClientEmail(),
-                        ),
-                        'number' => $order->getNumber(),
-                        'description' => $order->getCurrencyCode(),
-                        'total_amount' => $order->getTotalAmount(),
-                        'currency_code' => $order->getCurrencyCode(),
-                        'currency_digits_after_decimal_point' => $order->getCurrencyDigitsAfterDecimalPoint(),
-                        'details' => $order->getDetails(),
-                                    ), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-                    )),
-                    'paymentTitle' => ucwords(str_replace(array('_', '-'), ' ', $token->getPaymentName()))
-        ));
+        
+        else{
+         $request->getSession()->getFlashBag()->add('EchecActivationClub', "Echéc de payment.");
+        }
+        return $this->redirect($this->generateUrl('show_club', array('id' => $idclub)));
     }
 
 }

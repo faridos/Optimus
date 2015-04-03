@@ -95,7 +95,7 @@ class ClubController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-        if (!$club || $club->getActive() == 0) {
+        if (!$club || $club->getActive() == 0 || ($club->getIsPayant()== 0 && $club->getCreateur() != $user)) {
             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('club' => $club));
@@ -109,6 +109,7 @@ class ClubController extends Controller {
             }
         }
        $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club));
+      
         return $this->render('FrontOfficeOptimusBundle:Club:showClub.html.twig', array('club' => $club, 'user' => $user, 'programmes' =>$progarammes) );
     }
 

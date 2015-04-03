@@ -1,12 +1,18 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 {% block body %}
-    
-<div id="wrapper">
+    <div id="wrapper">
 <div id="content" class="mob-max" >
     
 <div class="col-lg-12"><div class="row mb20">
 </div>
     {% for flashMessage in app.session.flashbag.get('AjouterPalmarésClub') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('ActivationClub') %}
 <br/>
 <div class="alert alert-success">
 <a class="close" data-dismiss="alert">×</a>
@@ -310,7 +316,7 @@ photo Supprimer
 </div>
 <div  id="ajouterphoto{{album.id}}" style="display: none;" class="buttonsWrapper col-xs-12">
 <a id="lienphotoalbum" onclick="image2()" href="#albums">albums > {{album.nom }}</a>
-<a class="btn btn-round btn-default btn-sm rightus" href="#uploadphotoAlbum{{album.id}}" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
+{% if app.user == club.createur %}<a class="btn btn-round btn-default btn-sm rightus" href="#uploadphotoAlbum{{album.id}}" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a>{% endif %}<br>
 </div>   
 {%for image in album.images %}
 {%set  ph =  ph + 1 %}
@@ -362,8 +368,13 @@ photo Supprimer
 
 </div>
 </div>
-<div id="map-club" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
+
+<div id="map-club" style="height: 100%" class="mob-min">
+    <div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div>
 </div>
+
+</div>
+   
 <!-----------------------Modal ShowClub--------------------------->
 
 <!--*********************modal supprimer Club*******************-->
