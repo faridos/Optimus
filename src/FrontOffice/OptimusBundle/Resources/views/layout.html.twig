@@ -475,9 +475,9 @@
             </div>
         {% endfor %}
         {%set lastid = 0 %}
-
+{% if messages != null %}
         {%set lastid = messages[0].id %}
-
+{% endif %}
         <input id="lastid" type="hidden" value="{{lastid}}" />
     </div>
 {% endblock %}
