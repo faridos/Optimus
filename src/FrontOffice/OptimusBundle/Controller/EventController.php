@@ -416,7 +416,11 @@ class EventController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $messages = new ArrayCollection();
-        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->getNotif($user->getId());
+               $request = $this->get('request');
+        
+       $lastid =  $request->get("lastid");
+     
+        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->getNotif($user->getId() , $lastid);
        
         $response = new Response();
         $tabcomments = json_encode($messages);
@@ -447,9 +451,17 @@ class EventController extends Controller {
      */
     public function MessageMenuAction() {
         $em = $this->getDoctrine()->getManager();
+             $request = $this->get('request');
+        
+       $lastid =  $request->get("lastid");
+     
         $user = $this->container->get('security.context')->getToken()->getUser();
        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findBy(array('reciever'=>$user->getId()),array('msgTime'=>'DESC'));
-          return $this->render('FrontOfficeOptimusBundle:Message:MessageMenu.html.twig', array('messages' => $messages));
+         
+           $i = $messages[0]->getId() ;
+      
+       $nvmessages = $em->getRepository('FrontOfficeOptimusBundle:Message')->getnvmsg($user->getId() ,$lastid );
+          return $this->render('FrontOfficeOptimusBundle:Message:MessageMenu.html.twig', array('messages' => $messages , 'nvmessages'=>$nvmessages ,'lastid' =>$i));
     }
 }
 

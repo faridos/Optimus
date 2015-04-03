@@ -33,18 +33,16 @@ class MessageRepository extends EntityRepository {
     }
   
     
-     public function getNotif($id) {
-      
+     public function getNotif($id , $last) {
+    
+         
 
         $em = $this->getEntityManager();
-        $time=New \DateTime();
-          $time=$time->modify('+0 second');
-          $time2=New \DateTime();
-          $time2=$time2->modify('-5 second');
             $query = $em->createQuery("SELECT message, e "
                         . "FROM FrontOfficeOptimusBundle:Message message LEFT JOIN message.sender e"
-                        . " where message.reciever = :id and message.event is NOT NULL and message.vu = 0 and ( message.msgTime BETWEEN '".$time2->format("Y-m-d H:i:s") ."' AND '".$time->format("Y-m-d H:i:s")."' )"
-                )->setParameter('id', $id);
+                        . " where message.reciever = :id and message.event is NOT NULL and message.vu = 0 and message.id > :last "
+                )->setParameter('id', $id)
+                    ->setParameter('last', $last);
         return $events = $query->getArrayResult();
     
        
@@ -63,6 +61,25 @@ class MessageRepository extends EntityRepository {
        
         
     }
+    
+    
+    
+    
+       public function getnvmsg($id ,$lastid) {
+      
+
+        $em = $this->getEntityManager();
+           $query = $em->createQuery("SELECT message, e "
+                        . "FROM FrontOfficeOptimusBundle:Message message LEFT JOIN message.sender e"
+                        . " where message.reciever = :id and message.id > :lastid "
+                )->setParameter('id', $id)
+                ->setParameter('lastid', $lastid);
+        return $events = $query->getResult();
+    
+       
+        
+    }
+   
     
    
 

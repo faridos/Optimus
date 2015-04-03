@@ -286,6 +286,29 @@ class UserController extends Controller {
         $response = new Response($id);
         return $response;
     }
+    
+    /**
+     *
+     *
+     * @Route("retirer/amis", name="delete_invite", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function deleteInviteAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
+        $request = $this->get('request');
+        $id = $request->get("id");
+        
+  
+        $relation = $em->getRepository('SlyRelationBundle:Relation')->find($id);
+          if ($relation) {
+            $em->remove($relation);
+            $em->flush();
+        }
+        $response = new Response();
+        return $response;
+    }
 
     /**
      *
@@ -632,9 +655,8 @@ class UserController extends Controller {
     public function InvitationcountAction() {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
-       $nbr = $em->getRepository('FrontOfficeUserBundle:User')->getcountInvit($user->getId());
-    
-        $response = new Response($nbr[0]['nbrinvit']);
-          return $response;
+       $invitations = $em->getRepository('FrontOfficeUserBundle:User')->getcountInvit($user->getId());
+       
+       return $this->render('FrontOfficeUserBundle:User:participation.html.twig', array('Invitations' => $invitations ));
     }
 }

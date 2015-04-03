@@ -232,7 +232,7 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-                <a href="#" class="notifyAll">Afficher tout</a>
+          <!--      <a href="#" class="notifyAll">Afficher tout</a>-->
             </div>
         </div>
         <div class="headerNotifyWraper">
@@ -272,7 +272,7 @@
                                 <div class="ops">
 
                                     <a id="accept_invitation{{invitation.id}}" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
-                                    <a id="delete_invitation" href="{{ path('delete_relation', { 'id': invitation.object1Id}) }}" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
+                                    <a id="delete_invitation{{invitation.id}}" href="#" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
                                     <div class="loader"> <img src="{{asset('template/images/ajax-loader3.gif') }}"></div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -419,62 +419,66 @@
 
     {% set messages = getNonSeenMessage(app.user.id) %}
     <div id="repondremsg">
-    {% for message in messages %}
-        <div class="row" id="modaldescumessage{{message.id}}" style="display:none;">
-            <div class="col-lg-3  navbar-fixed-bottom" style="margin-left: 74%;">
-                <div class="well well-sm ">
-                    <div class="affiche_nom">
-                        <b class="pull-left affiche_personne">{{message.sender.username}}</b>
-                        <a id="close{{message.id}}" class="glyphicon glyphicon-remove pull-right"></a>
-                    </div>
-                    <div class="affichage">
-                        <ul id="appendmessage" class="well well-sm scrollbar chat-thread" style="height:200px;">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    {% if message.sender.path == null %}
-                                        {% if message.sender.sexe == 'H' %}
-                                            <img  class="avatar pull-left" src="{{ asset('men.png') }}" class="img-responsive img-circle" width="30">
-                                        {% else %}
-                                            <img  class="avatar pull-left" src="{{ asset('women.png') }}" class="img-responsive img-circle" width="30">
-                                        {% endif %}
-                                    {% else %}
-                                        <img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" class="img-responsive img-circle" width="30">
-                                    {% endif %}
-
-                                </div>
-                                <div class="col-md-10" style="background:white;">
-                                    <p>
-                                        {% if message.event == null %}
-                                            {{ message.content }}
-                                        {% else %}
-                                            {{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
-                                        {% endif %}
-                                    </p>
-                                </div>
-                            </div>
-                            <hr>
-
-
-                        </ul>
-                    </div>
-                    <form method="post">
-                        <div class="input-group">
-                            <input id="newmessage{{message.id}}" type="text" class="form-control" placeholder="Repondre au message...">
-                            <span class="input-group-btn">
-                                <a id="repondre{{message.id}}" class="btn btn-green">Repondre</a>
-                                <a class="loader" id="loader_reponder">
-                                    <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
-                                </a>
-                            </span>
-
+        {% for message in messages %}
+            <div class="row" id="modaldescumessage{{message.id}}" style="display:none;">
+                <div class="col-lg-3  navbar-fixed-bottom" style="margin-left: 74%;">
+                    <div class="well well-sm ">
+                        <div class="affiche_nom">
+                            <b class="pull-left affiche_personne">{{message.sender.username}}</b>
+                            <a id="close{{message.id}}" class="glyphicon glyphicon-remove pull-right"></a>
                         </div>
-                    </form>
-                </div>
-            </div>
+                        <div class="affichage">
+                            <ul id="appendmessage{{message.id}}" class="well well-sm scrollbar chat-thread" style="height:200px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        {% if message.sender.path == null %}
+                                            {% if message.sender.sexe == 'H' %}
+                                                <img  class="avatar pull-left" src="{{ asset('men.png') }}" class="img-responsive img-circle" width="30">
+                                            {% else %}
+                                                <img  class="avatar pull-left" src="{{ asset('women.png') }}" class="img-responsive img-circle" width="30">
+                                            {% endif %}
+                                        {% else %}
+                                            <img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" class="img-responsive img-circle" width="30">
+                                        {% endif %}
 
-        </div>
-    {% endfor %}
-    
+                                    </div>
+                                    <div class="col-md-10" style="background:white;">
+                                        <p>
+                                            {% if message.event == null %}
+                                                {{ message.content }}
+                                            {% else %}
+                                                {{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+
+
+                            </ul>
+                        </div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input id="newmessage{{message.id}}" type="text" class="form-control" placeholder="Repondre au message...">
+                                <span class="input-group-btn">
+                                    <a id="repondre{{message.id}}" class="btn btn-green">Repondre</a>
+                                    <a class="loader" id="loader_reponder{{message.id}}">
+                                        <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                    </a>
+                                </span>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
+        {%set lastid = 0 %}
+
+        {%set lastid = messages[0].id %}
+
+        <input id="lastid" type="hidden" value="{{lastid}}" />
     </div>
 {% endblock %}
 
@@ -486,56 +490,57 @@
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
     <script src="{{ asset('template/js/ajaxNotif.js') }}" type="text/javascript"></script>
 
-    <script>
+    <script id='scriptmsg'>
 
         {% set messages = getNonSeenMessage(app.user.id) %}
+
         {% for message in messages %}
-                    $('#repondre{{message.id}}').on('click', function()
-            {
-            var sender = {{message.sender.id}};
-                    var message = $('#newmessage{{message.id}}').val();
-                    if (message != "")
-            {
-            $('#repondre{{message.id}}').hide();
-                    $('#loader_reponder').show();
-                    var photo = "";{% if app.user.path == null %}{% if app.user.sexe == 'H' %}
-                    photo = "{{ asset('men.png') }}";{% else %}
-                    photo = "{{ asset('women.png') }}";{% endif %}{% else %}
-                    photo = "{{asset(app.user.WebPath) }}";{% endif %}
-                    $.ajax({
-                    type: "POST",
-                            url: Routing.generate('repondre_message'),
-                            data: {message: message, sender:sender},
-                            dataType: 'json',
-                            success: function(data) {
-                            $('#loader_reponder').hide();
-                                    $('#repondre{{message.id}}').show();
-                                    $('#appendmessage').append('<div class="row">' +
-                                    '<div class="col-md-2 pull-right">' +
-                                    '<img src="' + photo + '" class="img-responsive img-circle" width="30" >' +
-                                    '</div>' +
-                                    '<div class="col-md-10 pull-left" style="background:white;">' +
-                                    '<p>' + message + '</p>' +
-                                    '</div></div><hr>'
-                                    );
-                                    $('#newmessage{{message.id}}').val("");
-                            }
+                                $('body').on('click', '#repondre{{message.id}}', function ()
+                        {
+                        var sender = {{message.sender.id}};
+                                var message = $('#newmessage{{message.id}}').val();
+                                if (message != "")
+                        {
+                        $('#repondre{{message.id}}').hide();
+                                $('#loader_reponder{{message.id}}').show();
+                                var photo = "";{% if app.user.path == null %}{% if app.user.sexe == 'H' %}
+                                photo = "{{ asset('men.png') }}";{% else %}
+                                photo = "{{ asset('women.png') }}";{% endif %}{% else %}
+                                photo = "{{asset(app.user.WebPath) }}";{% endif %}
+                                $.ajax({
+                                type: "POST",
+                                        url: Routing.generate('repondre_message'),
+                                        data: {message: message, sender:sender},
+                                        dataType: 'json',
+                                        success: function(data) {
+                                        $('#loader_reponder{{message.id}}').hide();
+                                                $('#repondre{{message.id}}').show();
+                                                $('#appendmessage{{message.id}}').append('<div class="row">' +
+                                                '<div class="col-md-2 pull-right">' +
+                                                '<img src="' + photo + '" class="img-responsive img-circle" width="30" >' +
+                                                '</div>' +
+                                                '<div class="col-md-10 pull-left" style="background:white;">' +
+                                                '<p>' + message + '</p>' +
+                                                '</div></div><hr>'
+                                                );
+                                                $('#newmessage{{message.id}}').val("");
+                                        }
 
-                    });
-            }
+                                });
+                        }
 
-            });
-                    $('#close{{message.id}}').click(function() {
-            $('#modaldescumessage{{message.id}}').hide();
-            });
-                    $('#descumessage{{message.id}}').click(function() {
-                       
-            $('#modaldescumessage{{message.id}}').show();
-                    $.ajax({
-                    type: "POST",
-                            url: '{{ path('message_seen') }}',
-                            data: 'id=' + {{message.id }},
-                            success: function(data) {
+                        });
+                                $('body').on('click', '#close{{message.id}}', function () {
+                        $('#modaldescumessage{{message.id}}').hide();
+                        });
+                                $('body').on('click', '#descumessage{{message.id}}', function () {
+
+                        $('#modaldescumessage{{message.id}}').show();
+                                $.ajax({
+                                type: "POST",
+                                        url: '{{ path('message_seen') }}',
+                                        data: 'id=' + {{message.id }},
+                                        success: function(data) {
             {% if message.vu == 0 %}
                                 var test = 0;{%else%}
                                         var test = 1;
@@ -559,12 +564,11 @@
                         //accept invitation
             {% set invitations = getInvitations(app.user.id) %}
             {% for invitation in invitations %}
-                        $('#accept_invitation{{invitation.id}}').click(function() {
-
-
+                        $('body').on('click', '#accept_invitation{{invitation.id}}', function () {
                 $.ajax({
                 url: Routing.generate('accept_relation', {'id':{{invitation.id}}}),
                         success: function(data) {
+                            
                         var nb = parseInt($('#nbInvitation').text());
                                 var nouveauNb = nb - 1;
                                 if (nouveauNb > 0)
@@ -593,60 +597,92 @@
                                 // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
                         }
                 });
-                });{% endfor %}
-                        setInterval(function(){
-                        $.ajax({
-                        url: Routing.generate('notif_test'),
-                                success: function(data) {
-                                for (var i in data) {
-                                var message = data[i];
-                                        toastr8.googlePlus({
-                                        message:message.content,
-                                                title: message.sender.nom + ' ' + message.sender.prenom,
-                                                imgURI: ["http://abweb.tn/newoptimus/images/avatar-3.png"]
-                                        });
-                                }
-                                }
-                        });
-                                $.ajax({
-                                url: Routing.generate('notif_testt'),
-                                        success: function(data) {
-                                        if (data == 0){
-                                        $('#nombre_message').hide();
-                                        } else{
+                });
+                         $('body').on('click', '#delete_invitation{{invitation.id}}', function () {
 
-                                        $('#samirMsg').html(data);
-                                                $('#nombre_message').show();
-                                        }
-                                        $('#samirMsg').html(data);
-                                        }
-                                });
-                                $.ajax({
-                                url: Routing.generate('notif_invit'),
-                                        success: function(data) {
-                                        if (data == 0){
-                                        $('#nombre_invitation').hide();
-                                        } else{
-                                        $('#nbInvitation').html(data);
-                                                $('#nombre_invitation').show();
-                                        }
-                                        }
-                                });
-                                $.ajax({
-                                url: Routing.generate('message_menu'),
-                                        success: function(data) {
-                                               tab = data.split('*');
-                                        $('#id_message').html(tab[0]);
-                                          $('#repondremsg').html(tab[1]);
-                                        }
-                                });
-                        }, 5000);
+                $.ajax({
+                type: "POST",
+                        url: Routing.generate('delete_invite'),
+                        data: {id:{{invitation.id}}},
+                        dataType: 'json',
+                        success: function(data) {
+                               $('#delete_invitation{{invitation.id}}').hide();
+                            var nb = parseInt($('#nbInvitation').text());
+                                var nouveauNb = nb - 1;
+                                if (nouveauNb > 0)
+                        {
+                        $('#nbInvitation').replaceWith(nouveauNb);
+                        }
+                        else
+                        {
+                        $('#nombre_invitation').hide();
+                        }
+                        }
+                });
+                        });            {% endfor %}
+                                    setInterval(function(){
+                                    var lastid = $('#lastid').val();
+                                            $.ajax({
+                                            url: Routing.generate('notif_test'),
+                                                    data: {lastid : lastid},
+                                                    success: function(data) {
+                                                    for (var i in data) {
+                                                    var message = data[i];
+                                                            toastr8.googlePlus({
+                                                            message:message.content,
+                                                                    title: message.sender.nom + ' ' + message.sender.prenom,
+                                                                    imgURI: ["http://abweb.tn/newoptimus/images/avatar-3.png"]
+                                                            });
+                                                    }
+                                                    }
+                                            });
+                                            $.ajax({
+                                            url: Routing.generate('notif_testt'),
+                                                    success: function(data) {
+                                                    if (data == 0){
+                                                    $('#nombre_message').hide();
+                                                    } else{
 
-            </script>
+                                                    $('#samirMsg').html(data);
+                                                            $('#nombre_message').show();
+                                                    }
+                                                    $('#samirMsg').html(data);
+                                                    }
+                                            });
+                                            $.ajax({
+                                            url: Routing.generate('notif_invit'),
+                                                    success: function(data) {
+                                                    tab = data.split('*');
+                                                            $('#id_invitation').html(tab[0]);
+                                                            if (tab[1] == 0){
+                                                    $('#nombre_invitation').hide();
+                                                    } else{
+                                                        $('#nombre_invitation').show();
+                                                    $('#nbInvitation').html(tab[1]);
+                                                            
+                                                    }
+                                                    $(tab[2]).appendTo(document.body)
+                                                    }
+                                            });
+                                            var lastid = $('#lastid').val();
+                                            $.ajax({
+                                            url: Routing.generate('message_menu'),
+                                                    data: {lastid : lastid},
+                                                    success: function(data) {
+                                                    tab = data.split('*');
+                                                            $('#id_message').html(tab[0]);
+                                                            $('#repondremsg').append(tab[1]);
+                                                            $('#lastid').val(tab[2]);
+                                                            $(tab[3]).appendTo(document.body)
+                                                    }
+                                            });
+                                    }, 5000);
+
+        </script>
 
 
-            {% block javascriptfils %}
-            {% endblock %}
-            {% block javascriptfils2 %}
-            {% endblock %}
-            {% endblock %}
+        {% block javascriptfils %}
+        {% endblock %}
+        {% block javascriptfils2 %}
+        {% endblock %}
+        {% endblock %}
