@@ -17,7 +17,7 @@ class OrderPurchaseController extends Controller
          $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository("FrontOfficeOptimusBundle:Club")->find($id);
         $this->get('session')->set('idclub',$id);
-      
+        
         $form = $this->createPurchaseForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -52,6 +52,8 @@ class OrderPurchaseController extends Controller
     {
         $formBuilder = $this->createFormBuilder(null, array('data_class' => 'FrontOffice\PaymentBundle\Entity\Order'));
  $user = $this->container->get('security.context')->getToken()->getUser();
+ $em = $this->getDoctrine()->getManager();
+ $configuration = $em->getRepository("FrontOfficeOptimusBundle:Configuration")->find(1);
  
         return $formBuilder
             ->add('payment_name', 'choice', array('attr'=>array('class'=>'search-optimus'),
@@ -73,7 +75,7 @@ class OrderPurchaseController extends Controller
                 'constraints' => array(new NotBlank())
             ))
             ->add('totalAmount', 'integer', array('attr'=>array('class'=>'search-optimus'),
-                'data' => 200,
+                'data' => $configuration->getPrixClub(),
                 'constraints' => array(new Range(array('max' => 1000, 'min' => 100)), new NotBlank())
             ))
             ->add('currencyCode', 'text', array('attr'=>array('class'=>'search-optimus'),

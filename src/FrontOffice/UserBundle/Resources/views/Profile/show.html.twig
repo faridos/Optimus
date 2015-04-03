@@ -1325,9 +1325,11 @@ $('.modal-backdrop').hide();
 $('#supprimer-photo').show();
 }
 });
-});{% endfor %}{% endfor %}</script>
+});{% endfor %}{% endfor %}
+
+</script>
 <script>
-{% for palmares in user.reward %}
+    {% for palmares in user.reward %}
 $('#supprimerPalmares{{palmares.id}}').click(function() {
 
 
@@ -1341,7 +1343,9 @@ $('.modal-backdrop').hide();
 $('#supprimer-p').show();
 }
 });
-});{% endfor %}</script>
+});
+{% endfor %}
+    </script>
 <script>
 {% for club in user.clubs %}
 $('#supprimerClub{{club.id}}').click(function() {
