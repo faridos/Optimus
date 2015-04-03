@@ -42,9 +42,9 @@ class Club {
     public $file;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="Date_creation", type="datetime")
+     * @ORM\Column(name="Date_creation", type="date")
      */
     private $dateCreation;
 
@@ -263,7 +263,7 @@ class Club {
     /**
      * Set dateCreation
      *
-     * @param \DateTime $dateCreation
+     * @param \Date $dateCreation
      * @return Club
      */
     public function setDateCreation($dateCreation) {
@@ -275,7 +275,7 @@ class Club {
     /**
      * Get dateCreation
      *
-     * @return \DateTime 
+     * @return \Date
      */
     public function getDateCreation() {
         return $this->dateCreation;
