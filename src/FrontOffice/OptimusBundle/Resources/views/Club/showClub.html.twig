@@ -155,6 +155,7 @@ Nombre des members : <span  id="nbparticip">500</span>
 </ul>
 <div class="tab-content">
     {% if club.isPayant == 1%}
+<!------------------------------Programmes Club------------------------------------------->
 <ul class="tab-pane fade  active in scrollbar" id="programmes" >
     {% if club.programs|length == 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -162,19 +163,47 @@ Nombre des members : <span  id="nbparticip">500</span>
 <button type="button" class="close" data-dismiss="alert"></button>
 <strong>Rien à afficher dans la catégorie programmes!</strong> Créer un pour commencer.
 </div>
+        {% endif %}
 {% if app.user == club.createur %}
 <div class="buttonsWrapper col-xs-12">
-<a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<a class="btn btn-round btn-default btn-sm rightus" href="#ajouterProgrammes" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
 <br>
 </div>
 {% endif %}
-{% endif %}
-<div id="msgparticipe" ></div>
-<br/>
-<div class="row" id="blockparticip">
+
+<div class="row">
+<br>
+
+<div class="row">
+<br>
+<div class="col-md-12" id="">
+<div data-linkto="" class="card albumus tooltipsContainer" >
+<br>
+<div class="profile-card">
+
+
+<div class="col-md-4">
+
+
+
+<div align="right">
+<a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
+<a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
 </div>
+
+<br>
 <div class="clearfix"></div>
+</div>
+</div>
+<br>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+
+</div>
 </ul>
+<!------------------------------Fin Programmes Club------------------------------------------->
 <ul class="tab-pane fade  scrollbar" id="members" >
      {% if club.adherents|length == 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -398,7 +427,14 @@ photo Supprimer
 </div>
 </div>
 <!--*********************fin modal supprimer Club*******************-->
-<!-------------------------Palmares ------------------------------------>
+<!-------------------------Programmes ---------------------------------------->
+<div class="modal fade" id="ajouterProgrammes" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Program:create',  { 'id': club.id })) }}
+</div>
+</div>
+<!-------------------------Fin Programmes ------------------------------------>
+
 <!--*********************modal ajouter palmares Club*******************-->
 <div class="modal fade" id="ajouterpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 <div class="modal-dialog">
