@@ -105,9 +105,8 @@ class UserRepository extends EntityRepository {
 
     public function getcountInvit($id) {
       
-
         $em = $this->getEntityManager();
-            $query = $em->createQuery("SELECT count(relation) as nbrinvit "
+            $query = $em->createQuery("SELECT relation "
                         . "FROM Sly\RelationBundle\Entity\Relation relation"
                         . " where relation.object2Id = :id and relation.confirmed = 0"
                 )->setParameter('id', $id);
