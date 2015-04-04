@@ -26,7 +26,7 @@
                                     </div>
                                     <div class="col-xs-6">
                                         <span>{{ form_widget(form.file) }}</span>
-                                        <p class="help-block">Télécharger le logo du club</p>
+                                        <p class="help-block">&nbsp;</p>
                                     </div>                                           
                                     <div class="form-group col-xs-6">
                                         <div class="input-group search-optimus">
@@ -82,24 +82,16 @@
 {% endblock %}
 
 {% block javascriptfils %}
-    <script>
-        $("#some_class_2").change(function() {
-            var start = $('#some_class_1').val();
-            var end = $('#some_class_2').val();
-            if (start != '' && end != '') {
-                var tabstart = (new Date(start).getTime() / 1000);
-                var tabend = (new Date(end).getTime() / 1000);
-                if (tabstart > tabend) {
-                    $('#notdate').show();
-                    $('#some_class_2').val("");
-                }
-                else{
-                $('#notdate').hide();
-            }
-            }
-            
+     <script src="{{asset('datemaske/jquery.maskedinput.min.js')}}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#frontoffice_optimusbundle_club_dateCreation").mask("99/99/9999");
+          
+
         });
+
     </script>
+   
     <script>
 
         function initialize() {
