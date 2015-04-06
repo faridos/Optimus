@@ -410,7 +410,7 @@
                 <table class=\"wc-time-slots\">\
                 <tbody>\
                 <tr>\
-                <td class=\"wc-grid-timeslot-header\"></td>\
+                <td class=\"wc-grid-timeslot-header tdoptimus\"></td>\
                 <td colspan=\"" + options.daysToShow + "\">\
                 <div class=\"wc-time-slot-wrapper\">\
                 <div class=\"wc-time-slots\">";
@@ -425,7 +425,7 @@
             calendarBodyHtml += "<div class=\"wc-time-slot wc-hour-end\"></div>";
          }
 
-         calendarBodyHtml += "</div></div></td></tr><tr><td class=\"wc-grid-timeslot-header\">";
+         calendarBodyHtml += "</div></div></td></tr><tr><td class=\"wc-grid-timeslot-header tdoptimus\">";
 
          for (var i = start; i < end; i++) {
 
@@ -1058,9 +1058,10 @@
            $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + ": " + calEvent.title);
          }
          else {
-           $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
+           $calEvent.find(".wc-time").html(calEvent.title + "<br/>" + self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
          }
-         $calEvent.find(".wc-title").html(calEvent.title);
+        
+         $calEvent.find(".wc-title").html(calEvent.body);
          $calEvent.data("calEvent", calEvent);
       },
 

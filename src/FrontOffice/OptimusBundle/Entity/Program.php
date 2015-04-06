@@ -37,12 +37,12 @@ class Program {
      * @ORM\Column(name="Nom", type="string", length=255)
      */
     private $nom;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=255)
-     */
-    private $description;
+    ///**
+     //* @var string
+    // *
+    // * @ORM\Column(name="description", type="string", length=255)
+    // */
+//    private $description;
 
     /**
      * @var \DateTime

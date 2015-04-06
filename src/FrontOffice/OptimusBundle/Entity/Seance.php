@@ -43,16 +43,16 @@ class Seance {
     private $description;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="Date_debut", type="datetime")
+     * @ORM\Column(name="Date_debut", type="string", length=255)
      */
     private $datedebut;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="Date_fin", type="datetime")
+     * @ORM\Column(name="Date_fin", type="string",  length=255)
      * 
      */
     private $datefin;
@@ -85,6 +85,7 @@ class Seance {
         $this->nom = $nom;
     }
 
+   
     public function getDatedebut() {
         return $this->datedebut;
     }
@@ -93,13 +94,15 @@ class Seance {
         return $this->datefin;
     }
 
-    public function setDatedebut(\DateTime $datedebut) {
+    public function setDatedebut($datedebut) {
         $this->datedebut = $datedebut;
     }
 
-    public function setDatefin(\DateTime $datefin) {
+    public function setDatefin($datefin) {
         $this->datefin = $datefin;
     }
+
+      
     public function getDescription() {
         return $this->description;
     }

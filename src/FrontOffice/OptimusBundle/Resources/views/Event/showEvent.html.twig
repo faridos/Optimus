@@ -2,9 +2,7 @@
 
 {% block body %}
     <div id="wrapper">
-<div id="" style="height: 100%" class="mob-min col-md-2"><a href="{{ asset('event.png') }}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
-                                                            <img src="{{ asset('event.png') }}" class="inline-block imaguss">
-                                                        </a> </div>
+
         <div id="content" class="mob-max" >
 
             {% for flashMessage in app.session.flashbag.get('AjouterPohoto') %}
@@ -338,7 +336,7 @@
 
                 </div>
             </div>
-            <!--div id="map-event" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div-->
+         <div id="map-event" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
         </div>
         <!------------------- modal supprission------------------->
         <div class="modal fade" id="supprimuss" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
