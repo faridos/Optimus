@@ -18,7 +18,7 @@ class ProgramType extends AbstractType
     {
         $builder
             ->add('nom','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'nom du programme')))
-            ->add('description','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'description du programme')))
+          //  ->add('description','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'description du programme')))
             ->add('datedebut', 'datetime' ,array('attr'=>array('class'=>'some_class search-optimus','placeholder'=>'date debut'),'widget' => 'single_text','required' => true))
             ->add('datefin', 'datetime' ,array('attr'=>array('class'=>'some_class search-optimus','placeholder'=>'date fin'),'widget' => 'single_text','required' => true));
          

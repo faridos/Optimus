@@ -2,7 +2,7 @@
 
 {% block navigation %}
     <div id="header" >
-        <div class="home-logo osLight"><a href="{{ path('accueil') }}"><img src="{{ asset('template/images/logo.png') }}"></a> </div>
+        <div class="home-logo osLight"><a href="{{ path('accueil') }}"><img src="{{ asset('logoOp.png') }}"></a> </div>
         <a href="#" class="navHandler" ><span class="fa fa-navicon"></span></a>
         <div class="search">
 
@@ -65,7 +65,7 @@
                 </div>
                 <ul>
                     <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-                    <li><a href="{{ path('clubs_member',{'id': app.user.id}) }}"><span class="fa fa-users"></span>Mes clubs</a></li>
+                    <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="fa fa-users"></span>Mes clubs</a></li>
                     <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="fa fa-trophy"></span>Mes évenements</a></li>
                     <li><a href="{{ path('setting_user',{'id': app.user.id}) }}"><span class="icon-settings"></span>Settings</a></li>
                     <li><a href="{{ path('history_event',{'id': app.user.id}) }}"><span class="glyphicon glyphicon-globe"></span>Historique</a></li>

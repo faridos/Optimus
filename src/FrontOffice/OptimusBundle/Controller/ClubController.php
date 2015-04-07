@@ -108,7 +108,7 @@ class ClubController extends Controller {
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
-       $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club));
+       $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club), array('datedebut' => 'desc'));
       
         return $this->render('FrontOfficeOptimusBundle:Club:showClub.html.twig', array('club' => $club, 'user' => $user, 'programmes' =>$progarammes) );
     }
