@@ -24,7 +24,11 @@
         "sly/relation-bundle": "dev-master",
         "damianociarla/rating-bundle": "~1.2",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
-        "nomaya/social-bundle": "dev-master"
+        "nomaya/social-bundle": "dev-master",
+        "payum/payum-bundle": "*@stable",
+        "payum/offline": "*@stable",
+        "payum/paypal-express-checkout-nvp": "*@stable"
+        
     },
     "scripts": {
         "post-install-cmd": [

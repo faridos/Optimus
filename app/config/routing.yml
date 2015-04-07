@@ -1,3 +1,7 @@
+front_office_payment:
+    resource: "@FrontOfficePaymentBundle/Resources/config/routing.yml"
+    prefix:   /
+
 front_office_rating:
     resource: "@FrontOfficeRatingBundle/Resources/config/routing.yml"
     prefix:   /
@@ -17,3 +21,13 @@ front_office_optimus:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    
+    
+payum_capture:
+    resource: "@PayumBundle/Resources/config/routing/capture.xml"
+
+payum_authorize:
+    resource: "@PayumBundle/Resources/config/routing/authorize.xml"
+
+payum_notify:
+    resource: "@PayumBundle/Resources/config/routing/notify.xml"

@@ -23,14 +23,35 @@ $('#add_relation').click(function() {
         
     });
 });
+$('#add_relation_ami').click(function() {
+    
+    $('#loader_ajouter_ami').show();
+    $('#replace-bt-amis').empty();
+    var id = $('.userWidget-1').attr('id');
+    console.log(id);
+    $.ajax({
+        url: Routing.generate('add_relation', {'id': id}),
+        success: function() {
+            $('#loader_ajouter_ami').hide();
+            $('#enattente-ami').show();
+        
+        }
+        
+    });
+});
+
 //envoyer message
 $('#envoyerMessage').click(function()
 {
     var id = $('.idReciever').attr('id');
     var txt = $('#txt-message').val();
+    $('#envoyerMessage').hide();
+$('#loader_envoie_message').show();
 
     $.ajax({
-        url: Routing.generate('message_send', {'id': id, 'content': txt}),
+        type: "POST",
+        url: Routing.generate('message_send'),
+        data: {id:id, content:txt},
 //        error: function() {
 //            $('#messageEch').show();
 //            $('#messageEnvoyer').hide();
@@ -39,6 +60,8 @@ $('#envoyerMessage').click(function()
             $('#messageEch').hide();
             $('#messageEnvoyer').show().delay(3000).fadeOut();
             $('textarea').val('');
+            $('#loader_envoie_message').hide();
+            $('#envoyerMessage').show();
         }
     });
 

@@ -95,6 +95,13 @@ class Club {
      * @ORM\Column(name="activation", type="boolean", nullable=false)
      */
     protected $active;
+    
+     /**
+     * @var boolean $isPayant
+     * @ORM\Column(name="payant", type="boolean")
+     */
+    protected $isPayant;
+
 
     /**
      * @var float
@@ -670,5 +677,28 @@ class Club {
     public function getPrograms()
     {
         return $this->programs;
+    }
+
+    /**
+     * Set isPayant
+     *
+     * @param boolean $isPayant
+     * @return Club
+     */
+    public function setIsPayant($isPayant)
+    {
+        $this->isPayant = $isPayant;
+    
+        return $this;
+    }
+
+    /**
+     * Get isPayant
+     *
+     * @return boolean 
+     */
+    public function getIsPayant()
+    {
+        return $this->isPayant;
     }
 }

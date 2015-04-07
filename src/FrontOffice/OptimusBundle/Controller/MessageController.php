@@ -36,30 +36,55 @@ class MessageController extends Controller {
             'entities' => $entities,
         );
     }
-
-    /**
+/**
      * Creates a new Message entity.
      *
-     * @Route("/{id}/send/{content}", name="message_send", options={"expose"=true})
+     * @Route("/ssssseen", name="message_seen", options={"expose"=true})
      * @Method("GET|POST")
      * 
      */
-    public function createAction($id, $content, Request $request) {
+    public function updateMsgAction() {
+        $em = $this->getDoctrine()->getEntityManager();		$id = $_POST["id"];       
+        $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
+        $test =  $message->getVu();
+       
+        if( $test == 0)
+        {
+            $message->setVu(1);
+            $em->persist($message);
+            $em->flush();
+        }
+        return new Response($test);
+             
+        
+    }
+    
+    /**
+     * Creates a new Message entity.
+     *
+     * @Route("/envoie/msg", name="message_send", options={"expose"=true})
+     * @Method("GET|POST")
+     * 
+     */
+    public function createAction() {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
+         $request = $this->get('request');
         $message = new Message();
+       $id =  $request->get("id");
+        $content = $request->get('content');
         $em = $this->getDoctrine()->getEntityManager();
         $sender = $this->container->get('security.context')->getToken()->getUser();
-        $destinatair = $em->getRepository('FrontOfficeUserBundle:User')->findOneBy(array('id' => $id));
-        $conversation1 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' => $destinatair));
-        $conversation2 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $destinatair, 'user2' => $sender));
+      
+        $conversation1 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' =>  $id));
+        $conversation2 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' =>  $id, 'user2' => $sender));
         if ($conversation1 == null && $conversation2 == null) {
             $convers = new Conversation();
             $convers->setStarttime(new \Datetime());
             $convers->setUser1($sender);
-            $convers->setUser2($destinatair);
+            $convers->setUser2( $id);
             $em->persist($convers);
             $em->flush();
             $newconvers_toshow = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' => $destinatair));
@@ -226,7 +251,31 @@ class MessageController extends Controller {
             'delete_form' => $deleteForm->createView(),
         );
     }
+/**
+     * 
+     *
+     * @Route("/repondre/message", name="repondre_message", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function repondreMsgAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $content = $request->get("message");
+        $sender = $request->get("sender");
+        $message = new Message();
+        $message->setReciever($sender);
+		
+		$message->setVu(0);
+        $message->setSender($user);
+        $message->setMsgTime(new \DateTime());
+        $message->setContent($content);
+        $em->persist($message);
+        $em->flush();
 
+        return new Response($sender);
+    }
     /**
      * Deletes a Message entity.
      *
@@ -268,22 +317,6 @@ class MessageController extends Controller {
         ;
     }
 
-    /**
-     * Creates a new Message entity.
-     *
-     * @Route("/{id}/seen", name="message_seen", options={"expose"=true})
-     * @Method("GET|POST")
-     * 
-     */
-    public function seenMsgAction($id) {
 
-        $em = $this->getDoctrine()->getManager();
-        $message = $em->getRepository('FrontOfficeOptimusBundle:Message')->find($id);
-        $message->setIsSeen(true);
-        $em->persist($message);
-        $em->flush();
-        $response = new Response($id);
-        return $response;
-    }
 
 }

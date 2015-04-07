@@ -54,7 +54,7 @@ class PhotoController extends Controller
    /**
      * Creates a new Photo entity.
      *
-     * @Route("club={id}/album={ida}/photo", name="photoClub_create")
+     * @Route("album={ida}/photo", name="photoClub_create")
      * @Method("GET|POST")
      * @Template("FrontOfficeOptimusBundle:Photo:newPhotoClub.html.twig")
      */
@@ -73,7 +73,7 @@ class PhotoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-           return $this->redirect($this->generateUrl('photos_club', array('id' => $club->getId(), 'id_album' => $ida)));
+           return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
         }
         
         return array(

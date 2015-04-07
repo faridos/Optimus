@@ -115,8 +115,10 @@ $request->getSession()->getFlashBag()->add('ModifierPalmarés', "Palmarés  a é
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($reward);
             $em->flush();
-
-           return $this->redirect($this->generateUrl('palmares_club', array('id' => $club->getId())));
+$em->flush();
+$request->getSession()->getFlashBag()->add('AjouterPalmarésClub', "Palmarés  a été creé avec success.");
+          
+           return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
         }
         return array(
             'id' => $id,
@@ -145,7 +147,7 @@ $request->getSession()->getFlashBag()->add('ModifierPalmarés', "Palmarés  a é
         if ($editForm->isValid()) {
             $em->flush();
 
-          return $this->redirect($this->generateUrl('palmares_club', array('id' => $club->getId())));
+          return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
         }
         
         return array(

@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-
 /**
  * User
  * @ORM\Entity(repositoryClass="FrontOffice\UserBundle\Repository\UserRepository")
@@ -97,6 +96,25 @@ class User extends BaseUser {
      * @ORM\Column(name="lng", type="float", nullable=true)
      */
     private $lng;
+    /**
+     * @var integer
+     * 
+     * @ORM\Column(name="amis", type="integer", nullable=true)
+     * 
+     */
+    protected $amis;
+    /**
+     * @var integer
+     * 
+     * @ORM\Column(name="compte", type="integer", nullable=true)
+     */
+    protected $compte;
+    /**
+     * @var integer
+     * 
+     * @ORM\Column(name="connected", type="integer", nullable=true)
+     */
+    protected $connected;
 
     /**
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Event", mappedBy="createur", cascade={"persist","remove"})
@@ -315,8 +333,31 @@ class User extends BaseUser {
     public function setLng($lng) {
         $this->lng = $lng;
     }
+    public function getAmis() {
+        return $this->amis;
+    }
 
-    public function setEvenements($evenements) {
+    public function getCompte() {
+        return $this->compte;
+    }
+
+    public function getConnected() {
+        return $this->connected;
+    }
+
+    public function setAmis($amis) {
+        $this->amis = $amis;
+    }
+
+    public function setCompte($compte) {
+        $this->compte = $compte;
+    }
+
+    public function setConnected($connected) {
+        $this->connected = $connected;
+    }
+
+        public function setEvenements($evenements) {
         $this->evenements = $evenements;
     }
 
@@ -423,17 +464,15 @@ class User extends BaseUser {
         }
     }
 
-
     /**
      * Add evenements
      *
      * @param \FrontOffice\OptimusBundle\Entity\Event $evenements
      * @return User
      */
-    public function addEvenement(\FrontOffice\OptimusBundle\Entity\Event $evenements)
-    {
+    public function addEvenement(\FrontOffice\OptimusBundle\Entity\Event $evenements) {
         $this->evenements[] = $evenements;
-    
+
         return $this;
     }
 
@@ -442,8 +481,7 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Event $evenements
      */
-    public function removeEvenement(\FrontOffice\OptimusBundle\Entity\Event $evenements)
-    {
+    public function removeEvenement(\FrontOffice\OptimusBundle\Entity\Event $evenements) {
         $this->evenements->removeElement($evenements);
     }
 
@@ -453,10 +491,9 @@ class User extends BaseUser {
      * @param \FrontOffice\OptimusBundle\Entity\Participation $participations
      * @return User
      */
-    public function addParticipation(\FrontOffice\OptimusBundle\Entity\Participation $participations)
-    {
+    public function addParticipation(\FrontOffice\OptimusBundle\Entity\Participation $participations) {
         $this->participations[] = $participations;
-    
+
         return $this;
     }
 
@@ -465,8 +502,7 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Participation $participations
      */
-    public function removeParticipation(\FrontOffice\OptimusBundle\Entity\Participation $participations)
-    {
+    public function removeParticipation(\FrontOffice\OptimusBundle\Entity\Participation $participations) {
         $this->participations->removeElement($participations);
     }
 
@@ -476,10 +512,9 @@ class User extends BaseUser {
      * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur
      * @return User
      */
-    public function addNotificationEntraineur(\FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur)
-    {
+    public function addNotificationEntraineur(\FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur) {
         $this->notification_entraineur[] = $notificationEntraineur;
-    
+
         return $this;
     }
 
@@ -488,8 +523,7 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur
      */
-    public function removeNotificationEntraineur(\FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur)
-    {
+    public function removeNotificationEntraineur(\FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur) {
         $this->notification_entraineur->removeElement($notificationEntraineur);
     }
 
@@ -498,8 +532,7 @@ class User extends BaseUser {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getNotificationEntraineur()
-    {
+    public function getNotificationEntraineur() {
         return $this->notification_entraineur;
     }
 
@@ -509,10 +542,9 @@ class User extends BaseUser {
      * @param \FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen
      * @return User
      */
-    public function addNotificationseen(\FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen)
-    {
+    public function addNotificationseen(\FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen) {
         $this->notificationseen[] = $notificationseen;
-    
+
         return $this;
     }
 
@@ -521,8 +553,7 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen
      */
-    public function removeNotificationseen(\FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen)
-    {
+    public function removeNotificationseen(\FrontOffice\OptimusBundle\Entity\NotificationSeen $notificationseen) {
         $this->notificationseen->removeElement($notificationseen);
     }
 
@@ -532,10 +563,9 @@ class User extends BaseUser {
      * @param \FrontOffice\OptimusBundle\Entity\Club $clubs
      * @return User
      */
-    public function addClub(\FrontOffice\OptimusBundle\Entity\Club $clubs)
-    {
+    public function addClub(\FrontOffice\OptimusBundle\Entity\Club $clubs) {
         $this->clubs[] = $clubs;
-    
+
         return $this;
     }
 
@@ -544,8 +574,7 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Club $clubs
      */
-    public function removeClub(\FrontOffice\OptimusBundle\Entity\Club $clubs)
-    {
+    public function removeClub(\FrontOffice\OptimusBundle\Entity\Club $clubs) {
         $this->clubs->removeElement($clubs);
     }
 
@@ -555,10 +584,9 @@ class User extends BaseUser {
      * @param \FrontOffice\OptimusBundle\Entity\Conversation $conversations1
      * @return User
      */
-    public function addConversations1(\FrontOffice\OptimusBundle\Entity\Conversation $conversations1)
-    {
+    public function addConversations1(\FrontOffice\OptimusBundle\Entity\Conversation $conversations1) {
         $this->conversations1[] = $conversations1;
-    
+
         return $this;
     }
 
@@ -567,8 +595,7 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Conversation $conversations1
      */
-    public function removeConversations1(\FrontOffice\OptimusBundle\Entity\Conversation $conversations1)
-    {
+    public function removeConversations1(\FrontOffice\OptimusBundle\Entity\Conversation $conversations1) {
         $this->conversations1->removeElement($conversations1);
     }
 
@@ -578,10 +605,9 @@ class User extends BaseUser {
      * @param \FrontOffice\OptimusBundle\Entity\Conversation $conversations2
      * @return User
      */
-    public function addConversations2(\FrontOffice\OptimusBundle\Entity\Conversation $conversations2)
-    {
+    public function addConversations2(\FrontOffice\OptimusBundle\Entity\Conversation $conversations2) {
         $this->conversations2[] = $conversations2;
-    
+
         return $this;
     }
 
@@ -590,8 +616,7 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Conversation $conversations2
      */
-    public function removeConversations2(\FrontOffice\OptimusBundle\Entity\Conversation $conversations2)
-    {
+    public function removeConversations2(\FrontOffice\OptimusBundle\Entity\Conversation $conversations2) {
         $this->conversations2->removeElement($conversations2);
     }
 
@@ -601,10 +626,9 @@ class User extends BaseUser {
      * @param \FrontOffice\OptimusBundle\Entity\Album $albums
      * @return User
      */
-    public function addAlbum(\FrontOffice\OptimusBundle\Entity\Album $albums)
-    {
+    public function addAlbum(\FrontOffice\OptimusBundle\Entity\Album $albums) {
         $this->albums[] = $albums;
-    
+
         return $this;
     }
 
@@ -613,8 +637,7 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Album $albums
      */
-    public function removeAlbum(\FrontOffice\OptimusBundle\Entity\Album $albums)
-    {
+    public function removeAlbum(\FrontOffice\OptimusBundle\Entity\Album $albums) {
         $this->albums->removeElement($albums);
     }
 
@@ -624,10 +647,9 @@ class User extends BaseUser {
      * @param \FrontOffice\OptimusBundle\Entity\Reward $reward
      * @return User
      */
-    public function addReward(\FrontOffice\OptimusBundle\Entity\Reward $reward)
-    {
+    public function addReward(\FrontOffice\OptimusBundle\Entity\Reward $reward) {
         $this->reward[] = $reward;
-    
+
         return $this;
     }
 
@@ -636,8 +658,7 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Reward $reward
      */
-    public function removeReward(\FrontOffice\OptimusBundle\Entity\Reward $reward)
-    {
+    public function removeReward(\FrontOffice\OptimusBundle\Entity\Reward $reward) {
         $this->reward->removeElement($reward);
     }
 
@@ -647,10 +668,9 @@ class User extends BaseUser {
      * @param \FrontOffice\OptimusBundle\Entity\Member $adherent
      * @return User
      */
-    public function addAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherent)
-    {
+    public function addAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherent) {
         $this->adherent[] = $adherent;
-    
+
         return $this;
     }
 
@@ -659,8 +679,8 @@ class User extends BaseUser {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Member $adherent
      */
-    public function removeAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherent)
-    {
+    public function removeAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherent) {
         $this->adherent->removeElement($adherent);
     }
+
 }

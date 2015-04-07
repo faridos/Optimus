@@ -5,7 +5,7 @@
             <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.generateCsrfToken('authenticate')}}" />
             <div class="form-group">
                 <label class="sr-only" for="email">Email address</label>
-                <input type="text" name="_username" value="" required="required" class="form-control round" id="email" placeholder="Email OR Pseudo " autocomplete="on" >
+                <input type="text" name="_username" value="" required="required" class="form-control round" id="email" placeholder="Email ou Pseudo " autocomplete="on" >
             </div>
             <div class="form-group">
                 <label class="sr-only" for="password">Mot de passe</label>
@@ -21,7 +21,7 @@
     <div class="search-panel">
         <form class="form-inline" role="form">
             <div class="form-group">
-                <img src="{{ asset('/Optimus/web/template/images/marker-green.png') }}">"&gt;
+                <img src="{{ asset('http://www.optimus-beta.com/web/template/images/marker-green.png') }}">
             </div>
             <div class="form-group">
                 <input style="border-radius:25px" type="text" class="form-control" id="pac-input2" placeholder="Entrer ici votre région" autocomplete="on" size="60">
@@ -44,7 +44,22 @@
                 (function($) {
                 "use strict";
                         var options = {
-                        zoom : 14
+                        zoom : 15,
+                        mapTypeId: google.maps.MapTypeId.HYBRID,
+                        zoomControl: true,
+                        mapTypeControl: true,
+    panControl: true,
+  panControlOptions: {
+  position: google.maps.ControlPosition.LEFT_CENTER
+},
+    zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.LARGE,
+        position: google.maps.ControlPosition.LEFT_CENTER
+    },
+    mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.RIGHT_CENTER
+    }
                         };
                         
                         
@@ -76,17 +91,23 @@ var markers = [];
                             var marker_{{ event.id}} = new google.maps.Marker({
                             position: myLatLng,
                             map: map,
-                            icon: new google.maps.MarkerImage(url + '/web/template/images/marker-green.png'),
+                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-green.png'),
                             draggable: false,
                             animation: google.maps.Animation.DROP,
                             title: "Cliquez pour voir aperçu"
                             });
-                                    
+                            var image ={% if event.path == null %}
+                                                        "{{ asset('event.png') }}"
+                                    {% else %}
+                                                        "{{ asset(event.WebPath)}}"
+                                        {% endif %}        
                             var contenuInfoBulle_{{ event.id}} = '<div class="infoW">' +
                             '<div class="propImg">' +
-                            '<img src="/Optimus/web/template/images/prop/1-1-thmb.png">' +
-                            '<div class="propBg">' +
+                            '<img class="closeInfo" src="'+ image +'">' +
+                            '<div class="propBg closeInfo">' +
+                            {% if event.frais %}
                             '<div class="propPrice">{{event.frais}} &euro;</div>' +
+                            {% endif %}
                             '<div class="propType">{{event.type}}</div>' +
                             '</div>' +
                             '</div>' +
@@ -122,7 +143,7 @@ var markers = [];
                                                         if ($('#home-map').length > 0) {
                                                 map = new google.maps.Map(document.getElementById('home-map'), options);
                                                         
-                                                        map.setZoom(12);
+                                                        map.setZoom(15);
                                                         addMarkers(map);
                                                         if (navigator.geolocation) {
                                                 navigator.geolocation.getCurrentPosition(function (position) {
@@ -146,7 +167,7 @@ var markers = [];
                                                 var btn = (document.getElementById('btn-input'));
                                                         google.maps.event.addDomListener(btn, 'click', function () {
                                                         map.setCenter(pos),
-                                                                map.setZoom(12)
+                                                                map.setZoom(15)
 
                                                         });
                                                         var input = (document.getElementById('pac-input2'));
@@ -171,7 +192,7 @@ var markers = [];
                                                         }
 
                                                         map.fitBounds(bounds);
-                                                                map.setZoom(12);
+                                                                map.setZoom(15);
                                                         });
                                                         google.maps.event.addListener(map, 'bounds_changed', function () {
                                                         var bounds = map.getBounds();

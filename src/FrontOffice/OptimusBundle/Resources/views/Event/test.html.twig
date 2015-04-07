@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+
+
+{% block javascripts %}
+
+    <script>
+
+        setInterval(function(){ 
+           alert("ttzzzy");
+            $.ajax({
+                    url: Routing.generate('test2'),
+                            success: function(data) {
+                           alert("tty");
+                            }
+                    });   alert("taaaaatzzzy");
+    }, 5000);
+
+    </script>
+{% endblock %}
+
+

@@ -65,6 +65,13 @@ class Notification {
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\NotificationSeen", mappedBy="notifications", cascade={"persist","remove"})
      * */
     protected $notificationsen;
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Participation",inversedBy="notificationParticipation")
+     * @ORM\JoinColumn(name="participation_id", referencedColumnName="id")
+     */
+    protected $participation;
 
     public function getId() {
         return $this->id;
@@ -77,8 +84,15 @@ class Notification {
     public function getNotificationsen() {
         return $this->notificationsen;
     }
+    function getParticipation() {
+        return $this->participation;
+    }
 
-    public function setNotificateur($notificateur) {
+    function setParticipation($participation) {
+        $this->participation = $participation;
+    }
+
+        public function setNotificateur($notificateur) {
         $this->notificateur = $notificateur;
     }
 

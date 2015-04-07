@@ -3,13 +3,14 @@
 namespace FrontOffice\OptimusBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Seance;
 use FrontOffice\OptimusBundle\Form\SeanceType;
-
+use \DateTime;
 /**
  * Seance controller.
  *
@@ -172,60 +173,47 @@ class SeanceController extends Controller
     /**
      * Edits an existing Seance entity.
      *
-     * @Route("/{id}", name="seance_update")
-     * @Method("PUT")
+     * @Route("/{id}/seance", name="seance_update", options={"expose"=true})
+     * @Method("GET|PUT")
      * @Template("FrontOfficeOptimusBundle:Seance:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FrontOfficeOptimusBundle:Seance')->find($id);
+        $seance = $em->getRepository('FrontOfficeOptimusBundle:Seance')->find($id);
+        $request = $this->get('request');
+      $nom = $request->get("nom");
+      $decr = $request->get("desc");
+      $debut = $request->get("debut");
+      $fin = $request->get("fin");
+        $seance->setNom($nom);
+                $seance->setDescription($decr);
+                $seance->setDatedebut($debut);
+                $seance->setDatefin($fin);
+//       
+        $em->merge($seance);
+        $em->flush();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Seance entity.');
-        }
+        return $response = new Response($id);
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('seance_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+       
     }
     /**
      * Deletes a Seance entity.
      *
-     * @Route("/{id}", name="seance_delete")
-     * @Method("DELETE")
+     * @Route("/seance/{id}/delete", name="seance_delete", options={"expose"=true})
+     * @Method("GET|DELETE")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('FrontOfficeOptimusBundle:Seance')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Seance entity.');
-            }
-
             $em->remove($entity);
             $em->flush();
-        }
+        
 
-        return $this->redirect($this->generateUrl('seance'));
+       return $response = new Response($id);
     }
 
     /**
@@ -247,7 +235,7 @@ class SeanceController extends Controller
     /**
      * Creates a new Seance entity.
      *
-     * @Route("club={id}/program={idp}/ajouter_seance", name="seance_create")
+     * @Route("club={id}/program={idp}/ajouter_seance", name="seance_create", options={"expose"=true})
      * @Method("GET|POST")
      * @Template("FrontOfficeOptimusBundle:Seance:new.html.twig")
      */
@@ -256,27 +244,26 @@ class SeanceController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity   = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         $program = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($idp);
+      $request = $this->get('request');
+      $nom = $request->get("nom");
+      $decr = $request->get("desc");
+      $debut = $request->get("debut");
+      $fin = $request->get("fin");
+     
         $seance = new Seance();
         $seance->setProgram($program);
-        $form = $this->createForm(new SeanceType(), $seance);
-        $form->handleRequest($request);
-        
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($seance);
-            $em->flush();
+        $seance->setNom($nom);
+                $seance->setDescription($decr);
+                $seance->setDatedebut($debut);
+                $seance->setDatefin($fin);
+//       
+        $em->persist($seance);
+        $em->flush();
 
-            return $this->redirect($this->generateUrl('program_show', array('id' => $id, 'idp' => $idp)));
-        }
+        return $response = new Response($seance->getId());
+        //}
 
-        return array(
-            'id' => $id,
-            'idp' => $idp,
-            'entity' => $entity,
-            'program' => $program,
-            'seance' => $seance,
-            'form'   => $form->createView(),
-        );
+       //
     }
 
 }

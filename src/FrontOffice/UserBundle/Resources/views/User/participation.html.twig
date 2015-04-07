@@ -1,0 +1,88 @@
+{% for invitation in Invitations %}  
+                        {% set UsersInvitations = getUsersInvitations(invitation.object1Id) %}
+                        <li class="invitation{{invitation.id}}" id="{{ invitation.id }}">
+                            <div class="userWidget-2" style="margin-bottom:1px">
+                                <div class="avatar">
+                                    <a href="{{ path('show_profil', { 'id': invitation.object1Id}) }}">
+                                        {% if UsersInvitations.path == null %}
+                                            {% if UsersInvitations.sexe == 'H' %}
+                                                <img alt="avatar" src="{{ asset('men.png') }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
+                                            {% else %}
+                                                <img alt="avatar" src="{{ asset('women.png') }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
+                                            {% endif %}
+                                        {% else %}
+                                            <img alt="avatar" src="{{ asset(UsersInvitations.WebPath) }}" style=" border-radius: 40px;  width: 60px;  height: 60px;">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <div class="notifyName" style="line-height:40px"><a href="#" style="color:#c02100"><strong>{{ UsersInvitations.username}}</strong></a></div>
+                                </div>
+                                <div class="ops">
+
+                                    <a id="accept_invitation{{invitation.id}}" href="#" class="btn btn-round btn-o btn-danger btn-sm">Accepter</a>
+                                    <a id="delete_invitation{{invitation.id}}" href="#" class="btn btn-round btn-o btn-default btn-sm">Refuser</a>
+                                    <div class="loader"> <img src="{{asset('template/images/ajax-loader3.gif') }}"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                        </li>
+
+                    {% endfor %}*{{Invitations|length}}*<script>{% for invitation in Invitations %}
+                        $('body').on('click', '#accept_invitation{{invitation.id}}', function () {
+                $.ajax({
+                url: Routing.generate('accept_relation', {'id':{{invitation.id}}}),
+                        success: function(data) {
+                        var nb = parseInt($('#nbInvitation').text());
+                                var nouveauNb = nb - 1;
+                                if (nouveauNb > 0)
+                        {
+                        $('#nbInvitation').replaceWith(nouveauNb);
+                        }
+                        else
+                        {
+                        $('#nombre_invitation').hide();
+                        }
+                        $('.invitation' + data).empty();
+                                $('#replace-accepte-profil').empty().append(
+                                '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
+                                'Amis' +
+                                '<span class="caret"></span>' +
+                                ' </button>'
+
+                                );
+                                $('#replace-accepte-profil').empty().append(
+                                '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
+                                'Amis' +
+                                '<span class="caret"></span>' +
+                                ' </button>'
+
+                                );
+                                // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+                        }
+                });
+                });
+                         $('body').on('click', '#delete_invitation{{invitation.id}}', function () {
+
+                $.ajax({
+                type: "POST",
+                        url: Routing.generate('delete_invite'),
+                        data: {id:{{invitation.id}}},
+                        dataType: 'json',
+                        success: function(data) {
+                                      $('#delete_invitation{{invitation.id}}').hide();
+                     
+                            var nb = parseInt($('#nbInvitation').text());
+                                var nouveauNb = nb - 1;
+                                if (nouveauNb > 0)
+                        {
+                        $('#nbInvitation').replaceWith(nouveauNb);
+                        }
+                        else
+                        {
+                        $('#nombre_invitation').hide();
+                        }
+                        }
+                });
+                        });            {% endfor %}</script>

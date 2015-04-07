@@ -1,0 +1,169 @@
+           {% for message in messages %}
+                        {% if message.vu == 0 %}
+                            <li style="background: #EFEFEF;;" class="message_{{message.id}}" id="{{ message.id }}">
+                                <a href="#" id="descumessage{{message.id}}" data-toggle="modal">
+                                    {% if message.sender.path == null %}
+                                        {% if message.sender.sexe == 'H' %}
+                                            <img  class="avatar pull-left" src="{{ asset('men.png') }}" alt="avatar">
+                                        {% else %}
+                                            <img  class="avatar pull-left" src="{{ asset('women.png') }}" alt="avatar">
+                                        {% endif %}
+                                    {% else %}
+                                        <img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" alt="avatar">
+
+                                    {% endif %}
+                                    <div class="pulse border-grey "></div>
+                                    <div id="{{ message.sender.id }}" class="notify pull-left  ">
+                                        <div class="notifyName" style="font-weight: bold"> {{ message.sender.username }}</div><div class="texte">{{ message.content }}</div>
+                                        <div class="notifyTime">{{ message.getDuréeMsg() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="message_{{message.id}}" id="{{ message.id }}">
+                                <a href="#" id="descumessage{{message.id}}" data-toggle="modal">
+                                    {% if message.sender.path == null %}
+                                        {% if message.sender.sexe == 'H' %}
+                                            <img  class="avatar pull-left" src="{{ asset('men.png') }}" alt="avatar">
+                                        {% else %}
+                                            <img  class="avatar pull-left" src="{{ asset('women.png') }}" alt="avatar">
+                                        {% endif %}
+                                    {% else %}
+                                        <img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" alt="avatar">
+                                    {% endif %}
+                                    <div class="pulse border-grey "></div>
+                                    <div id="{{ message.sender.id }}" class="notify pull-left  ">
+                                        <div class="notifyName" style="font-weight: bold"> {{ message.sender.username }}</div><div class="texte">{{ message.content }}</div>
+                                        <div class="notifyTime">{{ message.getDuréeMsg() }} </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}*
+                    
+                     {% for message in nvmessages %}
+        <div class="row" id="modaldescumessage{{message.id}}" style="display:none;">
+            <div class="col-lg-3  navbar-fixed-bottom" style="margin-left: 74%;">
+                <div class="well well-sm ">
+                    <div class="affiche_nom">
+                        <b class="pull-left affiche_personne">{{message.sender.username}}</b>
+                        <a id="close{{message.id}}" class="glyphicon glyphicon-remove pull-right"></a>
+                    </div>
+                    <div class="affichage">
+                        <ul id="appendmessage{{message.id}}" class="well well-sm scrollbar chat-thread" style="height:200px;">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    {% if message.sender.path == null %}
+                                        {% if message.sender.sexe == 'H' %}
+                                            <img  class="avatar pull-left" src="{{ asset('men.png') }}" class="img-responsive img-circle" width="30">
+                                        {% else %}
+                                            <img  class="avatar pull-left" src="{{ asset('women.png') }}" class="img-responsive img-circle" width="30">
+                                        {% endif %}
+                                    {% else %}
+                                        <img  class="avatar pull-left" src="{{ asset(message.sender.WebPath) }}" class="img-responsive img-circle" width="30">
+                                    {% endif %}
+
+                                </div>
+                                <div class="col-md-10" style="background:white;">
+                                    <p>
+                                        {% if message.event == null %}
+                                            {{ message.content }}
+                                        {% else %}
+                                            {{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+
+
+                        </ul>
+                    </div>
+                    <form method="post">
+                        <div class="input-group">
+                            <input id="newmessage{{message.id}}" type="text" class="form-control" placeholder="Repondre au message...">
+                            <span class="input-group-btn">
+                                <a id="repondre{{message.id}}" class="btn btn-green">Repondre</a>
+                                <a class="loader" id="loader_reponder{{message.id}}">
+                                    <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                </a>
+                            </span>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    {% endfor %}*{{lastid}}*<script>{% for message in nvmessages %}
+        $('body').on('click', '#repondre{{message.id}}', function () 
+            {
+            var sender = {{message.sender.id}};
+                    var message = $('#newmessage{{message.id}}').val();
+                    if (message != "")
+            {
+            $('#repondre{{message.id}}').hide();
+                    $('#loader_reponder{{message.id}}').show();
+                    var photo = "";{% if app.user.path == null %}{% if app.user.sexe == 'H' %}
+                    photo = "{{ asset('men.png') }}";{% else %}
+                    photo = "{{ asset('women.png') }}";{% endif %}{% else %}
+                    photo = "{{asset(app.user.WebPath) }}";{% endif %}
+                    $.ajax({
+                    type: "POST",
+                            url: Routing.generate('repondre_message'),
+                            data: {message: message, sender:sender},
+                            dataType: 'json',
+                            success: function(data) {
+                            $('#loader_reponder{{message.id}}').hide();
+                                    $('#repondre{{message.id}}').show();
+                                    $('#appendmessage{{message.id}}').append('<div class="row">' +
+                                    '<div class="col-md-2 pull-right">' +
+                                    '<img src="' + photo + '" class="img-responsive img-circle" width="30" >' +
+                                    '</div>' +
+                                    '<div class="col-md-10 pull-left" style="background:white;">' +
+                                    '<p>' + message + '</p>' +
+                                    '</div></div><hr>'
+                                    );
+                                    $('#newmessage{{message.id}}').val("");
+                            }
+
+                    });
+            }
+
+            });
+                    $('body').on('click', '#close{{message.id}}', function () {
+            $('#modaldescumessage{{message.id}}').hide();
+            });
+            $('body').on('click', '#descumessage{{message.id}}', function () {
+        
+            $('#modaldescumessage{{message.id}}').show();
+                    $.ajax({
+                    type: "POST",
+                            url: '{{ path('message_seen') }}',
+                            data: 'id=' + {{message.id }},
+                            success: function(data) {
+            {% if message.vu == 0 %}
+                                var test = 0;{%else%}
+                                        var test = 1;
+            {%endif %} 
+                                        if (test != 1){
+                                var nb = parseInt($('#samirMsg').text());
+                                        var nouveauNb = nb - 1;
+                                        if (nouveauNb > 0)
+                                {
+                                $('#samirMsg').text(nouveauNb);
+                                }
+                                else
+                                {
+                                $('#nombre_message').hide();
+                                }
+                                }
+                                }
+
+                        });
+                });{% endfor %}</script>
+    
+ 
+         

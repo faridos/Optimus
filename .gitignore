@@ -75,3 +75,4 @@ src/FrontOffice/OptimusBundle/Resources/views/layout_club.html.twig
 src/FrontOffice/OptimusBundle/Resources/views/layout_club.html.twig
 src/FrontOffice/OptimusBundle/Resources/views/layout_club.html.twig
 src/FrontOffice/OptimusBundle/Resources/views/layout_club.html.twig
+src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig

@@ -15,11 +15,12 @@ class MessageRepository extends EntityRepository {
     public function NonseenMsg($id) {
         $em = $this->getEntityManager();
         $query = $em->createQuery("SELECT m, u FROM FrontOfficeOptimusBundle:Message m"
-                        . " LEFT JOIN m.sender u where m.is_seen = 0 and m.reciever = :id"
+                        . " LEFT JOIN m.sender u where  m.reciever = :id"
                         . " ORDER BY m.msgTime DESC ")
                 ->setParameter('id', $id);
         return  $query->getResult();
     }
+    
 
     public function NonseenMsgAjax($id) {
           $em = $this->getEntityManager();
@@ -30,6 +31,57 @@ class MessageRepository extends EntityRepository {
         return  $query->getArrayResult();
         
     }
+  
+    
+     public function getNotif($id , $last) {
+    
+         
+
+        $em = $this->getEntityManager();
+            $query = $em->createQuery("SELECT message, e "
+                        . "FROM FrontOfficeOptimusBundle:Message message LEFT JOIN message.sender e"
+                        . " where message.reciever = :id and message.event is NOT NULL and message.vu = 0 and message.id > :last "
+                )->setParameter('id', $id)
+                    ->setParameter('last', $last);
+        return $events = $query->getArrayResult();
+    
+       
+        
+    }
+    public function getcount($id) {
+      
+
+        $em = $this->getEntityManager();
+            $query = $em->createQuery("SELECT count(message) as nbrmsg "
+                        . "FROM FrontOfficeOptimusBundle:Message message LEFT JOIN message.sender e"
+                        . " where message.reciever = :id and message.vu = 0"
+                )->setParameter('id', $id);
+        return  $query->getResult();
+    
+       
+        
+    }
+    
+    
+    
+    
+       public function getnvmsg($id ,$lastid) {
+      
+
+        $em = $this->getEntityManager();
+           $query = $em->createQuery("SELECT message, e "
+                        . "FROM FrontOfficeOptimusBundle:Message message LEFT JOIN message.sender e"
+                        . " where message.reciever = :id and message.id > :lastid "
+                )->setParameter('id', $id)
+                ->setParameter('lastid', $lastid);
+        return $events = $query->getResult();
+    
+       
+        
+    }
+   
+    
+   
 
 //
 //    public function findMsgDestinataires($idprofil) {

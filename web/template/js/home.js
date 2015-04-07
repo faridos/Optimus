@@ -7,10 +7,22 @@
 
 
     var options = {
-
-            zoom : 14
-
-        };
+                        zoom : 15,
+                        zoomControl: true,
+                        mapTypeControl: true,
+    panControl: true,
+  panControlOptions: {
+  position: google.maps.ControlPosition.LEFT_CENTER
+},
+    zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.LARGE,
+        position: google.maps.ControlPosition.LEFT_CENTER
+    },
+    mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.RIGHT_CENTER
+    }
+                        };
 
     
 
@@ -36,7 +48,7 @@
 
             
 
-            map.setZoom(14);
+            map.setZoom(15);
 
 
 
@@ -64,7 +76,7 @@
 
                             map: map,
 
-                            icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-position.png'),
+                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
 
                             draggable: false,
 
@@ -98,7 +110,7 @@
 
                     map.setCenter(pos),
 
-                    map.setZoom(12)
+                    map.setZoom(15)
 
 
 
@@ -168,7 +180,7 @@
 
                     map.fitBounds(bounds);
 
-                    map.setZoom(12);
+                    map.setZoom(15);
 
                     
 

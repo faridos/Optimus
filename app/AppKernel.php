@@ -4,6 +4,7 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
+
 {
     public function registerBundles()
     {
@@ -26,6 +27,8 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Sly\RelationBundle\SlyRelationBundle(),
             new Nomaya\SocialBundle\NomayaSocialBundle(),
+            new FrontOffice\PaymentBundle\FrontOfficePaymentBundle(),
+            new Payum\Bundle\PayumBundle\PayumBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

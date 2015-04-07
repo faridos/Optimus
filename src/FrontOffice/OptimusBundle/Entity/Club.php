@@ -42,9 +42,9 @@ class Club {
     public $file;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="Date_creation", type="datetime")
+     * @ORM\Column(name="Date_creation", type="date")
      */
     private $dateCreation;
 
@@ -95,6 +95,13 @@ class Club {
      * @ORM\Column(name="activation", type="boolean", nullable=false)
      */
     protected $active;
+    
+     /**
+     * @var boolean $isPayant
+     * @ORM\Column(name="payant", type="boolean")
+     */
+    protected $isPayant;
+
 
     /**
      * @var float
@@ -256,7 +263,7 @@ class Club {
     /**
      * Set dateCreation
      *
-     * @param \DateTime $dateCreation
+     * @param \Date $dateCreation
      * @return Club
      */
     public function setDateCreation($dateCreation) {
@@ -268,7 +275,7 @@ class Club {
     /**
      * Get dateCreation
      *
-     * @return \DateTime 
+     * @return \Date
      */
     public function getDateCreation() {
         return $this->dateCreation;
@@ -670,5 +677,28 @@ class Club {
     public function getPrograms()
     {
         return $this->programs;
+    }
+
+    /**
+     * Set isPayant
+     *
+     * @param boolean $isPayant
+     * @return Club
+     */
+    public function setIsPayant($isPayant)
+    {
+        $this->isPayant = $isPayant;
+    
+        return $this;
+    }
+
+    /**
+     * Get isPayant
+     *
+     * @return boolean 
+     */
+    public function getIsPayant()
+    {
+        return $this->isPayant;
     }
 }

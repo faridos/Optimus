@@ -1,0 +1,7 @@
+parameters:
+#    front_office_payment.example.class: FrontOffice\PaymentBundle\Example
+
+services:
+#    front_office_payment.example:
+#        class: %front_office_payment.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,26 @@
+{%extends "FrontOfficeOptimusBundle::layout.html.twig"%}
+ 
+
+{% block body %}
+     <div id="wrapper">
+<div id="content" class="mob-max" >
+<div class="col-lg-12"><div class="row mb20">
+</div>
+<div class="col-lg-12">
+    <div class="block">
+       
+        Status: {{ status }}
+    </div>
+
+   {{ club.nom}}
+   
+    <div class="block">
+        <pre style="white-space: pre;">{{ order|raw }}</pre>
+    </div>
+        </div></div></div></div>
+    
+    
+        
+{% endblock %}
+
+ 

@@ -1,0 +1,774 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block body %}
+    <div id="wrapper">
+<div id="content" class="mob-max" >
+    
+<div class="col-lg-12"><div class="row mb20">
+</div>
+    {% for flashMessage in app.session.flashbag.get('AjouterPalmarésClub') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('ActivationClub') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('AjouterAlbumClub') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
+<div class="col-lg-12">
+    
+<div class="tooltipsContainer panel panel-default dd">
+<a href="#ddPanel" class="btn btn-default btn-lg btn-block" data-toggle="collapse"style="background-color:#c02100;color:#fff;border-color:#c02100;" data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="" data-original-title="Cliquez ici pour voir profil club"><span class="navIcon fa fa-users"></span> Profil Club<span class="icon-equalizer pull-right"></span></a>
+<div id="ddPanel" class="panel-collapse collapse" style="margin-top:-6px;">
+<div class="panel-body" style="padding:0px;">
+<div class="userWidget-1 manamus" style="margin-bottom:0px;" >
+<div class="avatar" id="main">
+<div class="col-md-4">
+    
+<div class="propWidget-1 logotus tooltipsContainer ">
+<div class="fig salamus">
+{% if club.path == null %}
+<a href="{{ asset('club.png')}}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+<img src="{{ asset('club.png') }}" class="inline-block imaguss">
+</a>
+{% else %}
+<a href="{{ asset(club.WebPath) }}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+<img src="{{ asset(club.WebPath) }}" class="inline-block imaguss">
+</a>
+{% endif %}
+{% if club.createur == app.user %}
+<div class="priceCap paddus">
+    <button href="#modifierphotoevent" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo"><span class="notifyIcon fa fa-camera-retro"></span></button>
+</div>
+{% endif %}
+</div>
+</div>
+</div>
+{% if club.createur == app.user %}
+<div class="ops">
+    {% if club.isPayant != 0 %}
+<a class="btn btn-round btn-default btn-sm" href="#inviteramievent" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Inviter</span></a>
+{% endif %}
+<a class="btn btn-round btn-default btn-sm" href="{{ path('club_update',{'id' : club.id}) }}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
+<a class="btn btn-round btn-default btn-sm" href="#supprimerClub" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a> 
+</div>
+{% endif %}
+<div class="name osLight profilus namusclubus"><strong>{{club.nom}}</strong></div>
+</div>
+<div class=" address profilus" style="font-size:18px;"> 
+<div class="row">
+    {% if club.isPayant == 1 %}
+<div class="cardRating col-md-5" style="color:#eab134;margin-left: -40px;">
+<div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with { 'id' : 'C'~club.id } %}</div>
+</div>
+<div class="cardRating col-md-6" style="margin-left: 57px;">
+<div class="label labelus label-yellow " >
+Nombre des members : <span  id="nbparticip">500</span>
+</div>
+</div>
+{% endif %}
+<br><br>
+<div class="title profilus"></div>
+<div class="buttonsWrapper"> 
+<div class="row">
+<div class="col-md-5 pb20">
+<div class="pc-about osLight" style="margin-left: -37%;"><div class="title eventus">Propriétaire :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.createur}}</span></div>
+<div class="title eventus">Date Creation :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.dateCreation|date("d/m/Y ")}}</span></div>
+<div class="title eventus">Adresse :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.adresse}}</span></div><br>
+</div>
+</div>
+<div class="col-md-5" style=" margin-left: -20px;">
+<div class="pc-title osLight">
+<div class="title eventus">Displine : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.discpline}}</span></div>
+<div class="title eventus">Frais participation : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.fraisAdhesion}} &euro; </span></div>
+</div>
+</div></div></div>
+{% if club.description %}
+<div class="row descriptus">
+<div class="col-md-12 pb20">
+<div class="pc-about osLight">
+<div class="title">Description : <span class="address detaillus"style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.description}}</span>
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+{% if club.isPayant == 1%}
+<div class="row tooltipsContainer" style="margin-left:-140px">
+<div class="col-md-4 pb20">
+<div class="pc-about osLight" id="append">
+{% if club.createur != app.user %}
+<a class="btn btn-green btn-round " href="#"  id="exit_event">
+    <span class="fa fa-plus-circle" data-toggle="tooltip" data-tooltip-class="green" data-placement="top" title="" data-original-title="Participer"></span> <span >Rejoindre</span>                                          
+</a>
+{% endif %}
+</div>
+</div>
+<div class="col-md-4">
+<div class="pc-title osLight" id="append2">
+<div class="buttonsWrapper pb20 ">
+{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="pc-title osLight">
+<a href="#" class="btn btn-round btn-o btn-yellow" data-toggle="tooltip" data-tooltip-class="yellow" data-placement="top" title=" personnes ont commenté cet club" data-original-title="Nombre commentaires"><span class="fa fa-comments"></span> <strong>500</strong></a>
+<a href="#" class="btn btn-round btn-o btn-yellow" data-toggle="tooltip" data-tooltip-class="yellow" data-placement="top" title=" ont lu cet club" data-original-title="Nombre de vue"><span class="fa fa-eye"></span> <strong>500</strong></a>
+<a href="#" style="color:#c02100"></a>
+<a href="#" style="color:#c02100"></a>
+
+</div>
+
+</div>
+</div>
+{% endif %}
+</div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+</div>
+<!--********************************************************-->
+<div class="tabsContainer">
+
+
+<ul class="nav nav-tabs nav-justified" role="tablist">
+<li class="active"><a href="#programmes" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Programmes</a></li>
+<li class=""><a href="#members" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Member</a></li>
+<li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Palmares</a></li>
+<li class=""><a href="#albums" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Album</a></li>
+<li class=""><a href="#demande" role="tab" data-toggle="tab"><span class="icon-doc"></span> Demande</a></li>
+<li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
+</ul>
+<div class="tab-content">
+    {% if club.isPayant == 1%}
+<!------------------------------Programmes Club------------------------------------------->
+<ul class="tab-pane fade  active in scrollbar" id="programmes" >
+     <div id="supprimer-pr-c" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Palmarés Supprimer
+</div>
+    {% if club.programs|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Rien à afficher dans la catégorie programmes!</strong> Créer un pour commencer.
+</div>
+        {% endif %}
+{% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="#ajouterProgrammes" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+</div>
+{% endif %}
+
+
+<div class="row">
+<br>
+{% for programme in programmes %}
+    <div class="tooltipsContainer row  {{programme.id}}" {% if date(programme.datefin)<= date()  %} data-toggle="tooltip" data-tooltip-class="red" title="Programme dépasser"{% endif %}>
+<br>
+<div  class="col-md-12" id="">
+<div  {% if date(programme.datefin)<= date()  %}style="background-color: #ddd" {% endif %} data-linkto="" class="card albumus tooltipsContainer" >
+<br>
+<div class="profile-card">
+    <div class="col-md-3">
+
+<div style="color:#c02100" class="pc-name">{{programme.nom}}</div>
+</div>
+  <div class="col-md-7">
+<div class="col-md-5">
+<div class="pc-name">Du:{{programme.datedebut|date('d/m/Y H:i:s' ) }}</div>
+</div>
+<div class="col-md-5">
+<div class="pc-name">À:{{programme.datefin|date('d/m/Y H:i:s')}}</div>
+</div>
+</div>
+<div class="col-md-2">
+<div align="right">
+    
+    <a href="{{ path('program_show',{'id_club':club.id,'id' :programme.id} ) }}" class="btn btn-icon btn-round btn-green btn-xs" title="info" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-info"></span></a>
+
+{% if app.user == club.createur %}
+    <a href="#modifierProgrammes_club_{{programme.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
+<a href="#supprimerprogramme_club_{{programme.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
+{% endif %}
+</div>
+<br>
+<div class="clearfix"></div>
+</div>
+</div>
+<br>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+</ul>
+<!------------------------------Fin Programmes Club------------------------------------------->
+<ul class="tab-pane fade  scrollbar" id="members" >
+     {% if club.adherents|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Liste vide!</strong> Inviter.
+</div>
+
+{% endif %}
+{% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="#"><span class="fa icon-plus state"></span> <span class="state">Inviter Amis </span></a><br>
+<br>
+</div>
+{% endif %}
+
+</ul>
+<!--------------------palmaes club ------------------------->
+<ul class="tab-pane fade  scrollbar" id="palmares" >
+    <div id="supprimer-p-c" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Programme Supprimer
+</div>
+      {% if club.reward|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Liste vide!</strong>  Créer un pour commencer.
+</div>
+{% endif %}
+{% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="#ajouterpalmares" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+</div>
+{% endif %}
+<div class="row">
+<br>
+{% for palmares in club.reward %}
+<div class="row {{palmares.id}}">
+<br>
+<div class="col-md-12" id="block{{ palmares.id }}">
+<div data-linkto="" class="card albumus tooltipsContainer" >
+<br>
+<div class="profile-card">
+<div class="col-md-4">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Titre" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" >
+<span class="fa fa-child palmarus"></span></a>
+</div>
+<div class="pc-name">{{ palmares.titre }}</div>
+</div>
+<div class="col-md-4">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Classement" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+<span class="fa fa-star palmarus"></span></a>
+</div>
+<div class="pc-name">{{ palmares.classment }}</div>
+</div>
+<div class="col-md-4">
+
+<div class="profile-card">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o btn-pinterest palmaruss" title="Date" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+<span class="fa fa-calendar palmarus"></span></a>
+</div>
+<div class="pc-name">{{ palmares.date |date('Y-m-d')}}</div>
+</div>
+{% if app.user == club.createur %}
+<div align="right">
+<a href="#modifierpalmares_club_{{palmares.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
+<a href="#supprimerpalmares_club_{{palmares.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
+</div>
+{% endif %}
+<br>
+<div class="clearfix"></div>
+</div>
+</div>
+<br>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+</ul>
+<!--------------------fin palmaes club ------------------------->
+<!--------------------albums club ------------------------->
+<ul class="tab-pane fade  scrollbar" id="albums" >
+    <div id="supprimer-a" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Album Supprimer
+</div>
+<div id="supprimer-photo" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+photo Supprimer
+</div>
+     {% if club.album|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Liste vide!</strong>  Créer un pour commencer.
+</div>
+
+{% endif %}
+{% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a id="ajoutAlbum" class="btn btn-round btn-default btn-sm rightus" href="#uploadalbum-club" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+</div>
+{% endif %}
+   <div class="row">
+<br>
+{%set ph = 0 %}
+{% for album in club.album %}
+<div id='albumuser{{loop.index}}' class="col-xs-3 {{album.id}}" >
+<div data-linkto="" class="card albumus tooltipsContainer" >
+<div class="figure" id="main">
+<a href="#" onclick="image({{album.id}})" >
+{%if album.images|length == 0 %}
+<img src="{{ asset('album_d.png') }}" />
+{%else %}
+<img src="{{ asset(album.images[0].WebPath) }}" />
+
+{%endif %}
+</a>
+<div class="figView"></div>
+</div>
+<h2 align="center">{{ album.nom }}</h2>
+<div align="center" >
+{% if app.user == club.createur %}
+<a href="#modifieralbum-club{{album.id}}"  data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+<a href="#supprimeralbum_club_{{album.id}}"  data-toggle="modal"  class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+
+{% endif %}
+</div>
+<br>
+</div>
+</div>
+<div  id="ajouterphoto{{album.id}}" style="display: none;" class="buttonsWrapper col-xs-12">
+<a id="lienphotoalbum" onclick="image2()" href="#albums">albums > {{album.nom }}</a>
+{% if app.user == club.createur %}<a class="btn btn-round btn-default btn-sm rightus" href="#uploadphotoAlbum{{album.id}}" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a>{% endif %}<br>
+</div>   
+{%for image in album.images %}
+{%set  ph =  ph + 1 %}
+<div  id="photos{{ph}}" style="display: none;"  class="col-sm-4 {{image.id}}">
+<div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
+<div class="fig " id="main">
+<a href="{{ asset(image.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+<img src="{{ asset(image.WebPath) }}" />
+</a>
+{% if app.user == club.createur %}
+<div class="priceCap paddus">
+<button href="#suppritus{{image.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
+</div>
+{% endif %}
+<div class="figCap">
+<div class="address">Cliquez pour agrandir l'image</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endfor %}
+{% endfor %}
+</div>
+<div class="clearfix"></div>
+
+</ul>
+<!--------------------fin albums club ------------------------->
+{% if app.user == club.createur %}
+<ul class="tab-pane fade  scrollbar" id="demande" >
+</ul>
+{% endif %}
+<ul class="tab-pane fade  scrollbar" id="videos" >
+    <img style="width: 100%" src="{{ asset('154.png') }}">
+    <div class="clearfix"></div>
+</ul>
+        
+{% else %}
+    <ul class="tab-pane fade  active in scrollbar" id="nonPayer" >
+        <a href="{{ path('front_office_payment_prepare_order_purchase',{'id' : club.id }) }}">    <img style="width: 100%" src="{{ asset('payment.png') }}"></a>
+</ul>
+    {% endif %}
+</div>
+<div class="clearfix"></div>
+
+
+    </div>
+</div>
+
+</div>
+</div>
+
+<div id="map-club" style="height: 100%" class="mob-min">
+    <div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div>
+</div>
+
+</div>
+   
+<!-----------------------Modal ShowClub--------------------------->
+
+<!--*********************modal supprimer Club*******************-->
+<div class="modal fade" id="supprimerClub" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<form class="contactForm">
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer ce Club?</p>
+</div>
+<div class="modal-footer">
+<button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="bt-supprimer-club" href="{{ path('club_supprimer', { 'id' : club.id }) }}" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!--*********************fin modal supprimer Club*******************-->
+<!-------------------------Programmes ---------------------------------------->
+<!--*********************modal ajouter programme Club*******************-->
+<div class="modal fade" id="ajouterProgrammes" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Program:create',  { 'id': club.id })) }}
+</div>
+</div>
+<!--*********************modal fin ajout programme Club*******************-->
+{% for programme in programmes %}
+<!--*********************modal modifier programme Club*******************-->
+<div class="modal fade" id="modifierProgrammes_club_{{programme.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Program:editProgramClub',  { 'id_club': club.id,'id' : programme.id })) }}
+</div>
+</div>
+<!--*********************modal fin modifier programme Club*******************-->
+<!--**************** supprimer programmes ***************************-->
+<div class="modal" id="supprimerprogramme_club_{{programme.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer cette palmares ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerProgrammeClub{{programme.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+<a class="loader" id="loaderSuppprogramme{{programme.id}}" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
+</div>
+</div>
+</div>
+</div>
+<!--****************fin supprimer programmes ***************************-->
+{% endfor %}
+<!-------------------------Fin Programmes ------------------------------------>
+
+<!--*********************modal ajouter palmares Club*******************-->
+<div class="modal fade" id="ajouterpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Reward:addRewardClub',  { 'id': club.id })) }}
+</div>
+</div>
+<!--*********************fin modal ajouter palmares Club*******************-->
+<!--*********************modal modifier palmares***************************-->
+{% for palmares in club.reward %}
+<div class="modal fade" id="modifierpalmares_club_{{palmares.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Reward:update',  { 'id': palmares.id })) }}
+</div>
+</div>
+<!--****************** fin modal modifier palmares **************************-->
+
+<!--**************** supprimer palmares ***************************-->
+<div class="modal" id="supprimerpalmares_club_{{palmares.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer cette palmares ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerPalmaresClub{{palmares.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+<a class="loader" id="loaderSuppPal{{palmares.id}}" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+<!-------------------------Fin Palmares ------------------------------------>
+<!-------------------------Albums ------------------------------------>
+<!--*********************modal ajouter albums Club*******************-->
+<div class="modal fade" id="uploadalbum-club" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Album:createAlbumClub',  { 'id': club.id })) }}
+</div>
+</div>
+
+<!--*********************fin modal ajouter album Club*******************-->
+<!--*********************modal modifier album***************************-->
+{% for album in club.album %}
+    <div class="modal fade" id="uploadphotoAlbum{{album.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoClub',  {'ida': album.id })) }}
+</div>
+</div>
+<div class="modal fade" id="modifieralbum-club{{album.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Album:editAlbumClub',  {'id_club' : club.id, 'id': album.id })) }}
+</div>
+</div>
+<!--****************** fin modal modifier palmares **************************-->
+
+<!--**************** supprimer album ***************************-->
+<div class="modal" id="supprimeralbum_club_{{album.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer l'album {{ album.nom }} ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerAlbumClub{{album.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+<a class="loader" id="loaderSuppAlb{{album.id}}" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
+</div>
+</div>
+</div>
+</div>
+{%for image in album.images %}
+<div class="modal fade" id="suppritus{{image.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<form class="contactForm">
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer cette photo {{image.id}} ?</p>
+</div>
+<div class="modal-footer">
+<button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerPhoto{{image.id}}" href="#" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
+<a class="loader" id="loaderSuppPhoto{{image.id}}" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+{% endfor %}
+{% endfor %}
+<!-------------------------Fin Albums ------------------------------------>
+<!-----------------------Fin Modal ShowClub--------------------------->
+{% endblock %}
+{% block javascriptfils %}
+<script src="{{asset('datemaske/jquery.maskedinput.min.js')}}" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+$("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
+});</script>
+<script>
+    {% for programme in programmes %}
+        $("#supprimerProgrammeClub{{programme.id}}").click(function(){
+            $("#supprimerProgrammeClub{{programme.id}}").hide();
+            $("#loaderSuppprogramme{{programme.id}}").show();
+            $.ajax({
+url: Routing.generate('program_delete', {'id':{{programme.id}}}),
+success: function() {
+
+$('.{{programme.id}}').hide();
+$('#supprimerprogramme_club_{{programme.id}}').toggle();
+$('.modal-backdrop').hide();
+$('#supprimer-pr-c').show();
+}
+});
+        });
+        {% endfor %}
+    </script>
+<script>
+{% for palmares in club.reward %}
+$('#supprimerPalmaresClub{{palmares.id}}').click(function() {
+$('#supprimerPalmaresClub{{palmares.id}}').hide();
+$('#loaderSuppPal{{palmares.id}}').show();
+$.ajax({
+url: Routing.generate('delete_reward_club', {'id':{{palmares.id}}}),
+success: function() {
+
+$('.{{palmares.id}}').hide();
+$('#supprimerpalmares_club_{{palmares.id}}').toggle();
+$('.modal-backdrop').hide();
+$('#supprimer-p-c').show();
+}
+});
+});{% endfor %}
+</script>
+<script>
+{%for album in club.album %}
+{%for image in album.images %}
+$('#supprimerPhoto{{image.id}}').click(function() {
+$('#supprimerPhoto{{image.id}}').hide();
+$('#loaderSuppPhoto{{image.id}}').show();
+$.ajax({
+url: Routing.generate('photo_delete', {'id':{{image.id}}}),
+success: function(data) {
+
+$('.{{image.id}}').hide();
+$('#suppritus{{image.id}}').toggle();
+$('.modal-backdrop').hide();
+$('#supprimer-photo').show();
+}
+});
+});{% endfor %}{% endfor %}
+
+</script>
+<script>
+function image(id) {
+{%set phs = 0 %}
+
+{%for album in club.album %}
+$('#albumuser{{loop.index}}').hide();
+$('#ajoutAlbum').hide();
+$('#ajouterphoto' + id).show();                                                                                                                                                                                                        {%for imag in album.images %}
+{%set phs = phs + 1  %}
+if ({{album.id}} == id){
+$('#photos{{phs}}').show();
+}
+
+{% endfor %}
+{%endfor %}
+};
+function image2() {
+{%set phs = 0 %}
+
+{%for album in club.album %}
+$('#albumuser{{loop.index}}').show();
+$('#ajoutAlbum').show();
+$('#ajouterphoto{{album.id}}').hide();                                                                                                                                                                                                        {%for imag in album.images %}
+{%set phs = phs + 1  %}
+
+$('#photos{{phs}}').hide();{% endfor %}{%endfor %}
+};</script>
+<script>
+{%for album in club.album %}
+$('#supprimerAlbumClub{{album.id}}').click(function() {
+    $('#supprimerAlbumClub{{album.id}}').hide();
+    $('#loaderSuppAlb{{album.id}}').show();
+$.ajax({
+url: Routing.generate('album_delete', {'id': {{album.id}}}),
+success: function(data) {
+$('.' + data).hide();
+$("#supprimeralbum_club_{{album.id}}").toggle();
+$('.modal-backdrop').hide();
+$('#supprimer-a').show();
+}
+});
+});{% endfor %}
+</script>
+<script>
+"use strict";
+function initialize() {
+var options = {
+zoom : 15,
+mapTypeId: google.maps.MapTypeId.HYBRID
+};
+var mapclub = new google.maps.Map(document.getElementById('map-club'), options);
+if (navigator.geolocation) {
+
+navigator.geolocation.getCurrentPosition(function (position) {
+
+var posevent = new google.maps.LatLng(position.coords.latitude,
+position.coords.longitude);
+var newMarker = new google.maps.Marker({
+
+position: posevent,
+map: mapclub,
+icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
+draggable: false,
+animation: google.maps.Animation.DROP
+
+});
+var myLatLng = new google.maps.LatLng({{club.lat}}, {{club.lng}});
+var markerclub = new google.maps.Marker({
+position: myLatLng,
+map: mapclub,
+icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-green.png'),
+draggable: false,
+animation: google.maps.Animation.DROP
+});
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService()
+directionsDisplay = new google.maps.DirectionsRenderer({
+polylineOptions: {
+strokeColor: "#c02100"
+}
+});
+directionsDisplay.setMap(mapclub);
+calcRoute();
+function calcRoute() {
+
+var request = {
+origin:posevent,
+destination:myLatLng,
+travelMode: google.maps.TravelMode.DRIVING
+};
+directionsService.route(request, function(response, status) {
+if (status == google.maps.DirectionsStatus.OK) {
+directionsDisplay.setDirections(response);
+directionsDisplay.setOptions({ suppressMarkers: true });
+}
+});
+}
+}, function () {
+handleNoGeolocation(true);
+});
+} else {
+handleNoGeolocation(false);
+}
+
+
+
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+</script>
+
+
+{% endblock %}

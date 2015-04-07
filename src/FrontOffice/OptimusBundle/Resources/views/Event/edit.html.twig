@@ -1,12 +1,10 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 {% block body %}
+<div id="wrapper">
+<input style="width: 50%;" type="text" class="form-control" id="pac-input2" placeholder="Entrer ici votre région" autocomplete="on" size="60">
+<div id="content" class="mob-max" >
 
-    <div id="wrapper">
-        <div id="mapView" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
-
-        <div id="content" class="mob-max" >
-
-            <div class="col-lg-12"><div class="row mb20">
+<div class="col-lg-12"><div class="row mb20">
 
                 </div>
 
@@ -48,7 +46,7 @@
                                     </div>
                                         <div class="form-group col-xs-8 col-xs-offset-2" >
 
-                                     {{ form_widget(edit_form.description) }}
+                                     {{ form_widget(edit_form.description, { 'attr': {'style': 'height: 120px'} }) }}
                                                                             
                                     </div>
                                         
@@ -93,23 +91,69 @@
                 </div>
 
             </div>
-        </div>
 
-        <div class="clearfix"></div>
-    </div>
 
+</div>
+<div id="map-event-add" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
+</div>
 
 {% endblock %}
+
 {% block javascriptfils %}
     <script>
+        $("#some_class_2").change(function() {
+            var start = $('#some_class_1').val();
+            var end = $('#some_class_2').val();
+            if (start != '' && end != '') {
+                var tabstart = (new Date(start).getTime() / 1000);
+                var tabend = (new Date(end).getTime() / 1000);
+                if (tabstart > tabend) {
+                    $('#notdate').show();
+                    $('#some_class_2').val("");
+                }
+                else{
+                $('#notdate').hide();
+            }
+            }
+            
+        });
+    </script>
+    <script>
 
+        function initialize() {
+        var mapOptions = {
+          center: { lat: -34.397, lng: 150.644},
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.HYBRID
+        };
         var markerevent;
         var geocoder;
-        var latlng2 = new google.maps.LatLng({{event.lat}}, {{event.lng}});
         geocoder = new google.maps.Geocoder();
+        
+        
+        var mapAddEv = new google.maps.Map(document.getElementById('map-event-add'),
+            mapOptions);
+            
+            if (navigator.geolocation) {
+
+navigator.geolocation.getCurrentPosition(function (position) {
+
+var posevent = new google.maps.LatLng(position.coords.latitude,
+position.coords.longitude);
+var newMarker = new google.maps.Marker({
+
+position: posevent,
+map: mapAddEv,
+icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
+draggable: false,
+animation: google.maps.Animation.DROP
+
+});
+mapAddEv.setCenter(posevent);
+var latlng2 = new google.maps.LatLng({{event.lat}}, {{event.lng}});
         placeMarker(latlng2);
-                
-        google.maps.event.addListener(map, 'click', function(event) {
+google.maps.event.addListener(mapAddEv, 'click', function(event) {
+
 
             document.getElementById('lat_id').value = event.latLng.lat();
             document.getElementById('lng_id').value = event.latLng.lng();
@@ -123,7 +167,7 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
                         document.getElementById('lieu').value = results[0].formatted_address;
-                       placeMarker(event.latLng);
+                        placeMarker(event.latLng);
                     } else {
                         alert('No results found');
                     }
@@ -132,22 +176,65 @@
                 }
 
             });
-            
+
         });
         function placeMarker(location) {
 
             if (markerevent === undefined) {
                 markerevent = new google.maps.Marker({
                     position: location,
-                    map: map,
+                    map: mapAddEv,
                     draggable: true,
                     animation: google.maps.Animation.DROP,
                 });
-                markerevent.setIcon('/Optimus/web/template/images/marker-green.png');
+                markerevent.setIcon('http://www.optimus-beta.com/web/template/images/marker-green.png');
             }
             else {
                 markerevent.setPosition(location);
             }
         }
+        
+}, function () {
+handleNoGeolocation(true);
+});
+} else {
+handleNoGeolocation(false);
+}
+
+var input = (document.getElementById('pac-input2'));
+                                                       mapAddEv.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+                                                        var searchBox = new google.maps.places.SearchBox((input));
+                                                        google.maps.event.addListener(searchBox, 'places_changed', function () {
+                                                        var places = searchBox.getPlaces();
+                                                                if (places.length == 0) {
+                                                        return;
+                                                        }
+
+                                                        markers = [];
+                                                                var bounds = new google.maps.LatLngBounds();
+                                                                for (var i = 0, place; place = places[i]; i++) {
+                                                        var image = {
+                                                        url: place.icon,
+                                                                size: new google.maps.Size(71, 71),
+                                                                origin: new google.maps.Point(0, 0),
+                                                                anchor: new google.maps.Point(17, 34),
+                                                                scaledSize: new google.maps.Size(25, 25)
+                                                        };
+                                                                bounds.extend(place.geometry.location);
+                                                        }
+
+                                                        mapAddEv.fitBounds(bounds);
+                                                                mapAddEv.setZoom(15);
+                                                        });
+                                                        google.maps.event.addListener(mapAddEv, 'bounds_changed', function () {
+                                                        var bounds = mapAddEv.getBounds();
+                                                                searchBox.setBounds(bounds);
+                                                        });
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
     </script>
 {% endblock %}
+

@@ -11,7 +11,9 @@
 }
 
 .wc-nav button {
-	margin: 0 0.5em;	
+	margin: 0 0.5em;
+        background: #c02100;
+        color: #fff;
 }
  
 
@@ -47,9 +49,15 @@
 	background-color: #eee;	
 }
 
-.wc-grid-timeslot-header {
+.wc-grid-timeslot-header  {
 	width: 6%;
-	background: #eee;	
+	background: #eee;
+       
+}
+td.wc-grid-timeslot-header.tdoptimus  {
+	  -webkit-box-sizing: initial;
+             box-sizing: initial;
+       
 }
 
 
@@ -147,7 +155,7 @@ table.wc-time-slots {
 
 
 .wc-cal-event {
-	background-color: #68a1e5;	
+	background-color: #E4684F;	
 	filter:alpha(opacity=80);
 	-moz-opacity:0.8;
 	-khtml-opacity: 0.8;
@@ -168,7 +176,7 @@ table.wc-time-slots {
 }
 
 .wc-cal-event .wc-time {
-	background-color: #2b72d0;
+	background-color: #C02100;
 	border: 1px solid #1b62c0;
 	color: #fff;
 	padding: 0;
@@ -192,3 +200,14 @@ table.wc-time-slots {
 .wc-container .ui-draggable-dragging {
    z-index: 1000;
 }
+
+
+.tdoptimus{
+    
+   -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: initial; 
+    
+}
+
+

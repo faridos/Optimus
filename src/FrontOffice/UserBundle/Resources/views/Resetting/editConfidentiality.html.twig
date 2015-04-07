@@ -4,6 +4,7 @@
         <div id="content" class="max">
             <div class="components">
                 <h4>Paramètres</h4>
+                
                 <div class="row">
                     <div class="col-md-3">
                         <ol class="breadcrumb">
@@ -17,9 +18,57 @@
                     <div class="col-md-9">
                         <div class="tabsContainer">
                             <div class="tab-content">
-                                <div class="tab-pane fade active in" id="compte">
+                                <div class="tab-pane fade active in col-sm-8" id="compte">
                                     Confidentialité
                                 </div>
+                                   <div id="modifier-setting" style="display: none;" class="alert alert-success col-sm-3">
+<a class="close" data-dismiss="alert">×</a>
+Changement abouti
+</div>
+                                <table class="table" id="{{app.user.id}}">
+                                    <thead>
+                                        <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Profile</strong></th>
+                                            <td> 
+                                                <div class="form-group">
+                                                    <div class="col-sm-10">
+                                                        <div class="checkbox switch">
+                                                            <label>
+                                                                <input id="chekedProfil" type="checkbox" {% if app.user.compte == 1 %} checked {% else %} unchecked {% endif %}>
+                                                                <span class="cs-place"><span class="fa fa-check cs-handler"></span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                              <p id="message" style="display: none">Enregistrer<p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Liste Des amis</strong></th>
+                                            <td> 
+                                                <div class="form-group">
+                                                    <div class="col-sm-10">
+                                                        <div class="checkbox switch">
+                                                            <label>
+                                                                <input id="chekedAmis" type="checkbox" {% if app.user.amis == 1 %} checked {% else %} unchecked {% endif %}>
+                                                                <span class="cs-place"><span class="fa fa-check cs-handler"></span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p id="message1" style="display: none">Enregistrer<p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -31,5 +80,48 @@
     </div>
 {% endblock %}
 {% block javascriptfils %}
+    <script>
+        $('#chekedProfil').click(function() {
+            if (document.getElementById('chekedProfil').checked) {
+                  var test = 1;
+                }else{
+                      var test = 0;
+                }
+                
+                 $('#message').fadeIn(5000);
+                $.ajax({
+                    url: Routing.generate('setting_profil'),
+                    data: {test: test},
+                    dataType: 'json',
+                   
+                    success: function() {
+                     $('#message').hide();
+                      
+                    }
+                });
+           
+           
+        });
+        $('#chekedAmis').click(function() {
+             if (document.getElementById('chekedAmis').checked) {
+                  var test = 1;
+                }else{
+                      var test = 0;
+                }
+                    $('#message1').fadeIn(5000);
+                $.ajax({
+                    url: Routing.generate('setting_amis'),
+                    data: {test: test},
+                    dataType: 'json',
+                   
+                    success: function() {
+                       $('#message1').hide();
+                      
+                    }
+                });
+           
+       
+        });
+    </script>
 {% endblock %}
 

@@ -11,7 +11,7 @@ class UserEmailType  extends AbstractType
      public function buildForm(FormBuilderInterface $builder, array $options)
     {
          $builder
-                  ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle','attr'=>array('class'=>'search-optimus','style'=>'margin-top: 0px')));
+                  ->add('email', 'email', array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle','attr'=>array('class'=>'search-optimus','placeholder' => 'Adresse éléctronique (Obligatoire)','style'=>'margin-top: 0px')));
                  
                   
      }

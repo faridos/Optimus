@@ -12,8 +12,8 @@
 
     var options = {
 
-            zoom : 12
-
+            zoom : 15,
+            mapTypeId: google.maps.MapTypeId.HYBRID,
         };
 
     var styles = [{
@@ -252,7 +252,7 @@
 
        
 
-        map.setZoom(12);
+        map.setZoom(15);
 
 
 
@@ -284,7 +284,7 @@
 
                             map: map,
 
-                            icon: new google.maps.MarkerImage('/Optimus/web/template/images/marker-position.png'),
+                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
 
                             draggable: false,
                             animation: google.maps.Animation.DROP

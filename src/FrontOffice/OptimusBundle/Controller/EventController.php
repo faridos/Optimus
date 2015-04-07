@@ -390,5 +390,78 @@ class EventController extends Controller {
        
     }
 
+   
+    
+    /**
+     * 
+     *
+     * @Route("/test2", name="test2", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function SetTime2Action() {
+        $var="test";
+       
+       return new Response($var); 
+    }
+    
+    
+    /**
+     * Deletes a Club entity.
+     *
+     * @Route("/testdrr", name="notif_test", options={"expose"=true})
+     * 
+     */
+    public function MessageNotifAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $messages = new ArrayCollection();
+               $request = $this->get('request');
+        
+       $lastid =  $request->get("lastid");
+     
+        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->getNotif($user->getId() , $lastid);
+       
+        $response = new Response();
+        $tabcomments = json_encode($messages);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($tabcomments);
+        return $response;
+    }
+     /**
+     * 
+     *
+     * @Route("/testdrrir", name="notif_testt", options={"expose"=true})
+     * 
+     */
+    public function MessagecountAction() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+       $nbr = $em->getRepository('FrontOfficeOptimusBundle:Message')->getcount($user->getId());
+    
+        $response = new Response($nbr[0]['nbrmsg']);
+          return $response;
+    }
+    
+    /**
+     * 
+     *
+     * @Route("/message_menu", name="message_menu", options={"expose"=true})
+     * 
+     */
+    public function MessageMenuAction() {
+        $em = $this->getDoctrine()->getManager();
+             $request = $this->get('request');
+        
+       $lastid =  $request->get("lastid");
+     
+        $user = $this->container->get('security.context')->getToken()->getUser();
+       $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findBy(array('reciever'=>$user->getId()),array('msgTime'=>'DESC'));
+         
+           $i = $messages[0]->getId() ;
+      
+       $nvmessages = $em->getRepository('FrontOfficeOptimusBundle:Message')->getnvmsg($user->getId() ,$lastid );
+          return $this->render('FrontOfficeOptimusBundle:Message:MessageMenu.html.twig', array('messages' => $messages , 'nvmessages'=>$nvmessages ,'lastid' =>$i));
+    }
 }
 

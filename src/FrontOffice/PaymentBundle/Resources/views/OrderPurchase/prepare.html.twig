@@ -1,0 +1,170 @@
+{%extends "FrontOfficeOptimusBundle::layout.html.twig"%}
+
+
+
+{% block body %}
+    <div id="wrapper">
+        <div id="content" class="mob-max" >
+            <div class="col-lg-12"><div class="row mb20">
+                </div>
+                 <div class="col-lg-12">
+                     <div class="tooltipsContainer panel panel-default dd">
+<a href="#ddPanel" class="btn btn-default btn-lg btn-block" data-toggle="collapse"style="background-color:#c02100;color:#fff;border-color:#c02100;" data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="" data-original-title="Cliquez ici pour voir profil club"><span class="navIcon fa fa-users"></span> Profil Club<span class="fa fa-arrow-circle-down pull-right"></span></a>
+<div id="ddPanel" class="panel-collapse collapse" style="margin-top:-6px;">
+<div class="panel-body" style="padding:0px;">
+<div class="userWidget-1 manamus" style="margin-bottom:0px;" >
+<div class="avatar" id="main">
+<div class="col-md-4">
+    
+<div class="propWidget-1 logotus tooltipsContainer ">
+<div class="fig salamus">
+{% if club.path == null %}
+<a href="{{ asset('club.png')}}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+<img src="{{ asset('club.png') }}" class="inline-block imaguss">
+</a>
+{% else %}
+<a href="{{ asset(club.WebPath) }}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+<img src="{{ asset(club.WebPath) }}" class="inline-block imaguss">
+</a>
+{% endif %}
+{% if club.createur == app.user %}
+<div class="priceCap paddus">
+    <button href="#modifierphotoevent" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo"><span class="notifyIcon fa fa-camera-retro"></span></button>
+</div>
+{% endif %}
+</div>
+</div>
+</div>
+{% if club.createur == app.user %}
+<div class="ops">
+    {% if club.isPayant != 0 %}
+<a class="btn btn-round btn-default btn-sm" href="#inviteramievent" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Inviter</span></a>
+{% endif %}
+<a class="btn btn-round btn-default btn-sm" href="{{ path('club_update',{'id' : club.id}) }}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
+<a class="btn btn-round btn-default btn-sm" href="#supprimerClub" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a> 
+</div>
+{% endif %}
+<div class="name osLight profilus namusclubus"><strong>{{club.nom}}</strong></div>
+</div>
+<div class=" address profilus" style="font-size:18px;"> 
+<div class="row">
+    {% if club.isPayant == 1 %}
+<div class="cardRating col-md-5" style="color:#eab134;margin-left: -40px;">
+<div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with { 'id' : 'C'~club.id } %}</div>
+</div>
+<div class="cardRating col-md-6" style="margin-left: 57px;">
+<div class="label labelus label-yellow " >
+Nombre des members : <span  id="nbparticip">500</span>
+</div>
+</div>
+{% endif %}
+<br><br>
+<div class="title profilus"></div>
+<div class="buttonsWrapper"> 
+<div class="row">
+<div class="col-md-5 pb20">
+<div class="pc-about osLight" style="margin-left: -37%;"><div class="title eventus">Propriétaire :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.createur}}</span></div>
+<div class="title eventus">Date Creation :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.dateCreation|date("d/m/Y ")}}</span></div>
+<div class="title eventus">Adresse :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.adresse}}</span></div><br>
+</div>
+</div>
+<div class="col-md-5" style=" margin-left: -20px;">
+<div class="pc-title osLight">
+<div class="title eventus">Displine : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.discpline}}</span></div>
+<div class="title eventus">Frais participation : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.fraisAdhesion}} &euro; </span></div>
+</div>
+</div></div></div>
+{% if club.description %}
+<div class="row descriptus">
+<div class="col-md-12 pb20">
+<div class="pc-about osLight">
+<div class="title">Description : <span class="address detaillus"style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{club.description}}</span>
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+{% if club.isPayant == 1%}
+<div class="row tooltipsContainer" style="margin-left:-140px">
+<div class="col-md-4 pb20">
+<div class="pc-about osLight" id="append">
+{% if club.createur != app.user %}
+<a class="btn btn-green btn-round " href="#"  id="exit_event">
+    <span class="fa fa-plus-circle" data-toggle="tooltip" data-tooltip-class="green" data-placement="top" title="" data-original-title="Participer"></span> <span >Rejoindre</span>                                          
+</a>
+{% endif %}
+</div>
+</div>
+<div class="col-md-4">
+<div class="pc-title osLight" id="append2">
+<div class="buttonsWrapper pb20 ">
+{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="pc-title osLight">
+<a href="#" class="btn btn-round btn-o btn-yellow" data-toggle="tooltip" data-tooltip-class="yellow" data-placement="top" title=" personnes ont commenté cet club" data-original-title="Nombre commentaires"><span class="fa fa-comments"></span> <strong>500</strong></a>
+<a href="#" class="btn btn-round btn-o btn-yellow" data-toggle="tooltip" data-tooltip-class="yellow" data-placement="top" title=" ont lu cet club" data-original-title="Nombre de vue"><span class="fa fa-eye"></span> <strong>500</strong></a>
+<a href="#" style="color:#c02100"></a>
+<a href="#" style="color:#c02100"></a>
+
+</div>
+
+</div>
+</div>
+{% endif %}
+</div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+</div>
+                <div class="row">
+                    <form method="POST" {{ form_enctype(form) }}>
+                           <div class="col-xs-12 ">
+                            <div class="panel panel-default" style="text-align: center;">
+                                <div class="panel-heading optimus"> <span class="navLabel" >Payment  club</span></div>
+                                <div class="panel-body">
+                                   
+                                    <div class="form-group col-xs-6">
+                                         {{ form_widget(form.payment_name) }}
+                                    </div>
+                                     <div class="form-group col-xs-6">
+                                       {{ form_widget(form.clientEmail)}}
+                                    </div>
+                                    
+                                   
+                                  <div class="form-group col-xs-6">
+                                       {{ form_widget(form.totalAmount) }}
+                                    </div>
+                                    <div class="form-group col-xs-6">
+                                      {{ form_widget(form.currencyCode) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                     
+                        {{ form_widget(form._token) }}
+                       
+                        <div style="text-align: center">
+                             <input class="btn btn-round btn-green" type="submit" value="Confirmer" />
+                           
+                            <button class="btn btn-round btn-green">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                        </div>
+        </div>
+
+                      <div id="" style="height: 100%" class="mob-min col-md-2"><a href="#" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+                                                            <img src="{{ asset('paymentok.png')}}" class="inline-block imaguss" style="width: 324%;margin-top: 10%;">
+                                                        </a> </div>
+    </div>
+
+
+
+{% endblock %}
+

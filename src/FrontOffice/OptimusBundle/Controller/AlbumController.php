@@ -69,8 +69,8 @@ class AlbumController extends Controller
            
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('albums_club', array('id' => $id))); 
+            $request->getSession()->getFlashBag()->add('AjouterAlbumClub', "Album  a été creé avec success.");
+            return $this->redirect($this->generateUrl('show_club', array('id' => $id))); 
         }
 
         return array(
@@ -109,7 +109,7 @@ class AlbumController extends Controller
      /**
      * Displays a form to edit an existing Album entity.
      *
-     * @Route("/club{id_club}/album={id}/modifier", name="album_club_edit")
+     * @Route("/club/{id_club}/album/{id}/modifier", name="album_club_edit")
      * @Method("POST|GET|PUT")
      * @Template("FrontOfficeOptimusBundle:Album:editAlbumClub.html.twig")
      */
@@ -124,7 +124,7 @@ class AlbumController extends Controller
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $em->flush();
-            return $this->redirect($this->generateUrl('albums_club', array('id' => $id_club)));
+            return $this->redirect($this->generateUrl('show_club', array('id' => $id_club)));
         }
         return array(
             'id_club' => $id_club,

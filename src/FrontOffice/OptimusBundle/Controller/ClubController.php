@@ -57,6 +57,7 @@ class ClubController extends Controller {
         $club = new Club();
         $club->setCreateur($user);
         $club->setActive(1);
+        $club->setIsPayant(0);
         $club->setLienWeb('http://www.sport.com');
         $form = $this->createForm(new ClubType(), $club);
         $req = $this->get('request');
@@ -94,7 +95,7 @@ class ClubController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-        if (!$club || $club->getActive() == 0) {
+        if (!$club || $club->getActive() == 0 || ($club->getIsPayant()== 0 && $club->getCreateur() != $user)) {
             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('club' => $club));
@@ -107,8 +108,9 @@ class ClubController extends Controller {
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
-       $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club));
-        return $this->render('FrontOfficeOptimusBundle:Club:show_club.html.twig', array('club' => $club, 'user' => $user, 'programmes' =>$progarammes) );
+       $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club), array('datedebut' => 'desc'));
+      
+        return $this->render('FrontOfficeOptimusBundle:Club:showClub.html.twig', array('club' => $club, 'user' => $user, 'programmes' =>$progarammes) );
     }
 
     /**
@@ -142,11 +144,7 @@ class ClubController extends Controller {
                  $request->getSession()->getFlashBag()->add('ModificationClub', "Club  a été Modifier.");
                 return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
             }
-            return array(
-                'club' => $club,
-                'form' => $editForm->createView(),
-                'user' => $user,
-            );
+            return array('club' => $club,'form' => $editForm->createView(),'user' => $user);
         }
     }
 
@@ -179,6 +177,37 @@ class ClubController extends Controller {
              $request->getSession()->getFlashBag()->add('SupprissionClub', "Club  a été supprimer.");
 
             return  new Response($id);
+        }
+    }
+    /**
+     * Deletes a Club entity.
+     *
+     * @Route("/club={id}/delete", name="club_supprimer",  options={"expose"=true})
+     * 
+     */
+    public function deleteclubAction(Request $request, $id) {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        if (!$entity || $entity->getActive() == 0) {
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+        }
+        if ($entity->getCreateur() == $user) {
+            $entity->setActive(false);
+            $em->persist($entity);
+            $em->flush();
+            // add History 
+            $action = 'delete';
+            $clubevent = new HistoryClubEvent($user, $entity, $action);
+            $dispatcher = $this->get('event_dispatcher');
+            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+             $request->getSession()->getFlashBag()->add('SupprissionClub', "Club  a été supprimer.");
+
+             return $this->redirect($this->generateUrl('show_profil', array('id' => $user->getId())));
         }
     }
 

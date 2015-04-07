@@ -11,15 +11,24 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Repository\ParticipationRepository")
  */
 class Participation {
+    
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
-     * @ORM\Id
+     *
      * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Event", inversedBy="participations")
      */
     private $event;
 
     /**
-     * @ORM\Id
+     *
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="participations")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -31,6 +40,11 @@ class Participation {
      * @ORM\Column(name="date_paticipation", type="datetime")
      */
     private $datePaticipation;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Notification", mappedBy="participation")
+     */
+    protected $notificationParticipation;
 
     /**
      * Set datePaticipation
@@ -53,6 +67,9 @@ class Participation {
         return $this->datePaticipation;
     }
 
+public function getId() {
+        return $this->id;
+    }
 
     /**
      * Set event
@@ -100,6 +117,38 @@ class Participation {
         return $this->participant;
     }
     
+    /**
+     * Add notificationParticipation
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationParticipation
+     * @return Event
+     */
+    public function addNotificationParticipation(\FrontOffice\OptimusBundle\Entity\Notification $notificationParticipation)
+    {
+        $this->notificationParticipation[] = $notificationParticipation;
+    
+        return $this;
+    }
+
+    /**
+     * Remove notification_event
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationParticipation
+     */
+    public function removeNotificationParticipation(\FrontOffice\OptimusBundle\Entity\Notification $notificationParticipation)
+    {
+        $this->notificationParticipation->removeElement($notificationParticipation);
+    }
+
+    /**
+     * Get notificationParticipation
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotificationParticipation()
+    {
+        return $this->notificationParticipation;
+    }
     public function __construct() {
         $this->datePaticipation = new \Datetime();
     }
