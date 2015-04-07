@@ -16,8 +16,7 @@ class OptimusExtension extends \Twig_Extension {
     public function getFunctions() {
         return array(
             new \Twig_SimpleFunction('getTypeEvent', array($this, 'getTypeEvent')),
-            new \Twig_SimpleFunction('MemberOuNon', array($this, 'MemberOuNon')),
-             new \Twig_SimpleFunction('ParticipantOuNon', array($this, 'ParticipantOuNon')),
+            new \Twig_SimpleFunction('ParticipantOuNon', array($this, 'ParticipantOuNon')),
             new \Twig_SimpleFunction('getNotifications', array($this, 'getNotifications')),
             new \Twig_SimpleFunction('getNombreNotification', array($this, 'getNombreNotification')),
             new \Twig_SimpleFunction('pendingInvitation', array($this, 'pendingInvitation')),
@@ -35,13 +34,10 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('adherents', array($this, 'adherents')),
         );
     }
-    public function  memberclub($id){
-       $club = $this->em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('clubad'=> $club));
-    }
+    
     public function  adherents($id){
-       
-        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->getMembers($id);
+        $club = $this->em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->getMembers($id,$club->getCreateur()->getId());
     }
     public function  participants($event){
          return $this->em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants2($event, $event->getCreateur());
@@ -76,15 +72,12 @@ class OptimusExtension extends \Twig_Extension {
         return $this->em->getRepository('FrontOfficeOptimusBundle:TypeEvent')->findAll();
     }
     
-    public function getMembreRequest($club,$user) {
-        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->getMembersRequest($club,$user);
+    public function getMembreRequest($user, $club) {
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('member' => $user, 'clubad' => $club));
     }
 
     public function getMembreConfirmed($user, $club) {
         return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('member' => $user, 'clubad' => $club, 'confirmed' => '1'));
-    }
-  public function MemberOuNon($club, $user) {
-        return $this->em->getRepository("FrontOfficeOptimusBundle:Club")->MemberOuNon($club, $user);
     }
 
     public function ParticipantOuNon($event, $user) {
@@ -124,30 +117,21 @@ class OptimusExtension extends \Twig_Extension {
         return $pendingInvitations;
     }
 
-    public function getNotifications($id, $date) {
+    public function getNotifications($id) {
 
-        $notifications = $this->em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotification($id, $date);
+        $notifications = $this->em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users"=>$id),array("datenotificationseen"=>'DESC'));
         return $notifications;
     }
 
-    public function getNombreNotification($id, $date) {
-        $nombre = array();
-        $notification = $this->em->getRepository('FrontOfficeOptimusBundle:Notification')->getNbNotification($id, $date);
-        $notificationseen = $this->em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->getNotificationSeen($id);
-        if ($notification) {
-            foreach ($notification as $v1) {
-                $t1[] = $v1['id'];
-            }
-            if ($notificationseen) {
-                foreach ($notificationseen as $v2) {
-                    $t2[] = $v2['id'];
+    public function getNombreNotification($id) {
+                $notifications = $this->em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users"=>$id),array("datenotificationseen"=>'DESC'));
+                $nombre=0;
+                foreach ($notifications as $notif){
+                    if($notif->getVu() == "0"){
+                    $nombre++;
                 }
-                $nombre = array_diff($t1, $t2);
-            } else {
-                $t2 = array();
-                $nombre = array_diff($t1, $t2);
-            }
-        }
+                }
+        
         return $nombre;
     }
 
