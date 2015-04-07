@@ -36,11 +36,11 @@ class NotificationSeenController extends Controller {
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->find($id);
         if ($notification) {
             $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notification));
-            if (empty($notificationSeen)) {
-                $notifevent = new NotificationSeenEvent($user, $notification);
-                $dispatcher = $this->get('event_dispatcher');
-                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
-            }
+//            if (empty($notificationSeen)) {
+//                $notifevent = new NotificationSeenEvent($user, $notification);
+//                $dispatcher = $this->get('event_dispatcher');
+//                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
+//            }
         }
         $response = new Response();
         $NotificationJson = json_encode($notificationSeen);

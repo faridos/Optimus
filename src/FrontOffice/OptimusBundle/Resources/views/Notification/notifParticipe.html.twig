@@ -15,7 +15,7 @@
             <div class="clearfix"></div>
         </a>
     </li>
-    {% else %}
+    {% elseif notif.notifications.type == 'AnnulerParticip' %}
         <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
                <a href="{{ path('show_event', { 'id' : notif.notifications.event.id }) }}">
             {% if notif.notifications.event.getWebPath %}
@@ -27,6 +27,57 @@
             <div class="pulse border-grey"></div>
             <div class="notify pull-left">
                 <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a annuler sa participation de l'évènement {{ notif.notifications.event.titre }}</div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'add' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+               <a href="{{ path('show_event', { 'id' : notif.notifications.event.id }) }}">
+            {% if notif.notifications.event.getWebPath %}
+            <img class="avatar pull-left" src="{{ asset(notif.notifications.event.getWebPath)}}" alt="avatar">
+            {% else %}
+                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                {% endif %}    
+            
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a ajouter une évènement {{ notif.notifications.event.titre }}</div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'update' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+               <a href="{{ path('show_event', { 'id' : notif.notifications.event.id }) }}">
+            {% if notif.notifications.event.getWebPath %}
+            <img class="avatar pull-left" src="{{ asset(notif.notifications.event.getWebPath)}}" alt="avatar">
+            {% else %}
+                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                {% endif %}    
+            
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a modifier l'évènement {{ notif.notifications.event.titre }}</div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'delete' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+               <a href="{{ path('show_event', { 'id' : notif.notifications.event.id }) }}">
+            {% if notif.notifications.event.getWebPath %}
+            <img class="avatar pull-left" src="{{ asset(notif.notifications.event.getWebPath)}}" alt="avatar">
+            {% else %}
+                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                {% endif %}    
+            
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a supprimer l'évènement {{ notif.notifications.event.titre }}</div>
                 <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
             </div>
             <div class="clearfix"></div>
@@ -68,6 +119,24 @@ message:'<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}"> a par
 {% elseif resultat.type == "AnnulerParticip" %}
 toastr8.googlePlus({
 message:'<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a annuler sa participation de l\'évènement {{ resultat.event.titre }} </a>',
+        title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+        imgURI: ['http://www.optimus-beta.com/web/event.png']
+});
+{% elseif resultat.type == "add" %}
+toastr8.googlePlus({
+message:'<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a ajouter une évènement {{ resultat.event.titre }} </a>',
+        title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+        imgURI: ['http://www.optimus-beta.com/web/event.png']
+});
+{% elseif resultat.type == "update" %}
+toastr8.googlePlus({
+message:'<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a modifier l\'évènement {{ resultat.event.titre }} </a>',
+        title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+        imgURI: ['http://www.optimus-beta.com/web/event.png']
+});    
+{% elseif resultat.type == "delete" %}
+toastr8.googlePlus({
+message:'<a href="#">a supprimer l\'évènement {{ resultat.event.titre }} </a>',
         title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
         imgURI: ['http://www.optimus-beta.com/web/event.png']
 });
