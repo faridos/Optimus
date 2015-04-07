@@ -17,6 +17,7 @@
         <div id="content" class="max">
             <div class="components">
                 <div class="row">
+                    <h1>Programme:{{ programme.nom}} Du: {{ programme.datedebut|date('Y-m-d') }} À:{{ programme.datefin|date('Y-m-d')}}</h1>
                     <div id='calendar'></div>
                     <div id="event_edit_container">
                         <form id="ajouters">
@@ -1544,13 +1545,9 @@
 
         </script>
     <script>
-     
   $(document).ready(function() {
-
-
    var $calendar = $('#calendar');
    var id = 10;
-
    $calendar.weekCalendar({
       timeslotsPerHour : 4,
       allowCalEventOverlap : true,
@@ -1571,23 +1568,22 @@
          }
       },
       draggable : function(calEvent, $event) {
-         return calEvent.readOnly != true;
+        
       },
       resizable : function(calEvent, $event) {
-         return calEvent.readOnly != true;
+         
       },
       eventNew : function(calEvent, $event) {
+          {% if app.user == club.createur %} 
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
          var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
          var titleField = $dialogContent.find("input[name='title']");
          var bodyField = $dialogContent.find("textarea[name='body']");
-
-
          $dialogContent.dialog({
             modal: true,
-            title: "New Calendar Event",
+            title: "New Calendar Seance",
             close: function() {
                $dialogContent.dialog("destroy");
                $dialogContent.hide();
@@ -1601,10 +1597,26 @@
                   calEvent.end = new Date(endField.val());
                   calEvent.title = titleField.val();
                   calEvent.body = bodyField.val();
-
-                  $calendar.weekCalendar("removeUnsavedEvents");
-                  $calendar.weekCalendar("updateEvent", calEvent);
-                  $dialogContent.dialog("close");
+                  var date = new Date(Date.parse('{{ programme.datedebut.date }}'));
+                  var datef = new Date(Date.parse('{{ programme.datefin.date }}'));
+                  var startd = new Date(Date.parse(calEvent.start));
+                  var endd = new Date(Date.parse(calEvent.end));
+                  var month = date.getMonth()+1
+                  var monthf = datef.getMonth()+1
+                  if( date <= startd && datef >= endd){
+                   $calendar.weekCalendar("removeUnsavedEvents");
+                    $calendar.weekCalendar("updateEvent", calEvent);
+                   $.ajax({
+                           type: "POST",
+                           url: Routing.generate('seance_create', { 'id' :{{club.id}}, 'idp' : {{programme.id}}}),
+                           data: {debut:startField.val(), fin:endField.val(), nom:titleField.val(), desc:bodyField.val()},
+                           dataType: 'json',
+                           success: function(data) {
+                                    $dialogContent.dialog("close");
+                             }
+                          });
+                          }
+                          else{alert('la date doit entre: ' + date.getDate()+ "-" + month + "-" + date.getFullYear()+  " et " + datef.getDate()+ "-"  + monthf + "-" + datef.getFullYear());}
                },
                cancel : function() {
                   $dialogContent.dialog("close");
@@ -1615,6 +1627,7 @@
          $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
          setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
 
+      {% endif %}
       },
       eventDrop : function(calEvent, $event) {
         
@@ -1626,15 +1639,64 @@
          if (calEvent.readOnly) {
             return;
          }
-
+         {% if app.user == club.createur %} 
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
+         var idField = $dialogContent.find("input[name='id']").val(calEvent.id);
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
          var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
          var titleField = $dialogContent.find("input[name='title']").val(calEvent.title);
          var bodyField = $dialogContent.find("textarea[name='body']");
          bodyField.val(calEvent.body);
+         if( idField == "")
+         {
+            $dialogContent.dialog({
+               modal: true,
+               title: "New Calendar Seance",
+               close: function() {
+                  $dialogContent.dialog("destroy");
+                  $dialogContent.hide();
+                  $('#calendar').weekCalendar("removeUnsavedEvents");
+            },
+            buttons: {
+               save : function() {
+                  calEvent.id = id;
+                  id++;
+                  calEvent.start = new Date(startField.val());
+                  calEvent.end = new Date(endField.val());
+                  calEvent.title = titleField.val();
+                  calEvent.body = bodyField.val();
+                    var date = new Date(Date.parse('{{ programme.datedebut.date }}'));
+                    var datef = new Date(Date.parse('{{ programme.datefin.date }}'));
+                    var startd = new Date(Date.parse(calEvent.start));
+                    var endd = new Date(Date.parse(calEvent.end));
+                    var month = date.getMonth()+1
+                    var monthf = datef.getMonth()+1
+                    if( date <= startd && datef >= endd){
+                      $calendar.weekCalendar("removeUnsavedEvents");
+                      $calendar.weekCalendar("updateEvent", calEvent);
+                      $.ajax({
+                           type: "POST",
+                           url: Routing.generate('seance_create', { 'id' :{{club.id}}, 'idp' : {{programme.id}}}),
+                           data: {debut:startField.val(), fin:endField.val(), nom:titleField.val(), desc:bodyField.val()},
+                           dataType: 'json',
+                           success: function(data) {
+                                    $dialogContent.dialog("close");
+                             }
+                          });
+                          }
+                          else{alert('la date doit entre: ' + date.getDate()+ "-" + month + "-" + date.getFullYear()+  " et " + datef.getDate()+ "-" + monthf + "-" + datef.getFullYear());}
+               },
+               cancel : function() {
+                  $dialogContent.dialog("close");
+               }
+            }
+         }).show();
 
+         $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
+         setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
+         }
+         else{
          $dialogContent.dialog({
             modal: true,
             title: "Edit - " + calEvent.title,
@@ -1645,18 +1707,29 @@
             },
             buttons: {
                save : function() {
-
+                  calEvent.id = idField.val();
                   calEvent.start = new Date(startField.val());
                   calEvent.end = new Date(endField.val());
                   calEvent.title = titleField.val();
                   calEvent.body = bodyField.val();
-
+                  
+                  $.ajax({
+                       url: Routing.generate('seance_update', { 'id' :calEvent.id}),
+                       data: {debut: startField.val(), fin:endField.val(), nom:calEvent.title, desc:calEvent.body},
+                       dataType: 'json',
+                       success: function(data){}
+                   });
                   $calendar.weekCalendar("updateEvent", calEvent);
                   $dialogContent.dialog("close");
                },
                "delete" : function() {
-                  $calendar.weekCalendar("removeEvent", calEvent.id);
-                  $dialogContent.dialog("close");
+                   $.ajax({
+                     url: Routing.generate('seance_delete', { 'id' :calEvent.id}),
+                      success: function(data) {
+                      $calendar.weekCalendar("removeEvent", calEvent.id);
+                      $dialogContent.dialog("close");
+                       }
+                     });
                },
                cancel : function() {
                   $dialogContent.dialog("close");
@@ -1669,8 +1742,8 @@
          $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
          setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
          $(window).resize().resize(); //fixes a bug in modal overlay size ??
-
-      },
+         }
+    {% endif %} },
       eventMouseover : function(calEvent, $event) {
       },
       eventMouseout : function(calEvent, $event) {
@@ -1688,54 +1761,27 @@
       $dialogContent.find("textarea").val("");
    }
 
-   function getEventData() {
-      var year = new Date().getFullYear();
-      var month = new Date().getMonth();
-      var day = new Date().getDate();
-
-      return {
-         events : [
-            {
-               "id":1,
-               "start": new Date(year, month, day, 12),
-               "end": new Date(year, month, day, 13, 30),
-               "title":"Lunch with Mike"
-            },
-            {
-               "id":2,
-               "start": new Date(year, month, day, 14),
-               "end": new Date(year, month, day, 14, 45),
-               "title":"Dev Meeting"
-            },
-            {
-               "id":3,
-               "start": new Date(year, month, day + 1, 17),
-               "end": new Date(year, month, day + 1, 17, 45),
-               "title":"Hair cut"
-            },
-            {
-               "id":4,
-               "start": new Date(year, month, day - 1, 8),
-               "end": new Date(year, month, day - 1, 9, 30),
-               "title":"Team breakfast"
-            },
-            {
-               "id":5,
-               "start": new Date(year, month, day + 1, 14),
-               "end": new Date(year, month, day + 1, 15),
-               "title":"Product showcase"
-            },
-            {
-               "id":6,
-               "start": new Date(year, month, day, 10),
-               "end": new Date(year, month, day, 11),
-               "title":"I'm read-only",
-               readOnly : true
+     function getEventData() {
+       var events = [];           {% for session in sessions %}
+                    var d = new Date(Date.parse('{{session.datedebut}}'));
+                    var year = d.getFullYear();
+                    var month = d.getMonth();
+                    var day = d.getDate();
+                    var heure = d.getHours();
+                    var m = d.getMinutes();
+                    var df = new Date(Date.parse('{{session.datefin}}'));
+                    var heuref = df.getHours();
+                    var mf = df.getMinutes();
+                    events.push({ "id":"{{ session.id }}",
+                            "start": new Date(year, month, day, heure, m),
+                            "end": new Date(year, month, day, heuref, mf),
+                            "title":"{{ session.nom }}",
+                            "body":"{{ session.description }}" });
+                    {% endfor %}  
+                    return events;
             }
 
-         ]
-      };
-   }
+
 
 
    /*

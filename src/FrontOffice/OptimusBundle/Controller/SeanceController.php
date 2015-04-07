@@ -182,6 +182,7 @@ class SeanceController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $seance = $em->getRepository('FrontOfficeOptimusBundle:Seance')->find($id);
+        
         $request = $this->get('request');
       $nom = $request->get("nom");
       $decr = $request->get("desc");

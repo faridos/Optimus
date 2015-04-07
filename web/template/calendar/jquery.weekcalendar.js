@@ -40,7 +40,8 @@
          buttonText : {
             today : "today",
             lastWeek : "&nbsp;&lt;&nbsp;",
-            nextWeek : "&nbsp;&gt;&nbsp;"
+            nextWeek : "&nbsp;&gt;&nbsp;",
+          
          },
          scrollToHourMillis : 500,
          allowCalEventOverlap : false,
