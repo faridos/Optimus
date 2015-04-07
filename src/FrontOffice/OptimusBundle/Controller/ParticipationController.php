@@ -47,7 +47,7 @@ class ParticipationController extends Controller {
         $notif = new Notification();
         $notif->setNotificateur($user);
         $notif->setType('participation');
-        $notif->setParticipation($newparticipation);
+        $notif->setEvent($event);
         $em->persist($notif);
         $em->flush();
         
@@ -104,7 +104,7 @@ class ParticipationController extends Controller {
         $notif = new Notification();
         $notif->setNotificateur($user);
         $notif->setType('participation');
-        $notif->setParticipation($newparticipation);
+        $notif->setEvent($event);
         $em->persist($notif);
         $em->flush();
                 
@@ -163,7 +163,7 @@ class ParticipationController extends Controller {
         $notif = new Notification();
         $notif->setNotificateur($user);
         $notif->setType('participation');
-        $notif->setParticipation($newparticipation);
+        $notif->setEvent($event);
         $em->persist($notif);
         $em->flush();
         

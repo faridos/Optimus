@@ -117,30 +117,21 @@ class OptimusExtension extends \Twig_Extension {
         return $pendingInvitations;
     }
 
-    public function getNotifications($id, $date) {
+    public function getNotifications($id) {
 
-        $notifications = $this->em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotification($id, $date);
+        $notifications = $this->em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users"=>$id),array("datenotificationseen"=>'DESC'));
         return $notifications;
     }
 
-    public function getNombreNotification($id, $date) {
-        $nombre = array();
-        $notification = $this->em->getRepository('FrontOfficeOptimusBundle:Notification')->getNbNotification($id, $date);
-        $notificationseen = $this->em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->getNotificationSeen($id);
-        if ($notification) {
-            foreach ($notification as $v1) {
-                $t1[] = $v1['id'];
-            }
-            if ($notificationseen) {
-                foreach ($notificationseen as $v2) {
-                    $t2[] = $v2['id'];
+    public function getNombreNotification($id) {
+                $notifications = $this->em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users"=>$id),array("datenotificationseen"=>'DESC'));
+                $nombre=0;
+                foreach ($notifications as $notif){
+                    if($notif->getVu() == "0"){
+                    $nombre++;
                 }
-                $nombre = array_diff($t1, $t2);
-            } else {
-                $t2 = array();
-                $nombre = array_diff($t1, $t2);
-            }
-        }
+                }
+        
         return $nombre;
     }
 

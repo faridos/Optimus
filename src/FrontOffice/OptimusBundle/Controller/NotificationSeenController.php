@@ -49,5 +49,26 @@ class NotificationSeenController extends Controller {
         return $response;
       
     }
+    
+    /**
+     * 
+     *
+     * @Route("/notifParticipe", name="notifParticipe_seen", options={"expose"=true})
+     * @Method("GET|POST")
+     * 
+     */
+    public function updateNotifSeenParticipeAction() {
+        $em = $this->getDoctrine()->getEntityManager();		
+        $id = $_POST["id"];       
+        $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('id' => $id));
+        
+            $notificationSeen->setVu(1);
+            $em->persist($notificationSeen);
+            $em->flush();
+        
+        return new Response();
+             
+        
+    }
 
 }

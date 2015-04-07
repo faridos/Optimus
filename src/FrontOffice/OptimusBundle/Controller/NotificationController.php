@@ -66,10 +66,10 @@ class NotificationController extends Controller {
         $em->persist($notifseen);
         $em->flush();
        }
-        $notificationnonvu = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("vu"=>0));
-      $datenotificationseen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array(),array("datenotificationseen"=>'DESC'));
+        $notificationnonvu = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users"=>$user->getId() ,"vu"=>0));
+        $datenotificationseen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users"=>$user->getId()),array("datenotificationseen"=>'DESC'));
      
-         return $this->render('FrontOfficeOptimusBundle:Notification:notifParticipe.html.twig', array('datenotificationseen' => $datenotificationseen, 'count'=>$notificationnonvu ));
+         return $this->render('FrontOfficeOptimusBundle:Notification:notifParticipe.html.twig', array('datenotificationseen' => $datenotificationseen, 'count'=>$notificationnonvu,'res'=>$res  ));
         
       
     }

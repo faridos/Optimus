@@ -407,7 +407,7 @@ class EventController extends Controller {
     
     
     /**
-     * Deletes a Club entity.
+     * 
      *
      * @Route("/testdrr", name="notif_test", options={"expose"=true})
      * 
