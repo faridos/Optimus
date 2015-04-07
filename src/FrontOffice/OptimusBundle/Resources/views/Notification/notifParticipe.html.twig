@@ -1,0 +1,27 @@
+{% for notif in datenotificationseen %}
+    {% if notif.notifications.type == 'participation' %}
+    <li {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+        <a href="#">
+            <img class="avatar pull-left" src="{{ asset(notif.notifications.notificateur.getWebPath)}}" alt="avatar">
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a participer dans l'évènement </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% else %}
+        <li {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+        <a href="#">
+            <img class="avatar pull-left" src="{{ asset(notif.notifications.notificateur.getWebPath)}}" alt="avatar">
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a annuler sa participation</div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% endif %}
+{% endfor %}*{{count|length}}

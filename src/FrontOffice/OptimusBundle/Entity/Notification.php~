@@ -192,4 +192,27 @@ class Notification {
         $this->notificationsen->removeElement($notificationsen);
     }
 
+
+    /**
+     * Set notificateur
+     *
+     * @param \FrontOffice\UserBundle\Entity\User $notificateur
+     * @return Notification
+     */
+    public function setNotificateur(\FrontOffice\UserBundle\Entity\User $notificateur = null)
+    {
+        $this->notificateur = $notificateur;
+    
+        return $this;
+    }
+
+    /**
+     * Get notificateur
+     *
+     * @return \FrontOffice\UserBundle\Entity\User 
+     */
+    public function getNotificateur()
+    {
+        return $this->notificateur;
+    }
 }

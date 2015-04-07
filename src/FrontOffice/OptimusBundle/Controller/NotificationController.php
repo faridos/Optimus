@@ -11,7 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\UserBundle\Entity\User;
-
+use FrontOffice\OptimusBundle\Entity\NotificationSeen;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Notification controller.
@@ -29,7 +30,8 @@ class NotificationController extends Controller {
      */
     public function participeNotifAction() {
        
-        $res=array();
+        $res= array();
+        //$notifsParticip = new ArrayCollection();
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $amis = $em->getRepository('FrontOfficeUserBundle:User')->getFrinds($user->getId());
@@ -38,26 +40,37 @@ class NotificationController extends Controller {
            $c=0;
            foreach ($amis as $ami){
              foreach ($ami->getNotificateur() as $notif){
+                 $i=0;
                  if($notif->getDatenotification()> $user->getcreatedAt()){
+                     foreach ($user-> getNotificationseen() as $notifSeen){
+                         if($notifSeen->getNotifications()->getId()== $notif->getId())
+                         {
+                             $i=1;
+                         }
+                     }
+                     if($i==0){
                      
                      $res[$c]=$notif;
                      $c++;
-                    
-                     
+                         }
                  }
            }  
                
            }
        }
+       
+       foreach ($res as $val){
+        $notifseen = new NotificationSeen();
+        $notifseen->setUsers($user);
+        $notifseen->setNotifications($val);
+        $em->persist($notifseen);
+        $em->flush();
+       }
+        $notificationnonvu = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("vu"=>0));
+      $datenotificationseen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array(),array("datenotificationseen"=>'DESC'));
+     
+         return $this->render('FrontOfficeOptimusBundle:Notification:notifParticipe.html.twig', array('datenotificationseen' => $datenotificationseen, 'count'=>$notificationnonvu ));
         
-        
-       var_dump($res);die();
-        
-        $response = new Response();
-        $NotificationJson = json_encode($notificationSeen);
-        $response->headers->set('Content-Type', 'application/json');
-        $response->setContent($NotificationJson);
-        return $response;
       
     }
 

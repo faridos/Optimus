@@ -36,30 +36,95 @@ class NotificationSeen
    
     protected $notifications;
     
+      /**
+     * @var integer
+     *
+     * @ORM\Column(name="vu", type="integer", nullable=true)
+     */
+    private $vu;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateNotificationseen", type="datetime")
+     */
+    private $datenotificationseen;
+    
+        public function __construct() {
+		$this->vu = 0;
+                $this->datenotificationseen=new \Datetime();
+    }
+    
     public function getId() {
         return $this->id;
     }
 
-    public function getUsers() {
-        return $this->users;
-    }
-
-    public function getNotifications() {
-        return $this->notifications;
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function setUsers($users) {
-        $this->users = $users;
-    }
-
-    public function setNotifications($notifications) {
-        $this->notifications = $notifications;
-    }
+ 
 
 
     
+
+    /**
+     * Set users
+     *
+     * @param \FrontOffice\UserBundle\Entity\User $users
+     * @return NotificationSeen
+     */
+    public function setUsers(\FrontOffice\UserBundle\Entity\User $users = null)
+    {
+        $this->users = $users;
+    
+        return $this;
+    }
+
+    /**
+     * Get users
+     *
+     * @return \FrontOffice\UserBundle\Entity\User 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Set notifications
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $notifications
+     * @return NotificationSeen
+     */
+    public function setNotifications(\FrontOffice\OptimusBundle\Entity\Notification $notifications = null)
+    {
+        $this->notifications = $notifications;
+    
+        return $this;
+    }
+
+    /**
+     * Get notifications
+     *
+     * @return \FrontOffice\OptimusBundle\Entity\Notification 
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
+    }
+    
+     public function getVu() {
+        return $this->vu;
+    }
+
+
+    public function setVu($vu) {
+        $this->vu = $vu;
+    }
+    function getDatenotification() {
+        return $this->datenotification;
+    }
+
+    function setDatenotification(\DateTime $datenotification) {
+        $this->datenotification = $datenotification;
+    }
+
+
 }

@@ -78,11 +78,13 @@
 
             <a href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
                 <span class="notifyIcon icon-bell"></span>
-                {% set nbsNotification = getNombreNotification(app.user, app.user.createdAt) %}
+                <span class="counter" id="nombre_notif"><span id="countNotif">7</span></span>
+              {% set nbsNotification = getNombreNotification(app.user, app.user.createdAt) %}
                 {% for nbNotification in nbsNotification  %}
                     <span class="counter">{{ nbsNotification |length }}</span>
                 {% endfor %}
             </a>
+         
             <div class="dropdown-menu pull-right notifyMenu" role="menu">
                 {% set notifications = getNotifications(app.user, app.user.createdAt)%}
                 <div class="notifyHeader">
@@ -90,7 +92,7 @@
                     <a href="{{ path('setting_user_notifications',{'id': app.user.id}) }}" class="notifySettings icon-settings"></a>
                     <div class="clearfix"></div>
                 </div>
-                <ul class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
+                <ul id='blockNotif' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
                     {% for notification in notifications  %}
                         {% set notificateur = getUser(notification.notificateur) %}
                         {% if notification.event != null  %}
@@ -691,7 +693,18 @@
                                             
                                             
                                     }, 5000);
-
+                                    setInterval(function(){
+                                        $.ajax({
+                                            url: Routing.generate('participe_notification'),
+                                                    success: function(data) {
+                                                        tab = data.split('*');
+                                                        $('#blockNotif').html(tab[0]);
+                                                        
+                                                        
+                                                    $('#countNotif').html(tab[1]);
+                                                    }
+                                            });
+                                         }, 5000);
         </script>
 
 

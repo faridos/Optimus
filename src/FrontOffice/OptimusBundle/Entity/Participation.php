@@ -42,7 +42,7 @@ class Participation {
     private $datePaticipation;
     
      /**
-     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Notification", mappedBy="participation")
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Notification", mappedBy="participation", cascade={"persist","remove"})
      */
     protected $notificationParticipation;
 
