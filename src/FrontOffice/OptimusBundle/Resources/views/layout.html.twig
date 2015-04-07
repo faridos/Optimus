@@ -77,16 +77,15 @@
         <div class="headerNotifyWraper">
 
             <a href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
+                {% set notifications = getNotifications(app.user) %}
+                {% set nbsNotification = getNombreNotification(app.user) %}
+                
                 <span class="notifyIcon icon-bell"></span>
-                <span class="counter" id="nombre_notif"><span id="countNotif">7</span></span>
-              {% set nbsNotification = getNombreNotification(app.user, app.user.createdAt) %}
-                {% for nbNotification in nbsNotification  %}
-                    <span class="counter">{{ nbsNotification |length }}</span>
-                {% endfor %}
+                
+                <span class="counter" id="nombre_notif" {% if nbsNotification == 0 %}style='display: none;'{% endif %}><span id="countNotif">{{nbsNotification}}</span></span>
+              
             </a>
-         
             <div class="dropdown-menu pull-right notifyMenu" role="menu">
-                {% set notifications = getNotifications(app.user, app.user.createdAt)%}
                 <div class="notifyHeader">
                     <span>Notifications</span>
                     <a href="{{ path('setting_user_notifications',{'id': app.user.id}) }}" class="notifySettings icon-settings"></a>
@@ -94,75 +93,40 @@
                 </div>
                 <ul id='blockNotif' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
                     {% for notification in notifications  %}
-                        {% set notificateur = getUser(notification.notificateur) %}
-                        {% if notification.event != null  %}
-                            {% set participations = getParicipationEventNotification(notification.event.id,app.user.id, notification.datenotification) %}
-                            {% if notification.type == 'add' %}
-                                <li class="notification" id="{{ notification.id }}">
-                                    <a id="show_notification" href="{{ path('show_event', { 'id' : notification.event.id }) }}">
-                                        <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
-                                        <div class="pulse border-grey"></div>
-                                        <div class="notify pull-left">
-                                            <div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a publié l'évenement {{ notification.event.titre }}</div>
-                                            <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </a>
-                                </li>
-                            {% elseif notification.type == 'Update' %}
-                                {% if participations is not empty %}
-                                    <li>
-                                        <a href="{{ path('show_event', { 'id' : notification.event.id }) }}">
-                                            <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
-                                            <div class="pulse border-grey"></div>
-                                            <div class="notify pull-left">
-                                                <div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a modifier l'évenement {{ notification.event.titre }}</div>
-                                                <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            {% elseif notification.type == 'delete' %}
-                                {% if participations is not empty %}
-                                    <li>
-                                        <a href="#">
-                                            <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
-                                            <div class="pulse border-grey"></div>
-                                            <div class="notify pull-left">
-                                                <div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a annuler l'évenement {{ notification.event.titre }}</div>
-                                                <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            {% endif %}
-                        {% elseif notification.club != null  %}
-                            <li>
-                                <a href="{{ path('show_club', { 'id' : notification.club.id }) }}">
-                                    <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}" alt="avatar">
-                                    <div class="pulse border-grey"></div>
-                                    <div class="notify pull-left">
-                                        <div class="notifyName">{{ notificateur.prenom }} {{ notificateur.nom }} a publié le club {{ notification.club.nom }}</div>
-                                        <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a>
-                            </li>
-                        {% elseif notification.entraineur != null  %}
-                            <li>
-                                <a href="{{ path('show_profil',{ 'id': notification.entraineur.id})}}">
-                                    <img class="avatar pull-left" src="{{ asset(notificateur.getWebPath)}}">
-                                    <div class="pulse border-grey"></div>
-                                    <div class="notify pull-left">
-                                        <div class="notifyName">l'entraineur {{ notificateur.prenom }} {{ notificateur.nom }} inscrit</div>
-                                        <div class="notifyTime">{{ notification.getDuréeNotification() }}</div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </a>
-                            </li>
-                        {% endif %}
+                     {% if notification.notifications.type == 'participation' %}
+    <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+        <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
+            {% if notification.notifications.event.getWebPath %}
+            <img class="avatar pull-left" src="{{ asset(notification.notifications.notificateur.getWebPath)}}" alt="avatar">
+            {% else %}
+                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                {% endif %}
+            
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a participer dans l'évènement {{ notification.notifications.event.titre }} </div>
+                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% else %}
+        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+        <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
+            {% if notification.notifications.event.getWebPath %}
+            <img class="avatar pull-left" src="{{ asset(notification.notifications.notificateur.getWebPath)}}" alt="avatar">
+            {% else %}
+                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a annuler sa participation de l'évènement {{ notification.notifications.event.titre }}</div>
+                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% endif %}
                     {% endfor %}
                 </ul>
                 <a href="{{ path('all_notifications_user',{'id' : app.user.id}) }}" class="notifyAll">Afficher tout</a>
@@ -178,9 +142,7 @@
             {% endfor %}
             <a id="nb_message" href="#" class="headerNotify dropdown-toggle" data-toggle="dropdown">
                 <span class="notifyIcon fa fa-envelope-o"></span>
-                {% if  i != 0 %}
-                    <span class="counter" id="nombre_message"><span id="samirMsg">{{ i }}</span></span>
-                    {% endif %}
+                <span class="counter" id="nombre_message" {% if  i == 0 %}style='display: none'{% endif %}><span id="samirMsg">{{ i }}</span></span>
             </a>
             <div class="dropdown-menu pull-right notifyMenu" role="menu">
                 <div class="notifyHeader">
@@ -241,7 +203,7 @@
             {% set Invitations = getInvitations(app.user.id) %}
             <a href="#"  class="headerNotify dropdown-toggle" id="nb_invitation" data-toggle="dropdown">
                 <span class="notifyIcon icon-users"></span>
-                {% if Invitations is not empty %}  <span class="counter" id="nombre_invitation"  ><span id="nbInvitation">{{ Invitations|length  }}</span></span>{% endif %}
+                  <span class="counter" id="nombre_invitation" {% if Invitations|length == 0 %}style='display: none;'{% endif %}><span id="nbInvitation">{{ Invitations|length  }}</span></span>
             </a>
             <div class="dropdown-menu pull-right notifyMenu" role="menu" style="width:380px">
 
@@ -494,6 +456,33 @@
 
     <script id='scriptmsg'>
 
+         {% set notifications = getNotifications(app.user) %}
+          {% for notification in notifications  %}
+                   $('body').on('click', '#notifParticipe{{notification.id}}', function ()
+                        {
+                           $.ajax({
+                                type: "POST",
+                                        url: '{{ path('notifParticipe_seen') }}',
+                                        data: 'id=' + {{notification.id}},
+                                        success: function() {
+                                        var nb = parseInt($('#countNotif').text());
+                                        
+                                        var nouveauNb = nb - 1;
+                                        if (nouveauNb > 0)
+                                        {
+                                        $('#countNotif').replaceWith(nouveauNb);
+                                        }
+                                        else
+                                        {
+                                        $('#nombre_notif').hide();
+                                        }
+                                        }
+
+                        });
+                        });
+              {% endfor %}
+                    
+                    
         {% set messages = getNonSeenMessage(app.user.id) %}
 
         {% for message in messages %}
@@ -683,9 +672,9 @@
                                                             if (tab[3] == 0){
                                                     $('#nombre_message').hide();
                                                     } else{
-
-                                                    $('#samirMsg').html(tab[3]);
                                                     $('#nombre_message').show();
+                                                    $('#samirMsg').html(tab[3]);
+                                                    
                                                     }
                                                             $(tab[4]).appendTo(document.body)
                                                     }
@@ -699,9 +688,14 @@
                                                     success: function(data) {
                                                         tab = data.split('*');
                                                         $('#blockNotif').html(tab[0]);
-                                                        
-                                                        
                                                     $('#countNotif').html(tab[1]);
+                                                    if (tab[1] == 0){
+                                                    $('#nombre_notif').hide();
+                                                    } else{
+                                                    $('#nombre_notif').show();
+                                                    $('#countNotif').html(tab[1]);
+                                                    }
+                                                    $(tab[2]).appendTo(document.body)
                                                     }
                                             });
                                          }, 5000);

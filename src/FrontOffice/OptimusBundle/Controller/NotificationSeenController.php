@@ -36,11 +36,11 @@ class NotificationSeenController extends Controller {
         $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->find($id);
         if ($notification) {
             $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notification));
-            if (empty($notificationSeen)) {
-                $notifevent = new NotificationSeenEvent($user, $notification);
-                $dispatcher = $this->get('event_dispatcher');
-                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
-            }
+//            if (empty($notificationSeen)) {
+//                $notifevent = new NotificationSeenEvent($user, $notification);
+//                $dispatcher = $this->get('event_dispatcher');
+//                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
+//            }
         }
         $response = new Response();
         $NotificationJson = json_encode($notificationSeen);
@@ -48,6 +48,27 @@ class NotificationSeenController extends Controller {
         $response->setContent($NotificationJson);
         return $response;
       
+    }
+    
+    /**
+     * 
+     *
+     * @Route("/notifParticipe", name="notifParticipe_seen", options={"expose"=true})
+     * @Method("GET|POST")
+     * 
+     */
+    public function updateNotifSeenParticipeAction() {
+        $em = $this->getDoctrine()->getEntityManager();		
+        $id = $_POST["id"];       
+        $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('id' => $id));
+        
+            $notificationSeen->setVu(1);
+            $em->persist($notificationSeen);
+            $em->flush();
+        
+        return new Response();
+             
+        
     }
 
 }

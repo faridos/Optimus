@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FrontOffice\OptimusBundle\Entity\Event;
+use FrontOffice\OptimusBundle\Entity\Notification;
 use FrontOffice\OptimusBundle\Entity\Message;
 use FrontOffice\OptimusBundle\Form\EventType;
 use FrontOffice\OptimusBundle\Form\EventPhotoType;
@@ -72,16 +73,16 @@ class EventController extends Controller {
         if (!$event || $event->getActive() == false) {
             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
-        $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('event' => $event));
-        if ($notification) {
-            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notification));
-            if (empty($notificationSeen)) {
-
-                $notifevent = new NotificationSeenEvent($user, $notification);
-                $dispatcher = $this->get('event_dispatcher');
-                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
-            }
-        }
+//        $notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findOneBy(array('event' => $event));
+//        if ($notification) {
+//            $notificationSeen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findOneBy(array('users' => $user, 'notifications' => $notification));
+//            if (empty($notificationSeen)) {
+//
+//                $notifevent = new NotificationSeenEvent($user, $notification);
+//                $dispatcher = $this->get('event_dispatcher');
+//                $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
+//            }
+//        }
 
         $nbr1 = $event->getNbrvu();
         $nbr = $nbr1 + 1 ;
@@ -162,13 +163,20 @@ class EventController extends Controller {
             if ($form->isValid()) {
                 $em->persist($event);
                 $em->flush();
+                
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('add');
+        $notif->setEvent($event);
+        $em->persist($notif);
+        $em->flush();
 //add notification + add prticipation + add History
-                $action = 'add';
-                $eventhistory = new HistoryEventEvent($user, $event, $action);
-                $eventparticipation = new ParticipationEvent($user, $event);
-                $dispatcher = $this->get('event_dispatcher');
-                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
-                $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
+//                $action = 'add';
+//                $eventhistory = new HistoryEventEvent($user, $event, $action);
+//                $eventparticipation = new ParticipationEvent($user, $event);
+//                $dispatcher = $this->get('event_dispatcher');
+//                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+//                $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
                 $request->getSession()->getFlashBag()->add('AjouterEvent', "Votre évènement a été ajouter avec success.");
                 return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
             }
@@ -199,11 +207,18 @@ class EventController extends Controller {
         if ($editForm->isValid()) {
             $event->setDateModification(new DateTime());
             $em->flush();
+            
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('update');
+        $notif->setEvent($event);
+        $em->persist($notif);
+        $em->flush(); 
 //add notification
-            $action = 'update';
-            $eventhistory = new HistoryEventEvent($user, $event, $action);
-            $dispatcher = $this->get('event_dispatcher');
-            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+//            $action = 'update';
+//            $eventhistory = new HistoryEventEvent($user, $event, $action);
+//            $dispatcher = $this->get('event_dispatcher');
+//            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
             $request->getSession()->getFlashBag()->add('EditEvent', "Votre évènement a été modifié avec success.");
             return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
         }
@@ -235,10 +250,18 @@ class EventController extends Controller {
         $entity->setActive(false);
         $em->persist($entity);
         $em->flush();
-        $action = 'delete';
-        $eventhistory = new HistoryEventEvent($user, $entity, $action);
-        $dispatcher = $this->get('event_dispatcher');
-        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('delete');
+        $notif->setEvent($entity);
+        $em->persist($notif);
+        $em->flush();
+        
+//        $action = 'delete';
+//        $eventhistory = new HistoryEventEvent($user, $entity, $action);
+//        $dispatcher = $this->get('event_dispatcher');
+//        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         $request->getSession()->getFlashBag()->add('SupprissionEvenement', "Evenement  a été supprimer.");
         return  new Response($id);
     }
@@ -265,10 +288,18 @@ class EventController extends Controller {
         $entity->setActive(false);
         $em->persist($entity);
         $em->flush();
-        $action = 'delete';
-        $eventhistory = new HistoryEventEvent($user, $entity, $action);
-        $dispatcher = $this->get('event_dispatcher');
-        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('delete');
+        $notif->setEvent($entity);
+        $em->persist($notif);
+        $em->flush();
+        
+//        $action = 'delete';
+//        $eventhistory = new HistoryEventEvent($user, $entity, $action);
+//        $dispatcher = $this->get('event_dispatcher');
+//        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         
         return $this->redirect($this->generateUrl('accueil'));
     }
@@ -407,7 +438,7 @@ class EventController extends Controller {
     
     
     /**
-     * Deletes a Club entity.
+     * 
      *
      * @Route("/testdrr", name="notif_test", options={"expose"=true})
      * 

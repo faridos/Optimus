@@ -250,7 +250,7 @@
                     },
                     iconClass: 'toast8-info',
                     positionClass: 'toast8-bottom-left',
-                    timeOut: 5000, // Set timeOut and extendedTimeout to 0 to make it sticky
+                    timeOut: 10000, // Set timeOut and extendedTimeout to 0 to make it sticky
                     titleClass: 'toast8-title',
                     messageClass: 'toast8-message',
                     leftBlockClass: 'toast8-avatar-container',
