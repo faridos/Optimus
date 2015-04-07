@@ -588,7 +588,7 @@
                var eventDuration = self._getEventDurationFromPositionedEventElement($weekDay, $newEvent, top);
 
                $newEvent.remove();
-               {% if app.user == club.createur %}var newCalEvent = {start: eventDuration.start, end: eventDuration.end, title: options.newEventText};{% endif %}
+               {% if app.user == club.createur and programme.datefin >= date() %}var newCalEvent = {start: eventDuration.start, end: eventDuration.end, title: options.newEventText};{% endif %}
                var $renderedCalEvent = self._renderEvent(newCalEvent, $weekDay);
 
                if (!options.allowCalEventOverlap) {
@@ -1574,7 +1574,7 @@
          
       },
       eventNew : function(calEvent, $event) {
-          {% if app.user == club.createur %} 
+          {% if app.user == club.createur and programme.datefin >= date()%} 
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
@@ -1639,7 +1639,7 @@
          if (calEvent.readOnly) {
             return;
          }
-         {% if app.user == club.createur %} 
+         {% if app.user == club.createur and programme.datefin >= date()%} 
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
          var idField = $dialogContent.find("input[name='id']").val(calEvent.id);

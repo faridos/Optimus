@@ -72,26 +72,26 @@ $('#btn-fermer-message').click(function() {
     $('textarea').val('');
 });
 $('#request_club').click(function() {
-    $('.loader').show();
+    $('#loaderRejoindreClub').show();
     var id = $('.requestClub').attr('id');
 
     $.ajax({
         url: Routing.generate('request_club', {'id': id}),
         success: function() {
             $('.requestClub').replaceWith('Enattente');
-            $('.loader').hide();
+            $('#loaderRejoindreClub').hide();
         }
     });
 });
 $('#exit_club').click(function() {
-    $('.loader').show();
+    $('#loaderRejoindreClub').show();
     var id = $('.exitClub').attr('id');
 
     $.ajax({
         url: Routing.generate('exit_club', {'id': id}),
         success: function() {
             $('.exitClub').replaceWith('Rejoindre');
-            $('.loader').hide();
+            $('#loaderRejoindreClub').hide();
         }
     });
 });

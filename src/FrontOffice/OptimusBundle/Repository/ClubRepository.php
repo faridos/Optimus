@@ -25,6 +25,18 @@ class ClubRepository extends EntityRepository {
                 ->setParameter('id', $id);
         return $qb->getQuery()->getResult();
     }
+    public function MemberOuNon($club, $user) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $member = $qb->select('m')
+                        ->from("FrontOfficeOptimusBundle:Member", 'm')
+                        ->where("m.clubad = :club")
+                        ->andWhere("m.member= :user")
+                        ->setParameters(array('club' => $club, 'user' => $user))
+                        ->getQuery()->getResult();
+
+        return count($member); // retourne 0 ou 1
+    }
+
      
     public function getClubs($nomClub, $sport, $adresse) {
         $em = $this->getEntityManager();

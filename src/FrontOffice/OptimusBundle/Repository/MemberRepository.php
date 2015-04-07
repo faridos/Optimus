@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class MemberRepository extends EntityRepository {
 
-    public function getMembers($id, $id_createur) {
+    public function getMembers($id) {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
         $qb->select(array('m'))
@@ -20,9 +20,9 @@ class MemberRepository extends EntityRepository {
                 ->Join('FrontOffice\OptimusBundle\Entity\Club', 'c', "WITH", 'm.clubad = c.id')
                 ->where('m.confirmed = 1')
                 ->andWhere('c.id = :id')
-                ->andWhere('c.createur <> :id_createur')
-                ->setParameter('id', $id)
-                ->setParameter('id_createur', $id_createur);
+               
+                ->setParameter('id', $id);
+               
         return $qb->getQuery()->getResult();
     }
 

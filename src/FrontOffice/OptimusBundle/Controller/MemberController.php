@@ -69,28 +69,7 @@ class MemberController extends Controller {
         }
     }
 
-    /**
-     * 
-     *
-     * @Route("demande={id}/accept", name="accept_demande", options={"expose"=true})
-     * @Method("GET|POST")
-     */
-    public function confirmAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
-        if (!$demande) {
-            throw $this->createNotFoundException('Unable to find Club entity.');
-        }
-        $demande->setConfirmed(true);
-        if ($demande->getConfirmed() == true) {
-            $date = new DateTime();
-            $demande->setDateconfirm($date);
-            $em->persist($demande);
-            $em->flush();
-            $response = new Response($id);
-            return $response;
-        }
-    }
+  
 
     /**
      * Creates a new Member entity.
@@ -125,6 +104,7 @@ class MemberController extends Controller {
             $em->flush();
             $response = new Response($id);
             return $response;
+            
         }
     }
 

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Configuration
  *
  * @ORM\Table(name="configuration")
- * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Entity\ConfigurationRepository")
+ * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Repository\ConfigurationRepository")
  */
 class Configuration
 {

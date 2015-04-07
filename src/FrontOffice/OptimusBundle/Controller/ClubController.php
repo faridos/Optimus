@@ -12,6 +12,7 @@ use FrontOffice\OptimusBundle\Form\ClubType;
 use FrontOffice\OptimusBundle\Form\UpdateClubType;
 use FrontOffice\OptimusBundle\Form\ClubPhotoType;
 use FrontOffice\OptimusBundle\Entity\Member;
+use FrontOffice\OptimusBundle\Entity\Message;
 use FrontOffice\OptimusBundle\Entity\Comment;
 use FrontOffice\OptimusBundle\Entity\Palmares;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -109,7 +110,11 @@ class ClubController extends Controller {
             }
         }
        $progarammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->findBy(array('clubp' => $club), array('datedebut' => 'desc'));
-      
+      $nbv1 = $club->getNbrvu();
+        $nb = $nbv1 + 1 ;
+        $club->setNbrvu($nb);
+        $em->merge($club);
+        $em->flush();
         return $this->render('FrontOfficeOptimusBundle:Club:showClub.html.twig', array('club' => $club, 'user' => $user, 'programmes' =>$progarammes) );
     }
 
@@ -266,7 +271,7 @@ class ClubController extends Controller {
     /**
      * Creates a new Club entity.
      *
-     * @Route("/club={id}/request", name="request_club", options={"expose"=true})
+     * @Route("club/{id}/request", name="request_club", options={"expose"=true})
      * @Method("POST|GET")
      */
     public function requestAction(Request $request, $id) {
@@ -348,8 +353,7 @@ class ClubController extends Controller {
             $demande->setDateconfirm($date);
             $em->persist($demande);
             $em->flush();
-            $response = new Response($id);
-            return $response;
+           return $this->render('FrontOfficeOptimusBundle:Club:return.html.twig', array('demande' => $demande ));
         }
     }
 
@@ -379,6 +383,46 @@ class ClubController extends Controller {
         } else {
              return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
+        
+     
+    }
+    /**
+     * 
+     *
+     * @Route("club/inviter/ami", name="inviter_ami_club", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+       
+     public function inviterClubAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+       
+     //  $name = Array();
+     
+            $name = $request->get("name");
+            
+            $id =  $request->get("club");
+            $club = $em->getRepository('FrontOfficeOptimusBundle:club')->find($id);
+            $sender = $club->getCreateur();
+          
+            foreach ($name as $friend) {
+                 $message = new Message();
+                $namefriend = $em->getRepository('FrontOfficeUserBundle:User')->find($friend);
+                $content= 'Bonjour '. $namefriend->getNom() .' '. $namefriend->getPrenom() .' je inviter amon Club '. $club->getNom();
+              
+                $message->setReciever($friend);
+                $message->setSender($sender);
+                $message->setMsgTime(new \DateTime());
+                $message->setContent($content);
+                $message->setClub($club->getId());
+                $em->persist($message);
+                $em->flush();
+                 
+            }
+            return new Response('1'); 
+        
+       
     }
 
 }

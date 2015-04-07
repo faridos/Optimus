@@ -1,0 +1,75 @@
+ <div class="col-sm-4" id="{{demande.id}}">
+                                        <div class="tooltipsContainer agent notifyList">
+                                            <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="Essid Essid">
+                                             {% if demande.member.WebPath == null %}
+                                               {% if demande.member.sexe == 'H' %}
+                                                   <img src="{{ asset('men.png') }}" alt="">
+                                            <div class="pulse border-green pulseoptimus"></div>
+                                                   {% else %}
+                                                       <img src="{{ asset('women.png') }}" alt="">
+                                            <div class="pulse border-green pulseoptimus"></div>
+                                                       {% endif %}
+                                                       
+                                                       {% else%}
+                                            <img src="{{ asset(demande.member.WebPath) }}" alt="">
+                                            <div class="pulse border-green pulseoptimus"></div>
+                                            {% endif %}
+                                               
+                                            </a>
+                                            <div class="info">
+                                                <a href="#"> <div class="name clubumus"><strong>{{demande.member.prenom}} {{demande.member.nom}}</strong></div></a>
+                                                <div class="title">{{demande.member.profil}}</div>
+                                            </div><br>
+                                            <div align="center">
+                                                
+                                                <a href="#retirer{{demande.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="retirer"><span class="fa fa-close"></span></a>
+                                                <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="signaler"><span class="fa fa-legal"></span></a>
+                                            
+                                                </div><br>
+                                        </div>
+                                    </div>*<div class="modal" id="retirer{{demande.id}}"   >
+            <div class="modal-dialog">
+                <div class="modal-content bordusbottomus">
+                    <div class="modal-header bordustopus">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Souhaitez vous vraiment cet Adhérent ?</p>
+                    </div>
+                    <div class="modal-footer supp-album">
+                        <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                        <a id="supprimerAdherant{{demande.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+                  <a class="loader" id="loaderSupppMember{{demande.id}}" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
+                    </div>
+                </div>
+            </div>
+        </div>*<script >
+    
+    $('#supprimerAdherant{{demande.id}}').click(function() {
+         $('#supprimerAdherant{{demande.id}}').hide();
+        $('#loaderSupppMember{{demande.id}}').show();
+        
+        $.ajax({
+            url: Routing.generate('delete_member', {'id': {{demande.id}}}),
+            success: function(data) {
+                $('#' + {{demande.id}}).hide();
+                $("#retirer{{demande.id}}").toggle();
+                $('.modal-backdrop').hide();
+            }
+        });
+    });
+    
+    </script>
+
+
+                   
+
+
+
+
+
+
+
