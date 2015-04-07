@@ -428,20 +428,20 @@ class EventController extends Controller {
         $response->setContent($tabcomments);
         return $response;
     }
-     /**
-     * 
-     *
-     * @Route("/testdrrir", name="notif_testt", options={"expose"=true})
-     * 
-     */
-    public function MessagecountAction() {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-       $nbr = $em->getRepository('FrontOfficeOptimusBundle:Message')->getcount($user->getId());
-    
-        $response = new Response($nbr[0]['nbrmsg']);
-          return $response;
-    }
+//     /**
+//     * 
+//     *
+//     * @Route("/testdrrir", name="notif_testt", options={"expose"=true})
+//     * 
+//     */
+//    public function MessagecountAction() {
+//        $em = $this->getDoctrine()->getManager();
+//        $user = $this->container->get('security.context')->getToken()->getUser();
+//       $nbr = $em->getRepository('FrontOfficeOptimusBundle:Message')->getcount($user->getId());
+//    
+//        $response = new Response($nbr[0]['nbrmsg']);
+//          return $response;
+//    }
     
     /**
      * 
@@ -457,11 +457,14 @@ class EventController extends Controller {
      
         $user = $this->container->get('security.context')->getToken()->getUser();
        $messages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findBy(array('reciever'=>$user->getId()),array('msgTime'=>'DESC'));
-         
+          $i= 0 ;
+          $vu = 0 ;
+          if($messages !=null){
            $i = $messages[0]->getId() ;
-      
+          }
        $nvmessages = $em->getRepository('FrontOfficeOptimusBundle:Message')->getnvmsg($user->getId() ,$lastid );
-          return $this->render('FrontOfficeOptimusBundle:Message:MessageMenu.html.twig', array('messages' => $messages , 'nvmessages'=>$nvmessages ,'lastid' =>$i));
+       $nvnonmessages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findBy(array('reciever'=>$user->getId() , 'vu'=> $vu ));
+          return $this->render('FrontOfficeOptimusBundle:Message:MessageMenu.html.twig', array('messages' => $messages , 'nvmessages'=>$nvmessages ,'lastid' =>$i  , 'nvnonmessages'=>$nvnonmessages));
     }
 }
 

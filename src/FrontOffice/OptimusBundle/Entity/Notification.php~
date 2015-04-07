@@ -22,13 +22,13 @@ class Notification {
      */
     private $id;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="notificateur", type="integer")
-     */
-    private $notificateur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="notificateur")
+     * @ORM\JoinColumn(name="notificateur", referencedColumnName="id")
+     * */
+    protected $notificateur;
+    
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="notification_entraineur")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -65,22 +65,31 @@ class Notification {
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\NotificationSeen", mappedBy="notifications", cascade={"persist","remove"})
      * */
     protected $notificationsen;
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Participation",inversedBy="notificationParticipation", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="participation_id", referencedColumnName="id")
+     */
+    protected $participation;
 
     public function getId() {
         return $this->id;
     }
 
-    public function getNotificateur() {
-        return $this->notificateur;
-    }
-
+   
     public function getNotificationsen() {
         return $this->notificationsen;
     }
-
-    public function setNotificateur($notificateur) {
-        $this->notificateur = $notificateur;
+    function getParticipation() {
+        return $this->participation;
     }
+
+    function setParticipation($participation) {
+        $this->participation = $participation;
+    }
+
+     
 
     public function setNotificationsen($notificationsen) {
         $this->notificationsen = $notificationsen;
@@ -159,6 +168,7 @@ class Notification {
      */
     public function __construct() {
         $this->notificationsen = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->datenotification = new \Datetime();
     }
 
     /**

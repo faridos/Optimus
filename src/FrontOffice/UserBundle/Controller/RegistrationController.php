@@ -13,6 +13,7 @@ use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FrontOffice\OptimusBundle\Entity\Notification;
+use FrontOffice\OptimusBundle\Entity\ConfigNotif;
 use FrontOffice\UserBundle\Event\UserRegisterEvent;
 use FrontOffice\UserBundle\FrontOfficeUserEvents;
 use \DateTime;
@@ -37,7 +38,8 @@ class RegistrationController extends BaseController {
         $user->setConnected(0);
         $user->setTypeNotification('All');
         $user->setCreatedAt(new DateTime());
-
+        $configNotif = new ConfigNotif();
+        $user->setConfigNotif($configNotif);
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 

@@ -10,8 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Event\HistoryEventEvent;
+use FrontOffice\OptimusBundle\Entity\Notification;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use \DateTime;
 
 /**
  * Participation controller.
@@ -39,13 +41,21 @@ class ParticipationController extends Controller {
         $newparticipation = new Participation();
         $newparticipation->setParticipant($user);
         $newparticipation->setEvent($event);
-
         $em->persist($newparticipation);
         $em->flush();
-        $action = 'participation';
-        $eventhistory = new HistoryEventEvent($user, $event, $action);
-        $dispatcher = $this->get('event_dispatcher');
-        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('participation');
+        $notif->setParticipation($newparticipation);
+        $em->persist($notif);
+        $em->flush();
+        
+//        $action = 'participation';
+//        $eventhistory = new HistoryEventEvent($user, $event, $action);
+//        $dispatcher = $this->get('event_dispatcher');
+//        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        
         return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
         //return $response = new Response();
     }
@@ -69,23 +79,39 @@ class ParticipationController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
         $p = $em->getRepository('FrontOfficeOptimusBundle:Participation')->findBy(array('event' => $event, 'participant' => $user));
+        $particip=$p;
         if($p != null){
         $em->remove($p[0]);
         $em->flush();
+        
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('AnnulerParticip');
+        $notif->setEvent($event);
+        $em->persist($notif);
+        $em->flush();
+        
          $etat = 0 ;
          $msg = "Participer";
          $msgmap="Participer";
         }  else {
-              $newparticipation = new Participation();
+        $newparticipation = new Participation();
         $newparticipation->setParticipant($user);
         $newparticipation->setEvent($event);
-
         $em->persist($newparticipation);
         $em->flush();
-         $action = 'participation';
-        $eventhistory = new HistoryEventEvent($user, $event, $action);
-        $dispatcher = $this->get('event_dispatcher');
-        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('participation');
+        $notif->setParticipation($newparticipation);
+        $em->persist($notif);
+        $em->flush();
+                
+//        $action = 'participation';
+//        $eventhistory = new HistoryEventEvent($user, $event, $action);
+//        $dispatcher = $this->get('event_dispatcher');
+//        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         $etat = 1 ;
         $msg = "Annuler participation";
         $msgmap ="Annuler";
@@ -115,6 +141,14 @@ class ParticipationController extends Controller {
         if($p != null){
         $em->remove($p[0]);
         $em->flush();
+        
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('AnnulerParticip');
+        $notif->setEvent($event);
+        $em->persist($notif);
+        $em->flush();
+        
          $etat = 0 ;
          $msg = "Participer";
          $msgmap="Participer";
@@ -125,10 +159,18 @@ class ParticipationController extends Controller {
 
         $em->persist($newparticipation);
         $em->flush();
-         $action = 'participation';
-        $eventhistory = new HistoryEventEvent($user, $event, $action);
-        $dispatcher = $this->get('event_dispatcher');
-        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+        
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('participation');
+        $notif->setParticipation($newparticipation);
+        $em->persist($notif);
+        $em->flush();
+        
+//         $action = 'participation';
+//        $eventhistory = new HistoryEventEvent($user, $event, $action);
+//        $dispatcher = $this->get('event_dispatcher');
+//        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
         $etat = 1 ;
         $msg = "Annuler participation";
         $msgmap ="Annuler";
@@ -160,6 +202,12 @@ class ParticipationController extends Controller {
         $em->remove($p);
         $em->flush();
                
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('AnnulerParticip');
+        $notif->setEvent($event);
+        $em->persist($notif);
+        $em->flush();
         
         $response = new Response($events);
    

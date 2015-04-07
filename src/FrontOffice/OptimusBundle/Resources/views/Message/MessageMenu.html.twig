@@ -97,7 +97,7 @@
             </div>
 
         </div>
-    {% endfor %}*{{lastid}}*<script>{% for message in nvmessages %}
+                     {% endfor %}*{{lastid}}*{{nvnonmessages|length}}*<script>{% for message in nvmessages %}
         $('body').on('click', '#repondre{{message.id}}', function () 
             {
             var sender = {{message.sender.id}};

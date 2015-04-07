@@ -22,13 +22,13 @@ class Notification {
      */
     private $id;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="notificateur", type="integer")
-     */
-    private $notificateur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="notificateur")
+     * @ORM\JoinColumn(name="notificateur", referencedColumnName="id")
+     * */
+    protected $notificateur;
+    
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="notification_entraineur")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -68,7 +68,7 @@ class Notification {
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Participation",inversedBy="notificationParticipation")
+     * @ORM\ManyToOne(targetEntity="Participation",inversedBy="notificationParticipation", cascade={"persist","remove"})
      * @ORM\JoinColumn(name="participation_id", referencedColumnName="id")
      */
     protected $participation;
@@ -77,10 +77,7 @@ class Notification {
         return $this->id;
     }
 
-    public function getNotificateur() {
-        return $this->notificateur;
-    }
-
+   
     public function getNotificationsen() {
         return $this->notificationsen;
     }
@@ -92,9 +89,7 @@ class Notification {
         $this->participation = $participation;
     }
 
-        public function setNotificateur($notificateur) {
-        $this->notificateur = $notificateur;
-    }
+     
 
     public function setNotificationsen($notificationsen) {
         $this->notificationsen = $notificationsen;
@@ -173,6 +168,7 @@ class Notification {
      */
     public function __construct() {
         $this->notificationsen = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->datenotification = new \Datetime();
     }
 
     /**
@@ -196,4 +192,27 @@ class Notification {
         $this->notificationsen->removeElement($notificationsen);
     }
 
+
+    /**
+     * Set notificateur
+     *
+     * @param \FrontOffice\UserBundle\Entity\User $notificateur
+     * @return Notification
+     */
+    public function setNotificateur(\FrontOffice\UserBundle\Entity\User $notificateur = null)
+    {
+        $this->notificateur = $notificateur;
+    
+        return $this;
+    }
+
+    /**
+     * Get notificateur
+     *
+     * @return \FrontOffice\UserBundle\Entity\User 
+     */
+    public function getNotificateur()
+    {
+        return $this->notificateur;
+    }
 }

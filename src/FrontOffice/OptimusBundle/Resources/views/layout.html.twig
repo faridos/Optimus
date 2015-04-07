@@ -620,8 +620,11 @@
                         }
                 });
                         });            {% endfor %}
+                        
                                     setInterval(function(){
+                                         
                                     var lastid = $('#lastid').val();
+                                   
                                             $.ajax({
                                             url: Routing.generate('notif_test'),
                                                     data: {lastid : lastid},
@@ -629,14 +632,14 @@
                                                     for (var i in data) {
                                                     var message = data[i];
                                                             toastr8.googlePlus({
-                                                            message:message.content,
+                                                            message:'<a href="http://localhost/Optimus/web/app_dev.php/evenement='+ message.event +'" >'+message.content+' </a>',
                                                                     title: message.sender.nom + ' ' + message.sender.prenom,
-                                                                    imgURI: ["http://abweb.tn/newoptimus/images/avatar-3.png"]
+                                                                    imgURI: ['http://www.optimus-beta.com/web/event.png']
                                                             });
                                                     }
                                                     }
                                             });
-                                            $.ajax({
+                                            /*  $.ajax({
                                             url: Routing.generate('notif_testt'),
                                                     success: function(data) {
                                                     if (data == 0){
@@ -648,12 +651,13 @@
                                                     }
                                                     $('#samirMsg').html(data);
                                                     }
-                                            });
+                                            });*/
                                             $.ajax({
                                             url: Routing.generate('notif_invit'),
                                                     success: function(data) {
                                                     tab = data.split('*');
                                                             $('#id_invitation').html(tab[0]);
+                                                          
                                                             if (tab[1] == 0){
                                                     $('#nombre_invitation').hide();
                                                     } else{
@@ -673,9 +677,19 @@
                                                             $('#id_message').html(tab[0]);
                                                             $('#repondremsg').append(tab[1]);
                                                             $('#lastid').val(tab[2]);
-                                                            $(tab[3]).appendTo(document.body)
+                                                         
+                                                            if (tab[3] == 0){
+                                                    $('#nombre_message').hide();
+                                                    } else{
+
+                                                    $('#samirMsg').html(tab[3]);
+                                                    $('#nombre_message').show();
+                                                    }
+                                                            $(tab[4]).appendTo(document.body)
                                                     }
                                             });
+                                            
+                                            
                                     }, 5000);
 
         </script>
