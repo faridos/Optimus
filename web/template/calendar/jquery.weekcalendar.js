@@ -411,7 +411,7 @@
                 <table class=\"wc-time-slots\">\
                 <tbody>\
                 <tr>\
-                <td class=\"wc-grid-timeslot-header tdoptimus\"></td>\
+                <td class=\"wc-grid-timeslot-header\"></td>\
                 <td colspan=\"" + options.daysToShow + "\">\
                 <div class=\"wc-time-slot-wrapper\">\
                 <div class=\"wc-time-slots\">";
@@ -426,7 +426,7 @@
             calendarBodyHtml += "<div class=\"wc-time-slot wc-hour-end\"></div>";
          }
 
-         calendarBodyHtml += "</div></div></td></tr><tr><td class=\"wc-grid-timeslot-header tdoptimus\">";
+         calendarBodyHtml += "</div></div></td></tr><tr><td class=\"wc-grid-timeslot-header\">";
 
          for (var i = start; i < end; i++) {
 

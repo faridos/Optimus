@@ -351,7 +351,7 @@ class ClubController extends Controller {
         if (!$demande) {
             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
-           $demande->setConfirmed(1);
+           $demande->setConfirmed(0);
             $em->merge($demande);
             $em->flush();
             $compte = new CompteClub();

@@ -131,16 +131,16 @@ Nombre des members : <span  id="nbparticip">{{ club.adherents | length}}</span>
     
   {% elseif memberconfirmed.confirmed == 2 %} 
          <a class="btn btn-green btn-round " href="#" id="activer_member_club" >
-         <span class="fa icon-action-redo "></span> <span  class="activerclub" id="{{club.id}}" >Activer</span>
+         <span class="fa icon-action-redo "></span> <span  class="activerclub" id="{{club.id}}" >Regagner</span>
         </a>
  {% endif %}
                                                   
                                                 {% endif %}
-                                                 <a style="display: none" class="btn btn-green btn-round " href="#" id="exit_club" >
-         <span class="fa icon-action-redo "></span> <span  class="exitClub" id="{{club.id}}" >Quitter</span>
-        </a>
-        <a style="display: none"class="btn btn-green btn-round " href="#" id="activer_member_club" >
-         <span class="fa icon-action-redo "></span> <span  class="activerclub" id="{{club.id}}" >Activer</span>
+ <a style="display: none"  class="btn btn-green btn-round "  href="#"  id="AttentrejoindreClub">
+    <span >En attente</span>                                          
+</a>
+        <a style="display: none" class="btn btn-green btn-round " href="#" id="activer_member_club" >
+         <span class="fa icon-action-redo "></span> <span  class="activerclub" id="{{club.id}}" >Regagner</span>
         </a>
                                                      <a class="loader" id="loaderRejoindreClub" >
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">

@@ -106,7 +106,7 @@ $('#activer_member_club').click(function() {
         url: Routing.generate('activer_compte', {'id': id}),
         success: function(data) {
         $('#loaderRejoindreClub').hide();
-        $('#exit_club').show();
+        $('#AttentrejoindreClub').show();
         }
     });
 });

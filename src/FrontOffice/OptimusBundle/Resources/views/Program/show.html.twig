@@ -1,4 +1,4 @@
-{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% extends "FrontOfficeOptimusBundle::layouts.html.twig" %}
 {% block stylesheets %}
     <link rel='stylesheet' type='text/css' href='{{ asset('template/calendar/reset.css') }}' />
     <!--
@@ -13,14 +13,15 @@
 
 {% endblock %}
 {% block body %}
-    <div id="wrapper">
-        <div id="content" class="max">
-            <div class="components">
-                <div class="row">
-                    <h1>Programme:{{ programme.nom}} Du: {{ programme.datedebut|date('Y-m-d') }} À:{{ programme.datefin|date('Y-m-d')}}</h1>
-                    <div id='calendar'></div>
+    <div class="row" style="margin-top:122px">
+    
+                <div class="col-md-12" >
+                    <h1 style="  margin-bottom: -34px;
+  font-size: 14px;
+  margin-left: 100px;">{{ programme.nom}} Du: {{ programme.datedebut|date('Y-m-d') }} À:{{ programme.datefin|date('Y-m-d')}}</h1>
+                    <div id='calendar' style="width: 95%;margin-left: 4%;"></div>
                     <div id="event_edit_container">
-                        <form id="ajouters">
+                      <form id="ajouters">
                             <input type="hidden" />
                             <ul>
                                 <li>
@@ -47,10 +48,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div>
+   </div>       
 {% endblock %}
 {% block javascriptfils %}
 
@@ -62,7 +60,7 @@
     <script type='text/javascript' src='{{ asset('template/calendar/libs/jquery-ui-1.8rc3.custom.min.js') }}'></script>
  
     <script>
-        /*
+/*
  * jQuery.weekCalendar v1.2.3-pre
  * http://www.redredred.com.au/
  *
@@ -88,15 +86,15 @@
          timeFormat : "h:i a",
          dateFormat : "M d, Y",
          alwaysDisplayTimeMinutes: true,
-         use24Hour : false,
+         use24Hour : true,
          daysToShow : 7,
          firstDayOfWeek : 0, // 0 = Sunday, 1 = Monday, 2 = Tuesday, ... , 6 = Saturday
          useShortDayNames: false,
-         timeSeparator : " à",
+         timeSeparator : " to ",
          startParam : "start",
          endParam : "end",
-         businessHours : {start: 8, end: 18, limitDisplay : false},
-         newEventText : "Nouveau Seance",
+         businessHours : {start: 8, end: 18, limitDisplay : true},
+         newEventText : "New Event",
          timeslotHeight: 20,
          defaultEventLength : 2,
          timeslotsPerHour : 4,
@@ -438,9 +436,9 @@
 
          if (options.buttons) {
             calendarNavHtml = "<div class=\"wc-nav\">\
-                    <button class=\"wc-today\">" + options.buttonText.today + "</button>\
-                    <button class=\"wc-prev\">" + options.buttonText.lastWeek + "</button>\
-                    <button class=\"wc-next\">" + options.buttonText.nextWeek + "</button>\
+                    <button class=\"btn btn-danger btn-round wc-today\">" + options.buttonText.today + "</button>\
+                    <button class=\"btn btn-danger btn-round wc-prev\">" + options.buttonText.lastWeek + "</button>\
+                    <button class=\"btn btn-danger btn-round wc-next\">" + options.buttonText.nextWeek + "</button>\
                     </div>";
 
             $(calendarNavHtml).appendTo($calendarContainer);
@@ -474,7 +472,7 @@
                 <table class=\"wc-time-slots\">\
                 <tbody>\
                 <tr>\
-                <td class=\"wc-grid-timeslot-header tdoptimus\"></td>\
+                <td class=\"wc-grid-timeslot-header\"></td>\
                 <td colspan=\"" + options.daysToShow + "\">\
                 <div class=\"wc-time-slot-wrapper\">\
                 <div class=\"wc-time-slots\">";
@@ -489,7 +487,7 @@
             calendarBodyHtml += "<div class=\"wc-time-slot wc-hour-end\"></div>";
          }
 
-         calendarBodyHtml += "</div></div></td></tr><tr><td class=\"wc-grid-timeslot-header tdoptimus\">";
+         calendarBodyHtml += "</div></div></td></tr><tr><td class=\"wc-grid-timeslot-header\">";
 
          for (var i = start; i < end; i++) {
 
@@ -536,7 +534,6 @@
       /*
        * setup mouse events for capturing new events
        */
-      
       _setupEventCreationForWeekDay : function($weekDay) {
          var self = this;
          var options = this.options;
@@ -588,7 +585,7 @@
                var eventDuration = self._getEventDurationFromPositionedEventElement($weekDay, $newEvent, top);
 
                $newEvent.remove();
-               {% if app.user == club.createur and programme.datefin >= date() %}var newCalEvent = {start: eventDuration.start, end: eventDuration.end, title: options.newEventText};{% endif %}
+               var newCalEvent = {start: eventDuration.start, end: eventDuration.end, title: options.newEventText};
                var $renderedCalEvent = self._renderEvent(newCalEvent, $weekDay);
 
                if (!options.allowCalEventOverlap) {
@@ -1123,10 +1120,9 @@
            $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + ": " + calEvent.title);
          }
          else {
-           $calEvent.find(".wc-time").html(calEvent.title + "<br/>" + self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
+           $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
          }
-        
-         $calEvent.find(".wc-title").html(calEvent.body);
+         $calEvent.find(".wc-title").html(calEvent.title);
          $calEvent.data("calEvent", calEvent);
       },
 
@@ -1545,7 +1541,7 @@
 
         </script>
     <script>
-  $(document).ready(function() {
+    $(document).ready(function() {
    var $calendar = $('#calendar');
    var id = 10;
    $calendar.weekCalendar({
@@ -1553,7 +1549,7 @@
       allowCalEventOverlap : true,
       overlapEventsSeparate: true,
       firstDayOfWeek : 1,
-      businessHours :{start: 8, end: 18, limitDisplay: true },
+      businessHours :{start: 8, end: 24, limitDisplay: true },
       daysToShow : 7,
       height : function($calendar) {
          return $(window).height() - $("h1").outerHeight() - 1;

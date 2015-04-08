@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <title>{% block title %}Optimus{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ asset('template/css/jquery.datetimepicker.css') }}"/>
+<link href="{{ asset('template/css/fileinput.min.css') }}" rel="stylesheet">
+
+<link href="{{ asset('template/css/font-awesome.css') }}" rel="stylesheet">
+<link href="{{ asset('template/css/simple-line-icons.css') }}" rel="stylesheet">
+<link href="{{ asset('template/css/jquery-ui.css') }}" rel="stylesheet">
+<link href="{{ asset('template/css/datepicker.css') }}" rel="stylesheet">
+<link href="{{ asset('template/css/bootstraps.css') }}" rel="stylesheet">
+<link href="{{ asset('template/css/app.css') }}" rel="stylesheet">
+<link href="{{ asset('template/css/optimus.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ asset('template/css/jquery.lightbox.css') }}" type="text/css" rel="stylesheet" />
+
+<link href="{{ asset('template/css/toastr8.css') }}" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="{{ asset('template/css/selectinput.css') }}">
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favo.ico') }}" />
+        {% block stylesheets %}
+
+        {% endblock %}
+
+    </head>
+    <body>
+
+
+        <!-- Hero -->
+        {% block navigation %}
+        {% endblock %}
+
+
+        {% block body %}
+        {% endblock %}
+
+        {% block footer %}
+        {% endblock %}
+
+
+        <script src="{{ asset('template/js/imagesoptimus.js') }}" type="text/javascript"></script>
+<script src="{{ asset('template/js/imageoptimus.js') }}" type="text/javascript"></script>
+<script src="{{ asset('template/js/json2.js') }}"></script>
+<script src="{{ asset('template/js/jquery-2.1.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/plugin.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/agenda.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/jquery.lightbox.min.js') }}"></script>
+<script src="{{ asset('template/js/underscore.js') }}"></script>
+<script src="{{ asset('template/js/moment-2.5.1.js') }}"></script>
+<script src="{{ asset('template/js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('template/js/jquery-ui-touch-punch.js') }}"></script>
+<script src="{{ asset('template/js/jquery.placeholder.js') }}"></script>
+<script src="{{ asset('template/js/bootstrap.js') }}"></script>
+<script src="{{ asset('template/js/jquery.touchSwipe.min.js') }}"></script>
+<script src="{{ asset('template/js/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('template/js/jquery.visible.js') }}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=geometry&amp;libraries=places" type="text/javascript"></script>
+<script src="{{ asset('template/js/infobox.js') }}"></script>
+<script src="{{ asset('template/js/clndr.js') }}"></script>
+<script src="{{ asset('template/js/jquery.tagsinput.min.js') }}"></script>
+<script src="{{ asset('template/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('template/js/app.js') }}"></script>
+<script src="{{ asset('template/js/fileinput.min.js') }}"></script>
+<script src="{{ asset('template/js/calendar.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/selectinput.js') }}"></script>
+<script src="{{ asset('template/js/write.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('template/js/jquery.datetimepicker.js') }}"></script>
+<script src="{{ asset('template/js/datus.js') }}"></script>
+<script src="{{ asset('template/js/toastr8.js') }}"  type="text/javascript"></script>
+<!--- script lightbox optimus --->
+
+<script>
+$(document).ready(function(e) {
+$('a[data-lightbox-gallery]').iLightbox({
+type: 'image', //'image', 'inline', 'ajax', 'iframe', 'swf' and 'html'
+loop: true,
+arrows: true,
+closeBtn: true,
+title: null,
+href: null,
+content: null,
+beforeShow: function(a, b){ },
+onShow: function(a, b){ },
+beforeClose: function(){ },
+afterClose: function(){ },
+onUpdate: function(a){ },
+});
+});
+</script>
+
+        {% block javascripts %}
+        {% endblock %}
+    </body>
+</html>
