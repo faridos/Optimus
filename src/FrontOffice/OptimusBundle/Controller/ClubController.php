@@ -347,8 +347,8 @@ class ClubController extends Controller {
         if (!$demande) {
             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
-        $demande->setConfirmed(true);
-        if ($demande->getConfirmed() == true) {
+        $demande->setConfirmed(1);
+        if ($demande->getConfirmed() == 1) {
             $date = new DateTime();
             $demande->setDateconfirm($date);
             $em->persist($demande);

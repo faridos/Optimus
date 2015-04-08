@@ -95,13 +95,12 @@ class Club {
      * @ORM\Column(name="activation", type="boolean", nullable=false)
      */
     protected $active;
-    
-     /**
+
+    /**
      * @var boolean $isPayant
      * @ORM\Column(name="payant", type="boolean")
      */
     protected $isPayant;
-
 
     /**
      * @var float
@@ -109,6 +108,13 @@ class Club {
      * @ORM\Column(name="Frais_adhesion", type="float")
      */
     private $fraisAdhesion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbrvu", type="integer", nullable=true)
+     */
+    private $nbrvu;
 
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="clubs")
@@ -397,8 +403,15 @@ class Club {
 
         return $this;
     }
+    public function getNbrvu() {
+        return $this->nbrvu;
+    }
 
-    /**
+    public function setNbrvu($nbrvu) {
+        $this->nbrvu = $nbrvu;
+    }
+
+        /**
      * Get lng
      *
      * @return float 
@@ -500,17 +513,15 @@ class Club {
         return $this->clubcomments;
     }
 
-
     /**
      * Add notification_club
      *
      * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationClub
      * @return Club
      */
-    public function addNotificationClub(\FrontOffice\OptimusBundle\Entity\Notification $notificationClub)
-    {
+    public function addNotificationClub(\FrontOffice\OptimusBundle\Entity\Notification $notificationClub) {
         $this->notification_club[] = $notificationClub;
-    
+
         return $this;
     }
 
@@ -519,8 +530,7 @@ class Club {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationClub
      */
-    public function removeNotificationClub(\FrontOffice\OptimusBundle\Entity\Notification $notificationClub)
-    {
+    public function removeNotificationClub(\FrontOffice\OptimusBundle\Entity\Notification $notificationClub) {
         $this->notification_club->removeElement($notificationClub);
     }
 
@@ -529,8 +539,7 @@ class Club {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getNotificationClub()
-    {
+    public function getNotificationClub() {
         return $this->notification_club;
     }
 
@@ -540,10 +549,9 @@ class Club {
      * @param \FrontOffice\OptimusBundle\Entity\Comment $clubcomments
      * @return Club
      */
-    public function addClubcomment(\FrontOffice\OptimusBundle\Entity\Comment $clubcomments)
-    {
+    public function addClubcomment(\FrontOffice\OptimusBundle\Entity\Comment $clubcomments) {
         $this->clubcomments[] = $clubcomments;
-    
+
         return $this;
     }
 
@@ -552,8 +560,7 @@ class Club {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Comment $clubcomments
      */
-    public function removeClubcomment(\FrontOffice\OptimusBundle\Entity\Comment $clubcomments)
-    {
+    public function removeClubcomment(\FrontOffice\OptimusBundle\Entity\Comment $clubcomments) {
         $this->clubcomments->removeElement($clubcomments);
     }
 
@@ -563,10 +570,9 @@ class Club {
      * @param \FrontOffice\OptimusBundle\Entity\Member $adherents
      * @return Club
      */
-    public function addAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherents)
-    {
+    public function addAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherents) {
         $this->adherents[] = $adherents;
-    
+
         return $this;
     }
 
@@ -575,8 +581,7 @@ class Club {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Member $adherents
      */
-    public function removeAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherents)
-    {
+    public function removeAdherent(\FrontOffice\OptimusBundle\Entity\Member $adherents) {
         $this->adherents->removeElement($adherents);
     }
 
@@ -586,10 +591,9 @@ class Club {
      * @param \FrontOffice\OptimusBundle\Entity\Reward $reward
      * @return Club
      */
-    public function addReward(\FrontOffice\OptimusBundle\Entity\Reward $reward)
-    {
+    public function addReward(\FrontOffice\OptimusBundle\Entity\Reward $reward) {
         $this->reward[] = $reward;
-    
+
         return $this;
     }
 
@@ -598,8 +602,7 @@ class Club {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Reward $reward
      */
-    public function removeReward(\FrontOffice\OptimusBundle\Entity\Reward $reward)
-    {
+    public function removeReward(\FrontOffice\OptimusBundle\Entity\Reward $reward) {
         $this->reward->removeElement($reward);
     }
 
@@ -608,8 +611,7 @@ class Club {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getReward()
-    {
+    public function getReward() {
         return $this->reward;
     }
 
@@ -619,10 +621,9 @@ class Club {
      * @param \FrontOffice\OptimusBundle\Entity\Album $album
      * @return Club
      */
-    public function addAlbum(\FrontOffice\OptimusBundle\Entity\Album $album)
-    {
+    public function addAlbum(\FrontOffice\OptimusBundle\Entity\Album $album) {
         $this->album[] = $album;
-    
+
         return $this;
     }
 
@@ -631,8 +632,7 @@ class Club {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Album $album
      */
-    public function removeAlbum(\FrontOffice\OptimusBundle\Entity\Album $album)
-    {
+    public function removeAlbum(\FrontOffice\OptimusBundle\Entity\Album $album) {
         $this->album->removeElement($album);
     }
 
@@ -641,8 +641,7 @@ class Club {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getAlbum()
-    {
+    public function getAlbum() {
         return $this->album;
     }
 
@@ -652,10 +651,9 @@ class Club {
      * @param \FrontOffice\OptimusBundle\Entity\Program $programs
      * @return Club
      */
-    public function addProgram(\FrontOffice\OptimusBundle\Entity\Program $programs)
-    {
+    public function addProgram(\FrontOffice\OptimusBundle\Entity\Program $programs) {
         $this->programs[] = $programs;
-    
+
         return $this;
     }
 
@@ -664,8 +662,7 @@ class Club {
      *
      * @param \FrontOffice\OptimusBundle\Entity\Program $programs
      */
-    public function removeProgram(\FrontOffice\OptimusBundle\Entity\Program $programs)
-    {
+    public function removeProgram(\FrontOffice\OptimusBundle\Entity\Program $programs) {
         $this->programs->removeElement($programs);
     }
 
@@ -674,8 +671,7 @@ class Club {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPrograms()
-    {
+    public function getPrograms() {
         return $this->programs;
     }
 
@@ -685,10 +681,9 @@ class Club {
      * @param boolean $isPayant
      * @return Club
      */
-    public function setIsPayant($isPayant)
-    {
+    public function setIsPayant($isPayant) {
         $this->isPayant = $isPayant;
-    
+
         return $this;
     }
 
@@ -697,8 +692,8 @@ class Club {
      *
      * @return boolean 
      */
-    public function getIsPayant()
-    {
+    public function getIsPayant() {
         return $this->isPayant;
     }
+
 }

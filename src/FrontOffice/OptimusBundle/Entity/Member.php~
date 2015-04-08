@@ -37,10 +37,16 @@ class Member
      */
    private $dateconfirm;
    /**
-     * @var boolean $confirmed
-     * @ORM\Column(name="confirmed", type="boolean", nullable=false)
+     * @var integer $confirmed
+     * @ORM\Column(name="confirmed", type="integer", nullable=false)
      */
    protected $confirmed; 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Date_exit", type="date", nullable=true)
+     */
+   private $dateExit;
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="adherent")
      * @ORM\JoinColumn(name="member_id", referencedColumnName="id")

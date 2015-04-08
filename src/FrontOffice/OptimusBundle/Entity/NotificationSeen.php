@@ -127,4 +127,27 @@ class NotificationSeen
     }
 
 
+
+    /**
+     * Set datenotificationseen
+     *
+     * @param \DateTime $datenotificationseen
+     * @return NotificationSeen
+     */
+    public function setDatenotificationseen($datenotificationseen)
+    {
+        $this->datenotificationseen = $datenotificationseen;
+    
+        return $this;
+    }
+
+    /**
+     * Get datenotificationseen
+     *
+     * @return \DateTime 
+     */
+    public function getDatenotificationseen()
+    {
+        return $this->datenotificationseen;
+    }
 }

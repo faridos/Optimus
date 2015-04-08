@@ -100,7 +100,9 @@ class MemberController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
         if (!empty($demande)) {
-            $em->remove($demande);
+            $demande->setConfirmed(2);
+            $demande->setDateExit(new DateTime());
+            $em->merge($demande);
             $em->flush();
             $response = new Response($id);
             return $response;

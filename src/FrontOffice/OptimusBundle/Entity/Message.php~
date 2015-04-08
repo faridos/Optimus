@@ -77,6 +77,13 @@ class Message {
      * 
      */
     private $event;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="club", type="integer", nullable=true)
+     * 
+     */
+    private $club;
     
 
     public function __construct() {
@@ -94,8 +101,15 @@ class Message {
     public function getId() {
         return $this->id;
     }
+    public function getClub() {
+        return $this->club;
+    }
 
-    /**
+    public function setClub($club) {
+        $this->club = $club;
+    }
+
+        /**
      * Set content
      *
      * @param string $content

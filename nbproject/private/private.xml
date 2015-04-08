@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Notification.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Event.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/NotificationController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Event/showEvent.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/UserController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/ParticipationController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/EventController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Repository/UserRepository.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Entity/User.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/SeanceController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Member.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/showClub.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/MemberController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Club.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Program/show.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/ClubController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig</file>
         </group>
     </open-files>
 </project-private>
