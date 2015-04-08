@@ -30,7 +30,7 @@ class Participation {
     /**
      *
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="participations")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
      */
     private $participant;
 

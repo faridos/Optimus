@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * User
  * @ORM\Entity(repositoryClass="FrontOffice\UserBundle\Repository\UserRepository")

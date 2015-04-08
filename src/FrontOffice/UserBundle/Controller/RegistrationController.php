@@ -57,11 +57,11 @@ class RegistrationController extends BaseController {
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
             $userManager->updateUser($user);
 
-            if ($user->getProfil() == "Entraineur") {
-                $usernotif = new UserRegisterEvent($user);
-                $dispatcher = $this->get('event_dispatcher');
-                $dispatcher->dispatch(FrontOfficeUserEvents::AFTER_ENTRAINEUR_REGISTER, $usernotif);
-            }
+//            if ($user->getProfil() == "Entraineur") {
+//                $usernotif = new UserRegisterEvent($user);
+//                $dispatcher = $this->get('event_dispatcher');
+//                $dispatcher->dispatch(FrontOfficeUserEvents::AFTER_ENTRAINEUR_REGISTER, $usernotif);
+//            }
             if (null === $response = $event->getResponse()) {
                 $url = $this->generateUrl('fos_user_registration_confirmed');
                 $response = new RedirectResponse($url);
