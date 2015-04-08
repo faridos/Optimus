@@ -23,20 +23,20 @@ class Album
     private $id;
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="albums")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    
    protected $user;
    /**
      * @ORM\ManyToOne(targetEntity="Club", inversedBy="album")
-     * @ORM\JoinColumn(name="club_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    
    protected $club;
    
     /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="album")
-     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    
    protected $event;

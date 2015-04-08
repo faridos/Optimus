@@ -40,7 +40,7 @@ class Message {
 
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Conversation",inversedBy="messages", cascade={"persist","remove"})
-     * @ORM\JoinColumn(name="convers_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="convers_id", referencedColumnName="id", nullable=true ,onDelete="CASCADE")
      */
     protected $conversation;
 

@@ -31,14 +31,14 @@ class Photo
     public $file;
     /**
      * @ORM\ManyToOne(targetEntity="Album", inversedBy="images")
-     * @ORM\JoinColumn(name="album_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="album_id", referencedColumnName="id", nullable=true ,onDelete="CASCADE")
      **/
    
    protected $album;
    
    /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="images")
-     * @ORM\JoinColumn(name="event_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id", nullable=true ,onDelete="CASCADE")
      **/
    
    protected $event;

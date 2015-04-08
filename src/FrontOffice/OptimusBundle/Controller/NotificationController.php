@@ -42,7 +42,7 @@ class NotificationController extends Controller {
              foreach ($ami->getNotificateur() as $notif){
                  $i=0;
                  if($notif->getDatenotification()> $user->getcreatedAt()){
-                     foreach ($user-> getNotificationseen() as $notifSeen){
+                     foreach ($user->getNotificationseen() as $notifSeen){
                          if($notifSeen->getNotifications()->getId()== $notif->getId())
                          {
                              $i=1;
@@ -57,8 +57,9 @@ class NotificationController extends Controller {
            }  
                
            }
-       }
-       
+           
+        }
+        var_dump($res);die();
        foreach ($res as $val){
         $notifseen = new NotificationSeen();
         $notifseen->setUsers($user);

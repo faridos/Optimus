@@ -22,13 +22,13 @@ class Reward
     private $id;
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="reward")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    
    protected $user;
    /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Club", inversedBy="reward")
-     * @ORM\JoinColumn(name="club_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    
    protected $club;

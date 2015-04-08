@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
+use FrontOffice\OptimusBundle\Entity\Notification;
 use \DateTime;
 
 /**
@@ -50,6 +51,13 @@ public function ajaxCommenteventAction(Request $request, $eventid) {
             $comment->setCommentaire($cmt);
             $comment->setCreatedat(new \Datetime());
             $em->persist($comment);
+            $em->flush();
+            
+            $notif = new Notification();
+            $notif->setNotificateur($commenteur);
+            $notif->setType('comment');
+            $notif->setEvent($event);
+            $em->persist($notif);
             $em->flush();
         }
         

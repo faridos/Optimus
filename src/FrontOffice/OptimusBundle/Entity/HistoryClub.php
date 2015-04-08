@@ -23,13 +23,13 @@ class HistoryClub
     
     /**
      * @ORM\ManyToOne(targetEntity="Club", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
      */
     private $club;
     
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User",cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
      */
     private $user;
 

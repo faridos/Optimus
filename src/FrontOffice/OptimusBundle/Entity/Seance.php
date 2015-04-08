@@ -24,7 +24,7 @@ class Seance {
 
     /**
      * @ORM\ManyToOne(targetEntity="Program", inversedBy="seances")
-     * @ORM\JoinColumn(name="program_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="program_id", referencedColumnName="id" ,onDelete="CASCADE")
      * */
     protected $program;
 

@@ -25,25 +25,25 @@ class Notification {
 
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="notificateur")
-     * @ORM\JoinColumn(name="notificateur", referencedColumnName="id")
+     * @ORM\JoinColumn(name="notificateur", referencedColumnName="id" ,onDelete="CASCADE")
      * */
     protected $notificateur;
     
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="notification_entraineur")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id" ,onDelete="CASCADE")
      * */
     protected $entraineur;
 
     /**
      * @ORM\ManyToOne(targetEntity="Event",inversedBy="notification_event", cascade={"persist","remove"})
-     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id" ,onDelete="CASCADE")
      */
     protected $event;
 
     /**
      * @ORM\ManyToOne(targetEntity="Club", inversedBy="notification_club")
-     * @ORM\JoinColumn(name="club_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
      * */
     protected $club;
 
@@ -69,7 +69,7 @@ class Notification {
     
     /**
      * @ORM\ManyToOne(targetEntity="Participation",inversedBy="notificationParticipation", cascade={"persist","remove"})
-     * @ORM\JoinColumn(name="participation_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="participation_id", referencedColumnName="id" ,onDelete="CASCADE")
      */
     protected $participation;
 

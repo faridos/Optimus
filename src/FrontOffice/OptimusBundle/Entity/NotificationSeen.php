@@ -24,14 +24,14 @@ class NotificationSeen
     
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="notificationseen")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    
     protected $users;
     
     /**
      * @ORM\ManyToOne(targetEntity="Notification", inversedBy="notificationsen")
-     * @ORM\JoinColumn(name="notification_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="notification_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    
     protected $notifications;

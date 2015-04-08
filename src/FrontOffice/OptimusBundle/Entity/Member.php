@@ -21,7 +21,7 @@ class Member
     private $id;
     /**
      * @ORM\ManyToOne(targetEntity="Club", inversedBy="adherents")
-     * @ORM\JoinColumn(name="club_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    protected $clubad;
    /**
@@ -49,7 +49,7 @@ class Member
    private $dateExit;
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="adherent")
-     * @ORM\JoinColumn(name="member_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    
    protected $member;
