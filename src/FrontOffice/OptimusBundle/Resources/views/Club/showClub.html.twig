@@ -1156,11 +1156,10 @@ $('#exit_club').click(function() {
 $('#activer_member_club').click(function() {
     $('#loaderRejoindreClub').show();
     $('#activer_member_club').hide();
-    {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
-         
+    var id = $('.activerclub').attr('id');
 
     $.ajax({
-        url: Routing.generate('activer_compte', {'id': {{memberconfirmed.id}}}),
+        url: Routing.generate('activer_compte', {'id': id}),
         success: function(data) {
            tab = data.split('*');
            

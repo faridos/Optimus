@@ -6,7 +6,7 @@
     $('#loaderRejoindreClub').show();
 
     $.ajax({
-        url: Routing.generate('activer_compte', {'id': {{member.id}}}),
+        url: Routing.generate('activer_compte', {'id': {{club.id}}}),
         success: function(data) {
          tab = data.split('*');
           $('#activer_member_club').hide();
