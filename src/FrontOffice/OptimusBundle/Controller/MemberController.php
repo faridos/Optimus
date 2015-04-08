@@ -108,6 +108,7 @@ class MemberController extends Controller {
             $compte->setMember($member);
             $compte->setDateExit(new DateTime());
             $compte->setType('desactivé');
+             $compte->setClub($member->getClubad());
             $em->persist($compte);
             $em->flush();
             $response = new Response($id);

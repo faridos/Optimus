@@ -1,0 +1,13 @@
+ <a class="btn btn-green btn-round " href="#" id="exit_club" >
+         <span class="fa icon-action-redo "></span> <span  class="exitClub" id="{{club.id}}" >Quitter</span>
+        </a> <a class="loader" id="loaderRejoindreClub" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+        </a>*<script>$('#exit_club').click(function() {
+    $('#loaderRejoindreClub').show();
+    $.ajax({
+        url: Routing.generate('exit_club', {'id': {{club.id}}}),
+        success: function(data) {
+           alert('ok');
+        }
+    });
+});</script>

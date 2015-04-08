@@ -328,8 +328,7 @@ class ClubController extends Controller {
             $compte->setType('desactivé');
             $em->persist($compte);
             $em->flush();
-            $response = new Response($id);
-            return $response;
+           return $this->render('FrontOfficeOptimusBundle:Club:exitClub.html.twig', array('member' =>$member,'club' => $club ));
         }
         
     }
@@ -344,25 +343,25 @@ class ClubController extends Controller {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $em = $this->getDoctrine()->getManager();
-        $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
+        $club =  $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->findOneBy(array('clubad'=> $club,'member'=>$user));
         if (!$demande) {
             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
-        $demande->setConfirmed(1);
-        if ($demande->getConfirmed() == 1) {
-            
+           $demande->setConfirmed(1);
             $em->merge($demande);
             $em->flush();
             $compte = new CompteClub();
             $compte->setMember($demande);
-            $compte->setDateExit(new DateTime());
-            $compte->setType('desactivé');
+            $compte->setDateActive(new DateTime());
+            $compte->setType('activé');
+            $compte->setClub($demande->getClubad());
             $em->persist($compte);
             $em->flush();
-           $response = new Response($id);
-            return $response;
-        }
+           return $this->render('FrontOfficeOptimusBundle:Club:activercompte.html.twig', array('member'=>$demande,'club' => $club ));
+        
     }
 
 

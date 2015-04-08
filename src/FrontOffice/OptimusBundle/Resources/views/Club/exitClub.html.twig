@@ -1,0 +1,18 @@
+ <a class="btn btn-green btn-round " href="#" id="activer_member_club" >
+         <span class="fa icon-action-redo "></span> <span  class="activerclub" id="{{club.id}}" >Activer</span>
+ </a><a class="loader" id="loaderRejoindreClub" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                                     </a>*<script>$('#activer_member_club').click(function() {
+    $('#loaderRejoindreClub').show();
+
+    $.ajax({
+        url: Routing.generate('activer_compte', {'id': {{member.id}}}),
+        success: function(data) {
+         tab = data.split('*');
+          $('#activer_member_club').hide();
+            $('#loaderRejoindreClub').hide();
+            $('#appendclubutton').append(tab[0]);
+            $(tab[1]).appendTo(document.body);
+        }
+    });
+});</script>

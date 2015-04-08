@@ -153,6 +153,10 @@ class Club {
      * @ORM\OneToMany(targetEntity="Program", mappedBy="clubp")
      * */
     protected $programs;
+    /**
+     * @ORM\OneToMany(targetEntity="CompteClub", mappedBy="club", cascade={"persist","remove"})
+     * */
+    protected $comptem;
 
     public function __construct() {
 
@@ -696,4 +700,37 @@ class Club {
         return $this->isPayant;
     }
 
+
+    /**
+     * Add comptem
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\CompteClub $comptem
+     * @return Club
+     */
+    public function addComptem(\FrontOffice\OptimusBundle\Entity\CompteClub $comptem)
+    {
+        $this->comptem[] = $comptem;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comptem
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\CompteClub $comptem
+     */
+    public function removeComptem(\FrontOffice\OptimusBundle\Entity\CompteClub $comptem)
+    {
+        $this->comptem->removeElement($comptem);
+    }
+
+    /**
+     * Get comptem
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComptem()
+    {
+        return $this->comptem;
+    }
 }
