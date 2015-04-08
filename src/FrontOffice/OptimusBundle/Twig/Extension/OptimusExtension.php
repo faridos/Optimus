@@ -15,6 +15,7 @@ class OptimusExtension extends \Twig_Extension {
 
     public function getFunctions() {
         return array(
+            new \Twig_SimpleFunction('MemberOuNon', array($this, 'MemberOuNon')),
             new \Twig_SimpleFunction('getTypeEvent', array($this, 'getTypeEvent')),
             new \Twig_SimpleFunction('ParticipantOuNon', array($this, 'ParticipantOuNon')),
             new \Twig_SimpleFunction('getNotifications', array($this, 'getNotifications')),
@@ -34,10 +35,12 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('adherents', array($this, 'adherents')),
         );
     }
-    
+     public function  memberclub($id){
+       $club = $this->em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('clubad'=> $club));
+    }
     public function  adherents($id){
-        $club = $this->em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
-        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->getMembers($id,$club->getCreateur()->getId());
+      return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->getMembers($id);
     }
     public function  participants($event){
          return $this->em->getRepository("FrontOfficeOptimusBundle:Event")->getParticipants2($event, $event->getCreateur());
@@ -72,8 +75,11 @@ class OptimusExtension extends \Twig_Extension {
         return $this->em->getRepository('FrontOfficeOptimusBundle:TypeEvent')->findAll();
     }
     
-    public function getMembreRequest($user, $club) {
-        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('member' => $user, 'clubad' => $club));
+    public function getMembreRequest($club,$user) {
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->getMembersRequest($club,$user);
+    }
+     public function MemberOuNon($club, $user) {
+        return $this->em->getRepository("FrontOfficeOptimusBundle:Club")->MemberOuNon($club, $user);
     }
 
     public function getMembreConfirmed($user, $club) {
