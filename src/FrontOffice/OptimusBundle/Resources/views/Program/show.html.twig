@@ -1634,12 +1634,13 @@
       },
       eventResize : function(calEvent, $event) {
       },
+      {% if app.user == club.createur and programme.datefin >= date()%} 
       eventClick : function(calEvent, $event) {
 
          if (calEvent.readOnly) {
             return;
          }
-         {% if app.user == club.createur and programme.datefin >= date()%} 
+         
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
          var idField = $dialogContent.find("input[name='id']").val(calEvent.id);
@@ -1743,7 +1744,7 @@
          setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
          $(window).resize().resize(); //fixes a bug in modal overlay size ??
          }
-    {% endif %} },
+    }, {% endif %}
       eventMouseover : function(calEvent, $event) {
       },
       eventMouseout : function(calEvent, $event) {

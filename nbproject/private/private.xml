@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/SeanceController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Member.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/showClub.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/MemberController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Club.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Program/show.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/ClubController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
