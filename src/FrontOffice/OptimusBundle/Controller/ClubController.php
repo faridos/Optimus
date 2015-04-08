@@ -13,6 +13,7 @@ use FrontOffice\OptimusBundle\Form\UpdateClubType;
 use FrontOffice\OptimusBundle\Form\ClubPhotoType;
 use FrontOffice\OptimusBundle\Entity\Member;
 use FrontOffice\OptimusBundle\Entity\Message;
+use FrontOffice\OptimusBundle\Entity\CompteClub;
 use FrontOffice\OptimusBundle\Entity\Comment;
 use FrontOffice\OptimusBundle\Entity\Palmares;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -317,19 +318,53 @@ class ClubController extends Controller {
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->findOneBy(array('member' => $user, 'clubad' => $club));
         if (!empty($member)) {
-            $em->remove($member);
+           $member->setConfirmed(2);
+            $member->setDateExit(new DateTime());
+            $em->merge($member);
             $em->flush();
+            $compte = new CompteClub();
+            $compte->setMember($member);
+            $compte->setDateExit(new DateTime());
+            $compte->setType('desactivé');
+            $em->persist($compte);
+            $em->flush();
+            $response = new Response($id);
+            return $response;
         }
-        $action = 'quitter';
-        $clubevent = new HistoryClubEvent($user, $club, $action);
-        $dispatcher = $this->get('event_dispatcher');
-        $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-        $response = new Response();
-        $memberJson = json_encode($member);
-        $response->headers->set('Content-Type', 'application/json');
-        $response->setContent($memberJson);
-        return $response;
+        
     }
+    /**
+     * 
+     *
+     * @Route("member/{id}/activer", name="activer_compte", options={"expose"=true})
+     * @Method("GET|POST")
+     */
+    public function activerCompteAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
+        if (!$demande) {
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+        }
+        $demande->setConfirmed(1);
+        if ($demande->getConfirmed() == 1) {
+            
+            $em->merge($demande);
+            $em->flush();
+            $compte = new CompteClub();
+            $compte->setMember($demande);
+            $compte->setDateExit(new DateTime());
+            $compte->setType('desactivé');
+            $em->persist($compte);
+            $em->flush();
+           $response = new Response($id);
+            return $response;
+        }
+    }
+
 
     /**
      * 

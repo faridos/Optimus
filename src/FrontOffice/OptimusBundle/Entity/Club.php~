@@ -118,7 +118,7 @@ class Club {
 
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="clubs")
-     * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="createur_id", referencedColumnName="id" ,onDelete="CASCADE")
      * */
     protected $createur;
 

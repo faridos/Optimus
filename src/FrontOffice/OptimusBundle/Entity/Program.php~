@@ -27,7 +27,7 @@ class Program {
 
     /**
      * @ORM\ManyToOne(targetEntity="Club", inversedBy="programs")
-     * @ORM\JoinColumn(name="club_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
      * */
     protected $clubp;
 

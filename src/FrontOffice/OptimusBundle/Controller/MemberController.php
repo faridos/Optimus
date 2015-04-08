@@ -9,8 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Member;
+use FrontOffice\OptimusBundle\Entity\CompteClub;
 use FrontOffice\OptimusBundle\Form\MemberType;
-use DateTime;
+use \DateTime;
 
 /**
  * Member controller.
@@ -98,11 +99,16 @@ class MemberController extends Controller {
      */
     public function deleteMemberAction($id) {
         $em = $this->getDoctrine()->getManager();
-        $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
-        if (!empty($demande)) {
-            $demande->setConfirmed(2);
-            $demande->setDateExit(new DateTime());
-            $em->merge($demande);
+        $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
+        if (!empty($member)) {
+            $member->setConfirmed(2);
+            $em->merge($member);
+            $em->flush();
+            $compte = new CompteClub();
+            $compte->setMember($member);
+            $compte->setDateExit(new DateTime());
+            $compte->setType('desactivé');
+            $em->persist($compte);
             $em->flush();
             $response = new Response($id);
             return $response;

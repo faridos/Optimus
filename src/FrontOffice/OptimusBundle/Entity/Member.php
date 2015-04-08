@@ -24,6 +24,10 @@ class Member
      * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
      **/
    protected $clubad;
+    /**
+     * @ORM\OneToMany(targetEntity="CompteClub", mappedBy="member", cascade={"persist","remove"})
+     * */
+    protected $compte;
    /**
      * @var \DateTime
      *
@@ -41,12 +45,7 @@ class Member
      * @ORM\Column(name="confirmed", type="integer", nullable=false)
      */
    protected $confirmed; 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="Date_exit", type="date", nullable=true)
-     */
-   private $dateExit;
+   
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="adherent")
      * @ORM\JoinColumn(name="member_id", referencedColumnName="id" ,onDelete="CASCADE")
@@ -140,5 +139,38 @@ class Member
     public function getDateExit()
     {
         return $this->dateExit;
+    }
+
+    /**
+     * Add compte
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\CompteClub $compte
+     * @return Member
+     */
+    public function addCompte(\FrontOffice\OptimusBundle\Entity\CompteClub $compte)
+    {
+        $this->compte[] = $compte;
+    
+        return $this;
+    }
+
+    /**
+     * Remove compte
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\CompteClub $compte
+     */
+    public function removeCompte(\FrontOffice\OptimusBundle\Entity\CompteClub $compte)
+    {
+        $this->compte->removeElement($compte);
+    }
+
+    /**
+     * Get compte
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCompte()
+    {
+        return $this->compte;
     }
 }
