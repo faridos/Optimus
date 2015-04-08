@@ -125,7 +125,7 @@ class Club {
     /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="club", cascade={"persist","remove"})
      */
-    protected $notification_club;
+    protected $notificationclub;
 
     /**
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Comment", mappedBy="club" )
@@ -169,9 +169,6 @@ class Club {
         return $this->description;
     }
 
-    public function getNotification_club() {
-        return $this->notification_club;
-    }
 
     public function getAdherents() {
         return $this->adherents;
@@ -185,9 +182,7 @@ class Club {
         $this->description = $description;
     }
 
-    public function setNotification_club($notification_club) {
-        $this->notification_club = $notification_club;
-    }
+ 
 
     public function setAdherents($adherents) {
         $this->adherents = $adherents;
@@ -700,4 +695,37 @@ class Club {
         return $this->isPayant;
     }
 
+
+    /**
+     * Add comptem
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\CompteClub $comptem
+     * @return Club
+     */
+    public function addComptem(\FrontOffice\OptimusBundle\Entity\CompteClub $comptem)
+    {
+        $this->comptem[] = $comptem;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comptem
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\CompteClub $comptem
+     */
+    public function removeComptem(\FrontOffice\OptimusBundle\Entity\CompteClub $comptem)
+    {
+        $this->comptem->removeElement($comptem);
+    }
+
+    /**
+     * Get comptem
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComptem()
+    {
+        return $this->comptem;
+    }
 }

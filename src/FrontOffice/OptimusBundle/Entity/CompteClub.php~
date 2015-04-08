@@ -28,13 +28,13 @@ class CompteClub {
      /**
      * @var \DateTime
      *
-     * @ORM\Column(name="Date_exit", type="date", nullable=true)
+     * @ORM\Column(name="Date_exit", type="datetime", nullable=true)
      */
    private $dateExit;
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="Date_active", type="date", nullable=true)
+     * @ORM\Column(name="Date_active", type="datetime", nullable=true)
      */
    private $dateActive;
     /**
@@ -118,5 +118,28 @@ class CompteClub {
     public function getMember()
     {
         return $this->member;
+    }
+
+    /**
+     * Set club
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Club $club
+     * @return CompteClub
+     */
+    public function setClub(\FrontOffice\OptimusBundle\Entity\Club $club = null)
+    {
+        $this->club = $club;
+    
+        return $this;
+    }
+
+    /**
+     * Get club
+     *
+     * @return \FrontOffice\OptimusBundle\Entity\Club 
+     */
+    public function getClub()
+    {
+        return $this->club;
     }
 }

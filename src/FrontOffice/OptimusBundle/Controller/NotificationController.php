@@ -40,6 +40,7 @@ class NotificationController extends Controller {
            $c=0;
            foreach ($amis as $ami){
              foreach ($ami->getNotificateur() as $notif){
+                 if($notif->getType() != "comment"){
                  $i=0;
                  if($notif->getDatenotification()> $user->getcreatedAt()){
                      foreach ($user->getNotificationseen() as $notifSeen){
@@ -55,11 +56,17 @@ class NotificationController extends Controller {
                          }
                  }
            }  
+             }
                
            }
-           
+           foreach ($user->getParticipations() as $participe){
+               foreach ($participe->getEvent()->get as $participe){
+                   
+               }
+               
+           }
         }
-        var_dump($res);die();
+       
        foreach ($res as $val){
         $notifseen = new NotificationSeen();
         $notifseen->setUsers($user);

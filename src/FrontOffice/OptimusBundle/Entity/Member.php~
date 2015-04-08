@@ -31,13 +31,13 @@ class Member
    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="Date_sent", type="date")
+     * @ORM\Column(name="Date_sent", type="datetime")
      */
    private $datesent;
    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="Date_confirm", type="date", nullable=true)
+     * @ORM\Column(name="Date_confirm", type="datetime", nullable=true)
      */
    private $dateconfirm;
    /**
