@@ -3,13 +3,14 @@
  </a><a class="loader" id="loaderRejoindreClub" >
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
                                                      </a>*<script>$('#activer_member_club').click(function() {
-    $('#loaderRejoindreClub').show();
+    $('#activer_member_club').hide();
+     $('#loaderRejoindreClub').show();
 
     $.ajax({
         url: Routing.generate('activer_compte', {'id': {{club.id}}}),
         success: function(data) {
          tab = data.split('*');
-          $('#activer_member_club').hide();
+         
             $('#loaderRejoindreClub').hide();
             $('#appendclubutton').append(tab[0]);
             $(tab[1]).appendTo(document.body);

@@ -328,7 +328,8 @@ class ClubController extends Controller {
             $compte->setType('desactivé');
             $em->persist($compte);
             $em->flush();
-           return $this->render('FrontOfficeOptimusBundle:Club:exitClub.html.twig', array('member' =>$member,'club' => $club ));
+            $response = new Response($id);
+            return $response;
         }
         
     }
@@ -360,7 +361,8 @@ class ClubController extends Controller {
             $compte->setClub($demande->getClubad());
             $em->persist($compte);
             $em->flush();
-           return $this->render('FrontOfficeOptimusBundle:Club:activercompte.html.twig', array('member'=>$demande,'club' => $club ));
+           $response = new Response($id);
+            return $response;
         
     }
 
