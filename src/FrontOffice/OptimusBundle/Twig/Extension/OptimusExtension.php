@@ -83,7 +83,8 @@ class OptimusExtension extends \Twig_Extension {
     }
 
     public function getMembreConfirmed($user, $club) {
-        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('member' => $user, 'clubad' => $club, 'confirmed' => '1'));
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Member')->findOneBy(array('member' => $user, 'clubad' => $club));
+         
     }
 
     public function ParticipantOuNon($event, $user) {

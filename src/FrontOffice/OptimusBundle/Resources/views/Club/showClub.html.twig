@@ -111,27 +111,30 @@ Nombre des members : <span  id="nbparticip">{{ club.adherents | length}}</span>
 <div class="col-md-4 pb20">
 <div class="pc-about osLight" id="">
 {% if club.createur != app.user %}
-{% set memberrequest = getMembreRequest(app.user,club) %}   
-        {% if memberrequest is empty %}
+
+        {% if memberconfirmed is empty %}
 <a class="btn btn-green btn-round " href="#"  id="request_club">
     <span class="fa fa-plus-circle" data-toggle="tooltip" data-tooltip-class="green" data-placement="top" title="participaer dans cet club" data-original-title="Participer"></span>
     <span  class="requestClub" id="{{club.id}}">Rejoindre</span>                                          
 </a>
 
-  {% else %}
-       {% if memberconfirmed is empty %}
+  {% elseif memberconfirmed.confirmed == 0 %}
+       
 <a class="btn btn-green btn-round "  href="#"  id="AttentrejoindreClub">
    
     <span >En attente</span>                                          
 </a>
- {% else %}
+ {% elseif memberconfirmed.confirmed == 1 %}
      <a class="btn btn-green btn-round " href="#" id="exit_club" >
          <span class="fa icon-action-redo "></span> <span  class="exitClub" id="{{club.id}}" >Quitter</span>
         </a>
     
-   
+  {% elseif memberconfirmed.confirmed == 2 %} 
+         <a class="btn btn-green btn-round " href="#" id="activer_member_club" >
+         <span class="fa icon-action-redo "></span> <span  class="exitClub" id="{{club.id}}" >Activer</span>
+        </a>
  {% endif %}
-                                                    {% endif %}
+                                                  
                                                 {% endif %}
                                                      <a class="loader" id="loaderRejoindreClub" >
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
