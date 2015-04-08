@@ -512,35 +512,9 @@ class Club {
         return $this->clubcomments;
     }
 
-    /**
-     * Add notification_club
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationClub
-     * @return Club
-     */
-    public function addNotificationClub(\FrontOffice\OptimusBundle\Entity\Notification $notificationClub) {
-        $this->notification_club[] = $notificationClub;
+    
 
-        return $this;
-    }
-
-    /**
-     * Remove notification_club
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationClub
-     */
-    public function removeNotificationClub(\FrontOffice\OptimusBundle\Entity\Notification $notificationClub) {
-        $this->notification_club->removeElement($notificationClub);
-    }
-
-    /**
-     * Get notification_club
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getNotificationClub() {
-        return $this->notification_club;
-    }
+    
 
     /**
      * Add clubcomments
