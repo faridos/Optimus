@@ -30,8 +30,9 @@ class EventRepository extends EntityRepository {
 
         $em = $this->getEntityManager();
         $dt = new \Datetime();
+        $dt = $dt->modify('+ 1 days');
         $dt2 = new \DateTime();
-        $dt2 = $dt2->modify('+ 1 days');
+        $dt2 = $dt2->modify('+ 2 days');
         $query = $em->createQuery("SELECT event "
                         . "FROM FrontOfficeOptimusBundle:Event event"
                         . " where event.active = 1 and event.dateDebut BETWEEN  '" . $dt->format("Y-m-d") . " 00:00:00' and '" . $dt2->format("Y-m-d") . " 23:59:59'"
