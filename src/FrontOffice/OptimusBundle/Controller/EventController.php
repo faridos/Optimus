@@ -171,12 +171,12 @@ class EventController extends Controller {
         $em->persist($notif);
         $em->flush();
 //add notification + add prticipation + add History
-//                $action = 'add';
-//                $eventhistory = new HistoryEventEvent($user, $event, $action);
-//                $eventparticipation = new ParticipationEvent($user, $event);
-//                $dispatcher = $this->get('event_dispatcher');
-//                $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
-//                $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
+               // $action = 'add';
+               // $eventhistory = new HistoryEventEvent($user, $event, $action);
+                $eventparticipation = new ParticipationEvent($user, $event);
+               $dispatcher = $this->get('event_dispatcher');
+               // $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+              $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
                 $request->getSession()->getFlashBag()->add('AjouterEvent', "Votre évènement a été ajouter avec success.");
                 return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
             }

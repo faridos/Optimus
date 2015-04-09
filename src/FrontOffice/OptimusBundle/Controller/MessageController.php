@@ -77,42 +77,14 @@ class MessageController extends Controller {
         $content = $request->get('content');
         $em = $this->getDoctrine()->getEntityManager();
         $sender = $this->container->get('security.context')->getToken()->getUser();
-      
-        $conversation1 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' =>  $id));
-        $conversation2 = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' =>  $id, 'user2' => $sender));
-        if ($conversation1 == null && $conversation2 == null) {
-            $convers = new Conversation();
-            $convers->setStarttime(new \Datetime());
-            $convers->setUser1($sender);
-            $convers->setUser2( $id);
-            $em->persist($convers);
-            $em->flush();
-            $newconvers_toshow = $em->getRepository('FrontOfficeOptimusBundle:Conversation')->findOneBy(array('user1' => $sender, 'user2' => $destinatair));
+      $message->setSender($sender);
             $message->setReciever($id);
-            $message->setSender($sender);
-            $message->setConversation($newconvers_toshow->getId());
-           
-            $message->setMsgTime(new \DateTime());
-            $message->setContent($content);
-            $em->persist($message);
-            $em->flush();
-        } else if ($conversation1 !== null && $conversation2 == null) {
-            $message->setSender($sender);
-            $message->setReciever($id);
-            $message->setConversation($conversation1);
+          
             $message->getMsgTime(new \Datetime());
             $message->setContent($content);
             $em->persist($message);
             $em->flush();
-        } else if ($conversation1 == null && $conversation2 !== null) {
-            $message->setSender($sender);
-            $message->setReciever($id);
-            $message->setConversation($conversation2);
-            $message->getMsgTime(new \Datetime());
-            $message->setContent($content);
-            $em->persist($message);
-            $em->flush();
-        }
+       
         return new Response();
     }
 

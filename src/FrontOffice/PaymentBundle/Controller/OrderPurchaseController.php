@@ -74,11 +74,11 @@ class OrderPurchaseController extends Controller
                 'mapped' => false,
                 'constraints' => array(new NotBlank())
             ))
-            ->add('totalAmount', 'integer', array('attr'=>array('class'=>'search-optimus'),
+            ->add('totalAmount', 'integer', array('attr'=>array('class'=>'search-optimus','readonly'=>'readonly'),
                 'data' => $configuration->getPrixClub(),
-                'constraints' => array(new Range(array('max' => 1000, 'min' => 100)), new NotBlank())
+                'constraints' => array(new Range(array('max' => 1000, 'min' => 10)), new NotBlank())
             ))
-            ->add('currencyCode', 'text', array('attr'=>array('class'=>'search-optimus'),
+            ->add('currencyCode', 'text', array('attr'=>array('class'=>'search-optimus','readonly'=>'readonly'),
                 'data' => 'USD',
                 'constraints' => array(new NotBlank())
             ))

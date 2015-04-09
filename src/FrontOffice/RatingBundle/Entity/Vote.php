@@ -36,5 +36,4 @@ class Vote extends BaseVote
     }
    
 
-
 }

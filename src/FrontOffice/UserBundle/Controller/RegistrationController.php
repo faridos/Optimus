@@ -30,7 +30,7 @@ class RegistrationController extends BaseController {
         $userManager = $this->get('fos_user.user_manager');
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
-
+ $em = $this->getDoctrine()->getManager();
         $user = $userManager->createUser();
         $user->setEnabled(true);
         $user->setAmis(1);
@@ -38,8 +38,8 @@ class RegistrationController extends BaseController {
         $user->setConnected(0);
         $user->setTypeNotification('All');
         $user->setCreatedAt(new DateTime());
-        $configNotif = new ConfigNotif();
-        $user->setConfigNotif($configNotif);
+       
+        
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 
@@ -67,6 +67,13 @@ class RegistrationController extends BaseController {
             $em->flush();
                
            }
+            $configNotif = new ConfigNotif();
+        $configNotif->setUser($user);
+        $configNotif->setClub(1);
+        $configNotif->setEntraineur(1);
+        $configNotif->setEvent(1);
+         $em->persist($configNotif);
+            $em->flush();
 //                $usernotif = new UserRegisterEvent($user);
 //                $dispatcher = $this->get('event_dispatcher');
 //                $dispatcher->dispatch(FrontOfficeUserEvents::AFTER_ENTRAINEUR_REGISTER, $usernotif);

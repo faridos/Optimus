@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Configuration
  *
- * @ORM\Table(name="configNotif")
+ * @ORM\Table(name="confignotif")
  * @ORM\Entity(repositoryClass="FrontOffice\OptimusBundle\Entity\ConfigNotifRepository")
  */
 class ConfigNotif
@@ -22,9 +22,9 @@ class ConfigNotif
     private $id;
     
     /**
-     * @ORM\OneToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="configNotif")
+     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="configNotif")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     *
+     * 
      */
    protected $user;
     /**
@@ -47,9 +47,7 @@ class ConfigNotif
     private $entraineur;
 
       public function __construct() {
-        $this->club = 1;
-        $this->event = 1;
-        $this->entraineur = 1;
+       
     }
 
     /**
@@ -85,6 +83,7 @@ class ConfigNotif
     function setEntraineur($entraineur) {
         $this->entraineur = $entraineur;
     }
+
 
 
 

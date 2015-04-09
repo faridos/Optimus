@@ -42,8 +42,8 @@ les invitations ont été envoyées
 <div class="propWidget-1 logotus tooltipsContainer ">
 <div class="fig salamus">
 {% if club.path == null %}
-<a href="{{ asset('club.png')}}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
-<img src="{{ asset('club.png') }}" class="inline-block imaguss">
+<a href="{{ asset('logoclub.png')}}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+<img src="{{ asset('logoclub.png') }}" class="inline-block imaguss">
 </a>
 {% else %}
 <a href="{{ asset(club.WebPath) }}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
@@ -503,7 +503,7 @@ photo Supprimer
         
 {% else %}
     <ul class="tab-pane fade  active in scrollbar" id="nonPayer" >
-        <a href="{{ path('front_office_payment_prepare_order_purchase',{'id' : club.id }) }}">    <img style="width: 100%" src="{{ asset('payment.png') }}"></a>
+        <a href="{{ path('front_office_payment_prepare_order_purchase',{'id' : club.id }) }}">    <img style="width: 100%" src="{{ asset('logopayment.png') }}"></a>
 </ul>
     {% endif %}
 </div>

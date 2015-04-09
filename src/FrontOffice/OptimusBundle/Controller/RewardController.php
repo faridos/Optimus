@@ -102,7 +102,7 @@ $request->getSession()->getFlashBag()->add('ModifierPalmarés', "Palmarés  a é
      *
      * @Route("club={id}/récompense/new", name="add_reward_club")
      * @Method("GET|POST")
-     * @Template("FrontOfficeOptimusBundle:Reward:newRewardclub.html.twig")
+     * @Template("FrontOfficeOptimusBundle:Reward:newRewardClub.html.twig")
      */
     public function addRewardClubAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
