@@ -540,6 +540,11 @@ class UserController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser();
         //$notifications = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotification($user->getId(), $user->getCreatedAt());
         $notifications = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users"=>$user->getId()),array("datenotificationseen"=>'DESC'));
+        foreach ($notifications as $notificationSeen) {
+        $notificationSeen->setVu(1);
+            $em->persist($notificationSeen);
+            $em->flush();
+        }
         return $this->render('FrontOfficeUserBundle:Profile:showAllNotifications.html.twig', array('notifications' => $notifications, 'user' => $user));
     }
 

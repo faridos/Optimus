@@ -59,9 +59,10 @@ class EventRepository extends EntityRepository {
     public function getEventsMap() {
 
         $em = $this->getEntityManager();
+        $dt = new \Datetime();
         $query = $em->createQuery("SELECT event, u "
                         . "FROM FrontOfficeOptimusBundle:Event event LEFT JOIN event.createur u"
-                        . " where event.active = 1"
+                        . " where event.active = 1 and event.dateFin > '" . $dt->format("Y-m-d") ."'"
                 );
 
         return $events = $query->getResult();
