@@ -39,7 +39,7 @@ services:
         arguments:
             em: "@doctrine.orm.entity_manager"
         tags:
-            - { name: kernel.event_listener, event: front_event.notification_club, method: onCreateNotificationClub }
+          
             - { name: kernel.event_listener, event: front_event.notification_club, method: onCreateMemberClub }
            
             

@@ -70,10 +70,10 @@ class ClubController extends Controller {
             $em->flush();
             $action = 'add';
             $clubevent = new HistoryClubEvent($user, $club, $action);
-//            $clubnotification = new NotificationClubEvent($user, $club, $action);
-//            $dispatcher = $this->get('event_dispatcher');
-//            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-//            $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
+            $clubnotification = new NotificationClubEvent($user, $club, $action);
+            $dispatcher = $this->get('event_dispatcher');
+          $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+          $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
              $request->getSession()->getFlashBag()->add('AjoutClub', "Club  a été creé avec success.");
             return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
         }
@@ -283,7 +283,7 @@ class ClubController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $adherent = $em->getRepository('FrontOfficeOptimusBundle:Member')->findBy(array('member' => $user, 'clubad' => $club));
+        $adherent = $em->getRepository('FrontOfficeOptimusBundle:Member')->findOneBy(array('member' => $user, 'clubad' => $club));
         if (empty($adherent)) {
             $member = new Member();
             $member->setClubad($club);

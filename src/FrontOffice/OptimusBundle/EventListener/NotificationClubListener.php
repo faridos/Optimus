@@ -19,18 +19,7 @@ class NotificationClubListener {
         $this->em = $em;
     }
 
-    public function onCreateNotificationClub(NotificationClubEvent $event) {
-
-        $em = $this->em;
-
-        $notification = new Notification();
-        $notification->setClub($event->getClub());
-        $notification->setDatenotification(new DateTime());
-        $notification->setType($event->getAction());
-        $notification->setNotificateur($event->getUser()->getId());
-        $em->persist($notification);
-        $em->flush();
-    }
+    
     public function onCreateMemberClub(NotificationClubEvent $event) {
 
         $em = $this->em;
