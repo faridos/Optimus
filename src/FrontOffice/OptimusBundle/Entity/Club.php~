@@ -512,35 +512,9 @@ class Club {
         return $this->clubcomments;
     }
 
-    /**
-     * Add notification_club
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationClub
-     * @return Club
-     */
-    public function addNotificationClub(\FrontOffice\OptimusBundle\Entity\Notification $notificationClub) {
-        $this->notification_club[] = $notificationClub;
+    
 
-        return $this;
-    }
-
-    /**
-     * Remove notification_club
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationClub
-     */
-    public function removeNotificationClub(\FrontOffice\OptimusBundle\Entity\Notification $notificationClub) {
-        $this->notification_club->removeElement($notificationClub);
-    }
-
-    /**
-     * Get notification_club
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getNotificationClub() {
-        return $this->notification_club;
-    }
+    
 
     /**
      * Add clubcomments
@@ -727,5 +701,38 @@ class Club {
     public function getComptem()
     {
         return $this->comptem;
+    }
+
+    /**
+     * Add notificationclub
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationclub
+     * @return Club
+     */
+    public function addNotificationclub(\FrontOffice\OptimusBundle\Entity\Notification $notificationclub)
+    {
+        $this->notificationclub[] = $notificationclub;
+    
+        return $this;
+    }
+
+    /**
+     * Remove notificationclub
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationclub
+     */
+    public function removeNotificationclub(\FrontOffice\OptimusBundle\Entity\Notification $notificationclub)
+    {
+        $this->notificationclub->removeElement($notificationclub);
+    }
+
+    /**
+     * Get notificationclub
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotificationclub()
+    {
+        return $this->notificationclub;
     }
 }

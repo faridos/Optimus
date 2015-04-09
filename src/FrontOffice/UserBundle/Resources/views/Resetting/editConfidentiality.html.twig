@@ -21,8 +21,7 @@
                                 <div class="tab-pane fade active in col-sm-8" id="compte">
                                     Confidentialité
                                 </div>
-                                   <div id="modifier-setting" style="display: none;" class="alert alert-success col-sm-3">
-<a class="close" data-dismiss="alert">×</a>
+                                   <div id="modifier-setting" style="display: none; margin-top: -6%;margin-left: 45%;height: 10%;">
 Changement abouti
 </div>
                                 <table class="table" id="{{app.user.id}}">
@@ -46,6 +45,7 @@ Changement abouti
                                                 </div>
                                             </td>
                                             <td>
+                                                
                                               <p id="message" style="display: none">Enregistrer<p>
                                             </td>
                                         </tr>
@@ -95,7 +95,7 @@ Changement abouti
                     dataType: 'json',
                    
                     success: function() {
-                     $('#message').hide();
+                      $('#modifier-setting').show();
                       
                     }
                 });
@@ -115,7 +115,7 @@ Changement abouti
                     dataType: 'json',
                    
                     success: function() {
-                       $('#message1').hide();
+                       $('#modifier-setting').show();
                       
                     }
                 });

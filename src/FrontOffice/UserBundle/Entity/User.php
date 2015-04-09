@@ -174,8 +174,8 @@ class User extends BaseUser {
      * */
     protected $adherent;
     
-     /**
-   * @ORM\OneToOne(targetEntity="FrontOffice\OptimusBundle\Entity\ConfigNotif", cascade={"persist"})
+  /**
+   * @ORM\OneToOne(targetEntity="FrontOffice\OptimusBundle\Entity\ConfigNotif", mappedBy="user", cascade={"persist"})
    */
     protected $configNotif;
 

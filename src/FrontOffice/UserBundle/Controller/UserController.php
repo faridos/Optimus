@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FrontOffice\UserBundle\Entity\User;
 use FrontOffice\OptimusBundle\Entity\Palmares;
+use FrontOffice\OptimusBundle\Entity\ConfigNotif;
 use FrontOffice\OptimusBundle\Entity\Notification;
 use FrontOffice\OptimusBundle\Entity\NotificationSeen;
 use FrontOffice\UserBundle\Form\UserType;
@@ -489,20 +490,14 @@ class UserController extends Controller {
             throw new AccessDeniedException('.');
         }
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FrontOfficeUserBundle:User')->find($id);
-        if (!$entity) {
-            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
-        }
+         $user = $this->container->get('security.context')->getToken()->getUser();
+         $confNotif = $em->getRepository("FrontOfficeOptimusBundle:ConfigNotif")->findOneBy(array('user'=>$user));
+       
 
-        $editForm = $this->createForm(new UserType(), $entity);
-        $editForm->handleRequest($request);
-        if ($editForm->isValid()) {
-            $em->flush();
-            return $this->redirect($this->generateUrl('setting_user_notifications', array('id' => $id)));
-        }
+        
         return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
+            'config' => $confNotif,
+            
         );
     }
 
@@ -641,6 +636,78 @@ class UserController extends Controller {
         $test = $request->get("test");
            $user->setAmis($test);
             $em->persist($user);
+            $em->flush();
+        
+        
+        return $response = new Response($test);
+    }
+    /**
+     *
+     *
+     * @Route("settings/notification", name="setting_notification_event", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function activeNotifEventAction() {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $confNotif = $em->getRepository("FrontOfficeOptimusBundle:ConfigNotif")->findOneBy(array('user'=>$user));
+        $request = $this->get('request');
+        $test = $request->get("test");
+           $confNotif->setEvent($test);
+            $em->merge($user);
+            $em->flush();
+        
+        
+        return $response = new Response($test);
+    }
+   /**
+     *
+     *
+     * @Route("entre/settings/notification", name="setting_notification_entraineur", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function activeNotifEntreAction() {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $confNotif = $em->getRepository("FrontOfficeOptimusBundle:ConfigNotif")->findOneBy(array('user'=>$user));
+        $request = $this->get('request');
+        $test = $request->get("test");
+           $confNotif->setEntraineur($test);
+            $em->merge($user);
+            $em->flush();
+        
+        
+        return $response = new Response($test);
+    }
+   /**
+     *
+     *
+     * @Route("club/settings/notification", name="setting_notification_club", options={"expose"=true})
+     * @Method("GET")
+     * @Template()
+     */
+    public function activeNotifClubAction() {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $confNotif = $em->getRepository("FrontOfficeOptimusBundle:ConfigNotif")->findOneBy(array('user'=>$user));
+        $request = $this->get('request');
+        $test = $request->get("test");
+           $confNotif->setClub($test);
+            $em->merge($user);
             $em->flush();
         
         

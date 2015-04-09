@@ -20,7 +20,13 @@ class ConfigNotif
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
+    /**
+     * @ORM\OneToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="configNotif")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *
+     */
+   protected $user;
     /**
      * @var integer
      *
@@ -81,4 +87,27 @@ class ConfigNotif
     }
 
 
+
+    /**
+     * Set user
+     *
+     * @param \FrontOffice\UserBundle\Entity\User $user
+     * @return ConfigNotif
+     */
+    public function setUser(\FrontOffice\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \FrontOffice\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

@@ -14,70 +14,82 @@
                             </ul>
                         </ol>
                     </div>
-                    <div class="col-md-9">
+                 <div class="col-md-9">
                         <div class="tabsContainer">
                             <div class="tab-content">
-                                <div class="tab-pane fade in active" id="notifications">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading optimus">Notifications</div>
-
-                                        <table class="table" id="{{app.user.id}}">
-                                            <thead>
-                                                <tr>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><strong>Type de notification</strong></th>
-                                                    <td>
-                                                        {% set type = app.user.typeNotification %}
-                                                            {% if type == 'All' %}
-                                                                <div class="notif">toutes les notifications</div>
-                                                            {% elseif type == 'E' %}
-                                                                <div class="notif">les notifications évènements</div>
-                                                            {% elseif type == 'C' %}
-                                                                <div class="notif">les notifications clubs</div>
-                                                            {% elseif type == 'U' %}
-                                                                <div class="notif">les notifications inscription entraineur</div>
-                                                            {% elseif type == 'EC' %}
-                                                                <div class="notif">les notifications évènements et clubs</div>
-                                                            {% elseif type == 'EU' %}
-                                                                <div class="notif">les notifications évènements inscription entraineur</div>
-                                                            {% elseif type == 'UC' %}
-                                                                <div class="notif">les notifications clubs inscription entraineur</div>
-                                                            {% elseif type == 'NOT' %}
-                                                                <div class="notif">ne voir aucune notifications</div>
-                                                            {% endif %}
-                                                            <div id="notif"  style="display:none">
-                                                                <form action="{{ path('setting_user_notifications', {'id' : entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal form-groups-bordered">
-                                                                    {{ form_errors(edit_form) }}
-                                                                    <div class="ops">
-                                                                        <div class="form-group col-md-10">
-                                                                            {{ form_widget(edit_form.type_notification) }}
-                                                                        </div>
-                                                                        <div class="col-md-2">
-                                                                            <button style="margin:15px 0 0 20px" type="submit"  value="Submit" class="btn btn-round btn-green">Enregistrer</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="clearfix"></div> 
-                                                                    {{ form_widget(edit_form._token) }}
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                        <td> 
-                                                            <a href="javascript:visibilite('notif');" class="tabledit-edit-button btn btn-sm btn-warning" style="float:right; border-radius: 25px; " >
-                                                                <span class="glyphicon glyphicon-pencil"></span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div> 
-                                    </div>
+                                <div class="tab-pane fade active in col-sm-8" id="compte">
+                                <h3>  Type Notification</h3>
                                 </div>
+                                   <div id="modifier-setting" style="display: none; margin-top: -6%;margin-left: 45%;height: 10%;" class="col-sm-3">
+
+Changement abouti
+</div>
+                                <table class="table" id="{{app.user.id}}">
+                                    <thead>
+                                        <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Notification Evenement</strong></th>
+                                            <td> 
+                                                <div class="form-group">
+                                                    <div class="col-sm-10">
+                                                        <div class="checkbox switch">
+                                                            <label>
+                                                                <input id="chekedEvent" type="checkbox" {% if config.event == 1 %} checked {% else %} unchecked {% endif %}>
+                                                                <span class="cs-place"><span class="fa fa-check cs-handler"></span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                              <p id="message" style="display: none">Enregistrer<p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Notification Club</strong></th>
+                                            <td> 
+                                                <div class="form-group">
+                                                    <div class="col-sm-10">
+                                                        <div class="checkbox switch">
+                                                            <label>
+                                                                <input id="chekedClub" type="checkbox" {% if config.club == 1 %} checked {% else %} unchecked {% endif %}>
+                                                                <span class="cs-place"><span class="fa fa-check cs-handler"></span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p id="message1" style="display: none">Enregistrer<p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Notification Entraineur</strong></th>
+                                            <td> 
+                                                <div class="form-group">
+                                                    <div class="col-sm-10">
+                                                        <div class="checkbox switch">
+                                                            <label>
+                                                                <input id="chekedEntraineur" type="checkbox" {% if config.entraineur == 1 %} checked {% else %} unchecked {% endif %}>
+                                                                <span class="cs-place"><span class="fa fa-check cs-handler"></span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p id="message2" style="display: none">Enregistrer<p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="clearfix"></div>
                         </div>
+                        <div class="clearfix"></div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -85,19 +97,69 @@
         </div>
         {% endblock %}
             {% block javascriptfils %}
-                <script>
-                    function visibilite(thingId)
-                    {
-                        var targetElement;
-                        targetElement = document.getElementById(thingId);
-                        if (targetElement.style.display == "none")
-                        {
-                            $('.' + thingId).hide();
-                            targetElement.style.display = "";
-                        } else {
-                            $('.' + thingId).show();
-                            targetElement.style.display = "none";
-                        }
+                 <script>
+        $('#chekedEvent').click(function() {
+            if (document.getElementById('chekedEvent').checked) {
+                  var test = 1;
+                }else{
+                      var test = 0;
+                }
+                
+                
+                $.ajax({
+                    url: Routing.generate('setting_notification_event'),
+                    data: {test: test},
+                    dataType: 'json',
+                   
+                    success: function() {
+                     $('#modifier-setting').show();
+                      
                     }
+                });
+           
+           
+        });
+        $('#chekedClub').click(function() {
+            if (document.getElementById('chekedClub').checked) {
+                  var test = 1;
+                }else{
+                      var test = 0;
+                }
+                
+               
+                $.ajax({
+                    url: Routing.generate('setting_notification_club'),
+                    data: {test: test},
+                    dataType: 'json',
+                   
+                    success: function() {
+                     $('#message1').hide();
+                      
+                    }
+                });
+           
+           
+        });
+        $('#chekedEntraineur').click(function() {
+            if (document.getElementById('chekedEntraineur').checked) {
+                  var test = 1;
+                }else{
+                      var test = 0;
+                }
+                
+                
+                $.ajax({
+                    url: Routing.generate('setting_notification_entraineur'),
+                    data: {test: test},
+                    dataType: 'json',
+                   
+                    success: function() {
+                     $('#message2').hide();
+                      
+                    }
+                });
+           
+           
+        });
                 </script>
             {% endblock %}

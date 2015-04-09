@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * User
  * @ORM\Entity(repositoryClass="FrontOffice\UserBundle\Repository\UserRepository")
@@ -174,13 +174,22 @@ class User extends BaseUser {
      * */
     protected $adherent;
     
-     /**
-   * @ORM\OneToOne(targetEntity="FrontOffice\OptimusBundle\Entity\ConfigNotif", cascade={"persist"})
+  /**
+   * @ORM\OneToOne(targetEntity="FrontOffice\OptimusBundle\Entity\ConfigNotif", mappedBy="user", cascade={"persist"})
    */
     protected $configNotif;
 
     public function __construct() {
         parent::__construct();
+        $this->notificateur = new ArrayCollection();
+        $this->evenements = new ArrayCollection();
+        $this->participations = new ArrayCollection();
+        $this->notificationseen = new ArrayCollection();
+        $this->clubs = new ArrayCollection();
+        $this->albums = new ArrayCollection();
+        $this->reward = new ArrayCollection();
+        $this->conversations1 = new ArrayCollection();
+        $this->conversations2 = new ArrayCollection();
     }
 
     public function getId() {
@@ -649,4 +658,93 @@ class User extends BaseUser {
     }
 
 
+
+    /**
+     * Set typenotification
+     *
+     * @param string $typenotification
+     * @return User
+     */
+    public function setTypenotification($typenotification)
+    {
+        $this->typenotification = $typenotification;
+    
+        return $this;
+    }
+
+    /**
+     * Get typenotification
+     *
+     * @return string 
+     */
+    public function getTypenotification()
+    {
+        return $this->typenotification;
+    }
+
+    /**
+     * Add notificationEntraineur
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur
+     * @return User
+     */
+    public function addNotificationEntraineur(\FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur)
+    {
+        $this->notificationEntraineur[] = $notificationEntraineur;
+    
+        return $this;
+    }
+
+    /**
+     * Remove notificationEntraineur
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur
+     */
+    public function removeNotificationEntraineur(\FrontOffice\OptimusBundle\Entity\Notification $notificationEntraineur)
+    {
+        $this->notificationEntraineur->removeElement($notificationEntraineur);
+    }
+
+    /**
+     * Get notificationEntraineur
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotificationEntraineur()
+    {
+        return $this->notificationEntraineur;
+    }
+
+    /**
+     * Add notificateur
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificateur
+     * @return User
+     */
+    public function addNotificateur(\FrontOffice\OptimusBundle\Entity\Notification $notificateur)
+    {
+        $this->notificateur[] = $notificateur;
+    
+        return $this;
+    }
+
+    /**
+     * Remove notificateur
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $notificateur
+     */
+    public function removeNotificateur(\FrontOffice\OptimusBundle\Entity\Notification $notificateur)
+    {
+        $this->notificateur->removeElement($notificateur);
+    }
+
+    /**
+     * Get notificateur
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotificateur()
+    {
+        return $this->notificateur;
+    }
 }
