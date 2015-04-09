@@ -57,7 +57,16 @@ class RegistrationController extends BaseController {
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
             $userManager->updateUser($user);
 
-//            if ($user->getProfil() == "Entraineur") {
+           if ($user->getProfil() == "Entraineur") {
+               $em = $this->getDoctrine()->getManager();
+               $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('entraineur');
+            $notif->setEntraineur($user);
+            $em->persist($notif);
+            $em->flush();
+               
+           }
 //                $usernotif = new UserRegisterEvent($user);
 //                $dispatcher = $this->get('event_dispatcher');
 //                $dispatcher->dispatch(FrontOfficeUserEvents::AFTER_ENTRAINEUR_REGISTER, $usernotif);

@@ -65,8 +65,8 @@
                 </div>
                 <ul>
                     <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-                    <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="fa fa-users"></span>Mes clubs</a></li>
-                    <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="fa fa-trophy"></span>Mes évenements</a></li>
+                <!--    <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="fa fa-users"></span>Mes clubs</a></li>
+                    <li><a href="{{ path('show_profil',{'id': app.user.id}) }}"><span class="fa fa-trophy"></span>Mes évenements</a></li>-->
                     <li><a href="{{ path('setting_user',{'id': app.user.id}) }}"><span class="icon-settings"></span>Settings</a></li>
                     <li><a href="{{ path('history_event',{'id': app.user.id}) }}"><span class="glyphicon glyphicon-globe"></span>Historique</a></li>
                     <li class="divider"></li>
@@ -93,120 +93,141 @@
                 </div>
                 <ul id='blockNotif' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
                     {% for notification in notifications  %}
-                        
+
                         {% if notification.notifications.type == 'participation' %}
-    <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-        <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
-            {% if notification.notifications.event.getWebPath %}
-            <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
-            {% else %}
-                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
-                {% endif %}
-            <div class="pulse border-grey"></div>
-            <div class="notify pull-left">
-                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a participer dans l'évènement {{ notification.notifications.event.titre }}</div>
-                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
-            </div>
-            <div class="clearfix"></div>
-        </a>
-    </li>
-    {% elseif notification.notifications.type == 'AnnulerParticip' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
+                                    {% if notification.notifications.event.getWebPath %}
+                                        <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
+                                    {% else %}
+                                        <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                                    {% endif %}
+                                    <div class="pulse border-grey"></div>
+                                    <div class="notify pull-left">
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a participer dans l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.notifications.type == 'AnnulerParticip' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
+                                    {% if notification.notifications.event.getWebPath %}
+                                        <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
+                                    {% else %}
+                                        <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                                    {% endif %}    
+
+                                    <div class="pulse border-grey"></div>
+                                    <div class="notify pull-left">
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a annuler sa participation de l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.notifications.type == 'add' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
+                                    {% if notification.notifications.event.getWebPath %}
+                                        <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
+                                    {% else %}
+                                        <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                                    {% endif %}    
+
+                                    <div class="pulse border-grey"></div>
+                                    <div class="notify pull-left">
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouter une évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.notifications.type == 'update' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
+                                    {% if notification.notifications.event.getWebPath %}
+                                        <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
+                                    {% else %}
+                                        <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                                    {% endif %}    
+
+                                    <div class="pulse border-grey"></div>
+                                    <div class="notify pull-left">
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a modifier l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.notifications.type == 'delete' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
+                                    {% if notification.notifications.event.getWebPath %}
+                                        <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
+                                    {% else %}
+                                        <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                                    {% endif %}    
+
+                                    <div class="pulse border-grey"></div>
+                                    <div class="notify pull-left">
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a supprimer l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.notifications.type == 'comment' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_accueil',{'id': notification.notifications.event.id }) }}">
+                                    {% if notification.notifications.event.getWebPath %}
+                                        <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
+                                    {% else %}
+                                        <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                                    {% endif %}    
+
+                                    <div class="pulse border-grey"></div>
+                                    <div class="notify pull-left">
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a commenter l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.notifications.type == 'photo' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_accueil',{'id': notification.notifications.event.id }) }}">
+                                    {% if notification.notifications.event.getWebPath %}
+                                        <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
+                                    {% else %}
+                                        <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
+                                    {% endif %}    
+
+                                    <div class="pulse border-grey"></div>
+                                    <div class="notify pull-left">
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouter une photo dans l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                         {% elseif notification.notifications.type == 'entraineur' %}
         <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-               <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
-            {% if notification.notifications.event.getWebPath %}
-            <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
-            {% else %}
-                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
-                {% endif %}    
-            
+               <a href="{{ path('show_profil', { 'id' : notification.notifications.entraineur.id }) }}">
+               
+            {% if notification.notifications.notificateur.path == null %}
+                       {% if notification.notifications.notificateur.sexe == 'H' %}
+                           <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                       {% else %}
+                           <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                       {% endif %}
+                   {% else %}
+                       <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+               {% endif %}
             <div class="pulse border-grey"></div>
             <div class="notify pull-left">
-                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a annuler sa participation de l'évènement {{ notification.notifications.event.titre }}</div>
-                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
-            </div>
-            <div class="clearfix"></div>
-        </a>
-    </li>
-    {% elseif notification.notifications.type == 'add' %}
-        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-               <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
-            {% if notification.notifications.event.getWebPath %}
-            <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
-            {% else %}
-                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
-                {% endif %}    
-            
-            <div class="pulse border-grey"></div>
-            <div class="notify pull-left">
-                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouter une évènement {{ notification.notifications.event.titre }}</div>
-                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
-            </div>
-            <div class="clearfix"></div>
-        </a>
-    </li>
-    {% elseif notification.notifications.type == 'update' %}
-        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-               <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
-            {% if notification.notifications.event.getWebPath %}
-            <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
-            {% else %}
-                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
-                {% endif %}    
-            
-            <div class="pulse border-grey"></div>
-            <div class="notify pull-left">
-                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a modifier l'évènement {{ notification.notifications.event.titre }}</div>
-                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
-            </div>
-            <div class="clearfix"></div>
-        </a>
-    </li>
-    {% elseif notification.notifications.type == 'delete' %}
-        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-               <a href="{{ path('show_event', { 'id' : notification.notifications.event.id }) }}">
-            {% if notification.notifications.event.getWebPath %}
-            <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
-            {% else %}
-                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
-                {% endif %}    
-            
-            <div class="pulse border-grey"></div>
-            <div class="notify pull-left">
-                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a supprimer l'évènement {{ notification.notifications.event.titre }}</div>
-                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
-            </div>
-            <div class="clearfix"></div>
-        </a>
-    </li>
-    {% elseif notification.notifications.type == 'comment' %}
-        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-               <a href="{{ path('show_accueil',{'id': notification.notifications.event.id }) }}">
-            {% if notification.notifications.event.getWebPath %}
-            <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
-            {% else %}
-                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
-                {% endif %}    
-            
-            <div class="pulse border-grey"></div>
-            <div class="notify pull-left">
-                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a commenter l'évènement {{ notification.notifications.event.titre }}</div>
-                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
-            </div>
-            <div class="clearfix"></div>
-        </a>
-    </li>
-    {% elseif notification.notifications.type == 'photo' %}
-        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-               <a href="{{ path('show_accueil',{'id': notification.notifications.event.id }) }}">
-            {% if notification.notifications.event.getWebPath %}
-            <img class="avatar pull-left" src="{{ asset(notification.notifications.event.getWebPath)}}" alt="avatar">
-            {% else %}
-                <img class="avatar pull-left" src="{{ asset('event.png')}}" alt="avatar">
-                {% endif %}    
-            
-            <div class="pulse border-grey"></div>
-            <div class="notify pull-left">
-                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouter une photo dans l'évènement {{ notification.notifications.event.titre }}</div>
+                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} un nouveau entraineur inscrit</div>
                 <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
             </div>
             <div class="clearfix"></div>
@@ -545,8 +566,8 @@
                 $(document).ready(function(){
         $(".ajout_optimus").click(function(){
         $(".liste_optimus").slideToggle(400);
-                });
-                });        {% set notifications = getNotifications(app.user) %}
+        });
+        });{% set notifications = getNotifications(app.user) %}
         {% for notification in notifications  %}
                     $('body').on('click', '#notifParticipe{{notification.id}}', function ()
             {
@@ -568,223 +589,222 @@
                     }
 
             });
-            });        {% endfor %}
+            });{% endfor %}
 
 
-        {% set messages = getNonSeenMessage(app.user.id) %}
+            {% set messages = getNonSeenMessage(app.user.id) %}
 
-        {% for message in messages %}
-                    $('body').on('click', '#repondre{{message.id}}', function ()
-            {
-            var sender = {{message.sender.id}};
-                    var message = $('#newmessage{{message.id}}').val();
-                    if (message != "")
-            {
-            $('#repondre{{message.id}}').hide();
-                    $('#loader_reponder{{message.id}}').show();
-                    var photo = "";{% if app.user.path == null %}{% if app.user.sexe == 'H' %}
-                    photo = "{{ asset('men.png') }}";{% else %}
-                    photo = "{{ asset('women.png') }}";{% endif %}{% else %}
-                    photo = "{{asset(app.user.WebPath) }}";{% endif %}
+            {% for message in messages %}
+                        $('body').on('click', '#repondre{{message.id}}', function ()
+                {
+                var sender = {{message.sender.id}};
+                        var message = $('#newmessage{{message.id}}').val();
+                        if (message != "")
+                {
+                $('#repondre{{message.id}}').hide();
+                        $('#loader_reponder{{message.id}}').show();
+                        var photo = "";{% if app.user.path == null %}{% if app.user.sexe == 'H' %}
+                        photo = "{{ asset('men.png') }}";{% else %}
+                        photo = "{{ asset('women.png') }}";{% endif %}{% else %}
+                        photo = "{{asset(app.user.WebPath) }}";{% endif %}
+                        $.ajax({
+                        type: "POST",
+                                url: Routing.generate('repondre_message'),
+                                data: {message: message, sender:sender},
+                                dataType: 'json',
+                                success: function(data) {
+                                $('#loader_reponder{{message.id}}').hide();
+                                        $('#repondre{{message.id}}').show();
+                                        $('#appendmessage{{message.id}}').append('<div class="row">' +
+                                        '<div class="col-md-2 pull-right">' +
+                                        '<img src="' + photo + '" class="img-responsive img-circle" width="30" >' +
+                                        '</div>' +
+                                        '<div class="col-md-10 pull-left" style="background:white;">' +
+                                        '<p>' + message + '</p>' +
+                                        '</div></div><hr>'
+                                        );
+                                        $('#newmessage{{message.id}}').val("");
+                                }
+
+                        });
+                }
+
+                });
+                        $('body').on('click', '#close{{message.id}}', function () {
+                $('#modaldescumessage{{message.id}}').hide();
+                });
+                        $('body').on('click', '#descumessage{{message.id}}', function () {
+
+                $('#modaldescumessage{{message.id}}').show();
+                        $.ajax({
+                        type: "POST",
+                                url: '{{ path('message_seen') }}',
+                                data: 'id=' + {{message.id }},
+                                success: function(data) {
+                {% if message.vu == 0 %}
+                                    var test = 0;{%else%}
+                                            var test = 1;
+                {%endif %} 
+                                            if (test != 1){
+                                    var nb = parseInt($('#samirMsg').text());
+                                            var nouveauNb = nb - 1;
+                                            if (nouveauNb > 0)
+                                    {
+                                    $('#samirMsg').text(nouveauNb);
+                                    }
+                                    else
+                                    {
+                                    $('#nombre_message').hide();
+                                    }
+                                    }
+                                    }
+
+                            });
+                    });{% endfor %}
+                            //accept invitation
+                {% set invitations = getInvitations(app.user.id) %}
+                {% for invitation in invitations %}
+                            $('body').on('click', '#accept_invitation{{invitation.id}}', function () {
+                    $.ajax({
+                    url: Routing.generate('accept_relation', {'id':{{invitation.id}}}),
+                            success: function(data) {
+
+                            var nb = parseInt($('#nbInvitation').text());
+                                    var nouveauNb = nb - 1;
+                                    if (nouveauNb > 0)
+                            {
+                            $('#nbInvitation').replaceWith(nouveauNb);
+                            }
+                            else
+                            {
+                            $('#nombre_invitation').hide();
+                            }
+                            $('.invitation' + data).empty();
+                                    $('#replace-accepte-profil').empty().append(
+                                    '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
+                                    'Amis' +
+                                    '<span class="caret"></span>' +
+                                    ' </button>'
+
+                                    );
+                                    $('#replace-accepte-profil').empty().append(
+                                    '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
+                                    'Amis' +
+                                    '<span class="caret"></span>' +
+                                    ' </button>'
+
+                                    );
+                                    // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
+                            }
+                    });
+                    });
+                            $('body').on('click', '#delete_invitation{{invitation.id}}', function () {
+
                     $.ajax({
                     type: "POST",
-                            url: Routing.generate('repondre_message'),
-                            data: {message: message, sender:sender},
+                            url: Routing.generate('delete_invite'),
+                            data: {id:{{invitation.id}}},
                             dataType: 'json',
                             success: function(data) {
-                            $('#loader_reponder{{message.id}}').hide();
-                                    $('#repondre{{message.id}}').show();
-                                    $('#appendmessage{{message.id}}').append('<div class="row">' +
-                                    '<div class="col-md-2 pull-right">' +
-                                    '<img src="' + photo + '" class="img-responsive img-circle" width="30" >' +
-                                    '</div>' +
-                                    '<div class="col-md-10 pull-left" style="background:white;">' +
-                                    '<p>' + message + '</p>' +
-                                    '</div></div><hr>'
-                                    );
-                                    $('#newmessage{{message.id}}').val("");
+                            $('#delete_invitation{{invitation.id}}').hide();
+                                    var nb = parseInt($('#nbInvitation').text());
+                                    var nouveauNb = nb - 1;
+                                    if (nouveauNb > 0)
+                            {
+                            $('#nbInvitation').replaceWith(nouveauNb);
                             }
-
+                            else
+                            {
+                            $('#nombre_invitation').hide();
+                            }
+                            }
                     });
-            }
+                    });{% endfor %}
+                            setInterval(function(){
 
-            });
-                    $('body').on('click', '#close{{message.id}}', function () {
-            $('#modaldescumessage{{message.id}}').hide();
-            });
-                    $('body').on('click', '#descumessage{{message.id}}', function () {
-
-            $('#modaldescumessage{{message.id}}').show();
-                    $.ajax({
-                    type: "POST",
-                            url: '{{ path('message_seen') }}',
-                            data: 'id=' + {{message.id }},
-                            success: function(data) {
-            {% if message.vu == 0 %}
-                                var test = 0;{%else%}
-                                        var test = 1;
-            {%endif %} 
-                                        if (test != 1){
-                                var nb = parseInt($('#samirMsg').text());
-                                        var nouveauNb = nb - 1;
-                                        if (nouveauNb > 0)
-                                {
-                                $('#samirMsg').text(nouveauNb);
-                                }
-                                else
-                                {
-                                $('#nombre_message').hide();
-                                }
-                                }
-                                }
-
-                        });
-                });{% endfor %}
-                        //accept invitation
-            {% set invitations = getInvitations(app.user.id) %}
-            {% for invitation in invitations %}
-                        $('body').on('click', '#accept_invitation{{invitation.id}}', function () {
-                $.ajax({
-                url: Routing.generate('accept_relation', {'id':{{invitation.id}}}),
-                        success: function(data) {
-
-                        var nb = parseInt($('#nbInvitation').text());
-                                var nouveauNb = nb - 1;
-                                if (nouveauNb > 0)
-                        {
-                        $('#nbInvitation').replaceWith(nouveauNb);
-                        }
-                        else
-                        {
-                        $('#nombre_invitation').hide();
-                        }
-                        $('.invitation' + data).empty();
-                                $('#replace-accepte-profil').empty().append(
-                                '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
-                                'Amis' +
-                                '<span class="caret"></span>' +
-                                ' </button>'
-
-                                );
-                                $('#replace-accepte-profil').empty().append(
-                                '<button type="button" class="btn btn-green btn-round dropdown-toggle" data-toggle="dropdown">' +
-                                'Amis' +
-                                '<span class="caret"></span>' +
-                                ' </button>'
-
-                                );
-                                // .append("<li class=\"invitation\"> <div class=\"userWidget-2\" style=\"margin-bottom:1px\"> <div class=\"avatar\"></div> <div class=\"info\"><div class=\"notifyName\">" + invitation.username + "</div></div>");
-                        }
-                });
-                });
-                        $('body').on('click', '#delete_invitation{{invitation.id}}', function () {
-
-                $.ajax({
-                type: "POST",
-                        url: Routing.generate('delete_invite'),
-                        data: {id:{{invitation.id}}},
-                        dataType: 'json',
-                        success: function(data) {
-                        $('#delete_invitation{{invitation.id}}').hide();
-                                var nb = parseInt($('#nbInvitation').text());
-                                var nouveauNb = nb - 1;
-                                if (nouveauNb > 0)
-                        {
-                        $('#nbInvitation').replaceWith(nouveauNb);
-                        }
-                        else
-                        {
-                        $('#nombre_invitation').hide();
-                        }
-                        }
-                });
-                });{% endfor %}
-
-                        setInterval(function(){
-
-                        var lastid = $('#lastid').val();
-                                $.ajax({
-                                url: Routing.generate('notif_test'),
-                                        data: {lastid : lastid},
-                                        success: function(data) {
-                                        for (var i in data) {
-                                        var message = data[i];
-                                                toastr8.googlePlus({
-                                                message:'<a href="http://localhost/Optimus/web/app_dev.php/evenement=' + message.event + '" >' + message.content + ' </a>',
-                                                        title: message.sender.nom + ' ' + message.sender.prenom,
-                                                        imgURI: ['http://www.optimus-beta.com/web/event.png']
-                                                });
-                                        }
-                                        }
-                                });
-                                /*  $.ajax({
-                                 url: Routing.generate('notif_testt'),
-                                 success: function(data) {
-                                 if (data == 0){
-                                 $('#nombre_message').hide();
-                                 } else{
-                                 
-                                 $('#samirMsg').html(data);
-                                 $('#nombre_message').show();
-                                 }
-                                 $('#samirMsg').html(data);
-                                 }
-                                 });*/
-                                $.ajax({
-                                url: Routing.generate('notif_invit'),
-                                        success: function(data) {
-                                        tab = data.split('*');
-                                                $('#id_invitation').html(tab[0]);
-                                                if (tab[1] == 0){
-                                        $('#nombre_invitation').hide();
-                                        } else{
-                                        $('#nombre_invitation').show();
-                                                $('#nbInvitation').html(tab[1]);
-                                        }
-                                        $(tab[2]).appendTo(document.body)
-                                        }
-                                });
-                                var lastid = $('#lastid').val();
-                                $.ajax({
-                                url: Routing.generate('message_menu'),
-                                        data: {lastid : lastid},
-                                        success: function(data) {
-                                        tab = data.split('*');
-                                                $('#id_message').html(tab[0]);
-                                                $('#repondremsg').append(tab[1]);
-                                                $('#lastid').val(tab[2]);
-                                                if (tab[3] == 0){
-                                        $('#nombre_message').hide();
-                                        } else{
-                                        $('#nombre_message').show();
-                                                $('#samirMsg').html(tab[3]);
-                                        }
-                                        $(tab[4]).appendTo(document.body)
-                                        }
-                                });
-                        }, 5000);
-                        setInterval(function(){
-                        $.ajax({
-                        url: Routing.generate('participe_notification'),
-                                success: function(data) {
-                                tab = data.split('*');
-                                        $('#blockNotif').html(tab[0]);
-                                        $('#countNotif').html(tab[1]);
-                                        if (tab[1] == 0){
-                                $('#nombre_notif').hide();
-                                } else{
-                                $('#nombre_notif').show();
-                                        $('#countNotif').html(tab[1]);
-                                }
-                                $(tab[2]).appendTo(document.body)
-                                }
-                        });
-                        }, 5000);
-            </script>
+                            var lastid = $('#lastid').val();
+                                    $.ajax({
+                                    url: Routing.generate('notif_test'),
+                                            data: {lastid : lastid},
+                                            success: function(data) {
+                                            for (var i in data) {
+                                            var message = data[i];
+                                                    toastr8.googlePlus({
+                                                    message:'<a href="http://localhost/Optimus/web/app_dev.php/evenement=' + message.event + '" >' + message.content + ' </a>',
+                                                            title: message.sender.nom + ' ' + message.sender.prenom,
+                                                            imgURI: ['http://www.optimus-beta.com/web/event.png']
+                                                    });
+                                            }
+                                            }
+                                    });
+                                    /*  $.ajax({
+                                     url: Routing.generate('notif_testt'),
+                                     success: function(data) {
+                                     if (data == 0){
+                                     $('#nombre_message').hide();
+                                     } else{
+                                     
+                                     $('#samirMsg').html(data);
+                                     $('#nombre_message').show();
+                                     }
+                                     $('#samirMsg').html(data);
+                                     }
+                                     });*/
+                                    $.ajax({
+                                    url: Routing.generate('notif_invit'),
+                                            success: function(data) {
+                                            tab = data.split('*');
+                                                    $('#id_invitation').html(tab[0]);
+                                                    if (tab[1] == 0){
+                                            $('#nombre_invitation').hide();
+                                            } else{
+                                            $('#nombre_invitation').show();
+                                                    $('#nbInvitation').html(tab[1]);
+                                            }
+                                            $(tab[2]).appendTo(document.body)
+                                            }
+                                    });
+                                    var lastid = $('#lastid').val();
+                                    $.ajax({
+                                    url: Routing.generate('message_menu'),
+                                            data: {lastid : lastid},
+                                            success: function(data) {
+                                            tab = data.split('*');
+                                                    $('#id_message').html(tab[0]);
+                                                    $('#repondremsg').append(tab[1]);
+                                                    $('#lastid').val(tab[2]);
+                                                    if (tab[3] == 0){
+                                            $('#nombre_message').hide();
+                                            } else{
+                                            $('#nombre_message').show();
+                                                    $('#samirMsg').html(tab[3]);
+                                            }
+                                            $(tab[4]).appendTo(document.body)
+                                            }
+                                    });
+                            }, 5000);
+                            setInterval(function(){
+                            $.ajax({
+                            url: Routing.generate('participe_notification'),
+                                    success: function(data) {
+                                    tab = data.split('*');
+                                            $('#blockNotif').html(tab[0]);
+                                            $('#countNotif').html(tab[1]);
+                                            if (tab[1] == 0){
+                                    $('#nombre_notif').hide();
+                                    } else{
+                                    $('#nombre_notif').show();
+                                            $('#countNotif').html(tab[1]);
+                                    }
+                                    $(tab[2]).appendTo(document.body)
+                                    }
+                            });
+                            }, 10000);
+                </script>
 
 
-            {% block javascriptfils %}
-            {% endblock %}
-            {% block javascriptfils2 %}
-            {% endblock %}
-            {% endblock %}
+                {% block javascriptfils %}
+                {% endblock %}
+                {% block javascriptfils2 %}
+                {% endblock %}
+                {% endblock %}

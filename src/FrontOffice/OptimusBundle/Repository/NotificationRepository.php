@@ -6,6 +6,18 @@ use Doctrine\ORM\EntityRepository;
 
 class NotificationRepository extends EntityRepository {
 
+    public function getlisteEntraineur($id) {
+        $em = $this->getEntityManager();
+        $qb = $em->createQuery("select n "
+                                . "  from FrontOfficeOptimusBundle:Notification n "
+                                . " where n.entraineur IS NOT NULL "
+                                . " and  n.notificateur != :id "
+                                . " ORDER BY n.datenotification DESC"
+                        )
+                        ->setParameter('id', $id);
+                return $qb->getResult();
+    }
+    
     public function getNotification($id, $date) {
         $em = $this->getEntityManager();
         $user = $em->getRepository("FrontOfficeUserBundle:User")->find($id);
