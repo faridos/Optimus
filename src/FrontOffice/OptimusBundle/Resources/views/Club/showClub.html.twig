@@ -271,7 +271,7 @@ Palmarés Supprimer
     {% for member in members %}
         <div class="col-sm-4" id="{{member.id}}">
                                         <div class="tooltipsContainer agent notifyList">
-                                            <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="Essid Essid">
+                                            <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{member.member.username}}">
                                              {% if member.member.WebPath == null %}
                                                {% if member.member.sexe == 'H' %}
                                                    <img src="{{ asset('men.png') }}" alt="">
