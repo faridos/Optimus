@@ -11,7 +11,36 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class EventRepository extends EntityRepository {
+    
+   
+    
+//     public function getEventJour($id)
+//    {
+//        $dt = new \Datetime();
+//        $dt2 = new \DateTime();
+//        $dt2 = $dt2->modify('- 1 days');
+//        $query = $this->createQueryBuilder('e')
+//            ->select('e')
+//            ->where("e.dateDebut BETWEEN  '" . $dt2->format("Y-m-d") . " 00:00:00' and '" . $dt->format("Y-m-d") . " 23:59:59'")
+//            ->andWhere("e.id");
+//        return $query->getQuery()->getResult();
+//    }
 
+    public function getEventJour() {
+
+        $em = $this->getEntityManager();
+        $dt = new \Datetime();
+        $dt2 = new \DateTime();
+        $dt2 = $dt2->modify('+ 1 days');
+        $query = $em->createQuery("SELECT event "
+                        . "FROM FrontOfficeOptimusBundle:Event event"
+                        . " where event.active = 1 and event.dateDebut BETWEEN  '" . $dt->format("Y-m-d") . " 00:00:00' and '" . $dt2->format("Y-m-d") . " 23:59:59'"
+                );
+
+        return $events = $query->getResult();
+    }
+    
+    
     public function getEventLoad($date, $lng, $lat) {
 
         $em = $this->getEntityManager();
