@@ -20,29 +20,53 @@
                                     <div class="notificationsWidget">
                                         <h5>Notifications</h5>
                                         {% for notification in notifications %}
-                                            {% set notificateur = getUser(notification.notificateur) %}
+                                            
                                         <div class="notification">
                                             <div class="time green">
-                                                <div class="timeBody hidden-xs">{{ notification.datenotification|date('Y-m-d H:i:s') }}</div>
+                                                <div class="timeBody hidden-xs">{{ notification.notifications.datenotification|date('Y-m-d H:i:s') }}</div>
                                                 <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
                                                 <div class="indicator"><span class="fa fa-circle-o"></span></div>
                                                 <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
                                             </div>
                                             <div class="notifyContent">
                                                 <div class="notifyBody">
-                                                    <a href="#">
-                                                        <img class="avatar pull-left" src="{{ asset(notificateur.WebPath) }}" alt="avatar"> </a>
+                                                   
+                                                    
+                                                    <a href="{{ path('show_profil',{'id' : notification.notifications.notificateur.id}) }}">
+                                                        {% if notification.notifications.notificateur.path == null %}
+{% if notification.notifications.notificateur.sexe == 'H' %}
+<img class="avatar pull-left"  src="{{ asset('men.png') }}">
+{% else %}
+<img class="avatar pull-left"  src="{{ asset('women.png') }}">
+{% endif %}
+{% else %}
+<img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+{% endif %}
+                                                    </a>
                                                     <div class="notify pull-left">
-                                                        <a href="{{ path('show_profil',{'id' : notificateur.id}) }}" class="name">{{ notificateur.prenom }} {{ notificateur.nom }} <span class="label label-green visible-xs">02/02/2015 à 14:48</span></a>
-                                                        {% if notification.event != null %}
-                                                        <div class="message">a publié l'évènement {{ notification.event.titre }}</div>
+                                                        <a href="{{ path('show_profil',{'id' : notification.notifications.notificateur.id}) }}" class="name">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} <span class="label label-green visible-xs">02/02/2015 à 14:48</span></a>
+                                                        {% if notification.notifications.type == 'participation' %}
+                                                        <div class="message">a participer dans l'évènement {{ notification.notifications.event.titre }}</div>
                                                         {% endif %}
-                                                        {% if notification.club != null %}
-                                                        <div class="message">a publié la club {{ notification.club.nom }}</div>
+                                                        {% if notification.notifications.type == 'AnnulerParticip' %}
+                                                        <div class="message">a annuler sa participation de l'évènement {{ notification.notifications.event.titre }}</div>
                                                         {% endif %}
-                                                        {% if notification.entraineur != null %}
-                                                        <div class="message">l'entraineur {{ notification.event.titre }} à été inscrit</div>
+                                                        {% if notification.notifications.type == 'add' %}
+                                                        <div class="message">a ajouter une évènement {{ notification.notifications.event.titre }}</div>
                                                         {% endif %}
+                                                        {% if notification.notifications.type == 'update' %}
+                                                        <div class="message">a modifier l'évènement {{ notification.notifications.event.titre }}</div>
+                                                        {% endif %}
+                                                        {% if notification.notifications.type == 'delete' %}
+                                                        <div class="message">a supprimer l'évènement {{ notification.notifications.event.titre }}</div>
+                                                        {% endif %}
+                                                        {% if notification.notifications.type == 'comment' %}
+                                                        <div class="message">a commenter l'évènement {{ notification.notifications.event.titre }}</div>
+                                                        {% endif %}
+                                                        {% if notification.notifications.type == 'photo' %}
+                                                        <div class="message">a ajouter une photo dans l'évènement {{ notification.notifications.event.titre }}</div>
+                                                        {% endif %}
+                                                        
                                                     </div>
                                                     <div class="clearfix">
 

@@ -31,16 +31,29 @@ class NotificationController extends Controller {
     public function participeNotifAction() {
        
         $res= array();
+        $resjour=array();
+        $tab1 = array("participation", "AnnulerParticip", "add", "update", "delete");
+        $tab2 = array("comment", "photo");
         //$notifsParticip = new ArrayCollection();
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $amis = $em->getRepository('FrontOfficeUserBundle:User')->getFrinds($user->getId());
+        $eventjours = $em->getRepository('FrontOfficeOptimusBundle:Event')->getEventJour();
+        
+        foreach ($eventjours as $eventjour){
+            foreach ($user->getParticipations() as $participe){
+                if($participe->getEvent()->getId() == $eventjour->getId()){
+                   $resjour[]= $eventjour;
+                }
+            }
+        }
+       
         //$notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->find($id);
        if($user->getConfigNotif()->getEvent()){
            $c=0;
            foreach ($amis as $ami){
              foreach ($ami->getNotificateur() as $notif){
-                 if($notif->getType() != "comment"){
+                 if(in_array($notif->getType(), $tab1)){
                  $i=0;
                  if($notif->getDatenotification()> $user->getcreatedAt()){
                      foreach ($user->getNotificationseen() as $notifSeen){
@@ -60,13 +73,27 @@ class NotificationController extends Controller {
                
            }
            foreach ($user->getParticipations() as $participe){
-               foreach ($participe->getEvent()->get as $participe){
-                   
+               foreach ($participe->getEvent()->getNotificationEvent() as $notif2){
+                   if($user->getId() != $notif2->getNotificateur()->getId() and in_array($notif2->getType(), $tab2) ){
+                   $i=0;
+                    foreach ($user->getNotificationseen() as $notifSeen){
+                         if($notifSeen->getNotifications()->getId() == $notif2->getId())
+                         {
+                             $i=1;
+                         }
+                       
+                     }
+                       if($i==0){
+                     
+                     $res[$c]=$notif2;
+                     $c++;
+                         }
+                   }
                }
                
            }
         }
-       
+      
        foreach ($res as $val){
         $notifseen = new NotificationSeen();
         $notifseen->setUsers($user);
@@ -77,7 +104,7 @@ class NotificationController extends Controller {
         $notificationnonvu = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users"=>$user->getId() ,"vu"=>0));
         $datenotificationseen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users"=>$user->getId()),array("datenotificationseen"=>'DESC'));
      
-         return $this->render('FrontOfficeOptimusBundle:Notification:notifParticipe.html.twig', array('datenotificationseen' => $datenotificationseen, 'count'=>$notificationnonvu,'res'=>$res  ));
+         return $this->render('FrontOfficeOptimusBundle:Notification:notifParticipe.html.twig', array('datenotificationseen' => $datenotificationseen, 'count'=>$notificationnonvu,'res'=>$res , 'resjour'=>$resjour ));
         
       
     }

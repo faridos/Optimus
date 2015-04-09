@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Photo;
 use FrontOffice\OptimusBundle\Form\PhotoType;
+use FrontOffice\OptimusBundle\Entity\Notification;
 
 /**
  * Photo controller.
@@ -94,6 +95,7 @@ class PhotoController extends Controller
     public function createPhotoEventAction(Request $request,$id)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
         $photo = new Photo();
         $form = $this->createForm(new PhotoType(), $photo);
@@ -104,6 +106,14 @@ class PhotoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($photo);
             $em->flush();
+            
+            $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('photo');
+            $notif->setEvent($event);
+            $em->persist($notif);
+            $em->flush();
+            
             $request->getSession()->getFlashBag()->add('AjouterPohoto', "Pohoto a été ajouter avec success.");
             return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
         }
