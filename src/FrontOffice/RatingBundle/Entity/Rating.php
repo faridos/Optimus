@@ -28,7 +28,4 @@ class Rating extends BaseRating
        
     }
     
- 
-  
-
 }
