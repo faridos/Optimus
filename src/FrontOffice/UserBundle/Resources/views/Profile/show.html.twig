@@ -495,6 +495,8 @@ Palmarés Supprimer
 <h4 class="modal-title" id="contactLabel">Liste des partipants </h4>
 </div>
 <div class="modal-body">
+     <ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
+ <div class="col-md-12">
 {%for par in env.participations %}
 
 <div id="participantenv{{env.id}}{{par.participant.id}}">
@@ -516,7 +518,8 @@ Palmarés Supprimer
 <div style="margin-top: 2%;"></div>
 </div>
 {% endfor %}
-
+ </div>
+     </ul>
 </div>
 <div class="modal-footer supp-album">
 <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
@@ -558,7 +561,8 @@ Palmarés Supprimer
 </div>
 <div class="modal-body">
 <input id="inviterevent{{env.id}}" type="hidden" name="event" value="{{env.id}}"/>
-<div id="listfriend{{env.id}}"> 
+ <ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
+<div  class="col-md-12"  id="listfriend{{env.id}}"> 
 
 {% set i = 0 %}
 {% set friends = getFriends(env.createur.id) %}
@@ -567,7 +571,7 @@ Palmarés Supprimer
 {% if participantOuNon == 0 %}
 {% set i = i+1 %}
 
-<label class="checkbox custom-checkbox">
+<label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
 <input id="listefrirnd{{env.id}}{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}">
 <span class="fa fa-check" style="margin-top: 3%;"></span>
 {% if friend.path == null %}
@@ -594,6 +598,7 @@ tous vos  amis sont particip
 </div>
 {% endif %}                                                                      
 </div>
+</ul>
 </div>
 
 <div class="modal-footer supp-album">
@@ -620,9 +625,11 @@ tous vos  amis sont particip
 <h4 class="modal-title" id="contactLabel">Liste des partipants </h4>
 </div>
 <div class="modal-body">
-{%for par in part.event.participations %}
-
-<div id="participanteventparticipation{{par.event.id}}{{par.participant.id}}">
+    <ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
+ <div class="col-md-12">
+        {%for par in part.event.participations %}
+   
+<div  id="participanteventparticipation{{par.event.id}}{{par.participant.id}}">
 <a href="{{ path('show_profil',{'id': par.participant.id}) }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{par.participant.username}}">
 {#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
 {% if par.participant.path == null %}
@@ -641,7 +648,8 @@ tous vos  amis sont particip
 <div style="margin-top: 2%;"></div>
 </div>
 {% endfor %}
-
+</div>
+</ul>
 </div>
 <div class="modal-footer supp-album">
 <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
@@ -700,6 +708,8 @@ tous vos  amis sont particip
 <h4 class="modal-title" id="contactLabel">Liste des members </h4>
 </div>
 <div class="modal-body">
+     <ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
+ <div class="col-md-12">
 {% set members = adherents(club.id) %}
 {%for member in members %}
 
@@ -722,7 +732,8 @@ tous vos  amis sont particip
 <div style="margin-top: 2%;"></div>
 </div>
 {% endfor %}
-
+</div>
+     </ul>
 </div>
 <div class="modal-footer supp-album">
 <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
@@ -739,7 +750,10 @@ tous vos  amis sont particip
 </div>
 <div class="modal-body">
 <input id="inviterclub" type="hidden" name="event" value="{{club.id}}"/>
-<div id="listfriendclublist{{club.id}}"> 
+<ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
+
+
+<div  class="col-md-12" id="listfriendclublist{{club.id}}"> 
 
 {% set i = 0 %}
 {% set friends = getFriends(club.createur.id) %}
@@ -747,7 +761,7 @@ tous vos  amis sont particip
 {% set memberOuNon = MemberOuNon(club.id,friend) %}
 {% if memberOuNon == 0 %}
 {% set i = i+1 %}
-<label class="checkbox custom-checkbox">
+<label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
 <input id="listefrirndClub{{club.id}}{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}">
 <span class="fa fa-check" style="margin-top: 3%;"></span>
 {% if friend.path == null %}
@@ -773,6 +787,7 @@ tous vos  amis sont particip
 </div>
 {% endif %}                                                                      
 </div>
+</ul>
 </div>
 
 <div class="modal-footer supp-album">

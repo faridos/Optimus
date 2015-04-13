@@ -187,11 +187,12 @@ Nombre des members : <span  id="nbparticip">{{ club.adherents | length}}</span>
 
 <ul class="nav nav-tabs nav-justified" role="tablist">
 <li class="active"><a href="#programmes" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Programmes</a></li>
-<li class=""><a href="#members" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Member</a></li>
-<li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Palmares</a></li>
-<li class=""><a href="#albums" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Album</a></li>
-{% if app.user == club.createur %}<li class=""><a href="#demande" role="tab" data-toggle="tab"><span class="icon-doc"></span> Demande</a></li>{% endif %}
-<li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
+<li class=""><a href="#members" role="tab" data-toggle="tab"><span class="icon-users"></span> Member</a></li>
+
+{% if app.user == club.createur %}<li class=""><a href="#demande" role="tab" data-toggle="tab"><span class="icon-user"></span> Demande</a></li>{% endif %}
+<li class=""><a href="#compétitions" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Compétitions</a></li>
+<li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-badge"></span> Palmares</a></li>
+
 </ul>
 <div class="tab-content">
     {% if club.isPayant == 1%}
@@ -508,7 +509,7 @@ photo Supprimer
            </div>
 </ul>
 {% endif %}
-<ul class="tab-pane fade  scrollbar" id="videos" >
+<ul class="tab-pane fade  scrollbar" id="compétitions" >
     <img style="width: 100%" src="{{ asset('154.png') }}">
     <div class="clearfix"></div>
 </ul>
