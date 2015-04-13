@@ -43,18 +43,20 @@ les invitations ont été envoyées
 </div>
 <div class="tabsContainer">
 <ul class="nav nav-tabs nav-justified" role="tablist">
-<li class="active"><a href="#env" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Events</a></li>
+<li class="active"><a href="#env" role="tab" data-toggle="tab"><span class="icon-calendar"></span> Events</a></li>
 <li class=""><a href="#envparticip" role="tab" data-toggle="tab"><span class="icon-list"></span> Participation</a></li>
 <li class=""><a href="#clubs" role="tab" data-toggle="tab"><span class="fa fa-users"></span> Clubs</a></li>
 <li class=""><a href="#calendaree" role="tab" data-toggle="tab"><span class="navIcon fa fa-calendar"></span> Calendrier</a></li>
+<li class=""><a href="#compititions" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Compétitions</a></li>
 <li class=""><a href="#palmares" role="tab" data-toggle="tab"><span class="icon-badge"></span> Palmares</a></li>
 </ul>
 <div class="tab-content">
+
+<ul class="tab-pane fade  active in scrollbar" id="env" >
 {% if user.compte == 0 and user != app.user %}
 <img style="width: 100%" src="{{ asset('prive.png') }}">
-{% else %}
-<ul class="tab-pane fade  active in scrollbar" id="env" >
 
+{% else %}
 <div id="supprimer-e" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
 Evenement Supprimer
@@ -119,8 +121,13 @@ Cette évènement est depassé
 </div>
 {% endif %}
 {% endfor %}
+{% endif %}
 </ul>
 <ul class="tab-pane fade  scrollbar" id="envparticip" >
+    {% if user.compte == 0 and user != app.user %}
+<img style="width: 100%" src="{{ asset('prive.png') }}">
+
+{% else %}
 {% if user.participations|length == 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
 <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
@@ -180,14 +187,24 @@ Cette évènement est depassé
 </div>
 {% endif %}
 {% endfor %}
+{% endif %}
 </ul>
 <ul class="tab-pane fade  scrollbar" id="calendaree" >
+    {% if user.compte == 0 and user != app.user %}
+<img style="width: 100%" src="{{ asset('prive.png') }}">
+
+{% else %}
 <div class="buttonsWrapper col-xs-12">
 <div id="calendar">
 </div>
 </div>
+{% endif %}
 </ul>
 <ul class="tab-pane fade scrollbar" id="clubs" >
+    {% if user.compte == 0 and user != app.user %}
+<img style="width: 100%" src="{{ asset('prive.png') }}">
+
+{% else %}
 {% if user.profil == 'Entraineur' %}
 <div id="supprimer-c" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
@@ -295,7 +312,15 @@ Club Supprimer
 {% endif %}
 {% endfor %}
 {% endif %}
+{% endif %}
 </ul>
+<ul class="tab-pane fade  scrollbar" id="compititions" >
+    {% if user.compte == 0 and user != app.user %}
+<img style="width: 100%" src="{{ asset('prive.png') }}">
+
+{% else %}
+    {% endif %}
+    </ul>
 <ul class="tab-pane fade scrollbar" id="palmares" >
 <div id="supprimer-p" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
@@ -316,7 +341,7 @@ Palmarés Supprimer
 {% endif%}
 <div class="row">
 <br>
-{% for palmares in user.reward %}
+{% for palmares in user.reward|reverse %}
 <div class="row {{palmares.id}}">
 <br>
 <div class="col-md-12" id="block{{ palmares.id }}">
@@ -371,10 +396,11 @@ Palmarés Supprimer
 </div>
 {% endfor %}
 </div>
+
 </ul>
 <div class="clearfix"></div>
 
-{% endif %}
+
 
 </div>
 </div>
@@ -722,7 +748,7 @@ tous vos  amis sont particip
 {% if memberOuNon == 0 %}
 {% set i = i+1 %}
 <label class="checkbox custom-checkbox">
-<input id="listefrirndClub{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}">
+<input id="listefrirndClub{{club.id}}{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}">
 <span class="fa fa-check" style="margin-top: 3%;"></span>
 {% if friend.path == null %}
 {% if friend.sexe == 'H' %}
@@ -1151,8 +1177,8 @@ var i = 0;
 {%for friend in friends %}
 {% set memberOuNon = MemberOuNon(club.id,friend) %}
 {% if memberOuNon == 0 %}
-if (document.getElementById('listefrirndClub{{friend.id}}').checked){
-name[i] = $("#listefrirndClub{{friend.id}}").val();
+if (document.getElementById('listefrirndClub{{club.id}}{{friend.id}}').checked){
+name[i] = $("#listefrirndClub{{club.id}}{{friend.id}}").val();
 i = i + 1;
 test = 'true';
 }{% endif %}
@@ -1172,7 +1198,7 @@ $('.modal-backdrop').hide();
 $('#invitation-envoyées').show();                                                                                                                                                                                            {%for friend in friends %}
 {% set memberOuNon = MemberOuNon(club.id,friend) %}
 {% if memberOuNon == 0 %}
-document.getElementById('listefrirnd{{friend.id}}').checked = false;                                                                                                                                                                                                    {% endif %}
+document.getElementById('listefrirndClub{{club.id}}{{friend.id}}').checked = false;                                                                                                                                                                                                    {% endif %}
 {% endfor %}
 
 }
