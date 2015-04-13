@@ -25,6 +25,18 @@ class UserRepository extends EntityRepository {
         return $qb->getQuery()->getResult();
     }
 
+    public function getIsAmis($id,$ida) {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('r');
+        $qb->select('r')
+                ->from('Sly\RelationBundle\Entity\Relation', 'r')
+                ->where('r.object1Id = :id and r.object2Id= :ida')
+                ->orWhere('r.object2Id = :id and r.object1Id = :ida')
+                ->andWhere('r.confirmed = 1')
+                ->setParameter('id', $id)
+                ->setParameter('ida', $ida);
+        return  $qb->getQuery()->getResult();
+    }
    
 
     public function getInvitations($id) {

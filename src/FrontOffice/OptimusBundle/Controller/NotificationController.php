@@ -32,12 +32,12 @@ class NotificationController extends Controller {
         $c = 0;
         $res = array();
         $resjour = array();
-        $tab1 = array("participation", "AnnulerParticip", "add", "update", "delete");
-        $tab2 = array("comment", "photo");
+        $tab1 = array("participation", "AnnulerParticip", "update", "delete", "comment", "photo");
         //$notifsParticip = new ArrayCollection();
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $amis = $em->getRepository('FrontOfficeUserBundle:User')->getFrinds($user->getId());
+         
         $eventjours = $em->getRepository('FrontOfficeOptimusBundle:Event')->getEventJour();
 
         foreach ($eventjours as $eventjour) {
@@ -48,14 +48,14 @@ class NotificationController extends Controller {
             }
         }
 
-        //$notification = $em->getRepository('FrontOfficeOptimusBundle:Notification')->find($id);
+       
         if ($user->getConfigNotif()->getEvent()) {
             foreach ($amis as $ami) {
-                $isAmi = $em->getRepository('Sly\RelationBundle\Entity\Relation')->findOneBy(array('object1Id'=>$ami->getId()));
+                $isAmi = $em->getRepository('FrontOfficeUserBundle:User')->getIsAmis($user->getId(), $ami->getId());
                 foreach ($ami->getNotificateur() as $notif) {
-                    if (in_array($notif->getType(), $tab1) && $notif->getDatenotification() > $isAmi->getConfirmedAt()) {
+                    if ($notif->getType()== "add" && $notif->getDatenotification() > $isAmi[0]->getConfirmedAt()) {
                         $i = 0;
-                        if ($notif->getDatenotification() > $user->getcreatedAt()) {
+                        
                             foreach ($user->getNotificationseen() as $notifSeen) {
                                 if ($notifSeen->getNotifications()->getId() == $notif->getId()) {
                                     $i = 1;
@@ -66,15 +66,15 @@ class NotificationController extends Controller {
                                 $res[$c] = $notif;
                                 $c++;
                             }
-                        }
+                        
                     }
                 }
             }
-          
-            
+
             foreach ($user->getParticipations() as $participe) {
+                 
                 foreach ($participe->getEvent()->getNotificationEvent() as $notif2) {
-                    if ($user->getId() != $notif2->getNotificateur()->getId() and in_array($notif2->getType(), $tab2) ) {
+                    if ($user->getId() != $notif2->getNotificateur()->getId() && in_array($notif2->getType(), $tab1) && $notif2->getDatenotification() > $participe->getDatePaticipation()) {
                         $i = 0;
                         foreach ($user->getNotificationseen() as $notifSeen) {
                             if ($notifSeen->getNotifications()->getId() == $notif2->getId()) {
@@ -89,12 +89,13 @@ class NotificationController extends Controller {
                     }
                 }
             }
+            
         }
      
         if ($user->getConfigNotif()->getEntraineur()) {
             $notificationentrain = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getlisteEntraineur($user->getId());
-            
             foreach ($notificationentrain as $val) {
+                
                 if($user->getcreatedAt() < $val->getEntraineur()->getcreatedAt() && $val->getEntraineur()->getId() != $user->getId()  ){
                 $i = 0;
                 foreach ($user->getNotificationseen() as $notifSeen) {
@@ -111,6 +112,7 @@ class NotificationController extends Controller {
                 }
             }
         }
+       
 
 
         foreach ($res as $val) {
