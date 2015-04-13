@@ -456,7 +456,7 @@ class ClubController extends Controller {
                 $em->flush();
                  
             }
-            return new Response('1'); 
+            return new Response($message); 
         
        
     }

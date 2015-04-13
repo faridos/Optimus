@@ -265,8 +265,8 @@ class Message {
 
 
 
-//         public function __toString()
-//    {
-//        return (string) $this->getId();
-//    }
+         public function __toString()
+    {
+        return (string) $this->getId();
+    }
 }
