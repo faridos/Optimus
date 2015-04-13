@@ -205,7 +205,7 @@ Cette évènement est depassé
 <img style="width: 100%" src="{{ asset('prive.png') }}">
 
 {% else %}
-{% if user.profil == 'Entraineur' %}
+   {% if user.profil == 'Entraineur' %}
 <div id="supprimer-c" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
 Club Supprimer
@@ -226,7 +226,7 @@ Club Supprimer
 {% endif %}
 {% for club in user.clubs|reverse %}
 {% if club.active == 1 %}
-<div class="userWidget-2 tooltipsContainer col-md-12 {{club.id}}" >
+<div {% if club.isPayant == 0 %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-md-12 {{club.id}}" >
 <div class="tooltipsContainer avatar imagus">
 <a href="{{path('show_club',{'id':club.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ club.nom }}">
 {% if club.path == null %}
@@ -247,7 +247,7 @@ Club Supprimer
 
 <div  style="margin-top: 1%" align="right">
 <a href="#plusInfoClub{{club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des members"><span class="icon-users"></span></a>
-{% if app.user == club.createur %}
+{% if app.user == club.createur and club.isPayant == 1 %}
 <a href="#inviteramisclub{{club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="inviter"><span class="icon-plus"></span></a>
 <a href="{{ path('club_update', {'id':club.id})}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
 
@@ -269,7 +269,7 @@ Club Supprimer
 {% endif %}
 {% for member in user.adherent|reverse %}
 {% if member.clubad.active == 1 %}
-<div class="userWidget-2 tooltipsContainer col-md-12 {{member.clubad.id}}" >
+<div {% if club.isPayant == 0 %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-md-12 {{member.clubad.id}}" >
 <div class="tooltipsContainer avatar imagus col-md-3">
 <a href="{{path('show_club',{'id':member.clubad.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
 {% if member.clubad.path == null %}

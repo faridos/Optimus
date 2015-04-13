@@ -44,28 +44,28 @@ class Club {
     /**
      * @var \Date
      *
-     * @ORM\Column(name="Date_creation", type="date")
+     * @ORM\Column(name="Date_creation", type="date", nullable=true)
      */
     private $dateCreation;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Discpline", type="string", length=255)
+     * @ORM\Column(name="Discpline", type="string", length=255, nullable=true)
      */
     private $discpline;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Adresse", type="string", length=255)
+     * @ORM\Column(name="Adresse", type="string", length=255, nullable=true)
      */
     private $adresse;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
 
@@ -105,7 +105,7 @@ class Club {
     /**
      * @var float
      *
-     * @ORM\Column(name="Frais_adhesion", type="float")
+     * @ORM\Column(name="frais", type="float", nullable=true)
      */
     private $fraisAdhesion;
 

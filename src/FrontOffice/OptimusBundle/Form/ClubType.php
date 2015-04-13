@@ -18,14 +18,14 @@ class ClubType extends AbstractType
         $builder
             ->add('nom','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le nom du club')))
             ->add('file', 'file' ,array('attr'=>array('class'=>'btn btn-round btn-o search-optimus'),'required'=>False))
-            ->add('dateCreation','date', array('attr'=>array('class' => 'search-optimus','placeholder'=>'date creation '),'format' => 'dd/MM/yyyy', 'widget' => "single_text", 'required' => true))
+            ->add('dateCreation','date', array('attr'=>array('class' => 'search-optimus','placeholder'=>'date creation '),'format' => 'dd/MM/yyyy', 'widget' => "single_text", 'required' => False))
 	
 	
-            ->add('discpline','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer la discpline')))
-            ->add('description','textarea',array('attr'=>array('class'=>'form-control search-optimus','placeholder'=>'Entrer la description du votre club...')))
-            ->add('adresse','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Adresse'),'required'=>True))
+            ->add('discpline','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer la discpline'),'required' => False))
+            ->add('description','textarea',array('attr'=>array('class'=>'form-control search-optimus','placeholder'=>'Entrer la description du votre club...'),'required' => False))
+            ->add('adresse','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Adresse', 'readonly'=>'readonly'),'required'=>True))
            
-            ->add('fraisAdhesion','integer',array('attr'=>array('class'=>'form-control round sansBorder','placeholder'=>'Entrer les frais du club')))
+            ->add('fraisAdhesion','integer',array('attr'=>array('class'=>'form-control round sansBorder','placeholder'=>'Entrer les frais du club'),'required' => False))
             ->add('lat','hidden',array('attr'=>array('class'=>'search-optimus', )),array('required'=>true))
             ->add('lng','hidden',array('attr'=>array('class'=>'search-optimus',)),array('required'=>true))
             
