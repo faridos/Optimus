@@ -245,6 +245,8 @@ Cette évènement est depassé
 <ul class="tab-pane fade  scrollbar" id="photos" >
 
 <div class="row" >
+    {% set participantOuNon=ParticipantOuNon(event,app.user) %}
+{% if participantOuNon == 1 %}
 <div class="buttonsWrapper col-xs-12">
 {% if app.user.id == event.createur.id %}
 <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
@@ -260,17 +262,18 @@ Cette évènement est depassé
 <a href="{{ asset(photo.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
 <img src="{{ asset(photo.WebPath) }}" />
 </a>
-{% if event.createur == app.user %}
+
 <div class="priceCap paddus">
 <button href="#suppritus{{photo.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
 </div>
-{% endif %}
+
 <div class="figCap">
 <div class="address">Cliquez pour agrandir l'image</div>
 </div>
 </div>
 </div>
 </div>
+
 <div class="modal fade" id="suppritus{{photo.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content bordusbottomus">
@@ -297,10 +300,20 @@ Cette évènement est depassé
 {{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoEvent',  {'id': event.id })) }}
 </div>
 </div>
+{% else %}
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>cette catégorie reservée pour les participants</strong> 
+</div>
+{% endif %}
 </div>
 </ul>
 <ul class="tab-pane fade scrollbar" id="videos"  >
-<div class="row">
+  {% set participantOuNon=ParticipantOuNon(event,app.user) %}
+  <div class="row">
+{% if participantOuNon == 1 %}
+
 <br>
 {#   <div class="col-xs-4" >
 <div data-linkto="" class="card albumus" >
@@ -323,8 +336,16 @@ Cette évènement est depassé
 <div class="clearfix"></div>
 </div>
 </div>#}
-</div>
+
 <img src="{{ asset('154.png') }}" style='width: 100%;'>
+{% else %}
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>cette catégorie reservée pour les participants</strong> 
+</div>
+{% endif %}
+</div>
 <div class="clearfix"></div>
 </ul>
 </div>
