@@ -60,6 +60,9 @@ class ProgramController extends Controller {
         
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id_club);
+          if (!$club || $club->getActive() == 0 ) {
+            return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+        }
         $programme = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($id);
         $sessions = $em->getRepository('FrontOfficeOptimusBundle:Seance')->findBy(array('program' => $programme));
         // setlocale(LC_TIME, 'fr_FR.utf8', 'fra');

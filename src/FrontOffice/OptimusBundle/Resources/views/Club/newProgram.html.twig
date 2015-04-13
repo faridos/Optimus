@@ -1,3 +1,8 @@
+ <div class="row">
+                    <div id="notdate" style="display: none;" class="alert alert-danger">
+                        {#<a class="close" data-dismiss="alert">×</a>#}
+                        date fin ne doit pas inferieur au date debut
+                    </div>
 <form action="{{ path('program_create',{ 'id' : entity.id }) }}" {{ form_enctype(form) }} method="post" class="form-horizontal0 form-groups-bordered">
     {{ form_errors(form) }}
     <div class="modal-content bordusbottomus">
@@ -16,11 +21,11 @@
                     </div>#}
 
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 cfItem">
-                        {{ form_widget(form.datedebut) }}
+                        {{ form_widget(form.datedebut, { 'id': 'some_class_1' }) }}
 
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 cfItem">
-                        {{ form_widget(form.datefin) }}
+                        {{ form_widget(form.datefin, { 'id': 'some_class_2' }) }}
                     </div>
 
                 </div>
@@ -34,3 +39,4 @@
     {{ form_widget(form._token) }}
 </form>
 
+</div>

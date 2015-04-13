@@ -200,7 +200,7 @@ Nombre des members : <span  id="nbparticip">{{ club.adherents | length}}</span>
 <ul class="tab-pane fade  active in scrollbar" id="programmes" >
      <div id="supprimer-pr-c" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
-Palmarés Supprimer
+Programme Supprimer
 </div>
     {% if club.programs|length == 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -1000,6 +1000,24 @@ $('#supprimer-a').show();
 });
 });{% endfor %}
 </script>
+ <script>
+        $("#some_class_2").change(function() {
+            var start = $('#some_class_1').val();
+            var end = $('#some_class_2').val();
+            if (start != '' && end != '') {
+                var tabstart = (new Date(start).getTime() / 1000);
+                var tabend = (new Date(end).getTime() / 1000);
+                if (tabstart > tabend) {
+                    $('#notdate').show();
+                    $('#some_class_2').val("");
+                }
+                else{
+                $('#notdate').hide();
+            }
+            }
+            
+        });
+    </script>
 <script>
 "use strict";
 function initialize() {
