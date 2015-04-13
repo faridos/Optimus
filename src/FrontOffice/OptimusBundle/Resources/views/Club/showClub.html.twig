@@ -42,7 +42,7 @@ les invitations ont été envoyées
 <div class="propWidget-1 logotus tooltipsContainer ">
 <div class="fig salamus">
 {% if club.path == null %}
-<a href="{{ asset('logoclub.png')}}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+<a href="{{ asset('logoclub.png')}}" data-lightbox-title="photo Club" data-lightbox-gallery="">
 <img src="{{ asset('logoclub.png') }}" class="inline-block imaguss">
 </a>
 {% else %}
@@ -51,7 +51,11 @@ les invitations ont été envoyées
 </a>
 {% endif %}
 {% if club.createur == app.user %}
-<button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo"><span class="notifyIcon fa fa-camera-retro"></span></button>
+<div class="priceCap paddus">
+<button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo">
+<span class="notifyIcon fa fa-camera-retro"></span>
+</button>
+</div>
 {% endif %}
 </div>
 </div>
@@ -71,8 +75,13 @@ les invitations ont été envoyées
 <div class="row">
     {% if club.isPayant == 1 %}
           {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
+          
 <div class="cardRating col-md-5" style="color:#eab134;margin-left: -40px;">
+    {%if memberconfirmed == null %}
 <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with { 'id' : 'C'~club.id } %}</div>
+{% else %}
+<div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with { 'id' : 'C'~club.id } %}</div>
+{% endif %}
 </div>
 <div class="cardRating col-md-6" style="margin-left: 57px;">
 <div class="label labelus label-yellow " >
@@ -428,7 +437,10 @@ photo Supprimer
 </div>
 <div  id="ajouterphoto{{album.id}}" style="display: none;" class="buttonsWrapper col-xs-12">
 <a id="lienphotoalbum" onclick="image2()" href="#albums">albums > {{album.nom }}</a>
-{% if app.user == club.createur %}<a class="btn btn-round btn-default btn-sm rightus" href="#uploadphotoAlbum{{album.id}}" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a>{% endif %}<br>
+{% if app.user == club.createur %}
+<a class="btn btn-round btn-default btn-sm rightus" href="#uploadphotoAlbum{{album.id}}" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a>
+{% endif %}
+<br>
 </div>   
 {%for image in album.images %}
 {%set  ph =  ph + 1 %}

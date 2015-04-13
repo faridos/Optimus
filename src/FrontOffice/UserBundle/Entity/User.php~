@@ -175,7 +175,7 @@ class User extends BaseUser {
     protected $adherent;
     
   /**
-   * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\ConfigNotif", mappedBy="user", cascade={"persist"})
+   * @ORM\OneToOne(targetEntity="FrontOffice\OptimusBundle\Entity\ConfigNotif", mappedBy="user", cascade={"persist"})
    */
     protected $configNotif;
 
@@ -649,7 +649,13 @@ class User extends BaseUser {
         $this->adherent->removeElement($adherent);
     }
     
-    
+    function getConfigNotif() {
+        return $this->configNotif;
+    }
+
+    function setConfigNotif($configNotif) {
+        $this->configNotif = $configNotif;
+    }
 
 
 

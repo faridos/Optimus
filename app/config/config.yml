@@ -163,7 +163,7 @@ payum:
     payments:
         paypal_express_checkout_nvp:
             paypal_express_checkout_nvp:
-                username:  mouhamedchandoul7-facilitator_api1.gmail.com
-                password: U5JWKVNWRZYAF7SQ
-                signature: ARkk.oi6N.mXtKSCBQU1lYkf0DrxAhkggyxWKfgsBKG.OBGgTHeRKOqf
+                username:  optomiseventstest-facilitator-1_api1.gmail.com
+                password: NCNDDR238FXFARQ2
+                signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AlrcKpw8nVOoElh4Ekzk9d1Q-SUv
                 sandbox: true

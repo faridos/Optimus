@@ -215,7 +215,7 @@ Club Supprimer
 <div class="tooltipsContainer avatar imagus">
 <a href="{{path('show_club',{'id':club.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ club.nom }}">
 {% if club.path == null %}
-    
+
 <img src="{{ asset('logoclub.png') }}" alt="avatar" ></a>
 {% else %}
 <img src="{{ asset(club.WebPath) }}" alt="avatar" ></a>
@@ -785,7 +785,7 @@ tous vos  amis sont particip
 <h4 class="modal-title" id="contactLabel">Liste des members </h4>
 </div>
 <div class="modal-body">
-    {% set members = adherents(club.id) %}
+{% set members = adherents(club.id) %}
 {%for member in members %}
 
 <div id="memberclubA{{member.id}}">
@@ -872,7 +872,7 @@ tous vos  amis sont particip
 </div>
 </div>
 {%for member in members %}
-    <div class="modal" id="memberdelete{{member.id}}"   >
+<div class="modal" id="memberdelete{{member.id}}"   >
 <div class="modal-dialog">
 <div class="modal-content bordusbottomus">
 <div class="modal-header bordustopus">
@@ -892,7 +892,7 @@ tous vos  amis sont particip
 </div>
 </div>
 </div>
-    {% endfor %}  
+{% endfor %}  
 {% endfor %}  
 <!------------------- modal plus info club m------------------->
 {% for member in user.adherent %}
@@ -1250,35 +1250,36 @@ $(function() {
 $("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
 });</script>
 <script>
-    {% for club in user.clubs %}
-    $("#envoyerinvitfriendClub{{club.id}}").click(function(){
-    $("#envoyerinvitfriendClub{{club.id}}").hide();
-    $("#loaderInvit{{club.id}}").show();
-    var club = $("#inviterclub").val();
-    var name = new Array;
-    test = 'false';
-    var i = 0;   
-    {% set friends = getFriends(club.createur.id) %}
-    {%for friend in friends %}
+{% for club in user.clubs %}
+$("#envoyerinvitfriendClub{{club.id}}").click(function(){
+$("#envoyerinvitfriendClub{{club.id}}").hide();
+$("#loaderInvit{{club.id}}").show();
+var club = $("#inviterclub").val();
+var name = new Array;
+test = 'false';
+var i = 0;   
+{% set friends = getFriends(club.createur.id) %}
+{%for friend in friends %}
 {% set memberOuNon = MemberOuNon(club.id,friend) %}
 {% if memberOuNon == 0 %}
-    if (document.getElementById('listefrirndClub{{friend.id}}').checked){
+if (document.getElementById('listefrirndClub{{friend.id}}').checked){
 name[i] = $("#listefrirndClub{{friend.id}}").val();
 i = i + 1;
 test = 'true';
 }{% endif %}
 {% endfor %}
-    $.ajax({
+$.ajax({
 type: "POST",
 url: Routing.generate('inviter_ami_club'),
 data: {name:name, club:club},
 dataType: 'json',
 success: function(data) {
-    
+
 $('#loaderInvit{{club.id}}').hide();
-$("#inviteramiclub").hide();
+$("#envoyerinvitfriendClub{{club.id}}").show();
+$("#inviteramisclub{{club.id}}").hide();
 $('.modal-backdrop').hide();
-$("#envoyerinvitfriendClub").show();
+
 $('#invitation-envoyées').show();                                                                                                                                                                                            {%for friend in friends %}
 {% set memberOuNon = MemberOuNon(club.id,friend) %}
 {% if memberOuNon == 0 %}
@@ -1287,31 +1288,31 @@ document.getElementById('listefrirnd{{friend.id}}').checked = false;            
 
 }
 });
-    });
-    {% endfor %}
-    </script>
+});
+{% endfor %}
+</script>
 <script>
 {% for club in user.clubs %}
 {% set members = adherents(club.id) %}
-    {%for member in members %}
-    $("#supprimermember{{member.id}}").click(function(){
-         $("#supprimermember{{member.id}}").hide();
-      $("#loadersupmember{{member.id}}").show();
-    $.ajax({
-        url: Routing.generate('delete_member', {'id': {{member.id}}}),
-        success: function() {
-            $("#memberclubA{{member.id}}").hide()
-           $("#memberdelete{{member.id}}").hide();
+{%for member in members %}
+$("#supprimermember{{member.id}}").click(function(){
+$("#supprimermember{{member.id}}").hide();
+$("#loadersupmember{{member.id}}").show();
+$.ajax({
+url: Routing.generate('delete_member', {'id': {{member.id}}}),
+success: function() {
+$("#memberclubA{{member.id}}").hide()
+$("#memberdelete{{member.id}}").hide();
 $('.modal-backdrop').hide();
 
-        }
-    });
-      
-    });
+}
+});
+
+});
 
 {% endfor%}
 {% endfor%}
-    </script>
+</script>
 <script>
 $('#supprimerRelation').click(function(){
 var id = $('.idrelationsupprimer').attr('id');
@@ -1473,7 +1474,7 @@ $('#supprimer-photo').show();
 
 </script>
 <script>
-    {% for palmares in user.reward %}
+{% for palmares in user.reward %}
 $('#supprimerPalmares{{palmares.id}}').click(function() {
 
 
@@ -1489,7 +1490,7 @@ $('#supprimer-p').show();
 });
 });
 {% endfor %}
-    </script>
+</script>
 <script>
 {% for club in user.clubs %}
 $('#supprimerClub{{club.id}}').click(function() {

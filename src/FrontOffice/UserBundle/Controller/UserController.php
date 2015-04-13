@@ -18,11 +18,11 @@ use FrontOffice\UserBundle\Form\UserType;
 use FrontOffice\UserBundle\Form\UserPhotoType;
 use FrontOffice\UserBundle\Form\UserNameType;
 use FrontOffice\UserBundle\Form\UserEmailType;
-use Symfony\Component\Validator\Constraints\DateTime;
+//use Symfony\Component\Validator\Constraints\DateTime;
 use FrontOffice\OptimusBundle\Event\NotificationSeenEvent;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
+use \DateTime;
 /**
  * User controller.
  *
@@ -221,6 +221,7 @@ class UserController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $Invitation = $em->getRepository('SlyRelationBundle:Relation')->find($id);
         $Invitation->setConfirmed(true);
+        $Invitation->setConfirmedAt(new DateTime());
         $em->persist($Invitation);
         $em->flush();
         $response = new Response($id);
@@ -239,6 +240,7 @@ class UserController extends Controller {
         $user1 = $this->container->get('security.context')->getToken()->getUser();
         $Invitation = $em->getRepository('SlyRelationBundle:Relation')->findOneBy(array('object1Id' => $id, 'object2Id' => $user1->getId()));
         $Invitation->setConfirmed(true);
+        $Invitation->setConfirmedAt(new DateTime());
         $em->persist($Invitation);
         $em->flush();
         $response = new Response($Invitation->getId());

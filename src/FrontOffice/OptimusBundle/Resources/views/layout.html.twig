@@ -516,10 +516,12 @@
                                     </div>
                                     <div class="col-md-10" style="background:white;">
                                         <p>
-                                            {% if message.event == null %}
-                                                {{ message.content }}
+                                             {% if message.event != null %}
+                                              {{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
+                                            {% elseif message.club != null %}
+                                               {{ message.content }} <a href="{{ path('show_club',{'id':message.club})}}" style="color: #C02100">cliquez ici...</a>
                                             {% else %}
-                                                {{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
+                                              {{ message.content }}
                                             {% endif %}
                                         </p>
                                     </div>

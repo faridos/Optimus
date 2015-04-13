@@ -1129,21 +1129,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/misd-service-development/phone-number-bundle.git",
-                "reference": "958f13e87f3c5e121686b8a846fecee210b57624"
+                "reference": "459e7362b727ea4013a27fe715559391246a71be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/misd-service-development/phone-number-bundle/zipball/958f13e87f3c5e121686b8a846fecee210b57624",
-                "reference": "958f13e87f3c5e121686b8a846fecee210b57624",
+                "url": "https://api.github.com/repos/misd-service-development/phone-number-bundle/zipball/459e7362b727ea4013a27fe715559391246a71be",
+                "reference": "459e7362b727ea4013a27fe715559391246a71be",
                 "shasum": ""
             },
             "require": {
                 "giggsey/libphonenumber-for-php": "~5.7|~6.0|~7.0",
                 "php": ">=5.3.3",
                 "symfony/framework-bundle": "~2.1"
-            },
-            "conflict": {
-                "twig/twig": "<1.12.0"
             },
             "require-dev": {
                 "doctrine/doctrine-bundle": "~1.0",
@@ -1192,7 +1189,7 @@
                 "phonenumber",
                 "telephone number"
             ],
-            "time": "2015-04-11 11:49:06"
+            "time": "2015-01-02 08:31:12"
         },
         {
             "name": "monolog/monolog",
@@ -1332,17 +1329,17 @@
         },
         {
             "name": "payum/core",
-            "version": "0.14.4",
+            "version": "0.14.0",
             "target-dir": "Payum/Core",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Payum/Core.git",
-                "reference": "a3709ad79a4a90d7b064f86cf3b57ddfdadbafbf"
+                "reference": "b1a5330814cc7b3aaaec2012aba46be0b06f932f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Payum/Core/zipball/a3709ad79a4a90d7b064f86cf3b57ddfdadbafbf",
-                "reference": "a3709ad79a4a90d7b064f86cf3b57ddfdadbafbf",
+                "url": "https://api.github.com/repos/Payum/Core/zipball/b1a5330814cc7b3aaaec2012aba46be0b06f932f",
+                "reference": "b1a5330814cc7b3aaaec2012aba46be0b06f932f",
                 "shasum": ""
             },
             "require": {
@@ -1364,7 +1361,6 @@
                 "symfony/http-foundation": "~2.3",
                 "symfony/http-kernel": "~2.3",
                 "symfony/routing": "~2.3",
-                "symfony/validator": "~2.6",
                 "zendframework/zend-db": "~2"
             },
             "suggest": {
@@ -1434,7 +1430,7 @@
                 "paypal rest",
                 "recurring payment"
             ],
-            "time": "2015-04-08 17:34:16"
+            "time": "2015-02-20 07:44:44"
         },
         {
             "name": "payum/offline",
@@ -1688,17 +1684,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v2.3.14",
+            "version": "v2.3.13",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "cb8195ddf5b310b34033921edec638829ccfa201"
+                "reference": "c344892aa9f09f0005b395d79ad2531a7deaedc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/cb8195ddf5b310b34033921edec638829ccfa201",
-                "reference": "cb8195ddf5b310b34033921edec638829ccfa201",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/c344892aa9f09f0005b395d79ad2531a7deaedc9",
+                "reference": "c344892aa9f09f0005b395d79ad2531a7deaedc9",
                 "shasum": ""
             },
             "require": {
@@ -1730,7 +1726,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-04-10 06:19:33"
+            "time": "2015-03-26 11:09:17"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2183,16 +2179,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.3.27",
+            "version": "v2.3.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "ce4aab1508dd9642906fc9a120e0d8763e689896"
+                "reference": "dd70065d94468de18b722ec692fc3c34e87fd863"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/ce4aab1508dd9642906fc9a120e0d8763e689896",
-                "reference": "ce4aab1508dd9642906fc9a120e0d8763e689896",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/dd70065d94468de18b722ec692fc3c34e87fd863",
+                "reference": "dd70065d94468de18b722ec692fc3c34e87fd863",
                 "shasum": ""
             },
             "require": {
@@ -2287,7 +2283,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-04-01 14:28:26"
+            "time": "2015-03-17 14:18:00"
         },
         {
             "name": "true/punycode",
@@ -2494,7 +2490,6 @@
         "payum/paypal-express-checkout-nvp": 0
     },
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"
     },

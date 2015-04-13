@@ -161,7 +161,7 @@ class Club {
     public function __construct() {
 
         $this->clubcomments = new ArrayCollection();
-//        $this->dateCreation = new \DateTime();
+       $this->dateCreation = new \DateTime();
         // your own logic
     }
 
