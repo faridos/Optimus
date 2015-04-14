@@ -269,11 +269,11 @@ Club Supprimer
 {% endif %}
 {% for member in user.adherent|reverse %}
 {% if member.clubad.active == 1 %}
-<div {% if club.isPayant == 0 %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-md-12 {{member.clubad.id}}" >
+<div {% if member.clubad.isPayant == 0 %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-md-12 {{member.clubad.id}}" >
 <div class="tooltipsContainer avatar imagus col-md-3">
 <a href="{{path('show_club',{'id':member.clubad.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ user.nom ~' '~user.prenom }}">
 {% if member.clubad.path == null %}
-<img src="{{ asset('club.png') }}" alt="avatar" ></a>
+<img src="{{ asset('logoclub.png') }}" alt="avatar" ></a>
 {% else %}
 <img src="{{ asset(member.clubad.WebPath) }}" alt="avatar" ></a>
 {% endif %}

@@ -48,6 +48,12 @@ class Photo
      **/
    
    protected $event;
+   /**
+     * @ORM\ManyToOne(targetEntity="Competition", inversedBy="imagesCompetition")
+     * @ORM\JoinColumn(name="competition_id", referencedColumnName="id", nullable=true ,onDelete="CASCADE")
+     **/
+   
+   protected $competition;
     public function __construct()
     {
         
@@ -184,5 +190,28 @@ class Photo
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set competition
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Competition $competition
+     * @return Photo
+     */
+    public function setCompetition(\FrontOffice\OptimusBundle\Entity\Competition $competition = null)
+    {
+        $this->competition = $competition;
+    
+        return $this;
+    }
+
+    /**
+     * Get competition
+     *
+     * @return \FrontOffice\OptimusBundle\Entity\Competition 
+     */
+    public function getCompetition()
+    {
+        return $this->competition;
     }
 }

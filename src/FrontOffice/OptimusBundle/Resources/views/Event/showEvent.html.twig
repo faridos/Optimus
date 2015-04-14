@@ -439,8 +439,9 @@ Cette évènement est depassé
 <form method="post">
 <input id="inviterevent" type="hidden" name="event" value="{{event.id}}"/>
 <div class="modal-body" >
+<ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
+ <div id="listami" class="col-md-12">
 
-<div id="listami"> 
 {% set i = 0 %}
 {% set friends = getFriends(event.createur.id) %}
 
@@ -449,7 +450,7 @@ Cette évènement est depassé
 {% set participantOuNon=ParticipantOuNon(event,friend) %}
 {% if participantOuNon == 0 %}
 {% set i = i+1 %}
-<label class="checkbox custom-checkbox">
+<label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
 <input id="listefrirnd{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}">
 <span class="fa fa-check" style="margin-top: 3%;"></span>
 {% if friend.path == null %}
@@ -492,6 +493,7 @@ tous vos  amis sont particip
 {% endif %}                                                                      
 
 </div>
+</ul>
 <div class="modal-footer supp-album">
 {% if i > 0 %} 
 <a href="#" id="submitInvit" class="btn btn-round btn-o btn-green">Inviter</a>

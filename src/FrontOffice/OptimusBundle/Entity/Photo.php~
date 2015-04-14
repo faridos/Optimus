@@ -48,6 +48,12 @@ class Photo
      **/
    
    protected $event;
+   /**
+     * @ORM\ManyToOne(targetEntity="Competition", inversedBy="imagesCompetition")
+     * @ORM\JoinColumn(name="competition_id", referencedColumnName="id", nullable=true ,onDelete="CASCADE")
+     **/
+   
+   protected $competition;
     public function __construct()
     {
         
@@ -161,5 +167,28 @@ class Photo
         if ($file = $this->getAbsolutePath()) {
             unlink($file);
         }
+    }
+
+    /**
+     * Set user
+     *
+     * @param \FrontOffice\UserBundle\Entity\User $user
+     * @return Photo
+     */
+    public function setUser(\FrontOffice\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \FrontOffice\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
