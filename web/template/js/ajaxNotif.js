@@ -78,7 +78,8 @@ $('#request_club').click(function() {
     $.ajax({
         url: Routing.generate('request_club', {'id': id}),
         success: function() {
-            $('.requestClub').replaceWith('Enattente');
+            $('#request_club').hide();
+            $("#AttentrejoindreClub").show();
             $('#loaderRejoindreClub').hide();
         }
     });

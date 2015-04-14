@@ -318,7 +318,7 @@ Programme Supprimer
 <ul class="tab-pane fade  scrollbar" id="palmares" >
     <div id="supprimer-p-c" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
-Programme Supprimer
+Palmarés Supprimer
 </div>
       {% if club.reward|length == 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -631,11 +631,7 @@ tous vos  amis sont particip
 </div>
 </div>
 <!------------------- modal photo------------------->
-<div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-<div class="modal-dialog">
-{{ render (controller('FrontOfficeOptimusBundle:Club:editPhoto',  { 'id': club.id })) }}
-</div>
-</div>
+
 <!-------------------fin modal photo------------------->
 <!--*********************modal supprimer Club*******************-->
 <div class="modal fade" id="supprimerClub" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
@@ -700,11 +696,7 @@ tous vos  amis sont particip
 <!-------------------------Fin Programmes ------------------------------------>
 
 <!--*********************modal ajouter palmares Club*******************-->
-<div class="modal fade" id="ajouterpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-<div class="modal-dialog">
-{{ render (controller('FrontOfficeOptimusBundle:Reward:addRewardClub',  { 'id': club.id })) }}
-</div>
-</div>
+
 <!--*********************fin modal ajouter palmares Club*******************-->
 <!--*********************modal modifier palmares***************************-->
 {% for palmares in club.reward %}
@@ -811,7 +803,7 @@ tous vos  amis sont particip
 <!-----------------------Fin Modal ShowClub--------------------------->
 {% endblock %}
 {% block javascriptfils %}
-<script src="{{asset('datemaske/jquery.maskedinput.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('datemaske/jquery.maskedinput.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
 $(function() {
 $("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
@@ -1100,5 +1092,15 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 </script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.3/typeahead.min.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	$('input.typeahead').typeahead({
+		name: 'accounts',
+		local: ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen']
+	});
+});  
+</script>
 {% endblock %}
