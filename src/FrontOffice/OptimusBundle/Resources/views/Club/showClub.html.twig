@@ -568,11 +568,13 @@ photo Supprimer
 <div class="modal-content bordusbottomus">
 <div class="modal-header bordustopus">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<h4 class="modal-title" id="contactLabel">Liste des membres </h4>
+<h4 class="modal-title" id="contactLabel">Mes Amis</h4>
 </div>
 <div class="modal-body">
 <input id="inviterclub" type="hidden" name="event" value="{{club.id}}"/>
-<div id="listfriend"> 
+  <ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
+ <div id="listfriend" class="col-md-12">
+
 
 {% set i = 0 %}
 {% set friends = getFriends(club.createur.id) %}
@@ -580,7 +582,7 @@ photo Supprimer
 {% set memberOuNon = MemberOuNon(club.id,friend) %}
 {% if memberOuNon == 0 %}
 {% set i = i+1 %}
-<label class="checkbox custom-checkbox">
+<label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
 <input id="listefrirnd{{friend.id}}" type="checkbox" name="name[]" value="{{ friend.id }}">
 <span class="fa fa-check" style="margin-top: 3%;"></span>
 {% if friend.path == null %}
@@ -606,6 +608,7 @@ tous vos  amis sont particip
 </div>
 {% endif %}                                                                      
 </div>
+  </ul>
 </div>
 
 <div class="modal-footer supp-album">
