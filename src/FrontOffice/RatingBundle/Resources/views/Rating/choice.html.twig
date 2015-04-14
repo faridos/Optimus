@@ -1,7 +1,7 @@
 {% spaceless %}
     <div class="dcs-rating-container">
         {% for i in maxValue..1 %}
-            {% set style = 'fa fa-star-o2' %}
+            {% set style = 'fa fa-star-o' %}
             {% if i <= rating.rate %}
                 {% set style = 'fa fa-star2' %}
             {% elseif rating.rate|isHalfStar(i) %}

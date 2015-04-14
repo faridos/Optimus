@@ -399,7 +399,16 @@
                                                             '</div>' +
                                                             '<div class="clearfix"></div>' +
                                                             '<div class="infoButtons">' +
-                                                            '<a class="btn btn-sm btn-round btn-gray btn-o closeInfo">fermer</a>' +
+                                                            {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
+                                                            {% if memberconfirmed is empty %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o">Rejoindre</a>' +
+                                                            {% elseif memberconfirmed.confirmed == 0 %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o">En attente</a>' +
+                                                            {% elseif memberconfirmed.confirmed == 1 %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o">Quitter</a>' +
+                                                            {% elseif memberconfirmed.confirmed == 2 %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o">Regagner</a>' +
+                                                            {% endif %}
                                                             '<a href="{{ path('show_club',{'id':club.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
                                                             '</div>' +
                                                             '</div>';
