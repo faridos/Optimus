@@ -53,7 +53,7 @@ class NotificationController extends Controller {
             foreach ($amis as $ami) {
                 $isAmi = $em->getRepository('FrontOfficeUserBundle:User')->getIsAmis($user->getId(), $ami->getId());
                 foreach ($ami->getNotificateur() as $notif) {
-                    if ($notif->getType()== "add" && $notif->getDatenotification() > $isAmi[0]->getConfirmedAt()) {
+                    if ($notif->getType()== "add" && $notif->getDatenotification() > $isAmi[0]->getConfirmedAt() && $notif->getDatenotification() > $user->getConfigNotif()->getDateModifEvent()) {
                         $i = 0;
                         
                             foreach ($user->getNotificationseen() as $notifSeen) {
@@ -74,7 +74,7 @@ class NotificationController extends Controller {
             foreach ($user->getParticipations() as $participe) {
                  
                 foreach ($participe->getEvent()->getNotificationEvent() as $notif2) {
-                    if ($user->getId() != $notif2->getNotificateur()->getId() && in_array($notif2->getType(), $tab1) && $notif2->getDatenotification() > $participe->getDatePaticipation()) {
+                    if ($user->getId() != $notif2->getNotificateur()->getId() && in_array($notif2->getType(), $tab1) && $notif2->getDatenotification() > $participe->getDatePaticipation() && $notif2->getDatenotification() > $user->getConfigNotif()->getDateModifEvent()) {
                         $i = 0;
                         foreach ($user->getNotificationseen() as $notifSeen) {
                             if ($notifSeen->getNotifications()->getId() == $notif2->getId()) {
@@ -96,7 +96,7 @@ class NotificationController extends Controller {
             $notificationentrain = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getlisteEntraineur($user->getId());
             foreach ($notificationentrain as $val) {
                 
-                if($user->getcreatedAt() < $val->getEntraineur()->getcreatedAt() && $val->getEntraineur()->getId() != $user->getId()  ){
+                if($user->getcreatedAt() < $val->getEntraineur()->getcreatedAt() && $val->getEntraineur()->getId() != $user->getId() && $notif->getDatenotification() > $user->getConfigNotif()->getDateModifEntraineur() ){
                 $i = 0;
                 foreach ($user->getNotificationseen() as $notifSeen) {
                     if ($notifSeen->getNotifications()->getId() == $val->getId()) {

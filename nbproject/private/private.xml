@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/Optimus/web/template/js/ajaxNotif.js</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Club/showClub.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Event.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/UserController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig</file>
             <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Entity/Club.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/ClubController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig</file>
         </group>
     </open-files>
 </project-private>

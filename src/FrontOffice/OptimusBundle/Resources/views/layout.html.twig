@@ -395,12 +395,12 @@
 
                     </ul>
                 </li>
-                {% if app.user.profil == 'Entraineur' %}
-                    <li><a href="{{ path('add_club')}}"><span class="navIcon fa fa-users"></span><span class="navLabel"> + Club</span></a></li>
-                            {% endif %}
-                <li><a href="{{ path('add-event')}}"><span class="navIcon fa fa-trophy"></span><span class="navLabel">+Evenement</span></a></li>
-
-
+                
+                
+                <li><a href="{{ path('accueil') }}"><span class="navIcon fa fa-calendar-o"></span><span class="navLabel">Évènement</span></a></li>
+                <li><a href="{{ path('accueilClub') }}"><span class="navIcon fa fa-users"></span><span class="navLabel">Club</span></a></li>
+                <li><a href="#"><span class="navIcon fa fa-trophy"></span><span class="navLabel">Compétition</span></a></li>
+                <li><a href="#"><span class="navIcon fa fa-calendar"></span><span class="navLabel">Calendrier</span></a></li>
 
             </ul>
         </nav>

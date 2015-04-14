@@ -14,7 +14,7 @@ use \DateTime;
 /**
  * Seance controller.
  *
- * @Route("/")
+ * @Route("/seance")
  */
 class SeanceController extends Controller
 {

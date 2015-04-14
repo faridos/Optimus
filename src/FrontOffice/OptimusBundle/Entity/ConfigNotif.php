@@ -45,8 +45,32 @@ class ConfigNotif
      * @ORM\Column(name="entraineur", type="integer", nullable=true)
      */
     private $entraineur;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateModifEvent", type="datetime", nullable=true)
+     */
+    private $dateModifEvent;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateModifClub", type="datetime", nullable=true)
+     */
+    private $dateModifClub;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateModifEntraineur", type="datetime", nullable=true)
+     */
+    private $dateModifEntraineur;
+    
       public function __construct() {
+          $this->dateModification = new \Datetime();
+          $this->dateModifClub = new \Datetime();
+          $this->dateModifEntraineur = new \Datetime();
        
     }
 
@@ -109,4 +133,31 @@ class ConfigNotif
     {
         return $this->user;
     }
+
+    function getDateModifEvent() {
+        return $this->dateModifEvent;
+    }
+
+    function getDateModifClub() {
+        return $this->dateModifClub;
+    }
+
+    function getDateModifEntraineur() {
+        return $this->dateModifEntraineur;
+    }
+
+    function setDateModifEvent(\DateTime $dateModifEvent) {
+        $this->dateModifEvent = $dateModifEvent;
+    }
+
+    function setDateModifClub(\DateTime $dateModifClub) {
+        $this->dateModifClub = $dateModifClub;
+    }
+
+    function setDateModifEntraineur(\DateTime $dateModifEntraineur) {
+        $this->dateModifEntraineur = $dateModifEntraineur;
+    }
+
+
+
 }
