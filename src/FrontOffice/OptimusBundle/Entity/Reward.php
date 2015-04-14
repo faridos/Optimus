@@ -22,7 +22,7 @@ class Reward
     private $id;
     /**
      * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="reward")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id" ,onDelete="CASCADE")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="nom" ,onDelete="CASCADE")
      **/
    
    protected $user;

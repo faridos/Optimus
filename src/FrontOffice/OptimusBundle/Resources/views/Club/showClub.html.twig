@@ -337,45 +337,53 @@ Programme Supprimer
 <br>
 {% for palmares in club.reward %}
 <div class="row {{palmares.id}}">
-<br>
+
 <div class="col-md-12" id="block{{ palmares.id }}">
 <div data-linkto="" class="card albumus tooltipsContainer" >
 <br>
-<div class="profile-card">
-<div class="col-md-4">
-<div class="pc-avatar">
-<a href="#" class="btn btn-icon btn-round btn-o palmaruss" title="Titre" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" >
-<span class=""><img src="{{ asset('titre.png') }}"></span></a>
-</div>
-<div class="pc-name">{{ palmares.titre }}</div>
-</div>
-<div class="col-md-4">
-<div class="pc-avatar">
-<a href="#" class="btn btn-icon btn-round btn-o  palmaruss" title="Classement" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
-<span ><img src="{{ asset('classement.png') }}"></span></a>
-</div>
-<div class="pc-name">{{ palmares.classment }}</div>
-</div>
-<div class="col-md-4">
+<div class="profile-card" style="margin-right: 1%;">
+    <div class="">
 
-<div class="profile-card">
-<div class="pc-avatar">
-<a href="#" class="btn btn-icon btn-round btn-o  palmaruss" title="Date" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
-<span ><img src="{{ asset('date.png') }}"></span></a>
-</div>
-<div class="pc-name">{{ palmares.date |date('Y-m-d')}}</div>
-</div>
 {% if app.user == club.createur %}
 <div align="right">
 <a href="#modifierpalmares_club_{{palmares.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
 <a href="#supprimerpalmares_club_{{palmares.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
 </div>
 {% endif %}
-<br>
+
 <div class="clearfix"></div>
 </div>
+<div class="col-md-3 col-sm-2">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o palmaruss" title="{{ palmares.titre }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" >
+<span class=""><img src="{{ asset('titre.png') }}"></span></a>
 </div>
-<br>
+
+</div>
+<div class="col-md-3 col-sm-2">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o  palmaruss" title="{{ palmares.classment }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+<span ><img src="{{ asset('classement.png') }}"></span></a>
+</div>
+
+</div>
+<div class="col-md-3 col-sm-2">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o  palmaruss" title="{{ palmares.date |date('Y-m-d')}}" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+<span ><img src="{{ asset('date.png') }}"></span></a>
+</div>
+
+</div>
+<div class="col-md-3 col-sm-2">
+<div class="pc-avatar">
+<a href="#" class="btn btn-icon btn-round btn-o  palmaruss" title="{{ palmares.date |date('Y-m-d')}}" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+<span ><img src="{{ asset('date.png') }}"></span></a>
+</div>
+
+</div>
+
+</div>
+
 <div class="clearfix"></div>
 </div>
 </div>
