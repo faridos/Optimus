@@ -368,7 +368,7 @@
                                                         var marker_{{ club.id}} = new google.maps.Marker({
                                                         position: myLatLng,
                                                                 map: map,
-                                                                icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-green.png'),
+                                                                icon: new google.maps.MarkerImage('http://localhost/Optimus/web/club2.png'),
                                                                 draggable: false,
                                                                 animation: google.maps.Animation.DROP,
                                                                 title: "Cliquez pour voir aperçu"
@@ -401,14 +401,17 @@
                                                             '<div class="infoButtons">' +
                                                             {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
                                                             {% if memberconfirmed is empty %}
-                                                            '<a class="btn btn-sm btn-round btn-gray btn-o">Rejoindre</a>' +
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" id="Rej{{club.id}}">Rejoindre</a>' +
                                                             {% elseif memberconfirmed.confirmed == 0 %}
-                                                            '<a class="btn btn-sm btn-round btn-gray btn-o">En attente</a>' +
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" id="EnAtt{{club.id}}">En attente</a>' +
                                                             {% elseif memberconfirmed.confirmed == 1 %}
-                                                            '<a class="btn btn-sm btn-round btn-gray btn-o">Quitter</a>' +
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" id="Quitter{{club.id}}">Quitter</a>' +
                                                             {% elseif memberconfirmed.confirmed == 2 %}
-                                                            '<a class="btn btn-sm btn-round btn-gray btn-o">Regagner</a>' +
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" id="Regagner{{club.id}}">Regagner</a>' +
                                                             {% endif %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" style="display: none" id="EnAtt{{club.id}}">En attente</a>' +
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" style="display: none" id="Regagner{{club.id}}">Regagner</a>' +
+                                                            '<a class="loader" id="clubmap{{club.id}}" ><img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +
                                                             '<a href="{{ path('show_club',{'id':club.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
                                                             '</div>' +
                                                             '</div>';
@@ -419,6 +422,40 @@
                                                             });
                                                             $(document).on('click', '.closeInfo', function() {
                                                     infobox.open(null, null);
+                                                    });
+                                                    
+                                                    $(document).on('click', '#Rej{{club.id}}', function() {
+                                                        $('#Rej{{club.id}}').hide();
+                                                        $('#clubmap{{club.id}}').show();
+                                                        $.ajax({
+                                                        url: Routing.generate('request_club', {'id': {{club.id}} }),
+                                                                success: function() {
+                                                                   $('#clubmap{{club.id}}').hide();
+                                                                   $('#EnAtt{{club.id}}').show();
+                                                                }
+                                                        });
+                                                    });
+                                                    $(document).on('click', '#Quitter{{club.id}}', function() {
+                                                        $('#Quitter{{club.id}}').hide();
+                                                        $('#clubmap{{club.id}}').show();
+                                                        $.ajax({
+                                                        url: Routing.generate('exit_club', {'id': {{club.id}} }),
+                                                                success: function() {
+                                                                   $('#clubmap{{club.id}}').hide();
+                                                                   $('#Regagner{{club.id}}').show();
+                                                                }
+                                                        });
+                                                    });
+                                                    $(document).on('click', '#Regagner{{club.id}}', function() {
+                                                        $('#Regagner{{club.id}}').hide();
+                                                        $('#clubmap{{club.id}}').show();
+                                                        $.ajax({
+                                                        url: Routing.generate('activer_compte', {'id': {{club.id}} }),
+                                                                success: function() {
+                                                                   $('#clubmap{{club.id}}').hide();
+                                                                   $('#EnAtt{{club.id}}').show();
+                                                                }
+                                                        });
                                                     });
                                                         
                                                        {% endfor %}
