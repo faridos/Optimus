@@ -101,6 +101,7 @@ class PhotoController extends Controller
         $form = $this->createForm(new PhotoType(), $photo);
         $form->handleRequest($request);
         $photo->setEvent($event);
+        $photo->setUser($user);
     
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

@@ -542,7 +542,7 @@
             var $target = $(event.target);
             if ($target.hasClass("wc-day-column-inner")) {
 
-               var $newEvent = $("<div class=\"wc-cal-event wc-new-cal-event wc-new-cal-event-creating\"></div>");
+            {% if app.user == club.createur and programme.datefin >= date()%}  var $newEvent = $("<div class=\"wc-cal-event wc-new-cal-event wc-new-cal-event-creating\"></div>");{% endif %}
 
                $newEvent.css({lineHeight: (options.timeslotHeight - 2) + "px", fontSize: (options.timeslotHeight / 2) + "px"});
                $target.append($newEvent);

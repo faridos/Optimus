@@ -242,7 +242,10 @@ class User extends BaseUser {
 
     protected $evenements;
 
-
+ /**
+    * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Photo", mappedBy="user", cascade={"persist","remove"})
+    **/
+    protected $photos;
 
     /**
 
@@ -1496,4 +1499,37 @@ class User extends BaseUser {
 
     }
 
+
+    /**
+     * Add photos
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Photo $photos
+     * @return User
+     */
+    public function addPhoto(\FrontOffice\OptimusBundle\Entity\Photo $photos)
+    {
+        $this->photos[] = $photos;
+    
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Photo $photos
+     */
+    public function removePhoto(\FrontOffice\OptimusBundle\Entity\Photo $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
 }

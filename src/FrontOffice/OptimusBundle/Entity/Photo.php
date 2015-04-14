@@ -30,6 +30,12 @@ class Photo
      */
     public $file;
     /**
+     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="photos")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true ,onDelete="CASCADE")
+     **/
+   
+   protected $user;
+    /**
      * @ORM\ManyToOne(targetEntity="Album", inversedBy="images")
      * @ORM\JoinColumn(name="album_id", referencedColumnName="id", nullable=true ,onDelete="CASCADE")
      **/
@@ -155,5 +161,28 @@ class Photo
         if ($file = $this->getAbsolutePath()) {
             unlink($file);
         }
+    }
+
+    /**
+     * Set user
+     *
+     * @param \FrontOffice\UserBundle\Entity\User $user
+     * @return Photo
+     */
+    public function setUser(\FrontOffice\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \FrontOffice\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
