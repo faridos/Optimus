@@ -29,7 +29,7 @@ class ParticipCompetition {
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="particips")
+     * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Member", inversedBy="particips")
      * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
      */
     private $participant;
@@ -46,4 +46,62 @@ class ParticipCompetition {
     public function __construct() {
         $this->datePaticipation = new \Datetime();
     }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set datePaticipation
+     *
+     * @param \DateTime $datePaticipation
+     * @return ParticipCompetition
+     */
+    public function setDatePaticipation($datePaticipation)
+    {
+        $this->datePaticipation = $datePaticipation;
+    
+        return $this;
+    }
+
+    /**
+     * Get datePaticipation
+     *
+     * @return \DateTime 
+     */
+    public function getDatePaticipation()
+    {
+        return $this->datePaticipation;
+    }
+
+    /**
+     * Set competition
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Competition $competition
+     * @return ParticipCompetition
+     */
+    public function setCompetition(\FrontOffice\OptimusBundle\Entity\Competition $competition = null)
+    {
+        $this->competition = $competition;
+    
+        return $this;
+    }
+
+    /**
+     * Get competition
+     *
+     * @return \FrontOffice\OptimusBundle\Entity\Competition 
+     */
+    public function getCompetition()
+    {
+        return $this->competition;
+    }
+
+   
 }

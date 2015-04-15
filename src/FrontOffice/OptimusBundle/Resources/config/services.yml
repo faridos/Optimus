@@ -25,7 +25,15 @@ services:
         arguments:
             em: "@doctrine.orm.entity_manager"
         tags:
-            - { name: kernel.event_listener, event: front_event.participation_register, method: onCreateParticipationEvent }       
+            - { name: kernel.event_listener, event: front_event.participation_register, method: onCreateParticipationEvent } 
+            
+     kernel.listener.onCreateParticipationCimpetition:
+        class: FrontOffice\OptimusBundle\EventListener\CompetitionListener
+        arguments:
+            em: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: kernel.event_listener, event: front_event.after_compitition_register, method: onCreateParticipationCimpetition } 
+            
      
      kernel.listener.onCreateHistoryClub:
         class: FrontOffice\OptimusBundle\EventListener\ClubListener

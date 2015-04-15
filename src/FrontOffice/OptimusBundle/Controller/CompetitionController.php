@@ -11,7 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Competition;
 use FrontOffice\OptimusBundle\Form\CompetitionType;
 use FrontOffice\OptimusBundle\Form\CompetitionPhotoType;
-
+use FrontOffice\OptimusBundle\Event\ParticipationCompetitionEvent;
+use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 use FrontOffice\OptimusBundle\Form\UpdateCompetitionType;
 use \DateTime;
 
@@ -39,6 +40,7 @@ class CompetitionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
+        $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->findOneBy(array('clubad' => $club,'member' =>$user));
         $competition = new Competition();
         $competition->setCreateur($user);
         $competition->setClub($club);
@@ -52,7 +54,10 @@ class CompetitionController extends Controller
             if ($form->isValid()) {
                 $em->persist($competition);
                 $em->flush();
-      $request->getSession()->getFlashBag()->add('AjoutCompetition', "Compétition  a été creé avec success.");
+                 $eventparticipation = new ParticipationCompetitionEvent($member, $competition);
+                 $dispatcher = $this->get('event_dispatcher');
+                 $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_COMPETITION_REGISTER, $eventparticipation);
+              $request->getSession()->getFlashBag()->add('AjoutCompetition', "Compétition  a été creé avec success.");
                 return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
             }
         }

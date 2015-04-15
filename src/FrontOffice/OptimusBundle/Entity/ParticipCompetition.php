@@ -29,7 +29,7 @@ class ParticipCompetition {
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User", inversedBy="particips")
+     * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Member", inversedBy="particips")
      * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
      */
     private $participant;
@@ -103,13 +103,15 @@ class ParticipCompetition {
         return $this->competition;
     }
 
+   
+
     /**
      * Set participant
      *
-     * @param \FrontOffice\UserBundle\Entity\User $participant
+     * @param \FrontOffice\OptimusBundle\Entity\Member $participant
      * @return ParticipCompetition
      */
-    public function setParticipant(\FrontOffice\UserBundle\Entity\User $participant)
+    public function setParticipant(\FrontOffice\OptimusBundle\Entity\Member $participant)
     {
         $this->participant = $participant;
     
@@ -119,7 +121,7 @@ class ParticipCompetition {
     /**
      * Get participant
      *
-     * @return \FrontOffice\UserBundle\Entity\User 
+     * @return \FrontOffice\OptimusBundle\Entity\Member 
      */
     public function getParticipant()
     {
