@@ -112,9 +112,23 @@ class NotificationController extends Controller {
                 }
             }
         }
+        
+        $notificationstars = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findBy(array("idVote"=>"U".$user->getId()));
+        foreach ($notificationstars as $notifstar) {
+            $i = 0;
+            foreach ($user->getNotificationseen() as $notifSeen) {
+                if ($notifSeen->getNotifications()->getId() == $notifstar->getId()) {
+                        $i = 1;
+                }
+            }
+            if ($i == 0) {
+                  
+                    $res[$c] = $notifstar;
+                    $c++;
+                }
+        }
+        
        
-
-
         foreach ($res as $val) {
             $notifseen = new NotificationSeen();
             $notifseen->setUsers($user);

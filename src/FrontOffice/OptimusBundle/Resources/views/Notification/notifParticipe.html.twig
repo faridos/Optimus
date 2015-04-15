@@ -154,6 +154,28 @@
             <div class="clearfix"></div>
         </a>
     </li>
+    {% elseif notif.notifications.type == 'vote' %}
+        {% set vote = getVote(notif.notifications.idVote, notif.notifications.notificateur.id) %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="#">
+
+                {% if notif.notifications.notificateur.path == null %}
+                    {% if notif.notifications.notificateur.sexe == 'H' %}
+                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                    {% else %}
+                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                    {% endif %}
+                {% else %}
+                    <img class="avatar pull-left"  src="{{ asset(notif.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a ajouter un vote de {{vote.value}} etoile sur vous</div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
 
 {% endif %}
 
@@ -167,7 +189,6 @@
                 data: 'id=' + {{notification.id}},
                 success: function () {
                     var nb = parseInt($('#countNotif').text());
-
                     var nouveauNb = nb - 1;
                     if (nouveauNb > 0)
                     {
@@ -228,6 +249,12 @@
         {% elseif resultat.type == "entraineur" %}
             toastr8.googlePlus({
                 message: '<a href="{{ path('show_profil', { 'id' : resultat.entraineur.id }) }}">un nouveau entraineur inscrit </a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/event.png']
+            });
+        {% elseif resultat.type == "vote" %}
+            toastr8.googlePlus({
+                message: '<a href="#">a ajouter un vote sur vous </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });

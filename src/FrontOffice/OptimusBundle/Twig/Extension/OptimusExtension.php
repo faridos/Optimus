@@ -33,6 +33,7 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('participants', array($this, 'participants')),
             new \Twig_SimpleFunction('isAmi', array($this, 'isAmi')),
             new \Twig_SimpleFunction('adherents', array($this, 'adherents')),
+            new \Twig_SimpleFunction('getVote', array($this, 'getVote')),
         );
     }
      public function  memberclub($id){
@@ -122,6 +123,12 @@ class OptimusExtension extends \Twig_Extension {
     public function pendingInvitation($user, $user1) {
         $pendingInvitations = $this->em->getRepository('FrontOfficeUserBundle:User')->getpendingInvitations($user->getId(), $user1->getId());
         return $pendingInvitations;
+    }
+    
+    public function getVote($rating,$voter) {
+
+        $vote = $this->em->getRepository('FrontOfficeRatingBundle:Vote')->findOneBy(array("rating"=>$rating,"voter"=>$voter));
+        return $vote;
     }
 
     public function getNotifications($id) {

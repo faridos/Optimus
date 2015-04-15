@@ -7,6 +7,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use DCS\RatingBundle\Controller\RatingController as BaseController;
+use FrontOffice\OptimusBundle\Entity\Notification;
 
 class RatingController extends BaseController
 {
@@ -106,7 +107,16 @@ class RatingController extends BaseController
                 $redirectUri = $pathToRedirect;
             }
         }
-
+        
+        if($id[0]=="U"){
+        $em = $this->getDoctrine()->getManager();
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('vote');
+        $notif->setIdVote($id);
+        $em->persist($notif);
+        $em->flush();
+        }
         return $this->redirect($redirectUri);
     }
 }

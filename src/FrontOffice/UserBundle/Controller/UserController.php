@@ -309,6 +309,9 @@ class UserController extends Controller {
         $Invitation->setConfirmedAt(new DateTime());
         $em->persist($Invitation);
         $em->flush();
+        
+        
+        
         $response = new Response($id);
         return $response;
     }

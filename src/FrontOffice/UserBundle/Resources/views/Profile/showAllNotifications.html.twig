@@ -69,6 +69,10 @@
                                                             {% if notification.notifications.type == 'entraineur' %}
                                                                 <div class="message">un nouveau entraineur inscrit</div>
                                                             {% endif %}
+                                                            {% if notification.notifications.type == 'vote' %}
+                                                                {% set vote = getVote(notification.notifications.idVote, notification.notifications.notificateur.id) %}
+                                                                <div class="message">a ajouter un vote de {{vote.value}} etoile sur vous</div>
+                                                            {% endif %}
 
                                                         </div>
                                                         <div class="clearfix">

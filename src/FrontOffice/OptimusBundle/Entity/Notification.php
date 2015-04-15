@@ -55,6 +55,13 @@ class Notification {
     private $type;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="idVote", type="string", length=255, nullable=true)
+     */
+    private $idVote;
+    
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_notification", type="datetime")
@@ -215,4 +222,13 @@ class Notification {
     {
         return $this->notificateur;
     }
+    function getIdVote() {
+        return $this->idVote;
+    }
+
+    function setIdVote($idVote) {
+        $this->idVote = $idVote;
+    }
+
+
 }
