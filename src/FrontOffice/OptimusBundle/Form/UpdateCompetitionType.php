@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CompetitionType extends AbstractType
+class UpdateCompetitionType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -16,7 +16,7 @@ class CompetitionType extends AbstractType
     {
         $builder
             ->add('type','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le Type (Obligatoire)')))
-            ->add('file', 'file' ,array('attr'=>array('class'=>'btn btn-round btn-o search-optimus'),'required'=>False))
+        
             ->add('titre','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le titre (Obligatoire)')))
             ->add('lieu','text',array('attr'=>array('class'=>'search-optimus','placeholder'=>'Entrer le lieu' , 'readonly'=>'readonly'),'required'=>True))
             ->add('dateDebut','datetime', array('attr'=>array('class'=>'some_class search-optimus','placeholder'=>'Entrer la date de début (Obligatoire)'),'widget' => 'single_text','required' => true))

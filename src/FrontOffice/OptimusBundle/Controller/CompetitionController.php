@@ -3,12 +3,16 @@
 namespace FrontOffice\OptimusBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Competition;
 use FrontOffice\OptimusBundle\Form\CompetitionType;
+use FrontOffice\OptimusBundle\Form\UpdateCompetitionType;
+use \DateTime;
+
 
 /**
  * Competition controller.
@@ -21,49 +25,88 @@ class CompetitionController extends Controller
     /**
      * 
      *
-     * @Route("/ajouter", name="add-competition")
+     * @Route("/{id}/ajouter", name="add-competition")
      * @Method("GET|POST")
      * @Template()
      */
-    public function addAction(Request $request) {
+    public function addAction(Request $request,$id) {
          if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('.');
         }
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
+        $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         $competition = new Competition();
         $competition->setCreateur($user);
-        $event->setDateModification(null);
-        $event->setActive(true);
-        $event->setNbrvu(0);
-        $form = $this->createForm(new EventType, $event);
+        $competition->setClub($club);
+        $competition->setDateModification(null);
+        $competition->setNbrvu(0);
+        $form = $this->createForm(new CompetitionType, $competition);
         $req = $this->get('request');
         if ($req->getMethod() == "POST") {
             $form->bind($req);
             if ($form->isValid()) {
-                $em->persist($event);
+                $em->persist($competition);
                 $em->flush();
-                
-        $notif = new Notification();
-        $notif->setNotificateur($user);
-        $notif->setType('add');
-        $notif->setEvent($event);
-        $em->persist($notif);
-        $em->flush();
-//add notification + add prticipation + add History
-               // $action = 'add';
-               // $eventhistory = new HistoryEventEvent($user, $event, $action);
-                $eventparticipation = new ParticipationEvent($user, $event);
-               $dispatcher = $this->get('event_dispatcher');
-               // $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
-              $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
-                $request->getSession()->getFlashBag()->add('AjouterEvent', "Votre évènement a été ajouter avec success.");
-                return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
+      $request->getSession()->getFlashBag()->add('AjoutCompetition', "Compétition  a été creé avec success.");
+                return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
             }
         }
-        return $this->render('FrontOfficeOptimusBundle:Event:new.html.twig', array('form' => $form->createView(), 'user' => $user));
+        return $this->render('FrontOfficeOptimusBundle:Competition:new.html.twig', array('form' => $form->createView(), 'club' => $club));
     }
+      /**
+     * 
+     *
+     * @Route("/{id}/modifier", name="update-competition")
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function updatecAction(Request $request, $id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+        $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
+        if (!$competition ) {
+             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
+        }
+        $editForm = $this->createForm(new UpdateCompetitionType(), $competition);
+        $editForm->handleRequest($request);
+        if ($editForm->isValid()) {
+            $competition->setDateModification(new DateTime());
+            $em->flush();
+            
+      
+            return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
+        }
+        return $this->render('FrontOfficeOptimusBundle:Competition:edit.html.twig', array(
+                    'competition' => $competition,
+                    
+                    'edit_form' => $editForm->createView(),
+        ));
+    }
+    /**
+     * Deletes a Reward entity.
+     *
+     * @Route("c/{id}/supprimer", name="delete_competition", options={"expose"=true})
+     * @Method("GET|DELETE")
+     */
+    public function deleteCompetitionAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
+        if (!$competition) {
+            throw $this->createNotFoundException('Unable to find competition entity.');
+        }
+        $em->remove($competition);
+        $em->flush();
+        $response = new Response($id);
+        return $response;
+    }
+
+
 
     /**
      * Lists all Competition entities.

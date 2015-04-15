@@ -12,6 +12,13 @@
 {{ flashMessage }}
 </div>
 {% endfor %}
+{% for flashMessage in app.session.flashbag.get('AjoutCompetition') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
 {% for flashMessage in app.session.flashbag.get('ActivationClub') %}
 <br/>
 <div class="alert alert-success">
@@ -281,7 +288,7 @@ Programme Supprimer
 {% for member in members %}
 <div class="col-sm-4" id="{{member.id}}">
 <div class="tooltipsContainer agent notifyList">
-    <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{member.member.username}}">
+    <a href="{{ path('show_profil',{'id' :member.member.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{member.member.username}}">
      {% if member.member.WebPath == null %}
        {% if member.member.sexe == 'H' %}
            <img src="{{ asset('men.png') }}" alt="">
@@ -491,6 +498,7 @@ photo Supprimer
 
 </ul>
 <!--------------------fin albums club ------------------------->
+<!--------------------demende club ------------------------->
 {% if app.user == club.createur %}
 <ul class="tab-pane fade  scrollbar" id="demande" >
 {% set demandes = getMembreRequest(club.id,app.user) %}
@@ -530,11 +538,75 @@ photo Supprimer
 </div>
 </ul>
 {% endif %}
+<!--------------------fin demende club ------------------------->
+<!--------------------competition club ------------------------->
 <ul class="tab-pane fade  scrollbar" id="compétitions" >
-<img style="width: 100%" src="{{ asset('154.png') }}">
+    <div id="supprimer-compe" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Compétition Supprimer
+</div>
+    {% if club.competitions|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Liste vide!</strong>  Créer un pour commencer.
+</div>
+
+{% endif %}
+    {% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a id="ajoutAlbum" class="btn btn-round btn-default btn-sm rightus" href="{{ path('add-competition', {'id' : club.id }) }}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+</div>
+{% endif %}
+{% for competition in  club.competitions|reverse %}
+    
+
+<div {% if date(competition.dateFin)<= date() %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-xs-12 {{competition.id}}" >
+<div class="tooltipsContainer avatar imagus col-md-4">
+<a href="{{path('show_event',{'id':competition.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{competition.titre}}">
+{% if competition.path == null %}
+<img src="{{ asset('event.png')}}" alt="avatar" ></a>
+{% else %}
+<img src="{{ asset(competition.WebPath)}}" alt="avatar" ></a>
+{% endif %}
+</div>
+<div class="col-md-6">
+<div class="info" style="max-width: 100% !important">
+<div ><a href="{{path('show_event',{'id':competition.id})}}" class="name">{{competition.titre}}</a></div>
+<div class="title">Créateur : <span class="address">{{ competition.createur.nom ~' '~competition.createur.prenom }}</span></div>
+<div class="title">Lieu : <span class="address">{{competition.lieu}}</span></div>
+</div>
+</div>
+{#<div class="col-md-4">
+<div class="info  col-md-12" >
+<div class="title">Text descriptif : <span class="address">{{env.description}}</span></div>
+</div>
+</div>#}
+<div style="margin-top: 1%" align="right">
+<a href="#plusInfoCompetition{{competition.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des participant"><span class="icon-users"></span></a>
+
+{% if app.user == competition.createur and date(competition.dateFin)>= date()%}
+
+<a href="#envoyerinvitCompetition{{competition.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="inviter"><span class="icon-plus"></span></a>
+<a href="{{ path('update-competition',{id: competition.id})}}"  class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+
+<a href="#supprimerCompetition{{competition.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+
+{% endif %}
+</div>
+{% if date(competition.dateFin)<= date() %}
+<div class="label label-danger" style="margin-left: 40%; font-size: 12px; background-color: #c02100 !important;">
+Cette compétition est depassé
+</div>
+{% endif %}
+<div class="clearfix"></div>
+</div>
+
+    {% endfor %}
 <div class="clearfix"></div>
 </ul>
-
+<!--------------------fin competition club ------------------------->
 {% else %}
 <ul class="tab-pane fade  active in scrollbar" id="nonPayer" >
 <a href="{{ path('front_office_payment_prepare_order_purchase',{'id' : club.id }) }}">    <img style="width: 100%" src="{{ asset('logopayment.png') }}"></a>
@@ -643,9 +715,32 @@ tous vos  amis sont particip
 </div>
 </div>
 </div>
-<!------------------- modal photo------------------->
-
-<!-------------------fin modal photo------------------->
+<!------------------- modal competition------------------->
+<!--*********************************************************modal supprission competition*************************************************************-->
+{% for competition in  club.competitions|reverse %}
+    <div class="modal" id="supprimerCompetition{{competition.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer La Competition  ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerCompe{{competition.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+<a class="loader" id="loaderSupppComp{{competition.id}}" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
+</div>
+</div>
+</div>
+</div>
+    {% endfor %}
+<!--********************************************************fin modal supprission competition**********************************************************-->
+<!-------------------fin modal competition ------------------->
 <!--*********************modal supprimer Club*******************-->
 <div class="modal fade" id="supprimerClub" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 <div class="modal-dialog">
@@ -845,6 +940,25 @@ $("#closemessag").click(function(){
 $("#invitation-envoyées").hide();
 });
 </script>
+<script>
+    {% for competition in  club.competitions|reverse %}
+        $("#supprimerCompe{{competition.id}}").click(function(){
+           $("#supprimerCompe{{competition.id}}").hide(); 
+           $("#loaderSupppComp{{competition.id}}").show();
+           $.ajax({
+               url: Routing.generate('delete_competition', {'id': {{competition.id}}}),
+               success: function(data) {
+                   $("#loaderSupppComp{{competition.id}}").hide();
+                   $(".{{competition.id}}").hide();
+                   $("#supprimerCompetition{{competition.id}}").hide();
+                   $('.modal-backdrop').hide();
+                   
+                   $("#supprimer-compe").show();
+               }
+           });  
+        });
+        {% endfor %}
+    </script>
 <script>
 
 $("#envoyerinvitfriendsubmit").click(function(){
