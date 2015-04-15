@@ -1,11 +1,18 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 {% block body %}
-    <div id="wrapper">
+<div id="wrapper">
 <div id="content" class="mob-max" >
-    
+
 <div class="col-lg-12"><div class="row mb20">
 </div>
-    {% for flashMessage in app.session.flashbag.get('AjouterPalmarésClub') %}
+{% for flashMessage in app.session.flashbag.get('AjouterPalmarésClub') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('AjoutCompetition') %}
 <br/>
 <div class="alert alert-success">
 <a class="close" data-dismiss="alert">×</a>
@@ -27,7 +34,7 @@
 </div>
 {% endfor %}
 <div class="col-lg-12">
-     <div id="invitation-envoyées" style="display: none;" class="alert alert-success">
+<div id="invitation-envoyées" style="display: none;" class="alert alert-success">
 <a class="close" id="closemessag">×</a>
 les invitations ont été envoyées 
 </div>
@@ -38,7 +45,7 @@ les invitations ont été envoyées
 <div class="userWidget-1 manamus" style="margin-bottom:0px;" >
 <div class="avatar" id="main">
 <div class="col-md-4">
-    
+
 <div class="propWidget-1 logotus tooltipsContainer ">
 <div class="fig salamus">
 {% if club.path == null %}
@@ -62,7 +69,7 @@ les invitations ont été envoyées
 </div>
 {% if club.createur == app.user %}
 <div class="ops">
-    {% if club.isPayant != 0 %}
+{% if club.isPayant != 0 %}
 <a class="btn btn-round btn-default btn-sm" href="#inviteramiclub" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Inviter</span></a>
 {% endif %}
 <a class="btn btn-round btn-default btn-sm" href="{{ path('club_update',{'id' : club.id}) }}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
@@ -73,11 +80,11 @@ les invitations ont été envoyées
 </div>
 <div class=" address profilus" style="font-size:18px;"> 
 <div class="row">
-    {% if club.isPayant == 1 %}
-          {% set memberconfirmed = getMembreConfirmed(app.user,club) %}
-          
+{% if club.isPayant == 1 %}
+{% set memberconfirmed = getMembreConfirmed(app.user,club) %}
+
 <div class="cardRating col-md-5" style="color:#eab134;margin-left: -40px;">
-    {%if memberconfirmed == null %}
+{%if memberconfirmed == null %}
 <div>{% include 'FrontOfficeRatingBundle:Rating:rating.html.twig' with { 'id' : 'C'~club.id } %}</div>
 {% else %}
 <div>{% include 'FrontOfficeRatingBundle:Rating:control.html.twig' with { 'id' : 'C'~club.id } %}</div>
@@ -121,39 +128,39 @@ Nombre des members : <span  id="nbparticip">{{ club.adherents | length}}</span>
 <div class="pc-about osLight" id="appendclubutton">
 {% if club.createur != app.user %}
 
-        {% if memberconfirmed is empty %}
+{% if memberconfirmed is empty %}
 <a class="btn btn-green btn-round " href="#"  id="request_club">
-    <span class="fa fa-plus-circle" data-toggle="tooltip" data-tooltip-class="green" data-placement="top" title="participaer dans cet club" data-original-title="Participer"></span>
-    <span  class="requestClub" id="{{club.id}}">Rejoindre</span>                                          
+<span class="fa fa-plus-circle" data-toggle="tooltip" data-tooltip-class="green" data-placement="top" title="participaer dans cet club" data-original-title="Participer"></span>
+<span  class="requestClub" id="{{club.id}}">Rejoindre</span>                                          
 </a>
 
-  {% elseif memberconfirmed.confirmed == 0 %}
-       
+{% elseif memberconfirmed.confirmed == 0 %}
+
 <a class="btn btn-green btn-round "  href="#"  id="AttentrejoindreClub">
-   
-    <span >En attente</span>                                          
+
+<span >En attente</span>                                          
 </a>
- {% elseif memberconfirmed.confirmed == 1 %}
-     <a class="btn btn-green btn-round " href="#" id="exit_club" >
-         <span class="fa icon-action-redo "></span> <span  class="exitClub" id="{{club.id}}" >Quitter</span>
-        </a>
-    
-  {% elseif memberconfirmed.confirmed == 2 %} 
-         <a class="btn btn-green btn-round " href="#" id="activer_member_club" >
-         <span class="fa icon-action-redo "></span> <span  class="activerclub" id="{{club.id}}" >Regagner</span>
-        </a>
- {% endif %}
-                                                  
-                                                {% endif %}
- <a style="display: none"  class="btn btn-green btn-round "  href="#"  id="AttentrejoindreClub">
-    <span >En attente</span>                                          
+{% elseif memberconfirmed.confirmed == 1 %}
+<a class="btn btn-green btn-round " href="#" id="exit_club" >
+<span class="fa icon-action-redo "></span> <span  class="exitClub" id="{{club.id}}" >Quitter</span>
 </a>
-        <a style="display: none" class="btn btn-green btn-round " href="#" id="activer_member_club" >
-         <span class="fa icon-action-redo "></span> <span  class="activerclub" id="{{club.id}}" >Regagner</span>
-        </a>
-                                                     <a class="loader" id="loaderRejoindreClub" >
+
+{% elseif memberconfirmed.confirmed == 2 %} 
+<a class="btn btn-green btn-round " href="#" id="activer_member_club" >
+<span class="fa icon-action-redo "></span> <span  class="activerclub" id="{{club.id}}" >Regagner</span>
+</a>
+{% endif %}
+
+        {% endif %}
+<a style="display: none"  class="btn btn-green btn-round "  href="#"  id="AttentrejoindreClub">
+<span >En attente</span>                                          
+</a>
+<a style="display: none" class="btn btn-green btn-round " href="#" id="activer_member_club" >
+<span class="fa icon-action-redo "></span> <span  class="activerclub" id="{{club.id}}" >Regagner</span>
+</a>
+             <a class="loader" id="loaderRejoindreClub" >
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
-                                                     </a>
+             </a>
 </div>
 </div>
 <div class="col-md-4">
@@ -195,20 +202,20 @@ Nombre des members : <span  id="nbparticip">{{ club.adherents | length}}</span>
 
 </ul>
 <div class="tab-content">
-    {% if club.isPayant == 1%}
+{% if club.isPayant == 1%}
 <!------------------------------Programmes Club------------------------------------------->
 <ul class="tab-pane fade  active in scrollbar" id="programmes" >
-     <div id="supprimer-pr-c" style="display: none;" class="alert alert-danger">
+<div id="supprimer-pr-c" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
 Programme Supprimer
 </div>
-    {% if club.programs|length == 0 %}
+{% if club.programs|length == 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
 <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
 <button type="button" class="close" data-dismiss="alert"></button>
 <strong>Rien à afficher dans la catégorie programmes!</strong> Créer un pour commencer.
 </div>
-        {% endif %}
+{% endif %}
 {% if app.user == club.createur %}
 <div class="buttonsWrapper col-xs-12">
 <a class="btn btn-round btn-default btn-sm rightus" href="#ajouterProgrammes" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
@@ -220,17 +227,17 @@ Programme Supprimer
 <div class="row">
 <br>
 {% for programme in programmes %}
-    <div class="tooltipsContainer row  {{programme.id}}" {% if date(programme.datefin)<= date()  %} data-toggle="tooltip" data-tooltip-class="red" title="Programme dépasser"{% endif %}>
+<div class="tooltipsContainer row  {{programme.id}}" {% if date(programme.datefin)<= date()  %} data-toggle="tooltip" data-tooltip-class="red" title="Programme dépasser"{% endif %}>
 <br>
 <div  class="col-md-12" id="">
 <div  {% if date(programme.datefin)<= date()  %}style="background-color: #ddd" {% endif %} data-linkto="" class="card albumus tooltipsContainer" >
 <br>
 <div class="profile-card">
-    <div class="col-md-3">
+<div class="col-md-3">
 
-        <div  class="pc-name"><a style="color:#c02100" href="{{ path('program_show',{'id_club':club.id,'id' :programme.id} ) }}">{{programme.nom}}</a></div>
+<div  class="pc-name"><a style="color:#c02100" href="{{ path('program_show',{'id_club':club.id,'id' :programme.id} ) }}">{{programme.nom}}</a></div>
 </div>
-  <div class="col-md-7">
+<div class="col-md-7">
 <div class="col-md-5">
 <div class="pc-name">Du:{{programme.datedebut|date('d/m/Y H:i:s' ) }}</div>
 </div>
@@ -240,11 +247,11 @@ Programme Supprimer
 </div>
 <div class="col-md-2">
 <div align="right">
-    
-    <a href="{{ path('program_show',{'id_club':club.id,'id' :programme.id} ) }}" class="btn btn-icon btn-round btn-green btn-xs" title="info" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-info"></span></a>
+
+<a href="{{ path('program_show',{'id_club':club.id,'id' :programme.id} ) }}" class="btn btn-icon btn-round btn-green btn-xs" title="info" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-info"></span></a>
 
 {% if app.user == club.createur and programme.datefin >=date() %}
-    <a href="#modifierProgrammes_club_{{programme.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
+<a href="#modifierProgrammes_club_{{programme.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="modifier" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-settings"></span></a>
 <a href="#supprimerprogramme_club_{{programme.id}}" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer" data-toggle="modal" data-tooltip-class="red" data-placement="bottom"><span class="icon-trash"></span></a>
 {% endif %}
 </div>
@@ -263,7 +270,7 @@ Programme Supprimer
 </ul>
 <!------------------------------Fin Programmes Club------------------------------------------->
 <ul class="tab-pane fade  scrollbar" id="members" >
-     {% if club.adherents|length == 0 %}
+{% if club.adherents|length == 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
 <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
 <button type="button" class="close" data-dismiss="alert"></button>
@@ -277,50 +284,50 @@ Programme Supprimer
 </div>
 {% endif %}
 {% set members = adherents(club.id) %}
-     <div class="row pb40" id="appendMember">
-    {% for member in members %}
-        <div class="col-sm-4" id="{{member.id}}">
-                                        <div class="tooltipsContainer agent notifyList">
-                                            <a href="profil.html" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{member.member.username}}">
-                                             {% if member.member.WebPath == null %}
-                                               {% if member.member.sexe == 'H' %}
-                                                   <img src="{{ asset('men.png') }}" alt="">
-                                            <div class="pulse border-green pulseoptimus"></div>
-                                                   {% else %}
-                                                       <img src="{{ asset('women.png') }}" alt="">
-                                            <div class="pulse border-green pulseoptimus"></div>
-                                                       {% endif %}
-                                                       
-                                                       {% else%}
-                                            <img src="{{ asset(member.member.WebPath) }}" alt="">
-                                            <div class="pulse border-green pulseoptimus"></div>
-                                            {% endif %}
-                                               
-                                            </a>
-                                            <div class="info">
-                                                <a href="#"> <div class="name clubumus"><strong>{{member.member.prenom}} {{member.member.nom}}</strong></div></a>
-                                                
-                                                <div class="title">{{member.member.profil}}</div>
-                                            </div><br>
-                                            <div align="center">
-                                                {% if app.user == club.createur and member.member.id != app.user.id %}
-                                                <a href="#retirer{{member.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="retirer"><span class="fa fa-close"></span></a>
-                                                <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="signaler"><span class="fa fa-legal"></span></a>
-                                            {% endif %}
-                                                </div><br>
-                                        </div>
-                                    </div>
-        {% endfor %}
-        </div>
+<div class="row pb40" id="appendMember">
+{% for member in members %}
+<div class="col-sm-4" id="{{member.id}}">
+<div class="tooltipsContainer agent notifyList">
+    <a href="{{ path('show_profil',{'id' :member.member.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{member.member.username}}">
+     {% if member.member.WebPath == null %}
+       {% if member.member.sexe == 'H' %}
+           <img src="{{ asset('men.png') }}" alt="">
+    <div class="pulse border-green pulseoptimus"></div>
+           {% else %}
+               <img src="{{ asset('women.png') }}" alt="">
+    <div class="pulse border-green pulseoptimus"></div>
+               {% endif %}
+
+               {% else%}
+    <img src="{{ asset(member.member.WebPath) }}" alt="">
+    <div class="pulse border-green pulseoptimus"></div>
+    {% endif %}
+
+    </a>
+    <div class="info">
+        <a href="#"> <div class="name clubumus"><strong>{{member.member.prenom}} {{member.member.nom}}</strong></div></a>
+
+        <div class="title">{{member.member.profil}}</div>
+    </div><br>
+    <div align="center">
+        {% if app.user == club.createur and member.member.id != app.user.id %}
+        <a href="#retirer{{member.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="retirer"><span class="fa fa-close"></span></a>
+        <a href="#" class="btn btn-icon btn-round btn-green btn-xs" title="signaler"><span class="fa fa-legal"></span></a>
+    {% endif %}
+        </div><br>
+</div>
+</div>
+{% endfor %}
+</div>
 
 </ul>
 <!--------------------palmaes club ------------------------->
 <ul class="tab-pane fade  scrollbar" id="palmares" >
-    <div id="supprimer-p-c" style="display: none;" class="alert alert-danger">
+<div id="supprimer-p-c" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
 Palmarés Supprimer
 </div>
-      {% if club.reward|length == 0 %}
+{% if club.reward|length == 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
 <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
 <button type="button" class="close" data-dismiss="alert"></button>
@@ -342,7 +349,7 @@ Palmarés Supprimer
 <div data-linkto="" class="card albumus tooltipsContainer" >
 <br>
 <div class="profile-card" style="margin-right: 1%;">
-    <div class="">
+<div class="">
 
 {% if app.user == club.createur %}
 <div align="right">
@@ -380,21 +387,15 @@ Palmarés Supprimer
 <div class="pc-avatar">
 <a href="#" class="btn btn-icon btn-round btn-o  palmaruss" title="{{ palmares.user }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
 <span >
-    {% if app.user.path == null %}
-                    {% if app.user.sexe == 'H' %}
-
-                        <img src="{{ asset('men.png') }}" >
-
-                    {% else %}
-
-                        <img src="{{ asset('women.png') }}">
-
-                    {% endif %}
-                {% else %}
-
-                    <img src="{{ asset( app.user.getWebPath ) }}" >
-                {% endif %}
-    
+{% if app.user.path == null %}
+{% if app.user.sexe == 'H' %}
+<img src="{{ asset('men.png') }}" >
+{% else %}
+<img src="{{ asset('women.png') }}">
+{% endif %}
+{% else %}
+<img src="{{ asset( app.user.getWebPath ) }}" >
+{% endif %}
 </span>
 </a>
 </div>
@@ -413,7 +414,7 @@ Palmarés Supprimer
 <!--------------------fin palmaes club ------------------------->
 <!--------------------albums club ------------------------->
 <ul class="tab-pane fade  scrollbar" id="albums" >
-    <div id="supprimer-a" style="display: none;" class="alert alert-danger">
+<div id="supprimer-a" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
 Album Supprimer
 </div>
@@ -421,7 +422,7 @@ Album Supprimer
 <a class="close" data-dismiss="alert">×</a>
 photo Supprimer
 </div>
-     {% if club.album|length == 0 %}
+{% if club.album|length == 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
 <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
 <button type="button" class="close" data-dismiss="alert"></button>
@@ -435,7 +436,7 @@ photo Supprimer
 <br>
 </div>
 {% endif %}
-   <div class="row">
+<div class="row">
 <br>
 {%set ph = 0 %}
 {% for album in club.album %}
@@ -497,98 +498,163 @@ photo Supprimer
 
 </ul>
 <!--------------------fin albums club ------------------------->
+<!--------------------demende club ------------------------->
 {% if app.user == club.createur %}
 <ul class="tab-pane fade  scrollbar" id="demande" >
-    {% set demandes = getMembreRequest(club.id,app.user) %}
-           <div class="row pb40">
-        {% for  demande in demandes %}
-            
-                                <div id="demende{{demande.id}}" class="col-md-4 ">
-                                    <div class="tooltipsContainer agent notifyList">
-                                        <a href="{{path('show_profil',{'id' :demande.member.id})}}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{ demande.member.nom }} {{ demande.member.prenom }}">
-                                           {% if demande.member.WebPath == null %}
-                                               {% if demande.member.sexe == 'H' %}
-                                                   <img src="{{ asset('men.png') }}" alt="">
-                                            <div class="pulse border-green pulseoptimus"></div>
-                                             {% else %}
-                                                       <img src="{{ asset('women.png') }}" alt="">
-                                            <div class="pulse border-green pulseoptimus"></div>
-                                                       {% endif %}
-                                                       
-                                                       {% else%}
-                                            <img src="{{ asset(demande.member.WebPath) }}" alt="">
-                                            <div class="pulse border-green pulseoptimus"></div>
-                                            {% endif %}
-                                        </a>
-                                        <div class="info">
-                                            <a href="#"> <div class="name clubumus"><strong>{{ demande.member.nom }} {{ demande.member.prenom }}</strong></div></a>
-                                          <div class="info">
-                                            <a href="#"> <div class="name clubumus"><strong>{{ demande.member.nom }} {{ demande.member.prenom }}</strong></div></a>
-                                            <div class="title">{{ demande.member.profil }}</div>
-                                        </div> <br>
-                                        <div id="{{demande.id}}" align="center">
-                                            <a  id="accept_rejoindre{{demande.id}}" href="#" class="btn btn-icon btn-round btn-green btn-xs" title="accepter"><span class="fa fa-check"></span></a>
-                                            <a  id="refuser_rejoindre{{demande.id}}" href="#" class="btn btn-icon btn-round btn-green btn-xs" title="refuser"><span class="fa fa-close"></span></a>
-                                        </div><br>
-                                    </div>
-                                </div>
-            {% endfor %}
-           </div>
+{% set demandes = getMembreRequest(club.id,app.user) %}
+<div class="row pb40">
+{% for  demande in demandes %}
+
+<div id="demende{{demande.id}}" class="col-md-4 ">
+<div class="tooltipsContainer agent notifyList">
+<a href="{{path('show_profil',{'id' :demande.member.id})}}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{ demande.member.nom }} {{ demande.member.prenom }}">
+   {% if demande.member.WebPath == null %}
+       {% if demande.member.sexe == 'H' %}
+           <img src="{{ asset('men.png') }}" alt="">
+    <div class="pulse border-green pulseoptimus"></div>
+     {% else %}
+               <img src="{{ asset('women.png') }}" alt="">
+    <div class="pulse border-green pulseoptimus"></div>
+               {% endif %}
+
+               {% else%}
+    <img src="{{ asset(demande.member.WebPath) }}" alt="">
+    <div class="pulse border-green pulseoptimus"></div>
+    {% endif %}
+</a>
+<div class="info">
+    <a href="#"> <div class="name clubumus"><strong>{{ demande.member.nom }} {{ demande.member.prenom }}</strong></div></a>
+  <div class="info">
+    <a href="#"> <div class="name clubumus"><strong>{{ demande.member.nom }} {{ demande.member.prenom }}</strong></div></a>
+    <div class="title">{{ demande.member.profil }}</div>
+</div> <br>
+<div id="{{demande.id}}" align="center">
+    <a  id="accept_rejoindre{{demande.id}}" href="#" class="btn btn-icon btn-round btn-green btn-xs" title="accepter"><span class="fa fa-check"></span></a>
+    <a  id="refuser_rejoindre{{demande.id}}" href="#" class="btn btn-icon btn-round btn-green btn-xs" title="refuser"><span class="fa fa-close"></span></a>
+</div><br>
+</div>
+</div>
+{% endfor %}
+</div>
 </ul>
 {% endif %}
+<!--------------------fin demende club ------------------------->
+<!--------------------competition club ------------------------->
 <ul class="tab-pane fade  scrollbar" id="compétitions" >
-    <img style="width: 100%" src="{{ asset('154.png') }}">
-    <div class="clearfix"></div>
-</ul>
-        
+    <div id="supprimer-compe" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Compétition Supprimer
+</div>
+    {% if club.competitions|length == 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Liste vide!</strong>  Créer un pour commencer.
+</div>
+
+{% endif %}
+    {% if app.user == club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a id="ajoutAlbum" class="btn btn-round btn-default btn-sm rightus" href="{{ path('add-competition', {'id' : club.id }) }}"><span class="fa icon-plus state"></span> <span class="state">Ajouter </span></a><br>
+<br>
+</div>
+{% endif %}
+{% for competition in  club.competitions|reverse %}
+    
+
+<div {% if date(competition.dateFin)<= date() %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-xs-12 {{competition.id}}" >
+<div class="tooltipsContainer avatar imagus col-md-4">
+<a href="{{path('show_event',{'id':competition.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{competition.titre}}">
+{% if competition.path == null %}
+<img src="{{ asset('event.png')}}" alt="avatar" ></a>
 {% else %}
-    <ul class="tab-pane fade  active in scrollbar" id="nonPayer" >
-        <a href="{{ path('front_office_payment_prepare_order_purchase',{'id' : club.id }) }}">    <img style="width: 100%" src="{{ asset('logopayment.png') }}"></a>
+<img src="{{ asset(competition.WebPath)}}" alt="avatar" ></a>
+{% endif %}
+</div>
+<div class="col-md-6">
+<div class="info" style="max-width: 100% !important">
+<div ><a href="{{path('show_event',{'id':competition.id})}}" class="name">{{competition.titre}}</a></div>
+<div class="title">Créateur : <span class="address">{{ competition.createur.nom ~' '~competition.createur.prenom }}</span></div>
+<div class="title">Lieu : <span class="address">{{competition.lieu}}</span></div>
+</div>
+</div>
+{#<div class="col-md-4">
+<div class="info  col-md-12" >
+<div class="title">Text descriptif : <span class="address">{{env.description}}</span></div>
+</div>
+</div>#}
+<div style="margin-top: 1%" align="right">
+<a href="#plusInfoCompetition{{competition.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des participant"><span class="icon-users"></span></a>
+
+{% if app.user == competition.createur and date(competition.dateFin)>= date()%}
+
+<a href="#envoyerinvitCompetition{{competition.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="inviter"><span class="icon-plus"></span></a>
+<a href="{{ path('update-competition',{id: competition.id})}}"  class="btn btn-icon btn-round btn-green btn-xs" title="modifier"><span class="icon-settings"></span></a>
+
+<a href="#supprimerCompetition{{competition.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>
+
+{% endif %}
+</div>
+{% if date(competition.dateFin)<= date() %}
+<div class="label label-danger" style="margin-left: 40%; font-size: 12px; background-color: #c02100 !important;">
+Cette compétition est depassé
+</div>
+{% endif %}
+<div class="clearfix"></div>
+</div>
+
+    {% endfor %}
+<div class="clearfix"></div>
 </ul>
-    {% endif %}
+<!--------------------fin competition club ------------------------->
+{% else %}
+<ul class="tab-pane fade  active in scrollbar" id="nonPayer" >
+<a href="{{ path('front_office_payment_prepare_order_purchase',{'id' : club.id }) }}">    <img style="width: 100%" src="{{ asset('logopayment.png') }}"></a>
+</ul>
+{% endif %}
 </div>
 <div class="clearfix"></div>
 
 
-    </div>
+</div>
 </div>
 
 </div>
 </div>
 
 <div id="map-club" style="height: 100%" class="mob-min">
-    <div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div>
+<div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div>
 </div>
 
 </div>
 {% set members = adherents(club.id) %}
-    <div id="appenmodalaccept">
-    {% for member in members %}
-        <!------------------- modal supprission------------------->
-        
-        <div class="modal" id="retirer{{member.id}}"   >
-            <div class="modal-dialog">
-                <div class="modal-content bordusbottomus">
-                    <div class="modal-header bordustopus">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="contactLabel">Suppression </h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Souhaitez vous vraiment cet Adhérent ?</p>
-                    </div>
-                     <div class="modal-footer supp-album">
-                        <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-                        <a id="supprimerAdherant{{member.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
-                  <a class="loader" id="loaderSupppMember{{member.id}}" >
+<div id="appenmodalaccept">
+{% for member in members %}
+<!------------------- modal supprission------------------->
+
+<div class="modal" id="retirer{{member.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment cet Adhérent ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerAdherant{{member.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+<a class="loader" id="loaderSupppMember{{member.id}}" >
 <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
 </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-    </div>
-   
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+
 <!-----------------------Modal ShowClub--------------------------->
 <div class="modal" id="inviteramiclub"   >
 <div class="modal-dialog">
@@ -599,8 +665,8 @@ photo Supprimer
 </div>
 <div class="modal-body">
 <input id="inviterclub" type="hidden" name="event" value="{{club.id}}"/>
-  <ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
- <div id="listfriend" class="col-md-12">
+<ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
+<div id="listfriend" class="col-md-12">
 
 
 {% set i = 0 %}
@@ -635,7 +701,7 @@ tous vos  amis sont particip
 </div>
 {% endif %}                                                                      
 </div>
-  </ul>
+</ul>
 </div>
 
 <div class="modal-footer supp-album">
@@ -649,9 +715,32 @@ tous vos  amis sont particip
 </div>
 </div>
 </div>
-<!------------------- modal photo------------------->
-
-<!-------------------fin modal photo------------------->
+<!------------------- modal competition------------------->
+<!--*********************************************************modal supprission competition*************************************************************-->
+{% for competition in  club.competitions|reverse %}
+    <div class="modal" id="supprimerCompetition{{competition.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Suppression </h4>
+</div>
+<div class="modal-body">
+<p>Souhaitez vous vraiment supprimer La Competition  ?</p>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+<a id="supprimerCompe{{competition.id}}" href="#" class="btn btn-round btn-green">Confirmer</a>
+<a class="loader" id="loaderSupppComp{{competition.id}}" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
+</div>
+</div>
+</div>
+</div>
+    {% endfor %}
+<!--********************************************************fin modal supprission competition**********************************************************-->
+<!-------------------fin modal competition ------------------->
 <!--*********************modal supprimer Club*******************-->
 <div class="modal fade" id="supprimerClub" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 <div class="modal-dialog">
@@ -764,7 +853,7 @@ tous vos  amis sont particip
 <!--*********************fin modal ajouter album Club*******************-->
 <!--*********************modal modifier album***************************-->
 {% for album in club.album %}
-    <div class="modal fade" id="uploadphotoAlbum{{album.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal fade" id="uploadphotoAlbum{{album.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 <div class="modal-dialog">
 {{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoClub',  {'ida': album.id })) }}
 </div>
@@ -826,42 +915,76 @@ tous vos  amis sont particip
 <!-----------------------Fin Modal ShowClub--------------------------->
 {% endblock %}
 {% block javascriptfils %}
+     <script src="{{ asset('folder/chose.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('folder/chosen.jquery.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('folder/prism.js') }}" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    var config = {
+      '.chosen-select'           : {},
+      '.chosen-select-deselect'  : {allow_single_deselect:true},
+      '.chosen-select-no-single' : {disable_search_threshold:10},
+      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+      '.chosen-select-width'     : {width:"100%"}
+    }
+    for (var selector in config) {
+      $(selector).chosen(config[selector]);
+    }
+  </script>
 <script src="{{ asset('datemaske/jquery.maskedinput.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
 $(function() {
 $("#frontoffice_optimusbundle_reward_date").mask("99/99/9999");
 });</script>
 <script>
-    $("#closemessag").click(function(){
-       $("#invitation-envoyées").hide();
-    });
+$("#closemessag").click(function(){
+$("#invitation-envoyées").hide();
+});
 </script>
 <script>
-    
-    $("#envoyerinvitfriendsubmit").click(function(){
-    $("#envoyerinvitfriendsubmit").hide();
-    $("#loader").show();
-    var club = $("#inviterclub").val();
-    var name = new Array;
-    test = 'false';
-    var i = 0;   
-    {% set friends = getFriends(club.createur.id) %}
-    {%for friend in friends %}
+    {% for competition in  club.competitions|reverse %}
+        $("#supprimerCompe{{competition.id}}").click(function(){
+           $("#supprimerCompe{{competition.id}}").hide(); 
+           $("#loaderSupppComp{{competition.id}}").show();
+           $.ajax({
+               url: Routing.generate('delete_competition', {'id': {{competition.id}}}),
+               success: function(data) {
+                   $("#loaderSupppComp{{competition.id}}").hide();
+                   $(".{{competition.id}}").hide();
+                   $("#supprimerCompetition{{competition.id}}").hide();
+                   $('.modal-backdrop').hide();
+                   
+                   $("#supprimer-compe").show();
+               }
+           });  
+        });
+        {% endfor %}
+    </script>
+<script>
+
+$("#envoyerinvitfriendsubmit").click(function(){
+$("#envoyerinvitfriendsubmit").hide();
+$("#loader").show();
+var club = $("#inviterclub").val();
+var name = new Array;
+test = 'false';
+var i = 0;   
+{% set friends = getFriends(club.createur.id) %}
+{%for friend in friends %}
 {% set memberOuNon = MemberOuNon(club.id,friend) %}
 {% if memberOuNon == 0 %}
-    if (document.getElementById('listefrirnd{{friend.id}}').checked){
+if (document.getElementById('listefrirnd{{friend.id}}').checked){
 name[i] = $("#listefrirnd{{friend.id}}").val();
 i = i + 1;
 test = 'true';
 }{% endif %}
 {% endfor %}
-    $.ajax({
+$.ajax({
 type: "POST",
 url: Routing.generate('inviter_ami_club'),
 data: {name:name, club:club},
 dataType: 'json',
 success: function(data) {
-    
+
 $('#loader').hide();
 $("#inviteramiclub").hide();
 $('.modal-backdrop').hide();
@@ -874,67 +997,67 @@ document.getElementById('listefrirnd{{friend.id}}').checked = false;            
 
 }
 });
-    });
-    </script>
+});
+</script>
 
 <script >
-    {% set members = adherents(club.id) %}
-        {% for member in members %}
-    $('#supprimerAdherant{{member.id}}').click(function() {
-         $('#supprimerAdherant{{member.id}}').hide();
-        $('#loaderSupppMember{{member.id}}').show();
-        
-        $.ajax({
-            url: Routing.generate('delete_member', {'id': {{member.id}}}),
-            success: function() {
-                $('#{{member.id}}').hide();
-               
-                $("#retirer{{member.id}}").toggle();
-                $('.modal-backdrop').hide();
-            }
-        });
-    });
-        {% endfor %}
-    </script>
-     <script>
-        {% set demandes = getMembreRequest(club.id,app.user) %}
-        {% for demande in demandes %}
-            $('#accept_rejoindre{{demande.id}}').click(function() {
-           
-                $.ajax({
-                    url: Routing.generate('accept_demande', {'id': {{demande.id}}}),
-                    success: function(data) {
-                             tab = data.split('*');
-                           
-                        $('#demende{{demande.id}}').hide();
-                        $("#appendMember").append(tab[0]);
-                         $('#appenmodalaccept').append(tab[1]); 
-                         $(tab[2]).appendTo(document.body)
-                             }
-                });
-            });
-            $('#refuser_rejoindre{{demande.id}}').click(function() {
-                
-                var id = $('#{{demande.id}}').attr('id');
-               console.log(id);
-                $.ajax({
-                    url: Routing.generate('delete_demande', {'id': id}),
-                    success: function(data) {
-                           
-                           
-                        $('#demende'+data).hide();
-                        console.log(data);
-                    }
-                });
-            });
-        {% endfor %}
-    </script>
-    <script>
-    {% for programme in programmes %}
-        $("#supprimerProgrammeClub{{programme.id}}").click(function(){
-            $("#supprimerProgrammeClub{{programme.id}}").hide();
-            $("#loaderSuppprogramme{{programme.id}}").show();
-            $.ajax({
+{% set members = adherents(club.id) %}
+{% for member in members %}
+$('#supprimerAdherant{{member.id}}').click(function() {
+$('#supprimerAdherant{{member.id}}').hide();
+$('#loaderSupppMember{{member.id}}').show();
+
+$.ajax({
+url: Routing.generate('delete_member', {'id': {{member.id}}}),
+success: function() {
+$('#{{member.id}}').hide();
+
+$("#retirer{{member.id}}").toggle();
+$('.modal-backdrop').hide();
+}
+});
+});
+{% endfor %}
+</script>
+<script>
+{% set demandes = getMembreRequest(club.id,app.user) %}
+{% for demande in demandes %}
+$('#accept_rejoindre{{demande.id}}').click(function() {
+
+$.ajax({
+url: Routing.generate('accept_demande', {'id': {{demande.id}}}),
+success: function(data) {
+tab = data.split('*');
+
+$('#demende{{demande.id}}').hide();
+$("#appendMember").append(tab[0]);
+$('#appenmodalaccept').append(tab[1]); 
+$(tab[2]).appendTo(document.body)
+}
+});
+});
+$('#refuser_rejoindre{{demande.id}}').click(function() {
+
+var id = $('#{{demande.id}}').attr('id');
+console.log(id);
+$.ajax({
+url: Routing.generate('delete_demande', {'id': id}),
+success: function(data) {
+
+
+$('#demende'+data).hide();
+console.log(data);
+}
+});
+});
+{% endfor %}
+</script>
+<script>
+{% for programme in programmes %}
+$("#supprimerProgrammeClub{{programme.id}}").click(function(){
+$("#supprimerProgrammeClub{{programme.id}}").hide();
+$("#loaderSuppprogramme{{programme.id}}").show();
+$.ajax({
 url: Routing.generate('program_delete', {'id':{{programme.id}}}),
 success: function() {
 
@@ -944,9 +1067,9 @@ $('.modal-backdrop').hide();
 $('#supprimer-pr-c').show();
 }
 });
-        });
-        {% endfor %}
-    </script>
+});
+{% endfor %}
+</script>
 <script>
 {% for palmares in club.reward %}
 $('#supprimerPalmaresClub{{palmares.id}}').click(function() {
@@ -1013,8 +1136,8 @@ $('#photos{{phs}}').hide();{% endfor %}{%endfor %}
 <script>
 {%for album in club.album %}
 $('#supprimerAlbumClub{{album.id}}').click(function() {
-    $('#supprimerAlbumClub{{album.id}}').hide();
-    $('#loaderSuppAlb{{album.id}}').show();
+$('#supprimerAlbumClub{{album.id}}').hide();
+$('#loaderSuppAlb{{album.id}}').show();
 $.ajax({
 url: Routing.generate('album_delete', {'id': {{album.id}}}),
 success: function(data) {
@@ -1026,24 +1149,24 @@ $('#supprimer-a').show();
 });
 });{% endfor %}
 </script>
- <script>
-        $("#some_class_2").change(function() {
-            var start = $('#some_class_1').val();
-            var end = $('#some_class_2').val();
-            if (start != '' && end != '') {
-                var tabstart = (new Date(start).getTime() / 1000);
-                var tabend = (new Date(end).getTime() / 1000);
-                if (tabstart > tabend) {
-                    $('#notdate').show();
-                    $('#some_class_2').val("");
-                }
-                else{
-                $('#notdate').hide();
-            }
-            }
-            
-        });
-    </script>
+<script>
+$("#some_class_2").change(function() {
+var start = $('#some_class_1').val();
+var end = $('#some_class_2').val();
+if (start != '' && end != '') {
+var tabstart = (new Date(start).getTime() / 1000);
+var tabend = (new Date(end).getTime() / 1000);
+if (tabstart > tabend) {
+$('#notdate').show();
+$('#some_class_2').val("");
+}
+else{
+$('#notdate').hide();
+}
+}
+
+});
+</script>
 <script>
 "use strict";
 function initialize() {

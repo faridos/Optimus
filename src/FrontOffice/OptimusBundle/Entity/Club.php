@@ -148,6 +148,11 @@ class Club {
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Album", mappedBy="club")
      * */
     protected $album;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Competition", mappedBy="club")
+     * */
+    protected $competitions;
 
     /**
      * @ORM\OneToMany(targetEntity="Program", mappedBy="clubp")
@@ -734,5 +739,38 @@ class Club {
     public function getNotificationclub()
     {
         return $this->notificationclub;
+    }
+
+    /**
+     * Add competitions
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Competition $competitions
+     * @return Club
+     */
+    public function addCompetition(\FrontOffice\OptimusBundle\Entity\Competition $competitions)
+    {
+        $this->competitions[] = $competitions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove competitions
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Competition $competitions
+     */
+    public function removeCompetition(\FrontOffice\OptimusBundle\Entity\Competition $competitions)
+    {
+        $this->competitions->removeElement($competitions);
+    }
+
+    /**
+     * Get competitions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCompetitions()
+    {
+        return $this->competitions;
     }
 }

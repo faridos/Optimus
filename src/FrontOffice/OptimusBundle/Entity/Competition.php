@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use \DateTime;
 /**
  * Event
  *
@@ -32,10 +32,16 @@ class Competition {
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User",inversedBy="competitions", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User",inversedBy="competitions")
+     * @ORM\JoinColumn(name="user_id", nullable=false ,onDelete="CASCADE")
      */
     private $createur;
+     /**
+     * @ORM\ManyToOne(targetEntity="Club", inversedBy="competitions")
+     * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
+     **/
+   
+   protected $club;
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -60,8 +66,18 @@ class Competition {
      * @ORM\Column(name="lieu", type="string", length=100)
      */
     private $lieu;
-
-    
+/**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_creation", type="datetime")
+     */
+    private $dateCreation;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_modification", type="datetime", nullable=true)
+     */
+    private $dateModification;
 
     /**
      * @var \DateTime
@@ -122,13 +138,7 @@ class Competition {
      */
     private $nbrvu;
 
-    /**
-     * @var boolean $activer
-     * @ORM\Column(name="activation", type="boolean", nullable=false)
-     */
-    protected $active;
-
-    
+   
 
     /**
     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Photo", mappedBy="competition")
@@ -140,13 +150,20 @@ class Competition {
 
     
     public function __construct() {
-       
+        $this->dateCreation = new \Datetime();
     }
 
 
    
+    function getDateModification() {
+        return $this->dateModification;
+    }
 
-     public function setFile(UploadedFile $file = null) {
+    function setDateModification($dateModification) {
+        $this->dateModification = $dateModification;
+    }
+
+         public function setFile(UploadedFile $file = null) {
         $this->file = $file;
         // check if we have an old image path
         if (isset($this->path)) {
@@ -252,8 +269,15 @@ class Competition {
     {
         return $this->type;
     }
+    function getDateCreation() {
+        return $this->dateCreation;
+    }
 
-    /**
+    function setDateCreation(\DateTime $dateCreation) {
+        $this->dateCreation = $dateCreation;
+    }
+
+        /**
      * Set path
      *
      * @param string $path
@@ -506,29 +530,9 @@ class Competition {
         return $this->nbrvu;
     }
 
-    /**
-     * Set active
-     *
-     * @param boolean $active
-     * @return Competition
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
+   
+
     
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean 
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
     /**
      * Set createur
      *
@@ -583,5 +587,28 @@ class Competition {
     public function getImagesCompetition()
     {
         return $this->imagesCompetition;
+    }
+
+    /**
+     * Set club
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Club $club
+     * @return Competition
+     */
+    public function setClub(\FrontOffice\OptimusBundle\Entity\Club $club = null)
+    {
+        $this->club = $club;
+    
+        return $this;
+    }
+
+    /**
+     * Get club
+     *
+     * @return \FrontOffice\OptimusBundle\Entity\Club 
+     */
+    public function getClub()
+    {
+        return $this->club;
     }
 }

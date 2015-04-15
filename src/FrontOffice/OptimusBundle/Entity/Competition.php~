@@ -36,6 +36,12 @@ class Competition {
      * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
      */
     private $createur;
+     /**
+     * @ORM\ManyToOne(targetEntity="Club", inversedBy="competitions")
+     * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
+     **/
+   
+   protected $club;
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -219,4 +225,369 @@ class Competition {
 
 
    
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Competition
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return Competition
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string 
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set titre
+     *
+     * @param string $titre
+     * @return Competition
+     */
+    public function setTitre($titre)
+    {
+        $this->titre = $titre;
+    
+        return $this;
+    }
+
+    /**
+     * Get titre
+     *
+     * @return string 
+     */
+    public function getTitre()
+    {
+        return $this->titre;
+    }
+
+    /**
+     * Set lieu
+     *
+     * @param string $lieu
+     * @return Competition
+     */
+    public function setLieu($lieu)
+    {
+        $this->lieu = $lieu;
+    
+        return $this;
+    }
+
+    /**
+     * Get lieu
+     *
+     * @return string 
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
+    }
+
+    /**
+     * Set dateDebut
+     *
+     * @param \DateTime $dateDebut
+     * @return Competition
+     */
+    public function setDateDebut($dateDebut)
+    {
+        $this->dateDebut = $dateDebut;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateDebut
+     *
+     * @return \DateTime 
+     */
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     * @return Competition
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime 
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+    /**
+     * Set nbrPlaces
+     *
+     * @param integer $nbrPlaces
+     * @return Competition
+     */
+    public function setNbrPlaces($nbrPlaces)
+    {
+        $this->nbrPlaces = $nbrPlaces;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbrPlaces
+     *
+     * @return integer 
+     */
+    public function getNbrPlaces()
+    {
+        return $this->nbrPlaces;
+    }
+
+    /**
+     * Set frais
+     *
+     * @param float $frais
+     * @return Competition
+     */
+    public function setFrais($frais)
+    {
+        $this->frais = $frais;
+    
+        return $this;
+    }
+
+    /**
+     * Get frais
+     *
+     * @return float 
+     */
+    public function getFrais()
+    {
+        return $this->frais;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Competition
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set lat
+     *
+     * @param float $lat
+     * @return Competition
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+    
+        return $this;
+    }
+
+    /**
+     * Get lat
+     *
+     * @return float 
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * Set lng
+     *
+     * @param float $lng
+     * @return Competition
+     */
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
+    
+        return $this;
+    }
+
+    /**
+     * Get lng
+     *
+     * @return float 
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    /**
+     * Set nbrvu
+     *
+     * @param integer $nbrvu
+     * @return Competition
+     */
+    public function setNbrvu($nbrvu)
+    {
+        $this->nbrvu = $nbrvu;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbrvu
+     *
+     * @return integer 
+     */
+    public function getNbrvu()
+    {
+        return $this->nbrvu;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Competition
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set createur
+     *
+     * @param \FrontOffice\UserBundle\Entity\User $createur
+     * @return Competition
+     */
+    public function setCreateur(\FrontOffice\UserBundle\Entity\User $createur)
+    {
+        $this->createur = $createur;
+    
+        return $this;
+    }
+
+    /**
+     * Get createur
+     *
+     * @return \FrontOffice\UserBundle\Entity\User 
+     */
+    public function getCreateur()
+    {
+        return $this->createur;
+    }
+
+    /**
+     * Add imagesCompetition
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Photo $imagesCompetition
+     * @return Competition
+     */
+    public function addImagesCompetition(\FrontOffice\OptimusBundle\Entity\Photo $imagesCompetition)
+    {
+        $this->imagesCompetition[] = $imagesCompetition;
+    
+        return $this;
+    }
+
+    /**
+     * Remove imagesCompetition
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Photo $imagesCompetition
+     */
+    public function removeImagesCompetition(\FrontOffice\OptimusBundle\Entity\Photo $imagesCompetition)
+    {
+        $this->imagesCompetition->removeElement($imagesCompetition);
+    }
+
+    /**
+     * Get imagesCompetition
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImagesCompetition()
+    {
+        return $this->imagesCompetition;
+    }
 }
