@@ -73,7 +73,12 @@
                                                                 {% set vote = getVote(notification.notifications.idVote, notification.notifications.notificateur.id) %}
                                                                 <div class="message">a ajouter un vote de {{vote.value}} etoile sur vous</div>
                                                             {% endif %}
-
+                                                            {% if notification.notifications.type == 'accepte' %}
+                                                                <div class="message">a accepter votre demande</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'refuse' %}
+                                                                <div class="message">a refuser votre demande</div>
+                                                            {% endif %}
                                                         </div>
                                                         <div class="clearfix">
 

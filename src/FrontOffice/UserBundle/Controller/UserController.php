@@ -310,7 +310,14 @@ class UserController extends Controller {
         $em->persist($Invitation);
         $em->flush();
         
-        
+        $ami=$em->getRepository('FrontOfficeUserBundle:User')->find($Invitation->getObject1Id());
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('accepte');
+        $notif->setEntraineur($ami);
+        $em->persist($notif);
+        $em->flush();
         
         $response = new Response($id);
         return $response;
@@ -331,6 +338,14 @@ class UserController extends Controller {
         $Invitation->setConfirmedAt(new DateTime());
         $em->persist($Invitation);
         $em->flush();
+        
+        $ami=$em->getRepository('FrontOfficeUserBundle:User')->find($Invitation->getObject1Id());
+        $notif = new Notification();
+        $notif->setNotificateur($user1);
+        $notif->setType('accepte');
+        $notif->setEntraineur($ami);
+        $em->persist($notif);
+        $em->flush();
         $response = new Response($Invitation->getId());
         return $response;
     }
@@ -344,7 +359,17 @@ class UserController extends Controller {
      */
     public function deleteInvitationAction($id) {
         $em = $this->getDoctrine()->getManager();
+        $user1 = $this->container->get('security.context')->getToken()->getUser();
         $Invitation = $em->getRepository('SlyRelationBundle:Relation')->find($id);
+        
+        $nonami=$em->getRepository('FrontOfficeUserBundle:User')->find($Invitation->getObject1Id());
+            $notif = new Notification();
+            $notif->setNotificateur($user1);
+            $notif->setType('refuse');
+            $notif->setEntraineur($nonami);
+            $em->persist($notif);
+            $em->flush();
+            
         $em->remove($Invitation);
         $em->flush();
         $response = new Response($id);
@@ -394,6 +419,14 @@ class UserController extends Controller {
   
         $relation = $em->getRepository('SlyRelationBundle:Relation')->find($id);
           if ($relation) {
+            $nonami=$em->getRepository('FrontOfficeUserBundle:User')->find($relation->getObject1Id());
+            $notif = new Notification();
+            $notif->setNotificateur($user1);
+            $notif->setType('refuse');
+            $notif->setEntraineur($nonami);
+            $em->persist($notif);
+            $em->flush();
+              
             $em->remove($relation);
             $em->flush();
         }

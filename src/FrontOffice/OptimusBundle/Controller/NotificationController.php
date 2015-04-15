@@ -122,12 +122,26 @@ class NotificationController extends Controller {
                 }
             }
             if ($i == 0) {
-                  
                     $res[$c] = $notifstar;
                     $c++;
                 }
         }
         
+        $notifAcceptRefuse = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findBy(array("entraineur"=>$user));
+        foreach ($notifAcceptRefuse as $notifAR) {
+            if ( $notifAR->getType() == "accepte" || $notifAR->getType() == "refuse" ) {
+            $i = 0;
+            foreach ($user->getNotificationseen() as $notifSeen) {
+                if ($notifSeen->getNotifications()->getId() == $notifAR->getId()) {
+                        $i = 1;
+                }
+            }
+            if ($i == 0) {
+                    $res[$c] = $notifAR;
+                    $c++;
+                }
+            }
+        }
        
         foreach ($res as $val) {
             $notifseen = new NotificationSeen();

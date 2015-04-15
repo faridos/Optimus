@@ -1,5 +1,5 @@
 {% extends "::baseA.html.twig" %}
- 
+
 {% block navigation %}
     <div id="header" >
         <div class="home-logo osLight"><a href="{{ path('accueil') }}"><img src="{{ asset('logoOp.png') }}"></a> </div>
@@ -212,49 +212,91 @@
                                     <div class="clearfix"></div>
                                 </a>
                             </li>
-                         {% elseif notification.notifications.type == 'entraineur' %}
-        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-               <a href="{{ path('show_profil', { 'id' : notification.notifications.entraineur.id }) }}">
-               
-            {% if notification.notifications.notificateur.path == null %}
-                       {% if notification.notifications.notificateur.sexe == 'H' %}
-                           <img class="avatar pull-left"  src="{{ asset('men.png') }}">
-                       {% else %}
-                           <img class="avatar pull-left"  src="{{ asset('women.png') }}">
-                       {% endif %}
-                   {% else %}
-                       <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
-               {% endif %}
-            <div class="pulse border-grey"></div>
-            <div class="notify pull-left">
-                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} un nouveau entraineur inscrit</div>
-                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
-            </div>
-            <div class="clearfix"></div>
-        </a>
-    </li>
-    {% elseif notification.notifications.type == 'vote' %}
-        {% set vote = getVote(notification.notifications.idVote, notification.notifications.notificateur.id) %}
-        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-            <a href="#">
+                        {% elseif notification.notifications.type == 'entraineur' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_profil', { 'id' : notification.notifications.entraineur.id }) }}">
 
-                {% if notification.notifications.notificateur.path == null %}
-                    {% if notification.notifications.notificateur.sexe == 'H' %}
-                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
-                    {% else %}
-                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
-                    {% endif %}
-                {% else %}
-                    <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
-                {% endif %}
-            <div class="pulse border-grey"></div>
-            <div class="notify pull-left">
-                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouter un vote de {{vote.value}} etoile sur vous</div>
-                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
-            </div>
-            <div class="clearfix"></div>
-        </a>
-    </li>
+                                    {% if notification.notifications.notificateur.path == null %}
+                                        {% if notification.notifications.notificateur.sexe == 'H' %}
+                                            <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                                        {% else %}
+                                            <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                                        {% endif %}
+                                    {% else %}
+                                        <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                                    {% endif %}
+                                <div class="pulse border-grey"></div>
+                                <div class="notify pull-left">
+                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} un nouveau entraineur inscrit</div>
+                                    <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                </div>
+                                <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.notifications.type == 'vote' %}
+                            {% set vote = getVote(notification.notifications.idVote, notification.notifications.notificateur.id) %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="#">
+
+                                    {% if notification.notifications.notificateur.path == null %}
+                                        {% if notification.notifications.notificateur.sexe == 'H' %}
+                                            <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                                        {% else %}
+                                            <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                                        {% endif %}
+                                    {% else %}
+                                        <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                                    {% endif %}
+                                <div class="pulse border-grey"></div>
+                                <div class="notify pull-left">
+                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouter un vote de {{vote.value}} etoile sur vous</div>
+                                    <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                </div>
+                                <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.notifications.type == 'accepte' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_profil', { 'id' : notification.notifications.notificateur.id }) }}">
+
+                                    {% if notification.notifications.notificateur.path == null %}
+                                        {% if notification.notifications.notificateur.sexe == 'H' %}
+                                            <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                                        {% else %}
+                                            <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                                        {% endif %}
+                                    {% else %}
+                                        <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                                    {% endif %}
+                                <div class="pulse border-grey"></div>
+                                <div class="notify pull-left">
+                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a accepter votre demande</div>
+                                    <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                </div>
+                                <div class="clearfix"></div>
+                                </a>
+                            </li>
+                        {% elseif notification.notifications.type == 'refuse' %}
+                            <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+                                <a href="{{ path('show_profil', { 'id' : notification.notifications.notificateur.id }) }}">
+
+                                    {% if notification.notifications.notificateur.path == null %}
+                                        {% if notification.notifications.notificateur.sexe == 'H' %}
+                                            <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                                        {% else %}
+                                            <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                                        {% endif %}
+                                    {% else %}
+                                        <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                                    {% endif %}
+                                <div class="pulse border-grey"></div>
+                                <div class="notify pull-left">
+                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a refuser votre demande</div>
+                                    <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+                                </div>
+                                <div class="clearfix"></div>
+                                </a>
+                            </li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -417,8 +459,8 @@
 
                     </ul>
                 </li>
-                
-                
+
+
                 <li><a href="{{ path('accueil') }}"><span class="navIcon fa fa-calendar-o"></span><span class="navLabel">Évènement</span></a></li>
                 <li><a href="{{ path('accueilClub') }}"><span class="navIcon fa fa-users"></span><span class="navLabel">Club</span></a></li>
                 <li><a href="#"><span class="navIcon fa fa-trophy"></span><span class="navLabel">Compétition</span></a></li>
@@ -538,12 +580,12 @@
                                     </div>
                                     <div class="col-md-10" style="background:white;">
                                         <p>
-                                             {% if message.event != null %}
-                                              {{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
+                                            {% if message.event != null %}
+                                                {{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
                                             {% elseif message.club != null %}
-                                               {{ message.content }} <a href="{{ path('show_club',{'id':message.club})}}" style="color: #C02100">cliquez ici...</a>
+                                                {{ message.content }} <a href="{{ path('show_club',{'id':message.club})}}" style="color: #C02100">cliquez ici...</a>
                                             {% else %}
-                                              {{ message.content }}
+                                                {{ message.content }}
                                             {% endif %}
                                         </p>
                                     </div>
@@ -591,8 +633,7 @@
         $(".ajout_optimus").click(function(){
         $(".liste_optimus").slideToggle(400);
         });
-        });{% set notifications = getNotifications(app.user) %}
-        {% for notification in notifications  %}
+        });{% set notifications = getNotifications(app.user) %}        {% for notification in notifications  %}
                     $('body').on('click', '#notifParticipe{{notification.id}}', function ()
             {
             $.ajax({
@@ -613,10 +654,7 @@
                     }
 
             });
-            });{% endfor %}
-
-
-            {% set messages = getNonSeenMessage(app.user.id) %}
+            });{% endfor %}            {% set messages = getNonSeenMessage(app.user.id) %}
 
             {% for message in messages %}
                         $('body').on('click', '#repondre{{message.id}}', function ()
