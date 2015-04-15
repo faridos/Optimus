@@ -19,6 +19,13 @@
 {{ flashMessage }}
 </div>
 {% endfor %}
+  {% for flashMessage in app.session.flashbag.get('SupprissionCompetition') %}
+<br/>
+<div class="alert alert-success">
+<a class="close" data-dismiss="alert">×</a>
+{{ flashMessage }}
+</div>
+{% endfor %}
 {% for flashMessage in app.session.flashbag.get('ActivationClub') %}
 <br/>
 <div class="alert alert-success">
@@ -53,13 +60,13 @@ les invitations ont été envoyées
 <img src="{{ asset('logoclub.png') }}" class="inline-block imaguss">
 </a>
 {% else %}
-<a href="{{ asset(club.WebPath) }}" data-lightbox-title="photo d'évènement" data-lightbox-gallery="">
+<a href="{{ asset(club.WebPath) }}" data-lightbox-title="photo Club" data-lightbox-gallery="">
 <img src="{{ asset(club.WebPath) }}" class="inline-block imaguss">
 </a>
 {% endif %}
 {% if club.createur == app.user %}
 <div class="priceCap paddus">
-<button href="#uploadphoto" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo">
+<button href="#modifierphotoClub" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo">
 <span class="notifyIcon fa fa-camera-retro"></span>
 </button>
 </div>
@@ -560,13 +567,13 @@ Compétition Supprimer
 </div>
 {% endif %}
 {% for competition in  club.competitions|reverse %}
-    
+    {% if competition.active == 1 %}
 
 <div {% if date(competition.dateFin)<= date() %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-xs-12 {{competition.id}}" >
 <div class="tooltipsContainer avatar imagus col-md-4">
-<a href="{{path('show_event',{'id':competition.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{competition.titre}}">
+<a href="{{path('competition_show',{'id':competition.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{competition.titre}}">
 {% if competition.path == null %}
-<img src="{{ asset('event.png')}}" alt="avatar" ></a>
+<img src="{{ asset('logoCompetition.png')}}" alt="avatar" ></a>
 {% else %}
 <img src="{{ asset(competition.WebPath)}}" alt="avatar" ></a>
 {% endif %}
@@ -574,7 +581,7 @@ Compétition Supprimer
 <div class="col-md-6">
 <div class="info" style="max-width: 100% !important">
 <div ><a href="{{path('show_event',{'id':competition.id})}}" class="name">{{competition.titre}}</a></div>
-<div class="title">Créateur : <span class="address">{{ competition.createur.nom ~' '~competition.createur.prenom }}</span></div>
+<div class="title"><span class="address"> Du {{ competition.dateDebut|date('d-m-Y H:i:s') ~' À '~competition.dateFin|date('d-m-Y H:i:s') }}</span></div>
 <div class="title">Lieu : <span class="address">{{competition.lieu}}</span></div>
 </div>
 </div>
@@ -602,7 +609,7 @@ Cette compétition est depassé
 {% endif %}
 <div class="clearfix"></div>
 </div>
-
+{% endif %}
     {% endfor %}
 <div class="clearfix"></div>
 </ul>
@@ -656,6 +663,13 @@ Cette compétition est depassé
 </div>
 
 <!-----------------------Modal ShowClub--------------------------->
+<div class="modal fade" id="modifierphotoClub" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Club:editPhoto',  { 'id': club.id })) }}
+</div>
+</div>
+
+
 <div class="modal" id="inviteramiclub"   >
 <div class="modal-dialog">
 <div class="modal-content bordusbottomus">
