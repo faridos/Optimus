@@ -142,12 +142,14 @@ class CompetitionController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
         $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
-
+       
         if (!$competition) {
             throw $this->createNotFoundException('Unable to find Competition entity.');
         }
+           $club = $competition->getClub();
+           $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->findOneBy(array('clubad' => $club,'member' =>$user));
          $nbr1 = $competition->getNbrvu();
         $nbr = $nbr1 + 1 ;
         $competition->setNbrvu($nbr);
@@ -155,7 +157,7 @@ class CompetitionController extends Controller
         $em->flush();
         return array(
             'competition'      => $competition,
-            
+            'member' => $member
         );
     }
      /**

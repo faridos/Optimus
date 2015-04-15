@@ -22,7 +22,6 @@ class CompetitionListener {
     public function onCreateParticipationCimpetition(ParticipationCompetitionEvent $event) {
 
         $em = $this->em;
-
         $participation = new ParticipCompetition();
         $participation->setCompetition($event->getCompetition());
         $participation->setParticipant($event->getMember());
