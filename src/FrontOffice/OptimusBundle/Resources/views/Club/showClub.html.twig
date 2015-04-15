@@ -374,14 +374,33 @@ Palmarés Supprimer
 </div>
 
 </div>
+{% set memberOuNon = MemberOuNon(club.id,app.user) %}
+{% if memberOuNon == 1 %}
 <div class="col-md-3 col-sm-2">
 <div class="pc-avatar">
-<a href="#" class="btn btn-icon btn-round btn-o  palmaruss" title="{{ palmares.date |date('Y-m-d')}}" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
-<span ><img src="{{ asset('date.png') }}"></span></a>
+<a href="#" class="btn btn-icon btn-round btn-o  palmaruss" title="{{ palmares.user }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="top">
+<span >
+    {% if app.user.path == null %}
+                    {% if app.user.sexe == 'H' %}
+
+                        <img src="{{ asset('men.png') }}" >
+
+                    {% else %}
+
+                        <img src="{{ asset('women.png') }}">
+
+                    {% endif %}
+                {% else %}
+
+                    <img src="{{ asset( app.user.getWebPath ) }}" >
+                {% endif %}
+    
+</span>
+</a>
 </div>
 
 </div>
-
+{% endif %}
 </div>
 
 <div class="clearfix"></div>
@@ -696,7 +715,11 @@ tous vos  amis sont particip
 <!-------------------------Fin Programmes ------------------------------------>
 
 <!--*********************modal ajouter palmares Club*******************-->
-
+<div class="modal fade" id="ajouterpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+<div class="modal-dialog">
+{{ render (controller('FrontOfficeOptimusBundle:Reward:addRewardClub',  { 'id': club.id })) }}
+</div>
+</div>
 <!--*********************fin modal ajouter palmares Club*******************-->
 <!--*********************modal modifier palmares***************************-->
 {% for palmares in club.reward %}
@@ -1092,15 +1115,5 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 </script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.3/typeahead.min.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	$('input.typeahead').typeahead({
-		name: 'accounts',
-		local: ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen']
-	});
-});  
-</script>
 {% endblock %}
