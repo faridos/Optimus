@@ -740,4 +740,37 @@ class Club {
     {
         return $this->notificationclub;
     }
+
+    /**
+     * Add competitions
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Competition $competitions
+     * @return Club
+     */
+    public function addCompetition(\FrontOffice\OptimusBundle\Entity\Competition $competitions)
+    {
+        $this->competitions[] = $competitions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove competitions
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Competition $competitions
+     */
+    public function removeCompetition(\FrontOffice\OptimusBundle\Entity\Competition $competitions)
+    {
+        $this->competitions->removeElement($competitions);
+    }
+
+    /**
+     * Get competitions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCompetitions()
+    {
+        return $this->competitions;
+    }
 }

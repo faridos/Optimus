@@ -137,7 +137,11 @@ class Competition {
      * @ORM\Column(name="nbrvu", type="integer", nullable=true)
      */
     private $nbrvu;
-
+/**
+     * @var boolean $activer
+     * @ORM\Column(name="activation", type="boolean", nullable=false)
+     */
+    protected $active;
    
 
     /**
@@ -146,7 +150,10 @@ class Competition {
     protected $imagesCompetition;
     
     
-    
+     /**
+    * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\ParticipCompetition", mappedBy="competition")
+    **/
+    protected $particips;
 
     
     public function __construct() {
@@ -259,8 +266,15 @@ class Competition {
     
         return $this;
     }
+    function getActive() {
+        return $this->active;
+    }
 
-    /**
+    function setActive($active) {
+        $this->active = $active;
+    }
+
+        /**
      * Get type
      *
      * @return string 
@@ -610,5 +624,38 @@ class Competition {
     public function getClub()
     {
         return $this->club;
+    }
+
+    /**
+     * Add particips
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips
+     * @return Competition
+     */
+    public function addParticip(\FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips)
+    {
+        $this->particips[] = $particips;
+    
+        return $this;
+    }
+
+    /**
+     * Remove particips
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips
+     */
+    public function removeParticip(\FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips)
+    {
+        $this->particips->removeElement($particips);
+    }
+
+    /**
+     * Get particips
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParticips()
+    {
+        return $this->particips;
     }
 }

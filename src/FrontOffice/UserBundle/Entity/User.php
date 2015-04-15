@@ -261,6 +261,7 @@ class User extends BaseUser {
      */
 
     protected $participations;
+   
 
 
 
@@ -1572,4 +1573,6 @@ class User extends BaseUser {
     {
         return $this->competitions;
     }
+
+    
 }

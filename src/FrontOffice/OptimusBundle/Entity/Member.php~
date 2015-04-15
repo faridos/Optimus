@@ -52,6 +52,13 @@ class Member
      **/
    
    protected $member;
+     /**
+
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\ParticipCompetition", mappedBy="participant", cascade={"persist","remove"})
+
+     */
+
+    protected $particips;
    public function __construct()
     {
         $this->confirmed=false;
