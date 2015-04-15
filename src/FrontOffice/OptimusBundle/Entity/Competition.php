@@ -36,6 +36,12 @@ class Competition {
      * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
      */
     private $createur;
+     /**
+     * @ORM\ManyToOne(targetEntity="Club", inversedBy="competitions")
+     * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
+     **/
+   
+   protected $club;
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -583,5 +589,28 @@ class Competition {
     public function getImagesCompetition()
     {
         return $this->imagesCompetition;
+    }
+
+    /**
+     * Set club
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Club $club
+     * @return Competition
+     */
+    public function setClub(\FrontOffice\OptimusBundle\Entity\Club $club = null)
+    {
+        $this->club = $club;
+    
+        return $this;
+    }
+
+    /**
+     * Get club
+     *
+     * @return \FrontOffice\OptimusBundle\Entity\Club 
+     */
+    public function getClub()
+    {
+        return $this->club;
     }
 }

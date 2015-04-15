@@ -17,6 +17,53 @@ use FrontOffice\OptimusBundle\Form\CompetitionType;
  */
 class CompetitionController extends Controller
 {
+    
+    /**
+     * 
+     *
+     * @Route("/ajouter", name="add-competition")
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function addAction(Request $request) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $competition = new Competition();
+        $competition->setCreateur($user);
+        $event->setDateModification(null);
+        $event->setActive(true);
+        $event->setNbrvu(0);
+        $form = $this->createForm(new EventType, $event);
+        $req = $this->get('request');
+        if ($req->getMethod() == "POST") {
+            $form->bind($req);
+            if ($form->isValid()) {
+                $em->persist($event);
+                $em->flush();
+                
+        $notif = new Notification();
+        $notif->setNotificateur($user);
+        $notif->setType('add');
+        $notif->setEvent($event);
+        $em->persist($notif);
+        $em->flush();
+//add notification + add prticipation + add History
+               // $action = 'add';
+               // $eventhistory = new HistoryEventEvent($user, $event, $action);
+                $eventparticipation = new ParticipationEvent($user, $event);
+               $dispatcher = $this->get('event_dispatcher');
+               // $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_EVENT_REGISTER, $eventhistory);
+              $dispatcher->dispatch(FrontOfficeOptimusEvent::PARICIAPTION_REGISTER, $eventparticipation);
+                $request->getSession()->getFlashBag()->add('AjouterEvent', "Votre évènement a été ajouter avec success.");
+                return $this->redirect($this->generateUrl('show_event', array('id' => $event->getId())));
+            }
+        }
+        return $this->render('FrontOfficeOptimusBundle:Event:new.html.twig', array('form' => $form->createView(), 'user' => $user));
+    }
 
     /**
      * Lists all Competition entities.

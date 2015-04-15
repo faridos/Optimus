@@ -191,4 +191,27 @@ class Photo
     {
         return $this->user;
     }
+
+    /**
+     * Set competition
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Competition $competition
+     * @return Photo
+     */
+    public function setCompetition(\FrontOffice\OptimusBundle\Entity\Competition $competition = null)
+    {
+        $this->competition = $competition;
+    
+        return $this;
+    }
+
+    /**
+     * Get competition
+     *
+     * @return \FrontOffice\OptimusBundle\Entity\Competition 
+     */
+    public function getCompetition()
+    {
+        return $this->competition;
+    }
 }
