@@ -31,11 +31,7 @@ class Competition {
      */
     private $type;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="FrontOffice\UserBundle\Entity\User",inversedBy="competitions")
-     * @ORM\JoinColumn(name="user_id", nullable=false ,onDelete="CASCADE")
-     */
-    private $createur;
+    
      /**
      * @ORM\ManyToOne(targetEntity="Club", inversedBy="competitions")
      * @ORM\JoinColumn(name="club_id", referencedColumnName="id" ,onDelete="CASCADE")
@@ -547,28 +543,7 @@ class Competition {
    
 
     
-    /**
-     * Set createur
-     *
-     * @param \FrontOffice\UserBundle\Entity\User $createur
-     * @return Competition
-     */
-    public function setCreateur(\FrontOffice\UserBundle\Entity\User $createur)
-    {
-        $this->createur = $createur;
     
-        return $this;
-    }
-
-    /**
-     * Get createur
-     *
-     * @return \FrontOffice\UserBundle\Entity\User 
-     */
-    public function getCreateur()
-    {
-        return $this->createur;
-    }
 
     /**
      * Add imagesCompetition

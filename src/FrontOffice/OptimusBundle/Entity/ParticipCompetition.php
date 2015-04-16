@@ -33,6 +33,12 @@ class ParticipCompetition {
      * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
      */
     private $participant;
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\club", inversedBy="particips")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $club;
 
     /**
      * @var \DateTime
@@ -126,5 +132,28 @@ class ParticipCompetition {
     public function getParticipant()
     {
         return $this->participant;
+    }
+
+    /**
+     * Set club
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\club $club
+     * @return ParticipCompetition
+     */
+    public function setClub(\FrontOffice\OptimusBundle\Entity\club $club)
+    {
+        $this->club = $club;
+    
+        return $this;
+    }
+
+    /**
+     * Get club
+     *
+     * @return \FrontOffice\OptimusBundle\Entity\club 
+     */
+    public function getClub()
+    {
+        return $this->club;
     }
 }

@@ -25,6 +25,7 @@ class CompetitionListener {
         $participation = new ParticipCompetition();
         $participation->setCompetition($event->getCompetition());
         $participation->setParticipant($event->getMember());
+        $participation->setClub($event->getMember()->getClubad());
         $participation->setDatePaticipation(new DateTime());
         $em->persist($participation);
         $em->flush();

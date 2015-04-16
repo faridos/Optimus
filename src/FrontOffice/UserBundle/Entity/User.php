@@ -241,14 +241,7 @@ class User extends BaseUser {
      */
 
     protected $evenements;
-     /**
-
-     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Competition", mappedBy="createur", cascade={"persist","remove"})
-
-     */
-
-    protected $competitions;
-
+     
  /**
     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Photo", mappedBy="user", cascade={"persist","remove"})
     **/
@@ -1541,38 +1534,7 @@ class User extends BaseUser {
         return $this->photos;
     }
 
-    /**
-     * Add competitions
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Competition $competitions
-     * @return User
-     */
-    public function addCompetition(\FrontOffice\OptimusBundle\Entity\Competition $competitions)
-    {
-        $this->competitions[] = $competitions;
     
-        return $this;
-    }
-
-    /**
-     * Remove competitions
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Competition $competitions
-     */
-    public function removeCompetition(\FrontOffice\OptimusBundle\Entity\Competition $competitions)
-    {
-        $this->competitions->removeElement($competitions);
-    }
-
-    /**
-     * Get competitions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCompetitions()
-    {
-        return $this->competitions;
-    }
 
     
 }

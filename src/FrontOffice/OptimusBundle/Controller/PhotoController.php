@@ -128,17 +128,52 @@ class PhotoController extends Controller
         );
     }
     /**
+     * Creates a new Photo entity.
+     *
+     * @Route("competition/{id}/photo", name="photoCompetition_create")
+     * @Method("GET|POST")
+     * @Template("FrontOfficeOptimusBundle:Photo:newPhotoCompetition.html.twig")
+     */
+    public function createPhotoCompetitionAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $photo = new Photo();
+        $form = $this->createForm(new PhotoType(), $photo);
+        $form->handleRequest($request);
+        $photo->setCompetition($competition);
+        $photo->setUser($user);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($photo);
+            $em->flush();
+ $request->getSession()->getFlashBag()->add('AjouterPohoto', "Pohoto a été ajouter avec success.");
+           return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
+        }
+        
+        return array(
+            
+            'photo' => $photo,
+            'id' => $id,
+            'form'   => $form->createView(),
+        );
+    }
+    
+    /**
      * Deletes a Album entity.
      *
      * @Route("photo={id}/supprimer", name="photo_delete", options={"expose"=true})
      * @Method("GET|DELETE")
      */
-    public function deleteAction($id) {
+    public function deleteAction(Request $request,$id) {
         $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $photo = $em->getRepository('FrontOfficeOptimusBundle:Photo')->find($id);
         $em->remove($photo);
         $em->flush();
+         $request->getSession()->getFlashBag()->add('SuppPohoto', "Pohoto a été supprimée.");
+
         $response = new Response($id);
          return $response;
     }

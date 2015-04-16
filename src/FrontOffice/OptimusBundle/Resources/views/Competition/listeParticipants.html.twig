@@ -1,0 +1,248 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block body %}
+    <div id="wrapper">
+        <div id="content" class="mob-max" >
+            <div class="col-lg-12"><div class="row mb20">
+                </div>
+                <div id="invitation-envoyées" style="display: none;" class="alert alert-success">
+                    <a class="close" id="closemessag">×</a>
+                    les invitations ont été envoyées 
+                </div>
+                <div class="col-lg-12">
+                    <!--********************************************************-->
+                    <div class="tooltipsContainer panel panel-default dd">
+                        <a href="#ddPanel" class="btn btn-default btn-lg btn-block" data-toggle="collapse"style="background-color:#c02100;color:#fff;border-color:#c02100;" data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="" data-original-title="Cliquez ici pour voir profil de Compétition">
+                            <span class="icon-trophy"></span> Profil Compétition<span class="fa fa-arrow-circle-down pull-right"></span>
+                        </a>
+                        <div id="ddPanel" class="panel-collapse collapse" style="margin-top:-6px;">
+                            <div class="panel-body" style="padding:0px;">
+                                <div class="userWidget-1 manamus" style="margin-bottom:0px;" {% if date(competition.dateFin)<= date() %}style="background-color: #ddd" {% endif %} >
+                                    <div class="avatar" id="main">
+                                        <div class="col-md-4">
+                                            <div class="propWidget-1 logotus tooltipsContainer ">
+                                                <div class="fig salamus">
+                                                    {% if competition.path == null %}
+                                                        <a href="{{ asset('logoCompetition.png') }}" data-lightbox-title="photo compétition" data-lightbox-gallery="">
+                                                            <img src="{{ asset('logoCompetition.png') }}" class="inline-block imaguss">
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="{{ asset(competition.WebPath) }}" data-lightbox-title="compétition" data-lightbox-gallery="">
+                                                            <img src="{{ asset(competition.WebPath) }}" class="inline-block imaguss">
+                                                        </a>
+                                                    {% endif %}
+                                                    {% if competition.club.createur == app.user %}
+                                                        <div class="priceCap paddus">
+                                                            <button href="#modifierphotocompetition" data-toggle="modal" data-placement="top" class="btn btn-icon btn-round btn-green btn-md optimus-logus" title="" data-original-title="modifier la photo"><span class="notifyIcon fa fa-camera-retro"></span></button>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if date(competition.dateFin)> date() %}
+                                            {% if competition.club.createur == app.user %}
+                                                <div class="ops">
+                                                    <a class="btn btn-round btn-default btn-sm" href="#invitermembercompetition" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Inviter</span></a>
+                                                    <a class="btn btn-round btn-default btn-sm" href="{{ path('update-competition',{id: competition.id})}}" ><span class="fa icon-settings state"></span> <span class="state">Gérer</span></a>
+                                                    <a class="btn btn-round btn-default btn-sm" href="#supprimussCompe" data-toggle="modal"><span class="fa icon-trash state"></span> <span class="state">Supprimer</span></a> 
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                        <div class="name osLight profilus namusclubus"><strong>{{competition.titre}}</strong></div>
+                                    </div>
+                                    <div class=" address profilus" style="font-size:18px;"> 
+                                        <div class="row">
+                                            <div class="cardRating col-md-5" style="margin-left: -40px;"> 
+                                            </div>
+                                            <div class="cardRating col-md-6" style="margin-left:-20px;">
+                                                <div class="label labelus label-yellow " >
+                                                    {% if date(competition.dateFin)> date() %}
+                                                        Nombre de participants : <span  id="nbparticip"> 500</span>
+                                                    {% else %}
+                                                        Cette compétition est depassé
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <br><br>
+                                            <div class="title profilus"></div>
+                                            <div class="buttonsWrapper"> 
+                                                <div class="row">
+                                                    <div class="col-md-5 pb20">
+                                                        <div class="pc-about osLight" style="margin-left: -37%;"><div class="title eventus">Créateur :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.club.createur}}</span></div>
+                                                            <div class="title eventus">Date début :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.dateDebut|date("d/m/Y h:i")}}</span></div>
+                                                            <div class="title eventus">Date fin :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.dateFin|date("d/m/Y h:i")}}</span></div>
+                                                            <div class="title eventus">Lieu :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.lieu}}</span></div><br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5" style=" margin-left: -20px;">
+                                                        <div class="pc-title osLight"><div class="title eventus">Type d'évenement : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.type}}</span></div>
+                                                                {% if competition.nbrPlaces %}
+                                                                <div class="title eventus">Nombre de places : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.nbrPlaces}}</span></div>
+                                                                {% endif %}
+                                                                {% if competition.frais %}
+                                                                <div class="title eventus">Frais participation : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.frais}} &euro; </span></div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div></div></div>
+                                            {% if competition.description %}
+                                                <div class="row descriptus">
+                                                    <div class="col-md-12 pb20">
+                                                        <div class="pc-about osLight">
+                                                            <div class="title">Description : <span class="address detaillus"style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.description}}</span></div>
+                                                        </div></div></div>
+                                                    {% endif %}
+                                            <div class="row tooltipsContainer" style="margin-left:-140px">
+                                                <div class="col-md-4 pb20">
+                                                    {% if competition.club.createur != app.user and date(competition.dateFin)> date() %}
+                                                        <div class="pc-about osLight" id="append">
+                                                            <a class="btn btn-green btn-round " href="#"  id="exit_event">
+                                                                <span class="fa fa-plus-circle" data-toggle="tooltip" data-tooltip-class="green" data-placement="top" title="" data-original-title="Participer"></span> <span >Participer</span>                                          
+                                                            </a><a class="loader" id="loaderPart"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="pc-title osLight" id="append2">
+                                                        <div class="buttonsWrapper pb20 ">
+                                                            {% if  date(competition.dateFin)> date()%}
+                                                                {{ socialButtons( {'pinterest' : false,'linkedin': false}) }}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="pc-title osLight">
+                                                        <a href="#" class="btn btn-round btn-o btn-yellow" data-toggle="tooltip" data-tooltip-class="yellow" data-placement="top" title="{{ competition.nbrvu }} ont lu cet événement" data-original-title="Nombre de vue"><span class="fa fa-eye"></span> <strong>{{ competition.nbrvu }}</strong></a>
+                                                        <a href="#" style="color:#c02100"></a>
+                                                        <a href="#" style="color:#c02100"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--********************************************************-->
+                </div>
+                <div class="col-xs-12 ">
+                    <div class="panel panel-default">
+                        <div style="text-align: center" class="panel-heading optimus"> <span class="navLabel">Selectioné des members</span></div>
+                        <div class="panel-body">
+                            <div id="listMember" class="col-md-12">
+                                {% if competition.club.adherents|length == 1%}
+                                    <div  id="memberVide" class="alert alert-danger alert-dismissible fade in" role="alert">
+                                        <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                                        <button type="button" class="close" data-dismiss="alert"></button>
+                                        <strong>Aucune member trouvé dans ce Club</strong> 
+                                    </div>
+                                {% else %}
+                                    {% for member in members %}
+                                        {% if app.user != member.member %}
+                                            {% set participant = ParticipantCompetitionOuNon(competition,member) %}
+                                            <label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
+                                                <input id="listefrirnd{{member.member.id}}" type="checkbox" name="name[]" value="{{ member.member.id }}" {% if participant == 1 %} cheked {% endif %}>
+                                                <span class="fa fa-check" style="margin-top: 3%;"></span>
+                                                {% if member.member.path == null %}
+                                                    {% if member.member.sexe == 'H' %}
+                                                        <img  style="width: 10%;margin-left: 4%;" src="{{ asset('men.png') }}">
+                                                    {% else %}
+                                                        <img  style="width: 10%;margin-left: 4%;" src="{{ asset('women.png') }}">
+                                                    {% endif %}
+                                                {% else %}
+                                                    <img  style="width: 10%;margin-left: 4%;"  src="{{ asset(member.member.WebPath)}}" alt="avatar" ></a>
+                                                {% endif %}
+                                                Pseudo: {{member.member.username}}
+                                                <div style="margin-top: 2%;"></div>
+
+                                            </label>
+                                      {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center">
+                    <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
+                    <a href="{{ path('competition_show',{'id' : competition.id}) }}" class="btn btn-round btn-green">Annuler</a>
+                </div>
+            </div>
+        </div>
+        <div id="map-competition" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
+    </div>
+
+{% endblock %}
+{% block javascriptfils %}
+
+    <script>
+        "use strict";
+        function initialize() {
+            var options = {
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            };
+            var mapevent = new google.maps.Map(document.getElementById('map-competition'), options);
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition(function (position) {
+
+                    var posevent = new google.maps.LatLng(position.coords.latitude,
+                            position.coords.longitude);
+                    var newMarker = new google.maps.Marker({
+                        position: posevent,
+                        map: mapevent,
+                        icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
+                        draggable: false,
+                        animation: google.maps.Animation.DROP
+
+                    });
+                    var myLatLng = new google.maps.LatLng({{competition.lat}}, {{competition.lng}});
+                    var markerevent = new google.maps.Marker({
+                        position: myLatLng,
+                        map: mapevent,
+                        icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-green.png'),
+                        draggable: false,
+                        animation: google.maps.Animation.DROP
+                    });
+                    var directionsDisplay;
+                    var directionsService = new google.maps.DirectionsService()
+                    directionsDisplay = new google.maps.DirectionsRenderer({
+                        polylineOptions: {
+                            strokeColor: "#c02100"
+                        }
+                    });
+                    directionsDisplay.setMap(mapevent);
+                    calcRoute();
+                    function calcRoute() {
+
+                        var request = {
+                            origin: posevent,
+                            destination: myLatLng,
+                            travelMode: google.maps.TravelMode.DRIVING
+                        };
+                        directionsService.route(request, function (response, status) {
+                            if (status == google.maps.DirectionsStatus.OK) {
+                                directionsDisplay.setDirections(response);
+                                directionsDisplay.setOptions({suppressMarkers: true});
+                            }
+                        });
+                    }
+                }, function () {
+                    handleNoGeolocation(true);
+                });
+            } else {
+                handleNoGeolocation(false);
+            }
+
+
+
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+
+{% endblock %}

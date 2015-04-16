@@ -153,6 +153,10 @@ class Club {
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Competition", mappedBy="club")
      * */
     protected $competitions;
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\ParticipCompetition", mappedBy="club")
+     * */
+    protected $particips;
 
     /**
      * @ORM\OneToMany(targetEntity="Program", mappedBy="clubp")
@@ -772,5 +776,38 @@ class Club {
     public function getCompetitions()
     {
         return $this->competitions;
+    }
+
+    /**
+     * Add particips
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips
+     * @return Club
+     */
+    public function addParticip(\FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips)
+    {
+        $this->particips[] = $particips;
+    
+        return $this;
+    }
+
+    /**
+     * Remove particips
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips
+     */
+    public function removeParticip(\FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips)
+    {
+        $this->particips->removeElement($particips);
+    }
+
+    /**
+     * Get particips
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParticips()
+    {
+        return $this->particips;
     }
 }

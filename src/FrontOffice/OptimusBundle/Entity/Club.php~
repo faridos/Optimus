@@ -153,6 +153,10 @@ class Club {
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Competition", mappedBy="club")
      * */
     protected $competitions;
+    /**
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\ParticipCompetition", mappedBy="club")
+     * */
+    protected $particips;
 
     /**
      * @ORM\OneToMany(targetEntity="Program", mappedBy="clubp")
