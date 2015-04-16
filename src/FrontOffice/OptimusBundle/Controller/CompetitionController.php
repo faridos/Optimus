@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Competition;
+use FrontOffice\OptimusBundle\Entity\ParticipCompetition;
 use FrontOffice\OptimusBundle\Form\CompetitionType;
 use FrontOffice\OptimusBundle\Form\CompetitionPhotoType;
 use FrontOffice\OptimusBundle\Event\ParticipationCompetitionEvent;
@@ -58,12 +59,32 @@ class CompetitionController extends Controller
                  $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_COMPETITION_REGISTER, $eventparticipation);
               $request->getSession()->getFlashBag()->add('AjoutCompetition', "Compétition  a été creé avec success.");
 //                return $this->redirect($this->generateUrl('competition_show', array('id' => $competition->getId())));
-                        return $this->render('FrontOfficeOptimusBundle:Competition:InviterMember.html.twig', array('competition' => $competition, 'club' => $club));
+                        return $this->redirect($this->generateUrl('select-member', array('id' => $competition->getId())));
 
             }
         }
         return $this->render('FrontOfficeOptimusBundle:Competition:new.html.twig', array('form' => $form->createView(), 'club' => $club));
     }
+    /**
+     * 
+     *
+     * @Route("/{id}/select", name="select-member")
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function selectMemberAction(Request $request,$id) {
+         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('.');
+        }
+        $em = $this->getDoctrine()->getManager();
+       
+        $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
+        $club = $competition->getClub();
+           return $this->render('FrontOfficeOptimusBundle:Competition:InviterMember.html.twig', array('competition' => $competition, 'club' => $club));
+
+            }
+  
       /**
      * 
      *
@@ -187,7 +208,7 @@ class CompetitionController extends Controller
             return $this->render('FrontOfficeOptimusBundle:Competition:editPhoto.html.twig', array('competition' => $competition, 'form' => $editForm->createView()));
         
     }
-     /**
+    /**
      * 
      *
      * @Route("/{id}/participant", name="setting_competition_participant", options={"expose"=true})
@@ -206,6 +227,48 @@ class CompetitionController extends Controller
         return $this->render('FrontOfficeOptimusBundle:Competition:listeParticipants.html.twig', array('competition' => $competition,'members' => $members));
         
     }
+    /**
+     * 
+     *
+     * @Route("/particip/member", name="particip_member_competition", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+       
+     public function participMemberAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+       
+     //  $name = Array();
+     
+            $name = $request->get("name");
+            
+            $id =  $request->get("competition");
+            $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
+            $club = $competition->getClub();
+          
+            foreach ($name as $member) {
+                 
+                $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($member);
+              $participCompe = $em->getRepository('FrontOfficeOptimusBundle:ParticipCompetition')->findOneBy(array('participant' => $member,'competition' => $competition));
+              if(!$participCompe) 
+              {
+               $participation = new ParticipCompetition();
+        $participation->setCompetition($competition);
+        $participation->setParticipant($member);
+        $participation->setClub($club);
+        $participation->setDatePaticipation(new DateTime());
+        $em->persist($participation);
+        $em->flush();
+         return new Response($participation); 
+              }  
+                return new Response($participCompe); 
+            }
+          
+        
+       
+    }
+
 
   
 }

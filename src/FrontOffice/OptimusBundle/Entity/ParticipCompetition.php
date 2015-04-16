@@ -52,7 +52,9 @@ class ParticipCompetition {
     public function __construct() {
         $this->datePaticipation = new \Datetime();
     }
-
+ public function __toString() {
+        return (string) $this->getId();
+    }
     /**
      * Get id
      *

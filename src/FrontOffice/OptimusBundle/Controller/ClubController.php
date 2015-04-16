@@ -439,7 +439,7 @@ class ClubController extends Controller {
             $name = $request->get("name");
             
             $id =  $request->get("club");
-            $club = $em->getRepository('FrontOfficeOptimusBundle:club')->find($id);
+            $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
             $sender = $club->getCreateur();
           
             foreach ($name as $friend) {

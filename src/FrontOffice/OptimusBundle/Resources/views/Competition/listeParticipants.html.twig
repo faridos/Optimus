@@ -128,7 +128,7 @@
                 </div>
                 <div class="col-xs-12 ">
                     <div class="panel panel-default">
-                        <div style="text-align: center" class="panel-heading optimus"> <span class="navLabel">Selectioné des members</span></div>
+                        <div style="text-align: center" class="panel-heading optimus"> <span class="navLabel">Gerée Participants</span></div>
                         <div class="panel-body">
                             <div id="listMember" class="col-md-12">
                                 {% if competition.club.adherents|length == 1%}
@@ -142,7 +142,7 @@
                                         {% if app.user != member.member %}
                                             {% set participant = ParticipantCompetitionOuNon(competition,member) %}
                                             <label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
-                                                <input id="listefrirnd{{member.member.id}}" type="checkbox" name="name[]" value="{{ member.member.id }}" {% if participant == 1 %} cheked {% endif %}>
+                                                <input id="listefrirnd{{member.member.id}}" type="checkbox" name="name[]" value="{{ member.member.id }}" {% if participant == 1 %} checked {% endif %}>
                                                 <span class="fa fa-check" style="margin-top: 3%;"></span>
                                                 {% if member.member.path == null %}
                                                     {% if member.member.sexe == 'H' %}
@@ -165,7 +165,7 @@
                     </div>
                 </div>
                 <div style="text-align: center">
-                    <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
+                    <a id="participMember" href="#" class="btn btn-round btn-green">Confirmer</a>
                     <a href="{{ path('competition_show',{'id' : competition.id}) }}" class="btn btn-round btn-green">Annuler</a>
                 </div>
             </div>

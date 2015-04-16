@@ -190,7 +190,7 @@ Cette compétition est depassé
 <ul class="tab-pane fade  active in scrollbar" id="participants" >
  {% if app.user == competition.club.createur %}
 <div class="buttonsWrapper col-xs-12">
-<a id="ajoutAlbum" class="btn btn-round btn-default btn-sm rightus" href="{{ path('setting_competition_participant', {'id' : club.id }) }}"><span class="fa icon-settings state"></span> <span class="state">Géerer Participants</span></a><br>
+<a id="ajoutAlbum" class="btn btn-round btn-default btn-sm rightus" href="{{ path('setting_competition_participant', {'id' : competition.id }) }}"><span class="fa icon-settings state"></span> <span class="state">Géerer Participants</span></a><br>
 <br>
 </div>
 {% endif %}

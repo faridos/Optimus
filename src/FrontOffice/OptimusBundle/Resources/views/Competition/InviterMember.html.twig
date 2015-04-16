@@ -126,7 +126,12 @@
                     </div>
                     <!--********************************************************-->
                 </div>
+                                                     
                 <div class="col-xs-12 ">
+                       <div id="participation-terminer" style="display: none;" class="alert alert-success">
+                    <a class="close" id="closemessag">×</a>
+                    Participation effectuée
+                </div>
                     <div class="panel panel-default">
                         <div style="text-align: center" class="panel-heading optimus"> <span class="navLabel">Selectioné des members</span></div>
                         <div class="panel-body">
@@ -140,8 +145,10 @@
                                 {% else %}
                                     {% for member in competition.club.adherents %}
                                         {% if member.member != competition.club.createur %}
+                                              {% set participant = ParticipantCompetitionOuNon(competition,member) %}
+                                              {% if participant == 0 %}
                                             <label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
-                                                <input id="listefrirnd{{member.member.id}}" type="checkbox" name="name[]" value="{{ member.member.id }}">
+                                                <input id="listeMember{{ member.id}}" type="checkbox" name="name[]" value="{{ member.id }}">
                                                 <span class="fa fa-check" style="margin-top: 3%;"></span>
                                                 {% if member.member.path == null %}
                                                     {% if member.member.sexe == 'H' %}
@@ -154,9 +161,13 @@
                                                 {% endif %}
                                                 Pseudo: {{member.member.username}}
                                                 <div style="margin-top: 2%;"></div>
-
                                             </label>
-                                        {% endif %}
+                                                
+                                                {% else %}
+                                                   <div id="members-particip"  class="alert alert-success">
+tous les members sont particip
+</div>{% endif %}
+                                            {% endif %}
                                     {% endfor %}
                                 {% endif %}
                             </div>
@@ -164,7 +175,10 @@
                     </div>
                 </div>
                 <div style="text-align: center">
-                    <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
+                    <a id="participMember" href="#" class="btn btn-round btn-green">Confirmer</a>
+                    <a class="loader" id="loader" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
                     <a href="{{ path('competition_show',{'id' : competition.id}) }}" class="btn btn-round btn-green">Annuler</a>
                 </div>
             </div>
@@ -174,7 +188,54 @@
 
 {% endblock %}
 {% block javascriptfils %}
-
+    <script>
+$("#closemessag").click(function(){
+$("#participation-terminer").hide();
+});
+</script>
+    <script>
+        $("#participMember").click(function(){
+            $("#participMember").hide();
+            $("#loader").show();
+            var competition = {{ competition.id }};
+            var name = new Array;
+            test = 'false';
+            var i = 0;   
+            {% for member in competition.club.adherents %}
+                 {% if member.member != competition.club.createur %}
+                     {% set participant = ParticipantCompetitionOuNon(competition,member) %}
+                                              {% if participant == 0 %}
+                if (document.getElementById('listeMember{{member.id}}').checked){
+                 name[i] = $("#listeMember{{member.id}}").val();
+                 i = i + 1;
+                 test = 'true';
+                 }
+                  {% endif %}
+                 {% endif %}
+               {% endfor %}
+               
+               $.ajax({
+                 type: "POST",
+                 url: Routing.generate('particip_member_competition'),
+                 data: {name:name, competition:competition},
+                 dataType: 'json',
+                 success: function(data) {
+                      $("#participMember").show();
+                      $("#loader").hide();
+                 {% for member in competition.club.adherents %}
+                           {% if member.member != competition.club.createur %}
+                               {% set participant = ParticipantCompetitionOuNon(competition,member) %}
+                                              {% if participant == 0 %}
+                         document.getElementById('listeMember{{member.id}}').checked = false;
+                          {% endif %}
+                              {% endif %}
+                         {% endfor %}
+                             $("#participation-terminer").show();
+}
+});
+});
+          
+        </script>
     <script>
         "use strict";
         function initialize() {
