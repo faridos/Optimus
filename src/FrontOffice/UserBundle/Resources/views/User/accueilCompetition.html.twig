@@ -30,7 +30,6 @@
 
                                     </div></div>{% endif %}
                                     {% for event in events %}
-
                                     <div class="notificationsWidget tooltipsContainer">
                                         <div class="notification">
                                             <div class="time green">
@@ -364,99 +363,62 @@
                                             }
 
 
-                                    {% for event in eventsMap %}
-
-                                                var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
-                                                        var marker_{{ event.id}} = new google.maps.Marker({
+                                    {% for competition in competitions %}
+                                                var myLatLng = new google.maps.LatLng({{competition.lat}}, {{competition.lng}});
+                                                        var marker_{{ competition.id}} = new google.maps.Marker({
                                                         position: myLatLng,
                                                                 map: map,
-                                                                {% if date(event.dateDebut)< date() %}
-                                                                icon: new google.maps.MarkerImage('http://localhost/Optimus/web/ACTIF.png'),
+                                                                {% if date(competition.dateDebut)< date() %}
+                                                                icon: new google.maps.MarkerImage('http://localhost/Optimus/web/ACTIF2.png'),
                                                                 {% else %}
-                                                                icon: new google.maps.MarkerImage('http://localhost/Optimus/web/INACTIF.png'),
+                                                                icon: new google.maps.MarkerImage('http://localhost/Optimus/web/INACTIF2.png'),
                                                                 {% endif %}
                                                                 draggable: false,
                                                                 animation: google.maps.Animation.DROP,
                                                                 title: "Cliquez pour voir aperçu"
                                                         });
-                                                        var image ={% if event.path == null %}
-                                                        "{{ asset('event.png') }}"
+                                                        var image ={% if competition.path == null %}
+                                                        "{{ asset('logoCompetition.png') }}"
                                     {% else %}
-                                                        "{{ asset(event.WebPath)}}"
+                                                        "{{ asset(competition.WebPath)}}"
                                         {% endif %}
-                                                            var contenuInfoBulle_{{ event.id}} =  '<div class="infoW">' +
+                                                            var contenuInfoBulle_{{ competition.id}} =  '<div class="infoW">' +
                                                             '<div class="propImg">' +
                                                             '<img class="closeInfo" src="' + image + '">' +
                                                             '<div class="propBg closeInfo">' +
-                                                            {% if event.frais %}
-                                                            '<div class="propPrice">{{event.frais}} &euro;</div>' +
+                                                            {% if competition.frais %}
+                                                            '<div class="propPrice">{{competition.frais}} &euro;</div>' +
                                                             {% endif %}
-                                                            '<div class="propType">{{event.type}}</div>' +
+                                                            {% if competition.type %}
+                                                            '<div class="propType">{{competition.type}}</div>' +
+                                                            {% endif %}
                                                             '</div>' +
                                                             '</div>' +
                                                             '<div class="paWrapper closeInfo" >' +
-                                                            '<div class="propTitle">{{event.titre}}</div>' +
-                                                            '<div class="propAddress">{{event.lieu}}</div>' +
+                                                            '<div class="propTitle">{{competition.titre}}</div>' +
+                                                            '<div class="propAddress">{{competition.lieu}}</div>' +
                                                             '</div>' +
                                                             '<div class="propRating">' +
-                                                            '{% include 'DCSRatingBundle:Rating:rating.html.twig' with {'id' : "E"~event.id} %}' +
+                                                            '{% include 'DCSRatingBundle:Rating:rating.html.twig' with {'id' : "CO"~competition.id} %}' +
                                                             '</div>' +
                                                             '<div class="clearfix"></div>' +
-                                                            '<div class="infoButtons">' +{% set participantOuNon=ParticipantOuNon(event,user) %}{% if participantOuNon == 0 and date(event.dateFin)>= date() %}
-                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#"  id="exit_eventm{{event.id}}">' +
-                                                            '<span id="eve_map{{event.id}}" class="requestEvent{{event.id}}"></span>' +
-                                                            '</a>' +
-                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% elseif date(event.dateFin)>= date() %}{% if  event.createur.id != user.id %}
-                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#" id="exit_eventm{{event.id}}">' +
-                                                            '<span id="eve_mapp{{event.id}}" class="exitEventm{{event.id}}"></span>' +
-                                                            '</a>' +
-                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% endif %}{% endif %}
-                                                            '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
+                                                            '<div class="infoButtons">' +
+                                                        
+                                                          
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o">Rejoindre</a>' +
+                                                            
+                                                            '<a href="{{ path('competition_show',{'id':competition.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
                                                             '</div>' +
                                                             '</div>';
                                                                    
-                                                            google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
-                                                                $.ajax({
-                                                        url: Routing.generate('marquerEvent', {'id': {{event.id}}}),
-                                                                success: function(data) {
-                                                                    console.log(data.msgmap);
-                                                                    $("#eve_map{{event.id}}").html(data.msgmap);
-                                                              $("#eve_mapp{{event.id}}").html(data.msgmap);
-                                                           
-                                                                }
-                                                        });
-                                                            infobox.setContent(contenuInfoBulle_{{ event.id}});
-                                                                    infobox.open(map, marker_{{ event.id}});
+                                                            google.maps.event.addListener(marker_{{ competition.id}}, 'click', function() {
+                                                            infobox.setContent(contenuInfoBulle_{{ competition.id}});
+                                                                    infobox.open(map, marker_{{ competition.id}});
                                                             });
                                                             $(document).on('click', '.closeInfo', function() {
                                                     infobox.open(null, null);
                                                     });
-                                                            $(document).on('click', '#exit_eventm{{event.id}}', function() {
-                                                        $("#exit_event{{event.id}}").empty();
-                                                    
-                                                        $("#exit_eventm{{event.id}}").empty();
-                                                        $('#loaderPartm_{{event.id}}').show();
-                                                        
-                                                        $("#exit_event{{event.id}}").empty();
-                                                        $('#loaderPart_{{event.id}}').show();
-                                                        $.ajax({
-                                                        url: Routing.generate('exit_event', {'id': {{event.id}}}),
-                                                                success: function(data) {
-                                                                    $("#exit_eventm{{event.id}}").html(data.msgmap);
-                                                                        $("#exit_event{{event.id}}").html(data.msg);
-                                                                        var test = data.etat;
-                                                                        if (test == 0){
-                                                                            $('#loaderPartm_{{event.id}}').hide();
-                                                                $('#appendshare{{event.id}}').hide();
-                                                                $('#loaderPart_{{event.id}}').hide();
-                                                                } else{
-                                                                $('#loaderPartm_{{event.id}}').hide();
-                                                                $('#appendshare{{event.id}}').show();
-                                                                $('#loaderPart_{{event.id}}').hide();
-                                                                }
-                                                                }
-                                                        });
-                                                    });
+                                 
                                                        {% endfor %}
                                            
                                                        var input = (document.getElementById('pac-input2'));
@@ -489,7 +451,7 @@
                                                                 searchBox.setBounds(bounds);
                                                         });
                                                     }, 300);
-                                            })(jQuery);                                                                                        {%for event in events %}
+                                            })(jQuery);  {%for event in events %}
                                                         $('#exit_event{{event.id}}').click(function() {
                                                         $("#exit_eventm{{event.id}}").empty();
                                                         $('#loaderPartm_{{event.id}}').show();

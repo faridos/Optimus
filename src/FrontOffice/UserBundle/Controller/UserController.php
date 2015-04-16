@@ -216,6 +216,91 @@ class UserController extends Controller {
     /**
      *
      *
+     * @Route("/Competitions", name="accueilCompetition")
+     * @Method("GET")
+     * @Template()
+     */
+    public function accueilCompetitionAction() {
+        $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $em = $this->getDoctrine()->getManager();
+
+        $events = $em->getRepository("FrontOfficeOptimusBundle:Event")->findBy(array('active' => 1), array('dateDebut' => 'desc'));
+        //$eventsMap = $em->getRepository("FrontOfficeOptimusBundle:Event")->getEventsMap();
+        $competitions = $em->getRepository("FrontOfficeOptimusBundle:Competition")->findBy(array('active' => 1));
+        $frinds = $em->getRepository("FrontOfficeUserBundle:User")->getFrinds($user->getId());
+        $listevents = array();
+        $k = 0;
+        foreach ($events as $value) {
+            $i = 0;
+
+
+            //test si le user connecté est le créateur
+            foreach ($user->getEvenements() as $evenuser) {
+
+                if ($evenuser->getId() == $value->getId()) {
+                    $i = 1;
+                    $listevents[$k] = $value->getId();
+                    //  $listevents['datecreation'][$k] = $value->getDateCreation();
+                    $k = $k + 1;
+                }
+            }
+            //test si le user connecté est participe dans ce evenement
+            if ($i == 0) {
+                foreach ($user->getParticipations() as $participation) {
+                    if ($participation->getEvent()->getId() == $value->getId()) {
+                        $i = 1;
+                        $listevents[$k] = $value->getId();
+                        // $listevents['datecreation'][$k] = $value->getDateCreation();
+                        $k = $k + 1;
+                    }
+                }
+            }
+
+            if ($i == 0) {
+                foreach ($frinds as $ami) {
+                    //test si l'un des amis de user  connecté est le créateur
+                    foreach ($ami->getEvenements() as $amieven) {
+                        if ($i == 0) {
+                            if ($amieven->getId() == $value->getId()) {
+                                $i = 1;
+                                $listevents[$k] = $value->getId();
+                                //      $listevents['datecreation'][$k] = $value->getDateCreation();
+                                $k = $k + 1;
+                            }
+                        }
+                    }
+
+                    //test si l'un des amis De user connecté est participe dans ce evenement
+                    if ($i == 0) {
+                        foreach ($ami->getParticipations() as $participationami) {
+                            if ($participationami->getEvent()->getId() == $value->getId()) {
+                                $i = 1;
+                                $listevents[$k] = $value->getId();
+                                //       $listevents['datecreation'][$k] = $value->getDateCreation();
+                                $k = $k + 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        $c = 0;
+
+        $eventss = array();
+        foreach ($listevents as $ev) {
+
+
+            $id = $ev;
+            $eventss[$c] = $em->getRepository("FrontOfficeOptimusBundle:Event")->find($id);
+            $c = $c + 1;
+        }
+
+        return $this->render('FrontOfficeUserBundle:User:accueilCompetition.html.twig', array('user' => $user, 'events' => $eventss, 'competitions' => $competitions));
+    }
+    
+    /**
+     *
+     *
      * @Route("{id}/profil", name="show_profil", options={"expose"=true})
      * @Method("GET")
      * @Template()
