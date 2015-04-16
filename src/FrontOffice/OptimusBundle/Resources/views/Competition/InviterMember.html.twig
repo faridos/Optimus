@@ -126,12 +126,9 @@
                     </div>
                     <!--********************************************************-->
                 </div>
-                                                     
+                      <form action="{{ path('particip_member_competition',{'id' : competition.id}) }}" method="post">                               
                 <div class="col-xs-12 ">
-                       <div id="participation-terminer" style="display: none;" class="alert alert-success">
-                    <a class="close" id="closemessag">×</a>
-                    Participation effectuée
-                </div>
+                    
                     <div class="panel panel-default">
                         <div style="text-align: center" class="panel-heading optimus"> <span class="navLabel">Selectioné des members</span></div>
                         <div class="panel-body">
@@ -145,8 +142,6 @@
                                 {% else %}
                                     {% for member in competition.club.adherents %}
                                         {% if member.member != competition.club.createur %}
-                                              {% set participant = ParticipantCompetitionOuNon(competition,member) %}
-                                              {% if participant == 0 %}
                                             <label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
                                                 <input id="listeMember{{ member.id}}" type="checkbox" name="name[]" value="{{ member.id }}">
                                                 <span class="fa fa-check" style="margin-top: 3%;"></span>
@@ -163,24 +158,18 @@
                                                 <div style="margin-top: 2%;"></div>
                                             </label>
                                                 
-                                                {% else %}
-                                                   <div id="members-particip"  class="alert alert-success">
-tous les members sont particip
-</div>{% endif %}
-                                            {% endif %}
+                                       {% endif %}        
                                     {% endfor %}
-                                {% endif %}
+                                {% endif %}  
                             </div>
                         </div>
                     </div>
                 </div>
                 <div style="text-align: center">
-                    <a id="participMember" href="#" class="btn btn-round btn-green">Confirmer</a>
-                    <a class="loader" id="loader" >
-<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
-</a>
-                    <a href="{{ path('competition_show',{'id' : competition.id}) }}" class="btn btn-round btn-green">Annuler</a>
+                    <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
+                    
                 </div>
+                      </form>
             </div>
         </div>
         <div id="map-competition" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>

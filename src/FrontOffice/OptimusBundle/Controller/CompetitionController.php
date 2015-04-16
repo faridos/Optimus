@@ -230,20 +230,20 @@ class CompetitionController extends Controller
     /**
      * 
      *
-     * @Route("/particip/member", name="particip_member_competition", options={"expose"=true})
+     * @Route("/{id}/particip/member", name="particip_member_competition", options={"expose"=true})
      * @Method("GET|POST")
      * @Template()
      */
        
-     public function participMemberAction() {
+     public function participMemberAction($id) {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request');
+        $request = $this->container->get('request');
        
-     //  $name = Array();
-     
-            $name = $request->get("name");
+       
+         $name = $request->request->get('name');
+       
             
-            $id =  $request->get("competition");
+          
             $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
             $club = $competition->getClub();
           
@@ -260,12 +260,12 @@ class CompetitionController extends Controller
         $participation->setDatePaticipation(new DateTime());
         $em->persist($participation);
         $em->flush();
-         return new Response($participation); 
+          return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
               }  
-                return new Response($participCompe); 
+             
             }
-          
-        
+           return $this->render('FrontOfficeOptimusBundle:Competition:InviterMember.html.twig', array('competition' => $competition, 'club' => $club));
+       
        
     }
 
