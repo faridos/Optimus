@@ -12,6 +12,19 @@ class NotificationRepository extends EntityRepository {
                                 . "  from FrontOfficeOptimusBundle:Notification n "
                                 . " where n.entraineur IS NOT NULL "
                                 . " and  n.notificateur != :id "
+                                . " and  n.type = 'entraineur' "
+                                . " ORDER BY n.datenotification DESC"
+                        )
+                        ->setParameter('id', $id);
+                return $qb->getResult();
+    }
+    
+    public function getNotifEntraineur($id) {
+        $em = $this->getEntityManager();
+        $qb = $em->createQuery("select n "
+                                . "  from FrontOfficeOptimusBundle:Notification n "
+                                . " where n.entraineur = :id "
+                                . " and  n.type != 'entraineur' "
                                 . " ORDER BY n.datenotification DESC"
                         )
                         ->setParameter('id', $id);

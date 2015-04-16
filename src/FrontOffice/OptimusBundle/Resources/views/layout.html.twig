@@ -104,7 +104,7 @@
                                     {% endif %}
                                     <div class="pulse border-grey"></div>
                                     <div class="notify pull-left">
-                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a participer dans l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a participé dans l'évènement {{ notification.notifications.event.titre }}</div>
                                         <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -121,7 +121,7 @@
 
                                     <div class="pulse border-grey"></div>
                                     <div class="notify pull-left">
-                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a annuler sa participation de l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a annulé sa participation de l'évènement {{ notification.notifications.event.titre }}</div>
                                         <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -138,7 +138,7 @@
 
                                     <div class="pulse border-grey"></div>
                                     <div class="notify pull-left">
-                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouter une évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouté une évènement {{ notification.notifications.event.titre }}</div>
                                         <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -155,7 +155,7 @@
 
                                     <div class="pulse border-grey"></div>
                                     <div class="notify pull-left">
-                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a modifier l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a modifié l'évènement {{ notification.notifications.event.titre }}</div>
                                         <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -172,7 +172,7 @@
 
                                     <div class="pulse border-grey"></div>
                                     <div class="notify pull-left">
-                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a supprimer l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a supprimé l'évènement {{ notification.notifications.event.titre }}</div>
                                         <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -189,7 +189,7 @@
 
                                     <div class="pulse border-grey"></div>
                                     <div class="notify pull-left">
-                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a commenter l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a commenté l'évènement {{ notification.notifications.event.titre }}</div>
                                         <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -206,7 +206,7 @@
 
                                     <div class="pulse border-grey"></div>
                                     <div class="notify pull-left">
-                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouter une photo dans l'évènement {{ notification.notifications.event.titre }}</div>
+                                        <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouté une photo dans l'évènement {{ notification.notifications.event.titre }}</div>
                                         <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -249,7 +249,7 @@
                                     {% endif %}
                                 <div class="pulse border-grey"></div>
                                 <div class="notify pull-left">
-                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouter un vote de {{vote.value}} etoile sur vous</div>
+                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a ajouté un vote de {{vote.value}} etoile sur vous</div>
                                     <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -270,7 +270,7 @@
                                     {% endif %}
                                 <div class="pulse border-grey"></div>
                                 <div class="notify pull-left">
-                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a accepter votre demande</div>
+                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a accepté votre demande</div>
                                     <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -291,12 +291,54 @@
                                     {% endif %}
                                 <div class="pulse border-grey"></div>
                                 <div class="notify pull-left">
-                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a refuser votre demande</div>
+                                    <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a refusé votre demande</div>
                                     <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
                                 </div>
                                 <div class="clearfix"></div>
                                 </a>
                             </li>
+                           {% elseif notification.notifications.type == 'rejClub' %}
+        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_profil', { 'id' : notification.notifications.notificateur.id }) }}">
+
+                {% if notification.notifications.notificateur.path == null %}
+                    {% if notification.notifications.notificateur.sexe == 'H' %}
+                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                    {% else %}
+                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                    {% endif %}
+                {% else %}
+                    <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} veut rejoindre votre club {{ notification.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notification.notifications.type == 'quiteClub' %}
+        <li id='notifParticipe{{notification.id}}' {% if notification.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_profil', { 'id' : notification.notifications.notificateur.id }) }}">
+
+                {% if notification.notifications.notificateur.path == null %}
+                    {% if notification.notifications.notificateur.sexe == 'H' %}
+                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                    {% else %}
+                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                    {% endif %}
+                {% else %}
+                    <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} a quitté votre club {{ notification.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notification.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
                         {% endif %}
                     {% endfor %}
                 </ul>

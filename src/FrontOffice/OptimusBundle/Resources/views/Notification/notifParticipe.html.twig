@@ -25,7 +25,7 @@
                 {% endif %}
                 <div class="pulse border-grey"></div>
                 <div class="notify pull-left">
-                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a participer dans l'évènement {{ notif.notifications.event.titre }}</div>
+                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a participé dans l'évènement {{ notif.notifications.event.titre }}</div>
                     <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
                 </div>
                 <div class="clearfix"></div>
@@ -42,7 +42,7 @@
 
                 <div class="pulse border-grey"></div>
                 <div class="notify pull-left">
-                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a annuler sa participation de l'évènement {{ notif.notifications.event.titre }}</div>
+                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a annulé sa participation de l'évènement {{ notif.notifications.event.titre }}</div>
                     <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
                 </div>
                 <div class="clearfix"></div>
@@ -59,7 +59,7 @@
 
                 <div class="pulse border-grey"></div>
                 <div class="notify pull-left">
-                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a ajouter une évènement {{ notif.notifications.event.titre }}</div>
+                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a ajouté une évènement {{ notif.notifications.event.titre }}</div>
                     <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
                 </div>
                 <div class="clearfix"></div>
@@ -76,7 +76,7 @@
 
                 <div class="pulse border-grey"></div>
                 <div class="notify pull-left">
-                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a modifier l'évènement {{ notif.notifications.event.titre }}</div>
+                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a modifié l'évènement {{ notif.notifications.event.titre }}</div>
                     <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
                 </div>
                 <div class="clearfix"></div>
@@ -93,7 +93,7 @@
 
                 <div class="pulse border-grey"></div>
                 <div class="notify pull-left">
-                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a supprimer l'évènement {{ notif.notifications.event.titre }}</div>
+                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a supprimé l'évènement {{ notif.notifications.event.titre }}</div>
                     <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
                 </div>
                 <div class="clearfix"></div>
@@ -110,7 +110,7 @@
 
                 <div class="pulse border-grey"></div>
                 <div class="notify pull-left">
-                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a commenter l'évènement {{ notif.notifications.event.titre }}</div>
+                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a commenté l'évènement {{ notif.notifications.event.titre }}</div>
                     <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
                 </div>
                 <div class="clearfix"></div>
@@ -127,7 +127,7 @@
 
                 <div class="pulse border-grey"></div>
                 <div class="notify pull-left">
-                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a ajouter une photo dans l'évènement {{ notif.notifications.event.titre }}</div>
+                    <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a ajouté une photo dans l'évènement {{ notif.notifications.event.titre }}</div>
                     <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
                 </div>
                 <div class="clearfix"></div>
@@ -170,7 +170,7 @@
                 {% endif %}
             <div class="pulse border-grey"></div>
             <div class="notify pull-left">
-                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a ajouter un vote de {{vote.value}} etoile sur vous</div>
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a ajouté un vote de {{vote.value}} etoile sur vous</div>
                 <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
             </div>
             <div class="clearfix"></div>
@@ -191,7 +191,7 @@
                 {% endif %}
             <div class="pulse border-grey"></div>
             <div class="notify pull-left">
-                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a accepter votre demande </div>
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a accepté votre demande </div>
                 <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
             </div>
             <div class="clearfix"></div>
@@ -212,7 +212,49 @@
                 {% endif %}
             <div class="pulse border-grey"></div>
             <div class="notify pull-left">
-                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a refuser votre demande </div>
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a refusé votre demande </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'rejClub' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_profil', { 'id' : notif.notifications.notificateur.id }) }}">
+
+                {% if notif.notifications.notificateur.path == null %}
+                    {% if notif.notifications.notificateur.sexe == 'H' %}
+                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                    {% else %}
+                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                    {% endif %}
+                {% else %}
+                    <img class="avatar pull-left"  src="{{ asset(notif.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} veut rejoindre votre club {{ notif.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'quiteClub' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_profil', { 'id' : notif.notifications.notificateur.id }) }}">
+
+                {% if notif.notifications.notificateur.path == null %}
+                    {% if notif.notifications.notificateur.sexe == 'H' %}
+                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                    {% else %}
+                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                    {% endif %}
+                {% else %}
+                    <img class="avatar pull-left"  src="{{ asset(notif.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a quitté votre club {{ notif.notifications.club.nom }} </div>
                 <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
             </div>
             <div class="clearfix"></div>
@@ -247,25 +289,25 @@
     {% for resultat in res  %}
         {% if resultat.type == "participation" %}
             toastr8.googlePlus({
-                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}"> a participer dans l\'évènement {{ resultat.event.titre }} </a>',
+                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}"> a participé dans l\'évènement {{ resultat.event.titre }} </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
         {% elseif resultat.type == "AnnulerParticip" %}
             toastr8.googlePlus({
-                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a annuler sa participation de l\'évènement {{ resultat.event.titre }} </a>',
+                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a annulé sa participation de l\'évènement {{ resultat.event.titre }} </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
         {% elseif resultat.type == "add" %}
             toastr8.googlePlus({
-                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a ajouter une évènement {{ resultat.event.titre }} </a>',
+                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a ajouté une évènement {{ resultat.event.titre }} </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
         {% elseif resultat.type == "update" %}
             toastr8.googlePlus({
-                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a modifier l\'évènement {{ resultat.event.titre }} </a>',
+                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a modifié l\'évènement {{ resultat.event.titre }} </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
@@ -277,13 +319,13 @@
             });
         {% elseif resultat.type == "comment" %}
             toastr8.googlePlus({
-                message: '<a href="{{ path('show_accueil',{'id': resultat.event.id }) }}">a commenter l\'évènement {{ resultat.event.titre }} </a>',
+                message: '<a href="{{ path('show_accueil',{'id': resultat.event.id }) }}">a commenté l\'évènement {{ resultat.event.titre }} </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
         {% elseif resultat.type == "photo" %}
             toastr8.googlePlus({
-                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a ajouter une photo dans l\'évènement {{ resultat.event.titre }} </a>',
+                message: '<a href="{{ path('show_event', { 'id' : resultat.event.id }) }}">a ajouté une photo dans l\'évènement {{ resultat.event.titre }} </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
@@ -295,19 +337,31 @@
             });
         {% elseif resultat.type == "vote" %}
             toastr8.googlePlus({
-                message: '<a href="#">a ajouter un vote sur vous </a>',
+                message: '<a href="#">a ajouté un vote sur vous </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
         {% elseif resultat.type == "accepte" %}
             toastr8.googlePlus({
-                message: '<a href="#">a accepter votre demande</a>',
+                message: '<a href="#">a accepté votre demande</a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
         {% elseif resultat.type == "refuse" %}
             toastr8.googlePlus({
-                message: '<a href="#">a refuser votre demande</a>',
+                message: '<a href="#">a refusé votre demande</a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/event.png']
+            });
+        {% elseif resultat.type == "rejClub" %}
+            toastr8.googlePlus({
+                message: '<a href="#">veut rejoindre votre club </a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/event.png']
+            });
+        {% elseif resultat.type == "quiteClub" %}
+            toastr8.googlePlus({
+                message: '<a href="#">a quitté votre club </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });

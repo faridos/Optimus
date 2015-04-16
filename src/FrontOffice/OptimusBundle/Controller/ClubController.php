@@ -16,6 +16,7 @@ use FrontOffice\OptimusBundle\Entity\Message;
 use FrontOffice\OptimusBundle\Entity\CompteClub;
 use FrontOffice\OptimusBundle\Entity\Comment;
 use FrontOffice\OptimusBundle\Entity\Palmares;
+use FrontOffice\OptimusBundle\Entity\Notification;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FrontOffice\OptimusBundle\Form\MemberType;
 use FrontOffice\OptimusBundle\Controller\MemberController;
@@ -290,6 +291,15 @@ class ClubController extends Controller {
             $member->setMember($this->container->get('security.context')->getToken()->getUser());
             $em->persist($member);
             $em->flush();
+            
+            $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('rejClub');
+            $notif->setClub($club);
+            $notif->setEntraineur($club->getCreateur());
+            $em->persist($notif);
+            $em->flush();
+            
             $action = 'rejoindre';
             $clubevent = new HistoryClubEvent($user, $club, $action);
             $dispatcher = $this->get('event_dispatcher');
@@ -318,10 +328,19 @@ class ClubController extends Controller {
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->findOneBy(array('member' => $user, 'clubad' => $club));
         if (!empty($member)) {
-           $member->setConfirmed(2);
+            $member->setConfirmed(2);
             $member->setDateExit(new DateTime());
             $em->merge($member);
             $em->flush();
+            
+            $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('quiteClub');
+            $notif->setClub($club);
+            $notif->setEntraineur($club->getCreateur());
+            $em->persist($notif);
+            $em->flush();
+            
             $compte = new CompteClub();
             $compte->setMember($member);
             $compte->setDateExit(new DateTime());
@@ -354,6 +373,15 @@ class ClubController extends Controller {
            $demande->setConfirmed(0);
             $em->merge($demande);
             $em->flush();
+            
+            $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('rejClub');
+            $notif->setClub($club);
+            $notif->setEntraineur($club->getCreateur());
+            $em->persist($notif);
+            $em->flush();
+            
             $compte = new CompteClub();
             $compte->setMember($demande);
             $compte->setDateActive(new DateTime());
@@ -379,6 +407,7 @@ class ClubController extends Controller {
             throw new AccessDeniedException('.');
         }
         $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
         if (!$demande) {
             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
@@ -388,6 +417,14 @@ class ClubController extends Controller {
             $date = new DateTime();
             $demande->setDateconfirm($date);
             $em->persist($demande);
+            $em->flush();
+            
+            $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('AccDemClub');
+            $notif->setClub($demande->getClubad());
+            $notif->setEntraineur($demande->getMember());
+            $em->persist($notif);
             $em->flush();
            return $this->render('FrontOfficeOptimusBundle:Club:return.html.twig', array('demande' => $demande ));
         }

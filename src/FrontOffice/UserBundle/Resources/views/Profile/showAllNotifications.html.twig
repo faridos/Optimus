@@ -46,38 +46,44 @@
                                                         <div class="notify pull-left">
                                                             <a href="{{ path('show_profil',{'id' : notification.notifications.notificateur.id}) }}" class="name">{{ notification.notifications.notificateur.prenom }} {{ notification.notifications.notificateur.nom }} <span class="label label-green visible-xs">02/02/2015 à 14:48</span></a>
                                                             {% if notification.notifications.type == 'participation' %}
-                                                                <div class="message">a participer dans l'évènement {{ notification.notifications.event.titre }}</div>
+                                                                <div class="message">a participé dans l'évènement {{ notification.notifications.event.titre }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'AnnulerParticip' %}
-                                                                <div class="message">a annuler sa participation de l'évènement {{ notification.notifications.event.titre }}</div>
+                                                                <div class="message">a annulé sa participation de l'évènement {{ notification.notifications.event.titre }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'add' %}
-                                                                <div class="message">a ajouter une évènement {{ notification.notifications.event.titre }}</div>
+                                                                <div class="message">a ajouté une évènement {{ notification.notifications.event.titre }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'update' %}
                                                                 <div class="message">a modifier l'évènement {{ notification.notifications.event.titre }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'delete' %}
-                                                                <div class="message">a supprimer l'évènement {{ notification.notifications.event.titre }}</div>
+                                                                <div class="message">a supprimé l'évènement {{ notification.notifications.event.titre }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'comment' %}
-                                                                <div class="message">a commenter l'évènement {{ notification.notifications.event.titre }}</div>
+                                                                <div class="message">a commenté l'évènement {{ notification.notifications.event.titre }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'photo' %}
-                                                                <div class="message">a ajouter une photo dans l'évènement {{ notification.notifications.event.titre }}</div>
+                                                                <div class="message">a ajouté une photo dans l'évènement {{ notification.notifications.event.titre }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'entraineur' %}
                                                                 <div class="message">un nouveau entraineur inscrit</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'vote' %}
                                                                 {% set vote = getVote(notification.notifications.idVote, notification.notifications.notificateur.id) %}
-                                                                <div class="message">a ajouter un vote de {{vote.value}} etoile sur vous</div>
+                                                                <div class="message">a ajouté un vote de {{vote.value}} etoile sur vous</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'accepte' %}
-                                                                <div class="message">a accepter votre demande</div>
+                                                                <div class="message">a accepté votre demande</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'refuse' %}
-                                                                <div class="message">a refuser votre demande</div>
+                                                                <div class="message">a refusé votre demande</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'rejClub' %}
+                                                                <div class="message">veut rejoindre votre club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'quiteClub' %}
+                                                                <div class="message">a quitté votre club {{ notification.notifications.club.nom }}</div>
                                                             {% endif %}
                                                         </div>
                                                         <div class="clearfix">

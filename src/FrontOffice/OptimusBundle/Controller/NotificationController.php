@@ -37,7 +37,7 @@ class NotificationController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $amis = $em->getRepository('FrontOfficeUserBundle:User')->getFrinds($user->getId());
-         
+
         $eventjours = $em->getRepository('FrontOfficeOptimusBundle:Event')->getEventJour();
 
         foreach ($eventjours as $eventjour) {
@@ -48,31 +48,30 @@ class NotificationController extends Controller {
             }
         }
 
-       
+
         if ($user->getConfigNotif()->getEvent()) {
             foreach ($amis as $ami) {
                 $isAmi = $em->getRepository('FrontOfficeUserBundle:User')->getIsAmis($user->getId(), $ami->getId());
                 foreach ($ami->getNotificateur() as $notif) {
-                    if ($notif->getType()== "add" && $notif->getDatenotification() > $isAmi[0]->getConfirmedAt() && $notif->getDatenotification() > $user->getConfigNotif()->getDateModifEvent()) {
+                    if ($notif->getType() == "add" && $notif->getDatenotification() > $isAmi[0]->getConfirmedAt() && $notif->getDatenotification() > $user->getConfigNotif()->getDateModifEvent()) {
                         $i = 0;
-                        
-                            foreach ($user->getNotificationseen() as $notifSeen) {
-                                if ($notifSeen->getNotifications()->getId() == $notif->getId()) {
-                                    $i = 1;
-                                }
-                            }
-                            if ($i == 0) {
 
-                                $res[$c] = $notif;
-                                $c++;
+                        foreach ($user->getNotificationseen() as $notifSeen) {
+                            if ($notifSeen->getNotifications()->getId() == $notif->getId()) {
+                                $i = 1;
                             }
-                        
+                        }
+                        if ($i == 0) {
+
+                            $res[$c] = $notif;
+                            $c++;
+                        }
                     }
                 }
             }
 
             foreach ($user->getParticipations() as $participe) {
-                 
+
                 foreach ($participe->getEvent()->getNotificationEvent() as $notif2) {
                     if ($user->getId() != $notif2->getNotificateur()->getId() && in_array($notif2->getType(), $tab1) && $notif2->getDatenotification() > $participe->getDatePaticipation() && $notif2->getDatenotification() > $user->getConfigNotif()->getDateModifEvent()) {
                         $i = 0;
@@ -89,60 +88,78 @@ class NotificationController extends Controller {
                     }
                 }
             }
-            
         }
-     
+
         if ($user->getConfigNotif()->getEntraineur()) {
             $notificationentrain = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getlisteEntraineur($user->getId());
             foreach ($notificationentrain as $val) {
-                
-                if($user->getcreatedAt() < $val->getEntraineur()->getcreatedAt() && $val->getEntraineur()->getId() != $user->getId() && $notif->getDatenotification() > $user->getConfigNotif()->getDateModifEntraineur() ){
-                $i = 0;
-                foreach ($user->getNotificationseen() as $notifSeen) {
-                    if ($notifSeen->getNotifications()->getId() == $val->getId()) {
-                        $i = 1;
-                    }
-                }
 
-                if ($i == 0) {
-                  
-                    $res[$c] = $val;
-                    $c++;
-                }
+                if ($user->getcreatedAt() < $val->getEntraineur()->getcreatedAt() && $val->getEntraineur()->getId() != $user->getId() && $notif->getDatenotification() > $user->getConfigNotif()->getDateModifEntraineur()) {
+                    $i = 0;
+                    foreach ($user->getNotificationseen() as $notifSeen) {
+                        if ($notifSeen->getNotifications()->getId() == $val->getId()) {
+                            $i = 1;
+                        }
+                    }
+
+                    if ($i == 0) {
+
+                        $res[$c] = $val;
+                        $c++;
+                    }
                 }
             }
         }
-        
-        $notificationstars = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findBy(array("idVote"=>"U".$user->getId()));
+
+        $notificationstars = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findBy(array("idVote" => "U" . $user->getId()));
         foreach ($notificationstars as $notifstar) {
             $i = 0;
             foreach ($user->getNotificationseen() as $notifSeen) {
                 if ($notifSeen->getNotifications()->getId() == $notifstar->getId()) {
-                        $i = 1;
+                    $i = 1;
                 }
             }
             if ($i == 0) {
-                    $res[$c] = $notifstar;
-                    $c++;
-                }
+                $res[$c] = $notifstar;
+                $c++;
+            }
         }
-        
-        $notifAcceptRefuse = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findBy(array("entraineur"=>$user));
+
+        $notifAcceptRefuse = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findBy(array("entraineur" => $user), array("datenotification" => 'DESC'));
         foreach ($notifAcceptRefuse as $notifAR) {
-            if ( $notifAR->getType() == "accepte" || $notifAR->getType() == "refuse" ) {
-            $i = 0;
-            foreach ($user->getNotificationseen() as $notifSeen) {
-                if ($notifSeen->getNotifications()->getId() == $notifAR->getId()) {
+            if ($notifAR->getType() == "accepte" || $notifAR->getType() == "refuse") {
+                $i = 0;
+                foreach ($user->getNotificationseen() as $notifSeen) {
+                    if ($notifSeen->getNotifications()->getId() == $notifAR->getId()) {
                         $i = 1;
+                    }
                 }
-            }
-            if ($i == 0) {
+                if ($i == 0) {
                     $res[$c] = $notifAR;
                     $c++;
                 }
             }
         }
-       
+
+        if ($user->getConfigNotif()->getClub()) {
+            $notifClubRejs = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotifEntraineur($user->getId());
+            var_dump($notifClubRejs);die();
+            foreach ($notifClubRejs as $notifClubRej) {
+                $i = 0;
+                foreach ($user->getNotificationseen() as $notifSeen) {
+                    if ($notifSeen->getNotifications()->getId() == $notifClubRej->getId()) {
+                        $i = 1;
+                    }
+                }
+                if ($i == 0) {
+                    $res[$c] = $notifClubRej;
+                    $c++;
+                }
+            }
+
+        }
+
+
         foreach ($res as $val) {
             $notifseen = new NotificationSeen();
             $notifseen->setUsers($user);

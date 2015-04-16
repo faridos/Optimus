@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use FrontOffice\OptimusBundle\Entity\Notification;
 use FrontOffice\OptimusBundle\Entity\Member;
 use FrontOffice\OptimusBundle\Entity\CompteClub;
 use FrontOffice\OptimusBundle\Form\MemberType;
@@ -82,9 +83,20 @@ class MemberController extends Controller {
     public function deleteDemandeAction($id) {
         $em = $this->getDoctrine()->getManager();
         $demande = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
+        $user = $this->container->get('security.context')->getToken()->getUser();
         if (!empty($demande)) {
+            
+            $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('RefDemClub');
+            $notif->setClub($demande->getClubad());
+            $notif->setEntraineur($demande->getMember());
+            $em->persist($notif);
+            $em->flush();
+            
             $em->remove($demande);
             $em->flush();
+            
             $response = new Response($id);
             return $response;
         }
@@ -104,6 +116,7 @@ class MemberController extends Controller {
             $member->setConfirmed(2);
             $em->merge($member);
             $em->flush();
+            
             $compte = new CompteClub();
             $compte->setMember($member);
             $compte->setDateExit(new DateTime());
@@ -111,6 +124,16 @@ class MemberController extends Controller {
              $compte->setClub($member->getClubad());
             $em->persist($compte);
             $em->flush();
+            
+            $user = $this->container->get('security.context')->getToken()->getUser();
+            $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('DeleteMemClub');
+            $notif->setClub($member->getClubad());
+            $notif->setEntraineur($member->getMember());
+            $em->persist($notif);
+            $em->flush();
+            
             $response = new Response($id);
             return $response;
             
