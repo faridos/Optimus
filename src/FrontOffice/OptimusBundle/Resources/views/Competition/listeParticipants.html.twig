@@ -126,6 +126,17 @@
                     </div>
                     <!--********************************************************-->
                 </div>
+                                                        <div class="col-xs-12 ">
+                {% for flashMessage in app.session.flashbag.get('SelectionMember') %}
+                    <br/>
+                    <div class="alert alert-success">
+                        <a class="close" data-dismiss="alert">×</a>
+                        {{ flashMessage }}
+                    </div>
+                      
+                {% endfor %}
+                 </div>
+               <form action="{{ path('setting_competition_participant',{'id' : competition.id,'idclub' : competition.club.id}) }}" method="post">
                 <div class="col-xs-12 ">
                     <div class="panel panel-default">
                         <div style="text-align: center" class="panel-heading optimus"> <span class="navLabel">Gerée Participants</span></div>
@@ -138,11 +149,20 @@
                                         <strong>Aucune member trouvé dans ce Club</strong> 
                                     </div>
                                 {% else %}
-                                    {% for member in members %}
-                                        {% if app.user != member.member %}
-                                            {% set participant = ParticipantCompetitionOuNon(competition,member) %}
+                                    {% for member in competition.club.adherents %}
+                                        {%set i = 0 %}
+                                            {% if member.member != competition.club.createur %}
+                                              {% for participation in competition.particips %}
+                                                  {%if participation.club == competition.club %}
+                                                 {% for participant in  participation.partclubcomp %}
+                                                     {%if participant.participant == member %}
+                                                         {%set i = 1 %}
+                                                         {%endif %}
+                                                     {%endfor %}
+                                                       {%endif %}
+                                                         {%endfor %}
                                             <label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
-                                                <input id="listefrirnd{{member.member.id}}" type="checkbox" name="name[]" value="{{ member.member.id }}" {% if participant == 1 %} checked {% endif %}>
+                                                <input id="listefrirnd{{member.id}}" type="checkbox" name="name[]" value="{{ member.id }}" {%if i == 1 %} checked {%endif %} >
                                                 <span class="fa fa-check" style="margin-top: 3%;"></span>
                                                 {% if member.member.path == null %}
                                                     {% if member.member.sexe == 'H' %}
@@ -157,17 +177,19 @@
                                                 <div style="margin-top: 2%;"></div>
 
                                             </label>
-                                      {% endif %}
+                                               {%endif %}
                                     {% endfor %}
                                 {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div style="text-align: center">
-                    <a id="participMember" href="#" class="btn btn-round btn-green">Confirmer</a>
-                    <a href="{{ path('competition_show',{'id' : competition.id}) }}" class="btn btn-round btn-green">Annuler</a>
-                </div>
+               <div style="text-align: center">
+                        <button type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</button>
+                         <a href="#" class="btn btn-round btn-green">Annuler</a>
+
+                    </div>
+                 </form>
             </div>
         </div>
         <div id="map-competition" style="height: 100%" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>

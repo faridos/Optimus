@@ -5,6 +5,7 @@ namespace FrontOffice\OptimusBundle\EventListener;
 use FrontOffice\OptimusBundle\Event\ParticipationCompetitionEvent;
 
 use FrontOffice\OptimusBundle\Entity\ParticipCompetition;
+use FrontOffice\OptimusBundle\Entity\PartClubCompetition;
 
 use \DateTime;
 
@@ -24,12 +25,15 @@ class CompetitionListener {
         $em = $this->em;
         $participation = new ParticipCompetition();
         $participation->setCompetition($event->getCompetition());
-        $participation->setParticipant($event->getMember());
         $participation->setClub($event->getMember()->getClubad());
         $participation->setDatePaticipation(new DateTime());
         $em->persist($participation);
         $em->flush();
-        
+        $partclub = new PartClubCompetition();
+        $partclub->setParticips($participation);
+        $partclub->setParticipant($event->getMember());
+        $em->persist($partclub);
+        $em->flush();
     }
 
    

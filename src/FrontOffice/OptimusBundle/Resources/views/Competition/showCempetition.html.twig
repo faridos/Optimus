@@ -112,7 +112,7 @@ Cette compétition est depassé
 <div class="row">
 <div class="col-md-5 pb20">
 
-<div class="pc-about osLight" style="margin-left: -37%;"><div class="title eventus">Créateur :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.club.createur}}</span></div>
+    <div class="pc-about osLight" style="margin-left: -37%;"><div class="title eventus">Club :<a href="{{ path('show_club',{'id' : competition.club.id}) }}"><span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.club}}</span></a></div>
 <div class="title eventus">Date début :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.dateDebut|date("d/m/Y h:i")}}</span></div>
 <div class="title eventus">Date fin :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.dateFin|date("d/m/Y h:i")}}</span></div>
 <div class="title eventus">Lieu :<span class="address detaillus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.lieu}}</span></div><br>
@@ -122,9 +122,7 @@ Cette compétition est depassé
 </div>
 <div class="col-md-5" style=" margin-left: -20px;">
 <div class="pc-title osLight"><div class="title eventus">Type d'évenement : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.type}}</span></div>
-{% if competition.nbrPlaces %}
-<div class="title eventus">Nombre de places : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.nbrPlaces}}</span></div>
-{% endif %}
+
 {% if competition.frais %}
 <div class="title eventus">Frais participation : <span class="address leftus" style="font-size: 13px !important;font-weight: bold !important; color: #000 !important;">{{competition.frais}} &euro; </span></div>
 {% endif %}
@@ -181,24 +179,26 @@ Cette compétition est depassé
 <div class="tabsContainer">
 <ul class="nav nav-tabs nav-justified" role="tablist">
 <li class="active"><a href="#participants" role="tab" data-toggle="tab"><span class="icon-trophy"></span> Participants</a></li>
-<li class=""><a href="#clubs" role="tab" data-toggle="tab"><span class="icon-trophy"></span> clubs</a></li>
+<li class=""><a href="#clubs" role="tab" data-toggle="tab"><span class="navIcon fa fa-users"></span> Clubs</a></li>
 <li class=""><a href="#photos" role="tab" data-toggle="tab"><span class="icon-doc"></span> Photos</a></li>
 <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
 </ul>
 <div class="tab-content">
 
 <ul class="tab-pane fade  active in scrollbar" id="participants" >
- {% if app.user == competition.club.createur %}
+ {% if app.user == competition.club.createur and date(competition.dateFin)> date() %}
 <div class="buttonsWrapper col-xs-12">
-<a id="ajoutAlbum" class="btn btn-round btn-default btn-sm rightus" href="{{ path('setting_competition_participant', {'id' : competition.id }) }}"><span class="fa icon-settings state"></span> <span class="state">Géerer Participants</span></a><br>
+<a id="gereé" class="btn btn-round btn-default btn-sm rightus" href="{{ path('competition_participant', {'id' : competition.id ,'idclub' : competition.club.id}) }}"><span class="fa icon-settings state"></span> <span class="state">Gérer Participants</span></a><br>
 <br>
 </div>
 {% endif %}
 <br/>
 <div class="row" id="blockparticip">
-{% for participant in competition.particips %}
-{% if club == participant.club %}
-    
+{% for participation in competition.particips %}
+ {% if club == participation.club %}
+     
+   {% for participant in  participation.partclubcomp %}
+      
 <div class="col-md-4" id="particip{{participant.participant.id}}">
 <div class="tooltipsContainer agent notifyList">
 <a href="{{ path('show_profil',{'id': participant.participant.member.id}) }}" class=" btn btn-round agent-avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="bottom" title="{{participant.participant.member.prenom}} {{participant.participant.member.nom}}">
@@ -219,18 +219,50 @@ Cette compétition est depassé
 </div><br>
 </div>
 </div>
+{% endfor %}
 
 {% endif %}
 {% endfor %}
+    
 </div>
 
 <div class="clearfix"></div>
 
 </ul>
     <ul class="tab-pane fade scrollbar" id="clubs"  >
+        
  
   <div class="row">
+{% for paticip in competition.particips %}
+   
+    
+    
+    <div class="userWidget-2 tooltipsContainer col-md-12 {{paticip.club.id}}" >
+<div class="tooltipsContainer avatar imagus">
+<a href="{{path('show_club',{'id':paticip.club.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{ paticip.club.nom }}">
+{% if paticip.club.path == null %}
 
+<img src="{{ asset('logoclub.png') }}" alt="avatar" ></a>
+{% else %}
+<img src="{{ asset(paticip.club.WebPath) }}" alt="avatar" ></a>
+{% endif %}
+</div>
+<div class="col-md-7">
+<div class="info" style="max-width: 100% !important;">
+<div class="name">{{ paticip.club.nom}}</div>
+<div class="title">Créateur du club : <span class="address">{{ paticip.club.createur.nom ~' '~paticip.club.createur.prenom }}</span></div>
+<div class="title">Adresse du club : <span class="address">{{ paticip.club.adresse}}</span></div>
+<div class="title">Frais d'abonnement : <span class="address">{{ paticip.club.fraisAdhesion}}£</span></div>
+</div>
+</div>
+<div  style="margin-top: 1%" align="right">
+<a href="#plusInfoClub{{paticip.club.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des members"><span class="icon-users"></span></a>
+</div>
+<div class="clearfix"></div>
+</div>
+
+
+{% endfor %}
 <br>
 
 </div>
@@ -238,69 +270,7 @@ Cette compétition est depassé
 </ul>
 <ul class="tab-pane fade  scrollbar" id="photos" >
     <div class="row" >
-     {% set participant=ParticipantCompetitionOuNon(competition,member) %}
-{% if participant == 1 %}
-    <div id="listephotoCompetition" >
-<div class="buttonsWrapper col-xs-12">
-<a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
-</div>
-<div class="buttonsWrapper col-xs-12">
-{% for photo in competition.imagesCompetition %}
-    
-<div class="col-sm-4" id="{{ photo.id }}">
-<div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
-<div class="fig " id="main">
-<a href="{{ asset(photo.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
-<img src="{{ asset(photo.WebPath) }}" />
-</a>
-{% if app.user == photo.user %}
-<div class="priceCap paddus">
-<button href="#suppritus{{photo.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
-</div>
-{% endif %}
-<div class="figCap">
-<div class="address">Cliquez pour agrandir l'image</div>
-</div>
-</div>
-</div>
-</div>
-<div class="modal fade" id="suppritus{{photo.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content bordusbottomus">
-<div class="modal-header bordustopus">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<h4 class="modal-title" id="contactLabel">Suppression </h4>
-</div>
-<form class="contactForm">
-<div class="modal-body">
-<p>Souhaitez vous vraiment supprimer cette photo ?</p>
-</div>
-<div class="modal-footer">
-<button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
-<a id="supprimerPhoto{{photo.id}}" href="#" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
-<a class="loader" id="loaderSuppPhoto{{photo.id}}" >
-<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
- </a>
-</div>
-</form>
-</div>
-</div>
-</div>
-{% endfor %}
-</div>
-<div class="modal fade" id="uploadphoto" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
-<div class="modal-dialog">
-{{ render (controller('FrontOfficeOptimusBundle:Photo:createPhotoCompetition',  {'id': competition.id })) }}
-</div>
-</div>
-</div>
-{% else %}
-    <div  id="photopriveeA" class="alert alert-danger alert-dismissible fade in" role="alert">
-<div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
-<button type="button" class="close" data-dismiss="alert"></button>
-<strong>cette catégorie reservée pour les participants</strong> 
-</div>
-{% endif %}
+     
 
 </div>
 </ul>
