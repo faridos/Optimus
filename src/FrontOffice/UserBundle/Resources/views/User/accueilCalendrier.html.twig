@@ -1,0 +1,579 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+{% block body %}
+    <div id="wrapper">
+
+        <div id="content" class="" >
+
+            <div id="content2" class="col-lg-12"><div class="row mb20">
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="notificationsWidget">
+                        <div class="singleTop whiteBg">
+                            {% set amis = getFriends(user.id)%}
+                            {% if events is empty %}
+                                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                    <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                                    <button type="button" class="close" data-dismiss="alert"></button>
+                                    <div align="center">    <strong >Notification Optimus</strong> </div>
+                                </div> <div class="row">
+                                    <img  style="  margin-top: -20px;width: 100%;"src="{{ asset('template/images/bienvenue.png') }}"/>
+                                    <div class="address" align="center">
+                                        <h4><span>Nous ne trouvons aucun élément à afficher
+                                                pour le moment.
+                                                Si vous êtes un nouveau membre d'Optimus ou
+                                                si vous n'avez pas encore eu d'activités, alors
+                                                il est temps de commencer l'aventure!</span></h4>
+
+                                    </div></div>{% endif %}
+                                    {% for event in events %}
+
+                                    <div class="notificationsWidget tooltipsContainer">
+                                        <div class="notification">
+                                            <div class="time green">
+                                                <a href="{{ path('show_event', { 'id' : event.id }) }}" class="timeBody hidden-xs" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="Voir profil d'évènement" {% if date(event.dateFin) < date() %} style="background-color: rgba(192, 33, 0, 0.2); color: #000;"{% endif %}>{{ event.titre }}</a>
+                                                <div class="timeArrow hidden-xs"><span class="fa fa-caret-right"></span></div>
+                                                <div class="indicator"><span class="fa fa-circle-o"></span></div>
+                                                <div class="notifyArrow"><span class="fa fa-caret-left"></span></div>
+                                            </div>
+                                            <div class="notifyContent tooltipsContainer">
+                                                <div class=" notifyBody">
+                                                    <a href="{{ path('show_profil', {'id' : event.createur.id}) }}">
+
+                                                        {% if event.createur.path == null %}
+                                                            {% if event.createur.sexe == 'H' %}
+                                                                <img class="avatar pull-left " src="{{ asset('men.png') }}" alt="avatar" data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="Profil">
+                                                            {% else %}
+                                                                <img class="avatar pull-left" src="{{ asset('women.png') }}"  data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="Profil">
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <img class="avatar pull-left" src="{{ asset(event.createur.WebPath)}}" alt="avatar"  data-toggle="tooltip" data-tooltip-class="red" data-placement="top" title="Profil">
+                                                        {% endif %}
+                                                    </a>
+                                                    <div class="notify pull-left">
+                                                        <div class="name">{{ event.createur.prenom }} {{ event.createur.nom }}<span class="label label-green visible-xs">Nom d'évenement</span></div>
+                                                        <div class="info">
+                                                            <div class="address">{{ event.lieu }}</div>
+                                                            <div class="title">Date début :{{ event.dateDebut|date('d/m/Y à H:i')}}</div><div class="title">Date de fin :{{ event.dateFin|date('d/m/Y à H:i') }}</div>
+                                                            {% if event.nbrPlaces %}
+                                                                <div class="title">Nombre de places: {{ event.nbrPlaces }} </div>
+                                                            {% endif %}
+                                                            {% if event.frais %}
+                                                                <div class="title">Prix: {{ event.frais }} &euro;</div>
+                                                            {% endif %}
+
+                                                        </div>
+                                                        <br/>
+                                                        <div class="buttonsWrapper pb20" id="append{{event.id}}">
+
+                                                            {% set participantOuNon=ParticipantOuNon(event,user) %}
+                                                            {% if participantOuNon == 0 and date(event.dateFin)> date() %}
+                                                                <a class="btn btn-green btn-round eventus" href="#"  id="exit_event{{event.id}}">
+                                                                    <span class="fa icon-action-redo "></span> <span class="requestEvent{{event.id}}">Participer</span>                                          
+                                                                </a>
+                                                                <a class="loader" id="loaderPart_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
+                                                                {% elseif date(event.dateFin)>= date() %}
+                                                                    {% if  event.createur.id != user.id %}
+                                                                    <a class="btn btn-green btn-round eventus" href="#" id="exit_event{{event.id}}">
+                                                                        <span class="fa icon-action-redo "></span> <span class="exitEvent{{event.id}}">Annuler participation</span>                                          
+                                                                    </a>
+                                                                    <a class="loader" id="loaderPart_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>
+                                                                    {% endif %}
+
+                                                                <div id="appendshare{{event.id}}" class="buttonsWrapper pb20 buttonleftus" >{{ socialButtons( {'pinterest' : false,'linkedin': false}) }}</div>
+
+                                                            {% endif %}
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <ul id="content_msg_{{event.id}}" class="commentsWidget scrollbar">
+                                        <div id="content2_msg_{{event.id}}" class="raw">
+                                            {%for key, comment in event.eventcomments|reverse %}
+                                                {% if key < 5 %}
+                                                    <div class="comment">
+                                                        <div class="commentAvatar">
+                                                            <a href="{{ path('show_profil', {'id' : comment.commenteur.id}) }}">
+                                                                {% if comment.commenteur.path == null %}
+                                                                    {% if comment.commenteur.sexe == 'H' %}
+                                                                        <img class="avatar" src="{{ asset('men.png') }}" alt="avatar">
+                                                                    {% else %}
+                                                                        <img class="avatar" src="{{ asset('women.png') }}" alt="avatar">
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    <img class="avatar" src="{{ asset(comment.commenteur.WebPath)}}" alt="avatar">
+                                                                {% endif %}
+                                                            </a>
+
+                                                            <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
+                                                        </div>
+                                                        <div class="commentContent">
+                                                            <div class="commentName">{{ comment.commenteur.prenom }} {{ comment.commenteur.nom }}</div>
+                                                            <div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> {{ comment.getDureeComment()}}</div><br>
+                                                            <div class="commentBody">{{ comment.Commentaire}}</div>
+
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        </div>
+
+                                    </ul>
+
+                                    <div class="commentsWidgetForm">
+                                        <div class="cfAvatar">
+
+                                            {% if app.user.path == null %}
+                                                {% if app.user.sexe == 'H' %}
+                                                    <img class="avatar" src="{{ asset('men.png') }}" alt="avatar">
+                                                {% else %}
+                                                    <img class="avatar" src="{{ asset('women.png') }}" alt="avatar">
+                                                {% endif %}
+                                            {% else %}
+                                                <img class="avatar" src="{{asset(app.user.WebPath)}}" alt="avatar">
+                                            {% endif %}
+
+                                        </div>
+                                        <div class="commentsForm">
+                                            <div class="input-group">
+                                                <input id="input_{{event.id}}" type="text" class="form-control" placeholder="Ajoutez un commentaire...">
+                                                <span class="input-group-btn">
+                                                    <a id="btnmsg_{{event.id}}" class="btn round btn-green">Commenter</a>
+                                                    <img id="btnlod_{{event.id}}" style="display: none;" src="{{asset('template/images/ajax-loader-comment.gif') }}">
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <br/>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        <div id="content" class="mob-max" style="overflow: hidden;height: 100%;">
+<div class="singleTop whiteBg" style="height:100%">
+<div class="row mb20">
+<div class="col-xs-12">
+       
+<div class="space"></div>
+<div id="calendar" class="fc fc-ltr"></div> 
+
+       
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
+
+</div>           
+
+            <!--- fin baniere publicitaire ****************************************************  --> 
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- Header -->
+        {% endblock %} 
+            {% block javascriptfils %}
+                <script>
+                    (function($) {
+                    "use strict";{% for event in events %}
+                            $("#btnmsg_{{event.id}}").on('click', function () {
+                    $("#btnmsg_{{event.id}}").hide();
+                            $('#btnlod_{{event.id}}').show();
+                            var comment = $("#input_{{event.id}}").val();
+                            $("#input_{{event.id}}").val("");
+                            var photo ={% if app.user.path == null %}{% if app.user.sexe == 'H' %}
+                            "{{ asset('men.png') }}"
+                    {% else %}
+                                "{{ asset('women.png') }}"
+                        {% endif %}
+                            {% else %}
+                                        "{{ asset(app.user.WebPath)}}"
+                                {% endif %}
+
+                                            var oa = new Object();
+                                            oa.comment = comment;
+                                            if (comment){
+                                    $.ajax({
+                                    url:    Routing.generate('ajax_event_comment', { eventid: {{event.id}}}),
+                                            type: 'POST',
+                                            data: oa,
+                                            contentType: "application/json; charset=ISO-8859-4",
+                                            beforeSend: function () {
+                                            console.log("envoi");
+                                            },
+                                            success: function () {
+                                            $("#btnmsg_{{event.id}}").show();
+                                                    $('#btnlod_{{event.id}}').hide();
+                                                    $("#content_msg_{{event.id}}").prepend('<div class="comment">' +
+                                                    '<div class="commentAvatar">' +
+                                                    '<img class="avatar" src="' + photo + '" alt="avatar">' +
+                                                    '<div class="commentArrow"><span class="fa fa-caret-left"></span></div>' +
+                                                    '</div>' +
+                                                    '<div class="commentContent">' +
+                                                    '<div class="commentName">{{app.user.prenom}} {{app.user.nom}}</div>' +
+                                                    '<div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> Maintenant </div>' +
+                                                    '<br>' +
+                                                    '<div class="commentBody">' + comment + '</div>' +
+                                                    '</div>' +
+                                                    '<div class="clearfix"></div>' +
+                                                    '</div>');
+                                                    $("#input_{{event.id}}").val("");
+                                            },
+                                            error: function () {
+                                            }
+                                    });
+                                    } else{
+                                    $("#btnmsg_{{event.id}}").show();
+                                            $('#btnlod_{{event.id}}').hide();
+                                    }
+                                    });
+                                            var load = false;
+                                            var last_id_{{event.id}} = 5;
+                                            $("#content_msg_{{event.id}}").scroll(function() {
+                                    if ($("#content_msg_{{event.id}}").scrollTop() == $("#content2_msg_{{event.id}}").height() - $("#content_msg_{{event.id}}").height() && load == false && last_id_{{event.id}} <{{event.eventcomments|length}} ){
+
+                                    load = true;
+                                            $('#loader_{{event.id}}').show();
+                                            $.ajax({
+                                            url: Routing.generate('commentsEventPlus', { ide: {{event.id}} , last_id: last_id_{{event.id}} }),
+                                                    type: 'GET',
+                                                    beforeSend: function () {
+                                                    },
+                                                    success: function (data) {
+                                                    last_id_{{event.id}} += 5;
+                                                            for (var i in data) {
+                                                    var comment = data[i];
+                                                            var photo = "/web/upload/profil/" + comment.commenteur.id + "/" + comment.commenteur.path;
+                                                            if (comment.commenteur.path == null){
+                                                    if (comment.commenteur.sexe == "H"){
+                                                    photo = "{{ asset('men.png') }}";
+                                                    }
+                                                    else
+                                                    {
+                                                    photo = "{{ asset('women.png') }}";
+                                                    }
+                                                    }
+                                                    $("#content2_msg_{{event.id}}").append('<div class="comment">' +
+                                                            '<div class="commentAvatar">' +
+                                                            '<img class="avatar" src="' + photo + '" alt="avatar">' +
+                                                            '<div class="commentArrow"><span class="fa fa-caret-left"></span></div>' +
+                                                            '</div>' +
+                                                            '<div class="commentContent">' +
+                                                            '<div class="commentName">' + comment.commenteur.prenom + comment.commenteur.nom + '</div>' +
+                                                            '<div class="commentTime" style="margin-left: 10px;"><span class="icon-clock"></span> ' + comment.createdat.date + '</div>' +
+                                                            '<br>' +
+                                                            '<div class="commentBody">' + comment.Commentaire + '</div>' +
+                                                            '</div>' +
+                                                            '<div class="clearfix"></div>' +
+                                                            '</div>');
+                                                            load = false;
+                                                            $('#loader_{{event.id}}').hide();
+                                                    }
+
+                                                    },
+                                                    error: function () {
+                                                    $('#loader_{{event.id}}').hide();
+                                                    }
+                                            });
+                                    }
+                                    });{% endfor %}
+                                    })(jQuery);{%for event in events %}
+                                            $('#exit_event{{event.id}}').click(function() {
+                                    $("#exit_eventm{{event.id}}").empty();
+                                            $('#loaderPartm_{{event.id}}').show();
+                                            $("#exit_event{{event.id}}").empty();
+                                            $('#loaderPart_{{event.id}}').show();
+                                            $.ajax({
+                                            url: Routing.generate('exit_event', {'id': {{event.id}}}),
+                                                    success: function(data) {
+
+                                                    $("#exit_event{{event.id}}").html(data.msg);
+                                                            $("#exit_eventm{{event.id}}").html(data.msgmap);
+                                                            var test = data.etat;
+                                                            if (test == 0){
+                                                    $('#appendshare{{event.id}}').hide();
+                                                            $('#loaderPart_{{event.id}}').hide();
+                                                            $('#loaderPartm_{{event.id}}').hide();
+                                                    } else{
+                                                    $('#appendshare{{event.id}}').show();
+                                                            $('#loaderPart_{{event.id}}').hide();
+                                                            $('#loaderPartm_{{event.id}}').hide();
+                                                    }
+
+
+                                                    }
+                                            });
+                                    });{%endfor%}
+                                </script>
+                                
+                                <script src="{{ asset('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
+                                <script src="{{ asset('assets/js/fullcalendar.min.js') }}"></script>
+                                <script src="{{ asset('assets/js/bootbox.min.js') }}"></script>
+                                <script type="text/javascript">
+                                            jQuery(function ($) {
+                                            /* initialize the external events
+                                             -----------------------------------------------------------------*/
+                                            $('#external-events div.external-event').each(function () {
+
+                                            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                                            // it doesn't need to have a start or end
+                                            var eventObject = {
+                                            title: $.trim($(this).text()) // use the element's text as the event title
+                                            };
+                                                    // store the Event Object in the DOM element so we can get to it later
+                                                    $(this).data('eventObject', eventObject);
+                                                    // make the event draggable using jQuery UI
+                                                    $(this).draggable({
+                                            zIndex: 999,
+                                                    revert: true, // will cause the event to go back to its
+                                                    revertDuration: 0  //  original position after the drag
+                                            });
+                                            });
+                                                    /* initialize the calendar
+                                                     -----------------------------------------------------------------*/
+                                                    var date = new Date();
+                                                    var d = date.getDate();
+                                                    var m = date.getMonth();
+                                                    var y = date.getFullYear();
+                                                    var calendar = $('#calendar').fullCalendar({
+                                            buttonText: {
+                                            prev: 'prev',
+                                                    next: 'next'
+                                            },
+                                                    header: {
+                                                    left: 'prev,next today',
+                                                            center: 'title',
+                                                            right: 'month,agendaWeek'
+                                                    },
+                                                    events: [
+                                    {%for env in eventsMap %}
+                              {% if  "now"|date("Y-m-d") < env.dateDebut|date('Y-m-d') %}
+                                                            {
+                                                            title: "{{ env.titre }} (l'événement n'a pas encore commencer)",
+                                                                    start: new Date({% if env.dateDebut %}{{ env.dateDebut|date('Y') }}{% endif %}
+                                                                            ,      {% if env.dateDebut %}{{ env.dateDebut|date('m ') }}{% endif %} - 1
+                                                                            ,{% if env.dateDebut %}{{ env.dateDebut|date('d ') }}{% endif %}
+                                                                            ),
+                                                                    end: new Date({% if env.dateFin %}{{ env.dateFin|date('Y') }}{% endif %}
+                                                                            ,  {% if env.dateFin %}{{ env.dateFin|date('m') }}{% endif %} - 1
+                                                                            ,{% if env.dateFin %}{{ env.dateFin|date('d') }}{% endif %}
+                                                                            ),
+                                                                    startdate: '{% if env.dateDebut %}{{ env.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                                                    enddate: '{% if env.dateFin %}{{ env.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                                                    region: '{{ env.lieu }}',
+                                                                    nbrp: '{{ env.nbrPlaces }}',
+                                                                    prix: '{{ env.frais }}',
+                                                                    createur: '{{ env.createur.nom ~' '~ env.createur.prenom }}',
+                                                                    id: '{{ env.id }}',
+                                                                    type: 'E',
+                                                                    className: 'label-warning'
+                                                            },{% else %}
+                                                            {
+                                                            title: "{{ env.titre }} (l'événement à déjà commencé)",
+                                                                    start: new Date({% if env.dateDebut %}{{ env.dateDebut|date('Y') }}{% endif %}
+                                                                            ,      {% if env.dateDebut %}{{ env.dateDebut|date('m ') }}{% endif %} - 1
+                                                                            ,{% if env.dateDebut %}{{ env.dateDebut|date('d ') }}{% endif %}
+                                                                            ),
+                                                                    end: new Date({% if env.dateFin %}{{ env.dateFin|date('Y') }}{% endif %}
+                                                                            ,  {% if env.dateFin %}{{ env.dateFin|date('m') }}{% endif %} - 1
+                                                                            ,{% if env.dateFin %}{{ env.dateFin|date('d') }}{% endif %}
+                                                                            ),
+                                                                    startdate: '{% if env.dateDebut %}{{ env.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                                                    enddate: '{% if env.dateFin %}{{ env.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                                                    region: '{{ env.lieu }}',
+                                                                    nbrp: '{{ env.nbrPlaces }}',
+                                                                    prix: '{{ env.frais }}',
+                                                                    createur: '{{ env.createur.nom ~' '~ env.createur.prenom }}',
+                                                                    id: '{{ env.id }}',
+                                                                    type: 'E',
+                                                                    className: 'label-success'
+                                                            },{% endif %}
+                                                                                                                        
+                                                            {% endfor %}
+                                                             {%for Competition in competitions %}
+                              {% if  "now"|date("Y-m-d") < Competition.dateDebut|date('Y-m-d') %}
+                                                            {
+                                                            title: "{{ Competition.titre }} (la competition n'a pas encore commencer)",
+                                                                    start: new Date({% if Competition.dateDebut %}{{ Competition.dateDebut|date('Y') }}{% endif %}
+                                                                            ,      {% if Competition.dateDebut %}{{ Competition.dateDebut|date('m ') }}{% endif %} - 1
+                                                                            ,{% if Competition.dateDebut %}{{ Competition.dateDebut|date('d ') }}{% endif %}
+                                                                            ),
+                                                                    end: new Date({% if Competition.dateFin %}{{ Competition.dateFin|date('Y') }}{% endif %}
+                                                                            ,  {% if Competition.dateFin %}{{ Competition.dateFin|date('m') }}{% endif %} - 1
+                                                                            ,{% if Competition.dateFin %}{{ Competition.dateFin|date('d') }}{% endif %}
+                                                                            ),
+                                                                    startdate: '{% if Competition.dateDebut %}{{ Competition.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                                                    enddate: '{% if Competition.dateFin %}{{ Competition.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                                                    region: '{{ Competition.lieu }}',
+                                                                    createur: '{{ Competition.club.nom }}',
+                                                                    id: '{{ Competition.id }}',
+                                                                    type: 'C',
+                                                                    className: 'label-info'
+                                                            },{% else %}
+                                                            {
+                                                            title: "{{ Competition.titre }} (la competition à déjà commencé)",
+                                                                    start: new Date({% if Competition.dateDebut %}{{ Competition.dateDebut|date('Y') }}{% endif %}
+                                                                            ,      {% if Competition.dateDebut %}{{ Competition.dateDebut|date('m ') }}{% endif %} - 1
+                                                                            ,{% if Competition.dateDebut %}{{ Competition.dateDebut|date('d ') }}{% endif %}
+                                                                            ),
+                                                                    end: new Date({% if Competition.dateFin %}{{ Competition.dateFin|date('Y') }}{% endif %}
+                                                                            ,  {% if Competition.dateFin %}{{ Competition.dateFin|date('m') }}{% endif %} - 1
+                                                                            ,{% if Competition.dateFin %}{{ Competition.dateFin|date('d') }}{% endif %}
+                                                                            ),
+                                                                    startdate: '{% if Competition.dateDebut %}{{ Competition.dateDebut|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                                                    enddate: '{% if Competition.dateFin %}{{ Competition.dateFin|date('d M Y', "Europe/Paris") }}{% endif %}',
+                                                                    region: '{{ Competition.lieu }}',
+                                                                    createur: '{{ Competition.club.nom }}',
+                                                                    id: '{{ Competition.id }}',
+                                                                    type: 'C',
+                                                                    className: 'label-danger'
+                                                            },{% endif %}
+                                                                                                                        
+                                                            {% endfor %}
+                                                            ],
+                                                            editable: false,
+                                                            droppable: false, // this allows things to be dropped onto the calendar !!!
+                                                            drop: function (date, allDay) { // this function is called when something is dropped
+
+                                                            // retrieve the dropped element's stored Event Object
+                                                            var originalEventObject = $(this).data('eventObject');
+                                                                    var $extraEventClass = $(this).attr('data-class');
+                                                                    // we need to copy it, so that multiple events don't have a reference to the same object
+                                                                    var copiedEventObject = $.extend({}, originalEventObject);
+                                                                    // assign it the date that was reported
+                                                                    copiedEventObject.start = date;
+                                                                    copiedEventObject.allDay = allDay;
+                                                                    if ($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
+                                                                    // render the event on the calendar
+                                                                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                                                                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                                                                    // is the "remove after drop" checkbox checked?
+                                                                    if ($('#drop-remove').is(':checked')) {
+                                                            // if so, remove the element from the "Draggable Events" list
+                                                            $(this).remove();
+                                                            }
+
+                                                            },
+                                                            selectable: false,
+                                                            selectHelper: false,
+                                                            select: function (start, end, allDay) {
+
+                                                            bootbox.prompt("New Event Title:", function (title) {
+                                                            if (title !== null) {
+                                                            calendar.fullCalendar('renderEvent',
+                                                            {
+                                                            title: title,
+                                                                    start: start,
+                                                                    end: end,
+                                                                    allDay: allDay
+                                                            },
+                                                                    true // make the event "stick"
+                                                                    );
+                                                            }
+                                                            });
+                                                                    calendar.fullCalendar('unselect');
+                                                            },
+                                                            eventClick: function (calEvent, jsEvent, view) {
+                                                                if(calEvent.type == 'E')
+                                                                {
+                                                            var form = $("<br/><label>événement : &nbsp;</label><br/>");
+                                                                    form.append("" + calEvent.title + "<br/>");
+                                                                    form.append("<label>Créateur : &nbsp;</label>");
+                                                                    form.append("" + calEvent.createur + "<br/>");
+                                                                    form.append("<label>Region : &nbsp;</label>");
+                                                                    form.append("" + calEvent.region + "<br/>");
+                                                                    form.append("<label>Date début : &nbsp;</label>");
+                                                                    form.append("" + calEvent.startdate + "<br/>");
+                                                                    form.append("<label>Date fin : &nbsp;</label>");
+                                                                    form.append("" + calEvent.enddate + "<br/>");
+                                                                    form.append("<label>Prix : &nbsp;</label>");
+                                                                    form.append("" + calEvent.prix + "euro <br/>");
+                                                                    form.append("<label>Number des personnes : &nbsp;</label>");
+                                                                    form.append("" + calEvent.nbrp + "<br/>");
+                                                                    var div = bootbox.dialog({
+                                                                    message: form,
+                                                                            buttons: {
+                                                                             "delete" : {
+                                                                             "label" : " Voir",
+                                                                             "className" : "btn-sm btn-danger",
+                                                                             "callback": function() {
+                                                                            window.location = "http://localhost/Optimus/web/app_dev.php/evenement="+calEvent.id;
+                                                                             }
+                                                                             } ,
+                                                                            "close": {
+                                                                            "label": "<i class='icon-remove'></i> Close",
+                                                                                    "className": "btn-sm"
+                                                                            }
+                                                                            }
+
+                                                                    });
+                                                                    form.on('submit', function () {
+                                                                    calEvent.title = form.find("input[type=text]").val();
+                                                                            calendar.fullCalendar('updateEvent', calEvent);
+                                                                            div.modal("hide");
+                                                                            return false;
+                                                                    });
+                                                                    //console.log(calEvent.id);
+                                                                    //console.log(jsEvent);
+                                                                    //console.log(view);
+
+                                                                    // change the border color just for fun
+                                                                    //$(this).css('border-color', 'red');
+
+                                                            }else{
+                                                                var form = $("<br/><label>Competition : &nbsp;</label><br/>");
+                                                                    form.append("" + calEvent.title + "<br/>");
+                                                                    form.append("<label>Créateur : &nbsp;</label>");
+                                                                    form.append("" + calEvent.createur + "<br/>");
+                                                                    form.append("<label>Region : &nbsp;</label>");
+                                                                    form.append("" + calEvent.region + "<br/>");
+                                                                    form.append("<label>Date début : &nbsp;</label>");
+                                                                    form.append("" + calEvent.startdate + "<br/>");
+                                                                    form.append("<label>Date fin : &nbsp;</label>");
+                                                                    form.append("" + calEvent.enddate + "<br/>");
+                                                                    var div = bootbox.dialog({
+                                                                    message: form,
+                                                                            buttons: {
+                                                                             "delete" : {
+                                                                             "label" : " Voir",
+                                                                             "className" : "btn-sm btn-danger",
+                                                                             "callback": function() {
+                                                                            window.location = "http://localhost/Optimus/web/app_dev.php/competition/"+calEvent.id;
+                                                                             }
+                                                                             } ,
+                                                                            "close": {
+                                                                            "label": "<i class='icon-remove'></i> Close",
+                                                                                    "className": "btn-sm"
+                                                                            }
+                                                                            }
+
+                                                                    });
+                                                                    form.on('submit', function () {
+                                                                    calEvent.title = form.find("input[type=text]").val();
+                                                                            calendar.fullCalendar('updateEvent', calEvent);
+                                                                            div.modal("hide");
+                                                                            return false;
+                                                                    });
+                                                            }
+                                                            }
+                                                    });
+                                                    })
+                                        </script>
+                                        <link rel="stylesheet" href="{{ asset('assets/css/datepicker.css') }}"/>
+                                        <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css') }}"/>
+                                        <link rel="stylesheet" href="{{ asset('assets/css/ace-fonts.css') }}"/>
+                                        <link rel="stylesheet" href="{{ asset('assets/css/ace-skins.min.css') }}"/>
+                                        {% endblock %}

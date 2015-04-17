@@ -82,6 +82,9 @@
                                                             {% if notification.notifications.type == 'rejClub' %}
                                                                 <div class="message">veut rejoindre votre club {{ notification.notifications.club.nom }}</div>
                                                             {% endif %}
+                                                            {% if notification.notifications.type == 'RefDemClub' %}
+                                                                <div class="message">a refusé votre demande de rejoindre le club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
                                                             {% if notification.notifications.type == 'quiteClub' %}
                                                                 <div class="message">a quitté votre club {{ notification.notifications.club.nom }}</div>
                                                             {% endif %}

@@ -143,7 +143,7 @@ class NotificationController extends Controller {
 
         if ($user->getConfigNotif()->getClub()) {
             $notifClubRejs = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotifEntraineur($user->getId());
-            var_dump($notifClubRejs);die();
+          
             foreach ($notifClubRejs as $notifClubRej) {
                 $i = 0;
                 foreach ($user->getNotificationseen() as $notifSeen) {
