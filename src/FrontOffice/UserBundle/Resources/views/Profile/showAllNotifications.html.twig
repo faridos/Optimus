@@ -40,7 +40,7 @@
                                                                     <img class="avatar pull-left"  src="{{ asset('women.png') }}">
                                                                 {% endif %}
                                                             {% else %}
-                                                                <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                                                                <img class="avatar pull-left"  src="{{ asset(notification.notifications.notificateur.WebPath)}}" alt="avatar" >
                                                             {% endif %}
                                                         </a>
                                                         <div class="notify pull-left">
@@ -84,6 +84,9 @@
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'RefDemClub' %}
                                                                 <div class="message">a refusé votre demande de rejoindre le club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'addClub' %}
+                                                                <div class="message">a ajouté un nouveau club {{ notification.notifications.club.nom }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'quiteClub' %}
                                                                 <div class="message">a quitté votre club {{ notification.notifications.club.nom }}</div>

@@ -66,15 +66,24 @@ class ClubController extends Controller {
         $req = $this->get('request');
         if ($req->getMethod() == 'POST') {
             $form->bind($req);
-
             $em->persist($club);
             $em->flush();
+            
+            $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('addClub');
+            $notif->setClub($club);
+            $notif->setEntraineur($user);
+            $em->persist($notif);
+            $em->flush();
+            
+            
             $action = 'add';
             $clubevent = new HistoryClubEvent($user, $club, $action);
-            $clubnotification = new NotificationClubEvent($user, $club, $action);
+            //$clubnotification = new NotificationClubEvent($user, $club, $action);
             $dispatcher = $this->get('event_dispatcher');
-          $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-          $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
+            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+            //$dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
              $request->getSession()->getFlashBag()->add('AjoutClub', "Club  a été creé avec success.");
             return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
         }
