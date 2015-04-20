@@ -34,8 +34,8 @@
     {% for club in clubs %}
         {% if club.isPayant == 1%}
 <div class="form-group">
-<div class="set radio custom-radio" onclick="step_process(1, 2)" id="set1">
- <label><input type="radio" name="radio1"><span class="set fa fa-check optrect"id="set1"></span>{{ club.nom}}</label>
+<div class="set radio custom-radio" onclick="step_process(1, 2)" >
+ <label><input type="radio" name="radio{{club.id}}" id="set{{club.id}}"><span class="set fa fa-check optrect"  ></span>{{ club.nom}}</label>
 </div>
 </div>
 {% endif %}
@@ -46,110 +46,48 @@
 </div>
 </div>
 
-
-<div class="contentimus col-xs-12 col-sm-12 col-md-4 col-lg-4 " >
-<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 page" id="page1">
-<div class="panel panel-default page shadux" id="page1" >
+{% for club in clubs %}
+  
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 " style="display: none" id="page{{club.id}}"> 
+<div class="panel panel-default shadux" >
 <div class="panel-heading optimus">Liste des adherents</div>
 <div class="panel-body">
 <ul class="notifyList scrollbar">
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 1</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 2</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
+    {% for member in club.adherents %}
+        {% if member.member != club.createur %}
+<div class="checkbox custom-checkbox"><label><input type="checkbox" name="choisi" id="choisi{{member.id}}" value="{{ member.member.nom~' '~member.member.prenom}}"><span class="fa fa-check"></span>{{ member.member.nom~' '~member.member.prenom}}</label></div>
+{% endif %}
+{% endfor %}
 </ul>
 <div style="text-align: center">
-
-<button type="button" onclick="step_process(2, 3)"  class="okus btn btn-round btn-green suivant" id="okus1">Suivant</button>
-
-</div>
-
-</div>
-
-</div></div>
-<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 page" id="page2">
-
-<div class="panel panel-default shadux"  >
-<div class="panel-heading optimus">Liste du Choix</div>
-<div class="panel-body">
-
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 1</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 2</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 4</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 5</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 6</label></div>
-<div style="text-align: center">
-<button type="button" onclick="step_process(2, 3)"  value="" class="okus btn btn-round btn-green" id="okus2">Suivant</button>
-
-</div>
-
-
+<button type="button" onclick="step_process(2, 3)"  class="okus btn btn-round btn-green suivant" id="okus{{club.id}}">Suivant</button>
 </div>
 </div>
 </div>
-
-
-
 </div>
+{% endfor %}
+{% for club in clubs %}
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 " style="display: none" id="choix{{club.id}}">
 
-
-<div class="contentimus2 col-xs-12 col-sm-12 col-md-4 col-lg-4 " >
-<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 final" id="final1">
 <div class="panel panel-default shadux"  >
 <div class="panel-heading optimus">hedhi resultat eli i5tarnéha min step 2</div>
 <div class="panel-body">
 <form role="form">
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 1</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 2</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
+    {% for member in club.adherents %}
+        {% if member.member != club.createur %}
+<div class="checkbox custom-checkbox"><label><input type="checkbox" id="confirmedChoix{{member.id}}"><span class="fa fa-check"></span> {{ member.member.nom~' '~member.member.prenom}}</label></div>
+{% endif %}
+{% endfor %}
 <div style="text-align: center">
-<button type="reset" value="" onclick="step_process(3, 2, 'desc')" class="avant btn btn-round btn-green" id="avant">Précédent</button>
-
+<button type="reset" value="" onclick="step_process(3, 2, 'desc')" class="avant btn btn-round btn-green" id="avant{{club.id}}">Précédent</button>
 <button type="button" value="" class="btn btn-round btn-green">Confirmer</button>
-
 </div>
 </form>
 </div>
-</div></div>
-
-<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 final" id="final2">
-<div class="panel panel-default shadux"  >
-<div class="panel-heading optimus">hedhi resultat lokhra mta3 step 3</div>
-<div class="panel-body">
-<form role="form">
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 1</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 2</label></div>
-<div class="checkbox custom-checkbox"><label><input type="checkbox"><span class="fa fa-check"></span> Choix 3</label></div>
-<div style="text-align: center">
-<button type="reset" value="" onclick="step_process(3, 2, 'desc')" class="avant btn btn-round btn-green" id="avant1">Précédent</button>
-
-<button type="button" value="" class="btn btn-round btn-green">Confirmer</button>
 
 </div>
-</form>
 </div>
-</div></div>
-
-
-
-
-</div>
-
-
-
-
-
-
+{% endfor %}
 </div>
 </div>
 
@@ -167,5 +105,30 @@
     {% endblock %}
     {% block javascriptfils %}
         <script src="{{ asset('template/js/progress.js') }}"></script>
-<script src="{{ asset('template/js/contentimus.js') }}"></script>
+<script>/**this code is developed by essid haithem for optimus team **/
+    {% for club in clubs %}
+$('#set{{club.id}}').click(function(){
+    if (this.checked) {
+        $('#page{{club.id}}').show();
+    }
+});
+$("#okus{{club.id}}").click(function(){
+
+ var txt = "" ;
+ var i ;
+for(i=0;i < 2; i++)
+{
+    if( document.getElementByName('choisi').checked)
+    {
+        txt = txt +  document.getElementByName('choisi').value + " ";
+    }
+}
+     alert(txt);
+});
+$("#avant{{club.id}}").click(function(){
+    $("#choix{{club.id}}").hide();
+});
+
+ {% endfor %}
+</script>
          {% endblock %}
