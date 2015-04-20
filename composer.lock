@@ -56,16 +56,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.2.3",
+            "version": "v1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "eeda578cbe24a170331a1cfdf78be723412df7a4"
+                "reference": "b5202eb9e83f8db52e0e58867e0a46e63be8332e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/eeda578cbe24a170331a1cfdf78be723412df7a4",
-                "reference": "eeda578cbe24a170331a1cfdf78be723412df7a4",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/b5202eb9e83f8db52e0e58867e0a46e63be8332e",
+                "reference": "b5202eb9e83f8db52e0e58867e0a46e63be8332e",
                 "shasum": ""
             },
             "require": {
@@ -120,20 +120,20 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2014-12-20 20:49:38"
+            "time": "2014-12-23 22:40:37"
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "2346085d2b027b233ae1d5de59b07440b9f288c8"
+                "reference": "c9eadeb743ac6199f7eec423cb9426bc518b7b03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/2346085d2b027b233ae1d5de59b07440b9f288c8",
-                "reference": "2346085d2b027b233ae1d5de59b07440b9f288c8",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/c9eadeb743ac6199f7eec423cb9426bc518b7b03",
+                "reference": "c9eadeb743ac6199f7eec423cb9426bc518b7b03",
                 "shasum": ""
             },
             "require": {
@@ -144,13 +144,13 @@
             },
             "require-dev": {
                 "phpunit/phpunit": ">=3.7",
-                "predis/predis": "~0.8",
+                "predis/predis": "~1.0",
                 "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "1.5.x-dev"
                 }
             },
             "autoload": {
@@ -190,24 +190,27 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-01-15 20:38:55"
+            "time": "2015-04-15 00:11:59"
         },
         {
             "name": "doctrine/collections",
-            "version": "v1.2",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2"
+                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/b99c5c46c87126201899afe88ec490a25eedd6a2",
-                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
+                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -226,17 +229,6 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/",
-                    "role": "Creator"
-                },
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com",
-                    "homepage": "http://www.instaclick.com"
-                },
-                {
                     "name": "Roman Borschel",
                     "email": "roman@code-factory.org"
                 },
@@ -245,10 +237,16 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
                     "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
-                    "role": "Developer of wrapped JMSSerializerBundle"
+                    "email": "schmittjoh@gmail.com"
                 }
             ],
             "description": "Collections Abstraction library",
@@ -258,7 +256,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2014-02-03 23:07:43"
+            "time": "2015-04-14 22:21:58"
         },
         {
             "name": "doctrine/common",
@@ -727,12 +725,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "808672b01f6aa6777417551c72a0be2c3545eafe"
+                "reference": "832f18ca55af72c97996157b1e08f147d1d5efeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/808672b01f6aa6777417551c72a0be2c3545eafe",
-                "reference": "808672b01f6aa6777417551c72a0be2c3545eafe",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/832f18ca55af72c97996157b1e08f147d1d5efeb",
+                "reference": "832f18ca55af72c97996157b1e08f147d1d5efeb",
                 "shasum": ""
             },
             "require": {
@@ -786,7 +784,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2015-03-12 11:42:34"
+            "time": "2015-04-15 14:50:07"
         },
         {
             "name": "giggsey/libphonenumber-for-php",
@@ -1129,12 +1127,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/misd-service-development/phone-number-bundle.git",
-                "reference": "459e7362b727ea4013a27fe715559391246a71be"
+                "reference": "66408fec08ce9b0657835e171087aa3157e6e0c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/misd-service-development/phone-number-bundle/zipball/459e7362b727ea4013a27fe715559391246a71be",
-                "reference": "459e7362b727ea4013a27fe715559391246a71be",
+                "url": "https://api.github.com/repos/misd-service-development/phone-number-bundle/zipball/66408fec08ce9b0657835e171087aa3157e6e0c9",
+                "reference": "66408fec08ce9b0657835e171087aa3157e6e0c9",
                 "shasum": ""
             },
             "require": {
@@ -1142,11 +1140,14 @@
                 "php": ">=5.3.3",
                 "symfony/framework-bundle": "~2.1"
             },
+            "conflict": {
+                "twig/twig": "<1.12.0"
+            },
             "require-dev": {
                 "doctrine/doctrine-bundle": "~1.0",
                 "jms/serializer-bundle": "~0.11",
                 "phpunit/phpunit": "~4.0",
-                "symfony/form": "~2.1",
+                "symfony/form": "~2.3",
                 "symfony/templating": "~2.1",
                 "symfony/twig-bundle": "~2.1",
                 "symfony/validator": "~2.1"
@@ -1189,7 +1190,7 @@
                 "phonenumber",
                 "telephone number"
             ],
-            "time": "2015-01-02 08:31:12"
+            "time": "2015-04-15 13:45:08"
         },
         {
             "name": "monolog/monolog",
@@ -1329,17 +1330,17 @@
         },
         {
             "name": "payum/core",
-            "version": "0.14.0",
+            "version": "0.14.5",
             "target-dir": "Payum/Core",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Payum/Core.git",
-                "reference": "b1a5330814cc7b3aaaec2012aba46be0b06f932f"
+                "reference": "3241ede26bb9b07c32f50f01fb0270d5cec085a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Payum/Core/zipball/b1a5330814cc7b3aaaec2012aba46be0b06f932f",
-                "reference": "b1a5330814cc7b3aaaec2012aba46be0b06f932f",
+                "url": "https://api.github.com/repos/Payum/Core/zipball/3241ede26bb9b07c32f50f01fb0270d5cec085a5",
+                "reference": "3241ede26bb9b07c32f50f01fb0270d5cec085a5",
                 "shasum": ""
             },
             "require": {
@@ -1361,6 +1362,7 @@
                 "symfony/http-foundation": "~2.3",
                 "symfony/http-kernel": "~2.3",
                 "symfony/routing": "~2.3",
+                "symfony/validator": "~2.6",
                 "zendframework/zend-db": "~2"
             },
             "suggest": {
@@ -1430,7 +1432,7 @@
                 "paypal rest",
                 "recurring payment"
             ],
-            "time": "2015-02-20 07:44:44"
+            "time": "2015-04-15 18:30:37"
         },
         {
             "name": "payum/offline",
@@ -1555,16 +1557,16 @@
         },
         {
             "name": "payum/payum-bundle",
-            "version": "0.14.2",
+            "version": "0.14.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Payum/PayumBundle.git",
-                "reference": "0902d96258d0014ceae6781d8ce2af44e72d0279"
+                "reference": "2b658ecc6a76533a17f2b1ed5def812644dcda3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Payum/PayumBundle/zipball/0902d96258d0014ceae6781d8ce2af44e72d0279",
-                "reference": "0902d96258d0014ceae6781d8ce2af44e72d0279",
+                "url": "https://api.github.com/repos/Payum/PayumBundle/zipball/2b658ecc6a76533a17f2b1ed5def812644dcda3c",
+                "reference": "2b658ecc6a76533a17f2b1ed5def812644dcda3c",
                 "shasum": ""
             },
             "require": {
@@ -1642,7 +1644,7 @@
                 "stripe.js",
                 "symfony"
             ],
-            "time": "2015-03-02 15:53:53"
+            "time": "2015-04-15 19:14:16"
         },
         {
             "name": "psr/log",
@@ -1684,17 +1686,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v2.3.13",
+            "version": "v2.3.14",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "c344892aa9f09f0005b395d79ad2531a7deaedc9"
+                "reference": "cb8195ddf5b310b34033921edec638829ccfa201"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/c344892aa9f09f0005b395d79ad2531a7deaedc9",
-                "reference": "c344892aa9f09f0005b395d79ad2531a7deaedc9",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/cb8195ddf5b310b34033921edec638829ccfa201",
+                "reference": "cb8195ddf5b310b34033921edec638829ccfa201",
                 "shasum": ""
             },
             "require": {
@@ -1726,7 +1728,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-03-26 11:09:17"
+            "time": "2015-04-10 06:19:33"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2179,16 +2181,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.3.26",
+            "version": "v2.3.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "dd70065d94468de18b722ec692fc3c34e87fd863"
+                "reference": "ce4aab1508dd9642906fc9a120e0d8763e689896"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/dd70065d94468de18b722ec692fc3c34e87fd863",
-                "reference": "dd70065d94468de18b722ec692fc3c34e87fd863",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/ce4aab1508dd9642906fc9a120e0d8763e689896",
+                "reference": "ce4aab1508dd9642906fc9a120e0d8763e689896",
                 "shasum": ""
             },
             "require": {
@@ -2283,7 +2285,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-03-17 14:18:00"
+            "time": "2015-04-01 14:28:26"
         },
         {
             "name": "true/punycode",
@@ -2490,6 +2492,7 @@
         "payum/paypal-express-checkout-nvp": 0
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"
     },
