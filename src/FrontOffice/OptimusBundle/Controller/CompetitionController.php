@@ -394,11 +394,12 @@ class CompetitionController extends Controller {
      * @Route("{id}/participer/", name="participerCompetition", options={"expose"=true})
      * @Method("GET")
      */
-     public function participerCompetitionAction() {
+     public function participerCompetitionAction($id) {
          $em = $this->getDoctrine()->getManager();
+          $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
           $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
           $clubs = $em->getRepository('FrontOfficeOptimusBundle:Club')->findBy(array('createur' => $user));
-         return $this->render('FrontOfficeOptimusBundle:Competition:participerCompetition.html.twig', array('clubs'=> $clubs));
+         return $this->render('FrontOfficeOptimusBundle:Competition:participerCompetition.html.twig', array('competition' =>$competition, 'clubs'=> $clubs));
     }
      /**
      * 
@@ -438,4 +439,81 @@ class CompetitionController extends Controller {
         
        
     }
+     /**
+     * 
+     *
+     * @Route("adherents/invitation", name="inviter_adherents", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+       
+     public function inviterAdherentsAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+       
+     //  $name = Array();
+     
+            $name = $request->get("name");
+            
+            $id =  $request->get("idcompetition");
+            $idclub =  $request->get("club");
+            $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
+             $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($idclub);
+              $participComp = $em->getRepository('FrontOfficeOptimusBundle:ParticipCompetition')->findOneBy(array('competition' => $competition, 'club' => $club));
+             if (!$participComp) {
+            $participation = new ParticipCompetition();
+            $participation->setCompetition($competition);
+            $participation->setClub($club);
+            $participation->setDatePaticipation(new DateTime());
+            $em->persist($participation);
+            $em->flush();
+            if ($name != null) {
+                foreach ($name as $member) {
+                    $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($member);
+                    $part = new PartClubCompetition();
+                    $part->setParticips($participation);
+                    $part->setParticipant($member);
+                    $em->persist($part);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
+                }
+            } else {
+                $request->getSession()->getFlashBag()->add('SelectionMember', "Il faurt selectionéé des members.");
+            }
+        } else {
+            if ($name != null) {
+                foreach ($name as $member) {
+                    $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($member);
+                    $part = new PartClubCompetition();
+                    $part->setParticips($participComp);
+                    $part->setParticipant($member);
+                    $em->persist($part);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
+                }
+            } else {
+                $request->getSession()->getFlashBag()->add('SelectionMember', "Il faurt selectionéé des members.");
+            }
+        }
+              $sender = $club->getCreateur();
+          
+            foreach ($name as $iduder) {
+                 $message = new Message();
+                $userinvit = $em->getRepository('FrontOfficeUserBundle:User')->find($iduder);
+                $content= 'Bonjour '. $userinvit->getNom() .' '. $userinvit->getPrenom() .' vous ete participe a la  Competition '. $competition->getTitre();
+              
+                $message->setReciever($iduder);
+                $message->setSender($sender);
+                $message->setMsgTime(new \DateTime());
+                $message->setContent($content);
+                $message->setCompetition($id);
+                $em->persist($message);
+                $em->flush();
+                  
+            }
+            return new Response($message); 
+        
+       
+    }
+
 }

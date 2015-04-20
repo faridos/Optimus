@@ -55,12 +55,12 @@
 <ul class="notifyList scrollbar">
     {% for member in club.adherents %}
         {% if member.member != club.createur %}
-<div class="checkbox custom-checkbox"><label><input type="checkbox" name="choisi" id="choisi{{member.id}}" value="{{ member.member.nom~' '~member.member.prenom}}"><span class="fa fa-check"></span>{{ member.member.nom~' '~member.member.prenom}}</label></div>
+<div class="checkbox custom-checkbox"><label><input type="checkbox" name="choisi[]" id="choisi{{member.id}}" value="{{ member.member.id}}"><span class="fa fa-check"></span>{{ member.member.nom~' '~member.member.prenom}}</label></div>
 {% endif %}
 {% endfor %}
 </ul>
 <div style="text-align: center">
-<button type="button" onclick="step_process(2, 3)"  class="okus btn btn-round btn-green suivant" id="okus{{club.id}}">Suivant</button>
+<button type="button" onclick="step_process(2, 3)"  class="okus btn btn-round btn-green suivant" id="okus{{club.id}}">Confirmer</button>
 </div>
 </div>
 </div>
@@ -113,17 +113,27 @@ $('#set{{club.id}}').click(function(){
     }
 });
 $("#okus{{club.id}}").click(function(){
-
- var txt = "" ;
- var i ;
-for(i=0;i < 2; i++)
-{
-    if( document.getElementByName('choisi').checked)
-    {
-        txt = txt +  document.getElementByName('choisi').value + " ";
-    }
+var name = new Array;
+var i = 0;
+var idcompetition = {{competition.id}};
+var club = {{ club.id}};
+ {% for member in club.adherents %}
+        {% if member.member != club.createur %}
+            if (document.getElementById('choisi{{member.id}}').checked){
+name[i] = $("#choisi{{member.id}}").val();
+i = i + 1;
+test = 'true';
 }
-     alert(txt);
+            {% endif %}
+            {% endfor %}
+                $.ajax({
+url: Routing.generate('inviter_adherents'),
+data: {name:name,idcompetition:idcompetition,club:club},
+success: function() {
+alert('g');
+}
+});
+                
 });
 $("#avant{{club.id}}").click(function(){
     $("#choix{{club.id}}").hide();
