@@ -66,4 +66,27 @@ class PartClubCompetition {
     {
         return $this->participant;
     }
+
+    /**
+     * Set particips
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips
+     * @return PartClubCompetition
+     */
+    public function setParticips(\FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips = null)
+    {
+        $this->particips = $particips;
+    
+        return $this;
+    }
+
+    /**
+     * Get particips
+     *
+     * @return \FrontOffice\OptimusBundle\Entity\ParticipCompetition 
+     */
+    public function getParticips()
+    {
+        return $this->particips;
+    }
 }

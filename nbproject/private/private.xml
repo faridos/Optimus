@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/UserController.php</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/User/accueilCalendrier.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/layout.html.twig</file>
-            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Profile/show.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/web/template/js/animation.js</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Registration/register_content.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Competition/regions.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Resources/views/Competition/showCempetition.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Repository/UserRepository.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/Registration/register.html.twig</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/OptimusBundle/Controller/CompetitionController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Controller/RegistrationController.php</file>
+            <file>file:/C:/wamp/www/Optimus/src/FrontOffice/UserBundle/Resources/views/layout.html.twig</file>
         </group>
     </open-files>
 </project-private>

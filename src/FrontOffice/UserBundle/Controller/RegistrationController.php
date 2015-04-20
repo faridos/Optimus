@@ -14,6 +14,7 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FrontOffice\OptimusBundle\Entity\Notification;
 use FrontOffice\OptimusBundle\Entity\ConfigNotif;
+use FrontOffice\OptimusBundle\Entity\Pays;
 use FrontOffice\UserBundle\Event\UserRegisterEvent;
 use FrontOffice\UserBundle\FrontOfficeUserEvents;
 use \DateTime;
@@ -67,6 +68,17 @@ class RegistrationController extends BaseController {
             $em->flush();
                
            }
+          $request = $this->get('request');
+            $paysregion = $request->get("regionpays");
+       
+        $pay = $em->getRepository("FrontOfficeOptimusBundle:Pays")->findOneBy(array('nom' => $paysregion));
+        if(!$pay){
+        $pays = new Pays();
+        $pays->setNom($paysregion);
+        $em->persist($pays);
+        $em->flush();
+        }
+        
             $configNotif = new ConfigNotif();
         $configNotif->setUser($user);
         $configNotif->setClub(1);

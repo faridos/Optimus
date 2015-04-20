@@ -1,0 +1,80 @@
+   {% for entraineur in users %}
+    {% if app.user != entraineur %}
+        {%set i = 0 %}
+        {%for particip in competition.particips %}
+        {%if entraineur == particip.club.createur %}
+              {%set i = 1 %}
+            {%endif %}
+        {% endfor %}
+        {%if i == 0 %}
+<label class="checkbox custom-checkbox col-md-6" style="margin-top: 0px">
+<input id="listentraineurappend{{entraineur.id}}{{compteur}}" type="checkbox" name="name[]" value="{{ entraineur.id }}">
+<span class="fa fa-check" style="margin-top: 3%;"></span>
+{% if entraineur.path == null %}
+{% if entraineur.sexe == 'H' %}
+<img  style="width: 10%;margin-left: 4%;" src="{{ asset('men.png') }}">
+{% else %}
+<img  style="width: 10%;margin-left: 4%;" src="{{ asset('women.png') }}">
+{% endif %}
+{% else %}
+<img  style="width: 10%;margin-left: 4%;"  src="{{ asset(entraineur.WebPath)}}" alt="avatar" ></a>
+{% endif %}
+Pseudo: {{entraineur.username}}
+<div style="margin-top: 2%;"></div>
+</label>
+{% endif %}
+{% endif %}
+{% endfor %}
+*<script>
+    
+{% for entraineur in users %}
+{% if app.user != entraineur %}
+ {%set i = 0 %}
+    {%for particip in competition.particips %}
+        {%if entraineur == particip.club.createur %}
+              {%set i = 1 %}
+            {%endif %}
+        {% endfor %}
+        {%if i == 0 %}
+            
+$('body').on('click', '#envoyerinvitEntraineurappend{{compteur}}', function () {
+  
+var comp = {{competition.id}};
+var name = new Array;
+$("#envoyerinvitEntraineurappend{{compteur}}").hide();
+$("#loaderInvitappend").show();
+var i = 0;
+
+if (document.getElementById('listentraineurappend{{entraineur.id}}{{compteur}}').checked){
+name[i] = $("#listentraineurappend{{entraineur.id}}{{compteur}}").val();
+i = i + 1;
+test = 'true';
+}
+
+$.ajax({
+type: "POST",
+url: Routing.generate('inviter_Entraineur_competition'),
+data: {name:name, comp:comp},
+dataType: 'json',
+success: function(data) {
+
+$('#loaderInvitappend').hide();
+$("#envoyerinvitEntraineurappend").show();
+$("#inviterEntraineurcompetition").hide();
+$('.modal-backdrop').hide();
+$('#invitation-envoyées').show(); 
+document.getElementById('listentraineurappend{{entraineur.id}}{{compteur}}').checked = false;   
+ }
+});
+});  
+{% endif %}
+{% endif %}
+{% endfor %}
+</script>*
+<a href="#" id="envoyerinvitEntraineurappend{{compteur}}" class="btn btn-round btn-o btn-green">Inviter</a>
+
+<a class="loader" id="loaderInvitappend" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>*{{compteur}}
+

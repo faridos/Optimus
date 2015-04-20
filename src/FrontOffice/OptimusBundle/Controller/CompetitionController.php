@@ -16,6 +16,7 @@ use FrontOffice\OptimusBundle\Form\CompetitionPhotoType;
 use FrontOffice\OptimusBundle\Event\ParticipationCompetitionEvent;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
 use FrontOffice\OptimusBundle\Form\UpdateCompetitionType;
+use FrontOffice\OptimusBundle\Entity\Message;
 use \DateTime;
 
 /**
@@ -164,8 +165,9 @@ class CompetitionController extends Controller {
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+        $entraineurs = $em->getRepository('FrontOfficeUserBundle:User')->findBy(array('profil' => 'Entraineur'));
         $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
-
+        $pays = $em->getRepository('FrontOfficeOptimusBundle:Pays')->findAll();
         if (!$competition) {
             return $this->render('FrontOfficeOptimusBundle::404.html.twig');
         }
@@ -179,7 +181,9 @@ class CompetitionController extends Controller {
         return array(
             'competition' => $competition,
             'club' => $club,
-            'member' => $member
+            'member' => $member,
+                'entraineurs' =>  $entraineurs,
+            'pays' => $pays
         );
     }
 
@@ -255,19 +259,18 @@ class CompetitionController extends Controller {
         }
 
         $request = $this->container->get('request');
-       $name = $request->request->get('name');
+        $name = $request->request->get('name');
         if ($name != null) {
             foreach ($name as $member) {
                 $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($member);
                 $participCompe = $em->getRepository('FrontOfficeOptimusBundle:ParticipCompetition')->findOneBy(array('club' => $club, 'competition' => $competition));
-              
-                    $participation = new PartClubCompetition();
-                    $participation->setParticips($participCompe);
-                    $participation->setParticipant($member);
-                    $em->persist($participation);
-                    $em->flush();
-                    return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
-                
+
+                $participation = new PartClubCompetition();
+                $participation->setParticips($participCompe);
+                $participation->setParticipant($member);
+                $em->persist($participation);
+                $em->flush();
+                return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
             }
         } else {
             $request->getSession()->getFlashBag()->add('SelectionMember', "Il faurt selectionéé des members.");
@@ -289,28 +292,150 @@ class CompetitionController extends Controller {
         $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
         $club = $competition->getClub();
         $name = $request->request->get('name');
-
-
-        $participation = new ParticipCompetition();
-        $participation->setCompetition($competition);
-        $participation->setClub($club);
-        $participation->setDatePaticipation(new DateTime());
-        $em->persist($participation);
-        $em->flush();
-        if ($name != null) {
-            foreach ($name as $member) {
-                $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($member);
-                $part = new PartClubCompetition();
-                $part->setParticips($participation);
-                $part->setParticipant($member);
-                $em->persist($participation);
-                $em->flush();
-                return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
+        $participComp = $em->getRepository('FrontOfficeOptimusBundle:ParticipCompetition')->findOneBy(array('competition' => $competition, 'club' => $club));
+        if (!$participComp) {
+            $participation = new ParticipCompetition();
+            $participation->setCompetition($competition);
+            $participation->setClub($club);
+            $participation->setDatePaticipation(new DateTime());
+            $em->persist($participation);
+            $em->flush();
+            if ($name != null) {
+                foreach ($name as $member) {
+                    $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($member);
+                    $part = new PartClubCompetition();
+                    $part->setParticips($participation);
+                    $part->setParticipant($member);
+                    $em->persist($part);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
+                }
+            } else {
+                $request->getSession()->getFlashBag()->add('SelectionMember', "Il faurt selectionéé des members.");
             }
         } else {
-            $request->getSession()->getFlashBag()->add('SelectionMember', "Il faurt selectionéé des members.");
+            if ($name != null) {
+                foreach ($name as $member) {
+                    $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($member);
+                    $part = new PartClubCompetition();
+                    $part->setParticips($participComp);
+                    $part->setParticipant($member);
+                    $em->persist($part);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
+                }
+            } else {
+                $request->getSession()->getFlashBag()->add('SelectionMember', "Il faurt selectionéé des members.");
+            }
         }
         return $this->render('FrontOfficeOptimusBundle:Competition:InviterMember.html.twig', array('competition' => $competition, 'club' => $club));
     }
 
+    /**
+     * Deletes a particip entity.
+     *
+     * @Route("/{id}/particip/delete", name="delete_particip_competition", options={"expose"=true})
+     * @Method("GET|DELETE")
+     */
+    public function deleteParticipAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($id);
+        $particip = $em->getRepository('FrontOfficeOptimusBundle:PartClubCompetition')->findOneBy(array('participant' => $member));
+
+        if (!$particip) {
+            throw $this->createNotFoundException('Unable to find competition entity.');
+        }
+
+        $em->remove($particip);
+        $em->flush();
+        $response = new Response($id);
+        return $response;
+    }
+ /**
+     * Deletes a particip entity.
+     *
+     * @Route("/{id}/pays/region", name="regions_pays", options={"expose"=true})
+     * @Method("GET")
+     */
+     public function rechercheRegionAction($id) {
+          $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+            $request = $this->get('request');
+            $pays = $request->get("pays");
+            $comp = $request->get("comp");
+            $compteur = $request->get("compteur");
+            $compteur = $compteur+1;
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('FrontOfficeUserBundle:User')->getUsers($pays,$user->getId());
+       
+          $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($comp);
+         return $this->render('FrontOfficeOptimusBundle:Competition:regions.html.twig', array('compteur'=>$compteur,'users'=> $users,'competition' => $competition));
+    }
+    /**
+     * Deletes a particip entity.
+     *
+     * @Route("regions/region", name="regions_region", options={"expose"=true})
+     * @Method("GET")
+     */
+     public function rechercheRegionRegionAction() {
+          $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+            $request = $this->get('request');
+            $reg = $request->get("reg");
+            $comp = $request->get("comp");
+            $compteur = $request->get("compteur");
+            $compteur = $compteur+1;
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('FrontOfficeUserBundle:User')->getUsersRegions($reg,$user->getId());
+         $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($comp);
+         return $this->render('FrontOfficeOptimusBundle:Competition:usersregions.html.twig', array('users'=> $users,'competition'=>$competition,'compteur'=>$compteur));
+    }
+     /**
+     * Deletes a particip entity.
+     *
+     * @Route("{id}/participer/", name="participerCompetition", options={"expose"=true})
+     * @Method("GET")
+     */
+     public function participerCompetitionAction() {
+         $em = $this->getDoctrine()->getManager();
+          $user = $this->container->get('security.context')->getToken()->getUser(); //utilisateur courant
+          $clubs = $em->getRepository('FrontOfficeOptimusBundle:Club')->findBy(array('createur' => $user));
+         return $this->render('FrontOfficeOptimusBundle:Competition:participerCompetition.html.twig', array('clubs'=> $clubs));
+    }
+     /**
+     * 
+     *
+     * @Route("inviter/entraineur", name="inviter_Entraineur_competition", options={"expose"=true})
+     * @Method("GET|POST")
+     * @Template()
+     */
+       
+     public function inviterCompetitionAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+       
+     //  $name = Array();
+     
+            $name = $request->get("name");
+            
+            $id =  $request->get("comp");
+            $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
+            $sender = $competition->getClub()->getCreateur();
+          
+            foreach ($name as $iduder) {
+                 $message = new Message();
+                $userinvit = $em->getRepository('FrontOfficeUserBundle:User')->find($iduder);
+                $content= 'Bonjour '. $userinvit->getNom() .' '. $userinvit->getPrenom() .' je inviter amon Competition '. $competition->getTitre();
+              
+                $message->setReciever($iduder);
+                $message->setSender($sender);
+                $message->setMsgTime(new \DateTime());
+                $message->setContent($content);
+                $message->setCompetition($id);
+                $em->persist($message);
+                $em->flush();
+                  
+            }
+            return new Response($message); 
+        
+       
+    }
 }

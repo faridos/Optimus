@@ -668,6 +668,8 @@
                                                 {{ message.content }} <a href="{{ path('show_event',{'id':message.event})}}" style="color: #C02100">cliquez ici...</a>
                                             {% elseif message.club != null %}
                                                 {{ message.content }} <a href="{{ path('show_club',{'id':message.club})}}" style="color: #C02100">cliquez ici...</a>
+                                            {% elseif message.   competition != null %}
+                                                {{ message.content }} <a href="{{ path('competition_show',{'id':message.competition})}}" style="color: #C02100">cliquez ici...</a>
                                             {% else %}
                                                 {{ message.content }}
                                             {% endif %}
