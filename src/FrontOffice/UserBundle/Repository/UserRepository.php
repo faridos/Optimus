@@ -66,10 +66,35 @@ class UserRepository extends EntityRepository {
         return $qb->getQuery()->getArrayResult();
     }
 
-    public function getUsers() {
-//     $em = $this->getEntityManager();
-//     $users=$em->getRepository('FrontOffice\UserBundle\Entity\User')->findAll();
-//     return $users;
+    public function getUsers($pays,$id) {
+      $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('u')
+                ->from('FrontOffice\UserBundle\Entity\User', 'u')
+                ->where('u.adresse Like :pays' )
+                ->andWhere('u.profil = :profil')
+                ->andWhere('u.id <> :id')
+                ->setParameter('pays', '%'.$pays.'%')
+                ->setParameter('id',$id)
+                
+         ->setParameter('profil', "Entraineur");
+            
+        return $qb->getQuery()->getArrayResult();
+    }
+      public function getUsersRegions($reg,$id) {
+      $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('u')
+                ->from('FrontOffice\UserBundle\Entity\User', 'u')
+                ->where('u.adresse Like :reg' )
+                ->andWhere('u.profil = :profil')
+                ->andWhere('u.id <> :id')
+                ->setParameter('reg', '%'.$reg.'%')
+                ->setParameter('id',$id)
+                
+         ->setParameter('profil', "Entraineur");
+            
+        return $qb->getQuery()->getArrayResult();
     }
 
     // added by farido tornado; 2 methods retournants l'user courant et son lastTactivity

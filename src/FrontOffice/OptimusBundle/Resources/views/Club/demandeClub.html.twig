@@ -24,10 +24,13 @@
                                             <img src="{{ asset(demande.member.WebPath) }}" alt="">
                                             <div class="pulse border-green pulseoptimus"></div>
                                         </a>
-                                        <div class="info">
-                                            <a href="#"> <div class="name clubumus"><strong>{{ demande.member.nom }} {{ demande.member.prenom }}</strong></div></a>
+                                        <div class="info{{demande.id}}">
+                                            <a href="#">
+                                           <div class="name clubumus"><strong>{{ demande.member.nom }} {{ demande.member.prenom }}</strong></div>
+                                            </a>
                                             <div class="title">{{ demande.member.profil }}</div>
-                                        </div> <br>
+                                        </div>
+                                        <br>
                                         <div id="{{demande.id}}" align="center">
                                             <a  id="accept_rejoindre{{demande.id}}" href="#" class="btn btn-icon btn-round btn-green btn-xs" title="accepter"><span class="fa fa-check"></span></a>
                                             <a  id="refuser_rejoindre{{demande.id}}" href="#" class="btn btn-icon btn-round btn-green btn-xs" title="refuser"><span class="fa fa-close"></span></a>

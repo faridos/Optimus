@@ -8,6 +8,7 @@ use Payum\Core\Model\OrderInterface;
 use Payum\Core\Request\GetHumanStatus;
 use Payum\Core\Request\Sync;
 use FrontOffice\OptimusBundle\Entity\Club;
+use FrontOffice\OptimusBundle\Entity\Notification;
 use Symfony\Component\HttpFoundation\Request;
 
 class DetailsController extends PayumController {
@@ -58,7 +59,7 @@ class DetailsController extends PayumController {
         /** @var OrderInterface $order */
         $order = $status->getFirstModel();
         $idclub = $this->get('session')->get('idclub');
-       
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         if ($status->getValue() == 'captured') {
             $club = $em->getRepository("FrontOfficeOptimusBundle:Club")->find($idclub);
@@ -66,6 +67,13 @@ class DetailsController extends PayumController {
             $em->merge($club);
             $em->flush();
            
+            $notif = new Notification();
+            $notif->setNotificateur($user);
+            $notif->setType('addClub');
+            $notif->setClub($club);
+            $notif->setEntraineur($user);
+            $em->persist($notif);
+            $em->flush();
            $request->getSession()->getFlashBag()->add('ActivationClub', " Payment Complete : Votre Club  est Maintenant Activé ."); 
         }
         

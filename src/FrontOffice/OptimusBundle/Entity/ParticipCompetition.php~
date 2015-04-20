@@ -26,17 +26,13 @@ class ParticipCompetition {
      * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Competition", inversedBy="particips")
      */
     private $competition;
+    
 
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\Member", inversedBy="particips")
-     * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
-     */
-    private $participant;
+  
     /**
      *
      * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\club", inversedBy="particips")
-     * @ORM\JoinColumn(nullable=false ,onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $club;
 
@@ -46,13 +42,19 @@ class ParticipCompetition {
      * @ORM\Column(name="date_paticipation", type="datetime")
      */
     private $datePaticipation;
-    
+     /**
+     *
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\PartClubCompetition", mappedBy="particips")
+     */
+    private $partclubcomp;
      
     
     public function __construct() {
         $this->datePaticipation = new \Datetime();
     }
-
+ public function __toString() {
+        return (string) $this->getId();
+    }
     /**
      * Get id
      *
@@ -111,26 +113,60 @@ class ParticipCompetition {
 
    
 
+    
     /**
-     * Set participant
+     * Set club
      *
-     * @param \FrontOffice\OptimusBundle\Entity\Member $participant
+     * @param \FrontOffice\OptimusBundle\Entity\club $club
      * @return ParticipCompetition
      */
-    public function setParticipant(\FrontOffice\OptimusBundle\Entity\Member $participant)
+    public function setClub(\FrontOffice\OptimusBundle\Entity\club $club)
     {
-        $this->participant = $participant;
+        $this->club = $club;
     
         return $this;
     }
 
     /**
-     * Get participant
+     * Get club
      *
-     * @return \FrontOffice\OptimusBundle\Entity\Member 
+     * @return \FrontOffice\OptimusBundle\Entity\club 
      */
-    public function getParticipant()
+    public function getClub()
     {
-        return $this->participant;
+        return $this->club;
+    }
+
+    /**
+     * Add partclubcomp
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\PartClubCompetition $partclubcomp
+     * @return ParticipCompetition
+     */
+    public function addPartclubcomp(\FrontOffice\OptimusBundle\Entity\PartClubCompetition $partclubcomp)
+    {
+        $this->partclubcomp[] = $partclubcomp;
+    
+        return $this;
+    }
+
+    /**
+     * Remove partclubcomp
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\PartClubCompetition $partclubcomp
+     */
+    public function removePartclubcomp(\FrontOffice\OptimusBundle\Entity\PartClubCompetition $partclubcomp)
+    {
+        $this->partclubcomp->removeElement($partclubcomp);
+    }
+
+    /**
+     * Get partclubcomp
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPartclubcomp()
+    {
+        return $this->partclubcomp;
     }
 }

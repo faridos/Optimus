@@ -153,6 +153,7 @@ class Competition {
 
     
     public function __construct() {
+       
         $this->dateCreation = new \Datetime();
     }
 

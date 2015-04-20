@@ -1,0 +1,134 @@
+{% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
+
+ {% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('template/css/contentimus.css')}}">
+  <link rel="stylesheet" href="{{ asset('template/css/progress.css') }}">
+        {% endblock %}
+{% block body %}
+    
+<!-- **************************** ici commence le contenu de la page ******************************************-->
+
+<div id="wrapper">
+
+<div id="content" class="max">
+
+<div class="components">
+
+<div class="row " >
+
+<div class="singleTop whiteBg" style="height:584px">
+<div class="progress_bar">
+<hr class="all_steps">
+<hr class="current_steps">
+<div class="step current" id="step1" data-step="1">Choix du Club</div>
+<div class="step" id="step2" data-step="2">Choix des Adherents</div>
+<div class="step" id="step3" data-step="3">Validation</div>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" >
+<div class="panel panel-default shadux">
+<div class="panel-heading optimus">Mes Clubs</div>
+<div class="panel-body">
+<form role="form">
+<ul class="notifyList scrollbar">
+    {% for club in clubs %}
+        {% if club.isPayant == 1%}
+<div class="form-group">
+<div class="set radio custom-radio" onclick="step_process(1, 2)" >
+ <label><input type="radio" name="radio{{club.id}}" id="set{{club.id}}"><span class="set fa fa-check optrect"  ></span>{{ club.nom}}</label>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</ul>
+</form>
+</div>
+</div>
+</div>
+
+{% for club in clubs %}
+  
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 " style="display: none" id="page{{club.id}}"> 
+<div class="panel panel-default shadux" >
+<div class="panel-heading optimus">Liste des adherents</div>
+<div class="panel-body">
+<ul class="notifyList scrollbar">
+    {% for member in club.adherents %}
+        {% if member.member != club.createur %}
+<div class="checkbox custom-checkbox"><label><input type="checkbox" name="choisi" id="choisi{{member.id}}" value="{{ member.member.nom~' '~member.member.prenom}}"><span class="fa fa-check"></span>{{ member.member.nom~' '~member.member.prenom}}</label></div>
+{% endif %}
+{% endfor %}
+</ul>
+<div style="text-align: center">
+<button type="button" onclick="step_process(2, 3)"  class="okus btn btn-round btn-green suivant" id="okus{{club.id}}">Suivant</button>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+{% for club in clubs %}
+<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 " style="display: none" id="choix{{club.id}}">
+
+<div class="panel panel-default shadux"  >
+<div class="panel-heading optimus">hedhi resultat eli i5tarnéha min step 2</div>
+<div class="panel-body">
+<form role="form">
+    {% for member in club.adherents %}
+        {% if member.member != club.createur %}
+<div class="checkbox custom-checkbox"><label><input type="checkbox" id="confirmedChoix{{member.id}}"><span class="fa fa-check"></span> {{ member.member.nom~' '~member.member.prenom}}</label></div>
+{% endif %}
+{% endfor %}
+<div style="text-align: center">
+<button type="reset" value="" onclick="step_process(3, 2, 'desc')" class="avant btn btn-round btn-green" id="avant{{club.id}}">Précédent</button>
+<button type="button" value="" class="btn btn-round btn-green">Confirmer</button>
+</div>
+</form>
+</div>
+
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+</div>
+</div>
+<div class="clearfix"></div>
+</div>
+
+
+
+
+<!-- **************************** Fin contenu de page ******************************************-->
+
+
+    {% endblock %}
+    {% block javascriptfils %}
+        <script src="{{ asset('template/js/progress.js') }}"></script>
+<script>/**this code is developed by essid haithem for optimus team **/
+    {% for club in clubs %}
+$('#set{{club.id}}').click(function(){
+    if (this.checked) {
+        $('#page{{club.id}}').show();
+    }
+});
+$("#okus{{club.id}}").click(function(){
+
+ var txt = "" ;
+ var i ;
+for(i=0;i < 2; i++)
+{
+    if( document.getElementByName('choisi').checked)
+    {
+        txt = txt +  document.getElementByName('choisi').value + " ";
+    }
+}
+     alert(txt);
+});
+$("#avant{{club.id}}").click(function(){
+    $("#choix{{club.id}}").hide();
+});
+
+ {% endfor %}
+</script>
+         {% endblock %}

@@ -12,5 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProgramRepository extends EntityRepository
 {
-    //put your code here
+    public function getProgramJour($id) {
+
+        $em = $this->getEntityManager();
+        $dt = new \Datetime();
+        $dt = $dt->modify('+ 1 days');
+        $dt2 = new \DateTime();
+        $dt2 = $dt2->modify('+ 2 days');
+        $query = $em->createQuery("SELECT program "
+                        . "FROM FrontOfficeOptimusBundle:Program program"
+                        . " where program.clubp = :id and program.datedebut BETWEEN  '" . $dt->format("Y-m-d") . " 00:00:00' and '" . $dt2->format("Y-m-d") . " 23:59:59'"
+                )->setParameter('id', $id);
+
+        return $programs = $query->getResult();
+    }
 }

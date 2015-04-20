@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\UserBundle\Entity\User;
+use FrontOffice\OptimusBundle\Entity\Member;
 use FrontOffice\OptimusBundle\Entity\NotificationSeen;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -32,13 +33,17 @@ class NotificationController extends Controller {
         $c = 0;
         $res = array();
         $resjour = array();
+        $resCompjour = array();
+        $resProgramJour = array();
         $tab1 = array("participation", "AnnulerParticip", "update", "delete", "comment", "photo");
+        $tab2 = array("modifClub", "suppClub", "AccDemClub", "quiteClub", "DeleteMemClub", "addProgram", "modifProgram", "suppProgram");
         //$notifsParticip = new ArrayCollection();
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $amis = $em->getRepository('FrontOfficeUserBundle:User')->getFrinds($user->getId());
 
         $eventjours = $em->getRepository('FrontOfficeOptimusBundle:Event')->getEventJour();
+        $competitionjours = $em->getRepository('FrontOfficeOptimusBundle:Competition')->getCompetitionJour();
 
         foreach ($eventjours as $eventjour) {
             foreach ($user->getParticipations() as $participe) {
@@ -47,7 +52,24 @@ class NotificationController extends Controller {
                 }
             }
         }
-
+        foreach ($competitionjours as $competitionjour) {
+            foreach ($user->getAdherent() as $membre) {
+                foreach ($membre->getParticips() as $participe) {
+                    if ($participe->getParticips()->getCompetition()->getId() == $competitionjour->getId() && $membre->getConfirmed()== 1) {
+                        $resCompjour[] = $competitionjour;
+                    }
+                }
+            }
+        }
+        foreach ($user->getAdherent() as $membre) {
+                if($membre->getConfirmed()== 1 ){
+                    $AlertProgrammes = $em->getRepository('FrontOfficeOptimusBundle:Program')->getProgramJour($membre->getClubad()->getId());
+                        foreach ($AlertProgrammes as $AlertProgramme) {
+                    $resProgramJour[] = $AlertProgramme;
+                    
+                        }
+                }
+            }
 
         if ($user->getConfigNotif()->getEvent()) {
             foreach ($amis as $ami) {
@@ -94,7 +116,7 @@ class NotificationController extends Controller {
             $notificationentrain = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getlisteEntraineur($user->getId());
             foreach ($notificationentrain as $val) {
 
-                if ($user->getcreatedAt() < $val->getEntraineur()->getcreatedAt() && $val->getEntraineur()->getId() != $user->getId() && $notif->getDatenotification() > $user->getConfigNotif()->getDateModifEntraineur()) {
+                if ($user->getcreatedAt() < $val->getEntraineur()->getcreatedAt() && $val->getEntraineur()->getId() != $user->getId() && $val->getDatenotification() > $user->getConfigNotif()->getDateModifEntraineur()) {
                     $i = 0;
                     foreach ($user->getNotificationseen() as $notifSeen) {
                         if ($notifSeen->getNotifications()->getId() == $val->getId()) {
@@ -143,22 +165,62 @@ class NotificationController extends Controller {
 
         if ($user->getConfigNotif()->getClub()) {
             $notifClubRejs = $em->getRepository('FrontOfficeOptimusBundle:Notification')->getNotifEntraineur($user->getId());
-            var_dump($notifClubRejs);die();
+
             foreach ($notifClubRejs as $notifClubRej) {
-                $i = 0;
-                foreach ($user->getNotificationseen() as $notifSeen) {
-                    if ($notifSeen->getNotifications()->getId() == $notifClubRej->getId()) {
-                        $i = 1;
+                if ($notifClubRej->getDatenotification() > $user->getConfigNotif()->getDateModifClub()) {
+                    $i = 0;
+                    foreach ($user->getNotificationseen() as $notifSeen) {
+                        if ($notifSeen->getNotifications()->getId() == $notifClubRej->getId()) {
+                            $i = 1;
+                        }
                     }
-                }
-                if ($i == 0) {
-                    $res[$c] = $notifClubRej;
-                    $c++;
+                    if ($i == 0) {
+                        $res[$c] = $notifClubRej;
+                        $c++;
+                    }
                 }
             }
 
-        }
 
+            $notifAddClubs = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findBy(array("type" => "addClub"), array("datenotification" => 'DESC'));
+            foreach ($notifAddClubs as $notifAddClub) {
+                if ($notifAddClub->getDatenotification() > $user->getConfigNotif()->getDateModifClub() && $user->getId() != $notifAddClub->getNotificateur()->getId()) {
+                    $i = 0;
+                    foreach ($user->getNotificationseen() as $notifSeen) {
+                        if ($notifSeen->getNotifications()->getId() == $notifAddClub->getId()) {
+                            $i = 1;
+                        }
+                    }
+                    if ($i == 0) {
+                        $res[$c] = $notifAddClub;
+                        $c++;
+                    }
+                }
+            }
+            
+            
+            foreach ($user->getAdherent() as $membre) {
+                if($membre->getConfirmed()== 1 ){
+                    $notifsClub = $em->getRepository('FrontOfficeOptimusBundle:Notification')->findBy(array("club" =>$membre->getClubad()), array("datenotification" => 'DESC'));
+                    foreach ($notifsClub as $notifclub) {
+                    if ($user->getId() != $notifclub->getNotificateur()->getId() && in_array($notifclub->getType(), $tab2) && $notifclub->getDatenotification() > $membre->getDateconfirm() && $notifclub->getDatenotification() > $user->getConfigNotif()->getDateModifClub()) {
+                        $i = 0;
+                        foreach ($user->getNotificationseen() as $notifSeen) {
+                            if ($notifSeen->getNotifications()->getId() == $notifclub->getId()) {
+                                $i = 1;
+                            }
+                        }
+                        if ($i == 0) {
+
+                            $res[$c] = $notifclub;
+                            $c++;
+                        }
+                    }
+                }
+                }
+            }
+            
+        }
 
         foreach ($res as $val) {
             $notifseen = new NotificationSeen();
@@ -170,7 +232,7 @@ class NotificationController extends Controller {
         $notificationnonvu = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users" => $user->getId(), "vu" => 0));
         $datenotificationseen = $em->getRepository('FrontOfficeOptimusBundle:NotificationSeen')->findBy(array("users" => $user->getId()), array("datenotificationseen" => 'DESC'));
 
-        return $this->render('FrontOfficeOptimusBundle:Notification:notifParticipe.html.twig', array('datenotificationseen' => $datenotificationseen, 'count' => $notificationnonvu, 'res' => $res, 'resjour' => $resjour));
+        return $this->render('FrontOfficeOptimusBundle:Notification:notifParticipe.html.twig', array('datenotificationseen' => $datenotificationseen, 'count' => $notificationnonvu, 'res' => $res, 'resjour' => $resjour,'resCompjour'=>$resCompjour, 'resProgramJour'=>$resProgramJour));
     }
 
 }

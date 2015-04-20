@@ -24,7 +24,7 @@ class NotificationRepository extends EntityRepository {
         $qb = $em->createQuery("select n "
                                 . "  from FrontOfficeOptimusBundle:Notification n "
                                 . " where n.entraineur = :id "
-                                . " and  n.type != 'entraineur' "
+                                . " and  (n.type = 'rejClub' or  n.type = 'RefDemClub')"
                                 . " ORDER BY n.datenotification DESC"
                         )
                         ->setParameter('id', $id);

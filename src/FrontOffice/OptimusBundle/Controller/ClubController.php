@@ -66,15 +66,15 @@ class ClubController extends Controller {
         $req = $this->get('request');
         if ($req->getMethod() == 'POST') {
             $form->bind($req);
-
             $em->persist($club);
             $em->flush();
+            
             $action = 'add';
             $clubevent = new HistoryClubEvent($user, $club, $action);
-            $clubnotification = new NotificationClubEvent($user, $club, $action);
+            //$clubnotification = new NotificationClubEvent($user, $club, $action);
             $dispatcher = $this->get('event_dispatcher');
-          $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
-          $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
+            $dispatcher->dispatch(FrontOfficeOptimusEvent::AFTER_CLUB_REGISTER, $clubevent);
+            //$dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_CLUB, $clubnotification);
              $request->getSession()->getFlashBag()->add('AjoutClub', "Club  a été creé avec success.");
             return $this->redirect($this->generateUrl('show_club', array('id' => $club->getId())));
         }
@@ -143,6 +143,15 @@ class ClubController extends Controller {
             $editForm->handleRequest($request);
             if ($editForm->isValid()) {
                 $em->flush();
+                
+                $notif = new Notification();
+                $notif->setNotificateur($user);
+                $notif->setType('modifClub');
+                $notif->setClub($club);
+                $notif->setEntraineur($user);
+                $em->persist($notif);
+                $em->flush();
+                
                 // add History 
                 $action = 'update';
                 $clubevent = new HistoryClubEvent($user, $club, $action);
@@ -176,6 +185,14 @@ class ClubController extends Controller {
             $entity->setActive(false);
             $em->persist($entity);
             $em->flush();
+            
+            $notif = new Notification();
+                $notif->setNotificateur($user);
+                $notif->setType('suppClub');
+                $notif->setClub($entity);
+                $notif->setEntraineur($user);
+                $em->persist($notif);
+                $em->flush();
             // add History 
             $action = 'delete';
             $clubevent = new HistoryClubEvent($user, $entity, $action);
@@ -207,6 +224,14 @@ class ClubController extends Controller {
             $entity->setActive(false);
             $em->persist($entity);
             $em->flush();
+            
+            $notif = new Notification();
+                $notif->setNotificateur($user);
+                $notif->setType('suppClub');
+                $notif->setClub($entity);
+                $notif->setEntraineur($user);
+                $em->persist($notif);
+                $em->flush();
             // add History 
             $action = 'delete';
             $clubevent = new HistoryClubEvent($user, $entity, $action);

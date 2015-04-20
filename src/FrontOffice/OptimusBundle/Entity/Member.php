@@ -54,7 +54,7 @@ class Member
    protected $member;
      /**
 
-     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\ParticipCompetition", mappedBy="participant", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\PartClubCompetition", mappedBy="participant", cascade={"persist","remove"})
 
      */
 
@@ -181,13 +181,15 @@ class Member
         return $this->compte;
     }
 
+   
+
     /**
      * Add particips
      *
-     * @param \FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips
+     * @param \FrontOffice\OptimusBundle\Entity\PartClubCompetition $particips
      * @return Member
      */
-    public function addParticip(\FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips)
+    public function addParticip(\FrontOffice\OptimusBundle\Entity\PartClubCompetition $particips)
     {
         $this->particips[] = $particips;
     
@@ -197,9 +199,9 @@ class Member
     /**
      * Remove particips
      *
-     * @param \FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips
+     * @param \FrontOffice\OptimusBundle\Entity\PartClubCompetition $particips
      */
-    public function removeParticip(\FrontOffice\OptimusBundle\Entity\ParticipCompetition $particips)
+    public function removeParticip(\FrontOffice\OptimusBundle\Entity\PartClubCompetition $particips)
     {
         $this->particips->removeElement($particips);
     }

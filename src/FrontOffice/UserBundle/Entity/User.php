@@ -379,6 +379,7 @@ class User extends BaseUser {
         $this->clubs = new ArrayCollection();
 
         $this->albums = new ArrayCollection();
+        $this->adherent = new ArrayCollection();
 
         $this->reward = new ArrayCollection();
 

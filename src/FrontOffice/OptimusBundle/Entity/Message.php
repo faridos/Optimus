@@ -84,6 +84,13 @@ class Message {
      * 
      */
     private $club;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="competition", type="integer", nullable=true)
+     * 
+     */
+    private $competition;
     
 
     public function __construct() {
@@ -268,5 +275,28 @@ class Message {
          public function __toString()
     {
         return (string) $this->getId();
+    }
+
+    /**
+     * Set competition
+     *
+     * @param integer $competition
+     * @return Message
+     */
+    public function setCompetition($competition)
+    {
+        $this->competition = $competition;
+    
+        return $this;
+    }
+
+    /**
+     * Get competition
+     *
+     * @return integer 
+     */
+    public function getCompetition()
+    {
+        return $this->competition;
     }
 }

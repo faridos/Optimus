@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Program;
 use FrontOffice\OptimusBundle\Entity\Seance;
+use FrontOffice\OptimusBundle\Entity\Notification;
 use FrontOffice\OptimusBundle\Form\ProgramType;
 use FrontOffice\OptimusBundle\Form\SeanceType;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,7 @@ class ProgramController extends Controller {
      */
     public function createAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $entity = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);
         $program = new Program();
         $program->setClubp($entity);
@@ -40,6 +42,14 @@ class ProgramController extends Controller {
             $em->persist($program);
             $em->flush();
 
+            $notif = new Notification();
+                $notif->setNotificateur($user);
+                $notif->setType('addProgram');
+                $notif->setClub($program->getClubp());
+                $notif->setEntraineur($user);
+                $em->persist($notif);
+                $em->flush();
+                
             return $this->redirect($this->generateUrl('show_club', array('id' => $entity->getId())));
         }
         return array(
@@ -97,7 +107,7 @@ class ProgramController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($id_club);
         $program = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($id);
-
+        $user = $this->container->get('security.context')->getToken()->getUser();
         if (!$program) {
             throw $this->createNotFoundException('Unable to find Program entity.');
         }
@@ -106,6 +116,14 @@ class ProgramController extends Controller {
 
         if ($editForm->isValid()) {
             $em->flush();
+            
+            $notif = new Notification();
+                $notif->setNotificateur($user);
+                $notif->setType('modifProgram');
+                $notif->setClub($club);
+                $notif->setEntraineur($user);
+                $em->persist($notif);
+                $em->flush();
 
             return $this->redirect($this->generateUrl('show_club', array('id' => $id_club)));
         }
@@ -127,6 +145,15 @@ class ProgramController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $program = $em->getRepository('FrontOfficeOptimusBundle:Program')->find($id);
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $notif = new Notification();
+                $notif->setNotificateur($user);
+                $notif->setType('suppProgram');
+                $notif->setClub($program->getClubp());
+                $notif->setEntraineur($user);
+                $em->persist($notif);
+                $em->flush();
+                
         $em->remove($program);
         $em->flush();
         $response = new Response($id);

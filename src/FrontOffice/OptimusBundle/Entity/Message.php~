@@ -84,6 +84,13 @@ class Message {
      * 
      */
     private $club;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="competition", type="integer", nullable=true)
+     * 
+     */
+    private $competition;
     
 
     public function __construct() {

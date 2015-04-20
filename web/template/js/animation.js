@@ -107,9 +107,11 @@
             'latLng': latlng
         }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
+                 $("#paysregion").val(results[3].formatted_address);
                 if (results[0]) {
 
                     $("#fos_user_registration_form_adresse").val(results[0].formatted_address);
+                   
 
                 } else {
                     alert('No results found');
