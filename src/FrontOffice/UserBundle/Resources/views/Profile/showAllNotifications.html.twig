@@ -1,7 +1,7 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 {% block body %}
     <div id="wrapper">
-        <div id="content" class="max">
+        <div id="content" class="max" style="overflow:hidden !important;">
             <div class="components">
                 <h4>Tout</h4>
                 <div class="row">
@@ -16,7 +16,7 @@
                     <div class="col-md-9">
                         <div class="tabsContainer">
                             <div class="tab-content ">
-                                <ul class="tab-pane fade active in scrollbar" id="notifications">
+                                <ul class="tab-pane fade active in scrollbar" id="notifications" style="overflow:auto !important;">
                                     <div class="notificationsWidget">
                                         <h5>Notifications</h5>
                                         {% for notification in notifications %}
@@ -86,10 +86,31 @@
                                                                 <div class="message">a refusé votre demande de rejoindre le club {{ notification.notifications.club.nom }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'addClub' %}
-                                                                <div class="message">a ajouté un nouveau club {{ notification.notifications.club.nom }}</div>
+                                                                <div class="message">a quitté le club {{ notification.notifications.club.nom }}</div>
                                                             {% endif %}
                                                             {% if notification.notifications.type == 'quiteClub' %}
                                                                 <div class="message">a quitté votre club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'AccDemClub' %}
+                                                                <div class="message">a rejoindre le club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'DeleteMemClub' %}
+                                                                <div class="message">a exclué {{ notification.notifications.entraineur.nom }} du club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'modifClub' %}
+                                                                <div class="message">a modifié le club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'suppClub' %}
+                                                                <div class="message">a supprimé le club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'addProgram' %}
+                                                                <div class="message">a ajouté un programme dans le club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'modifProgram' %}
+                                                                <div class="message">a modifié un programme dans le club {{ notification.notifications.club.nom }}</div>
+                                                            {% endif %}
+                                                            {% if notification.notifications.type == 'suppProgram' %}
+                                                                <div class="message">a supprimé un programme dans le club {{ notification.notifications.club.nom }}</div>
                                                             {% endif %}
                                                         </div>
                                                         <div class="clearfix">

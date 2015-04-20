@@ -30,6 +30,18 @@
         </a>
     </li>
 {% endfor %}
+{% for program in resProgramJour %}
+    <li id='notifParticipe{{program.id}}' style="background: rgba(236, 18, 0, 0.55);">
+        <a href="{{ path('competition_show',{'id':program.id} )}}">
+                <img class="avatar pull-left" src="{{ asset('logoclub.png')}}" alt="avatar">
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">Lancement du programme {{ program.nom }} <br/> Demain le {{ program.datedebut|date('Y/m/d à H:m') }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+{% endfor %}
 {% for notif in datenotificationseen %}
     {% if notif.notifications.type == 'participation' %}
         <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
@@ -257,7 +269,7 @@
     </li>
     {% elseif notif.notifications.type == 'RefDemClub' %}
         <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-            <a href="{{ path('show_profil', { 'id' : notif.notifications.notificateur.id }) }}">
+            <a href="#">
 
                 {% if notif.notifications.notificateur.path == null %}
                     {% if notif.notifications.notificateur.sexe == 'H' %}
@@ -278,7 +290,7 @@
     </li>
     {% elseif notif.notifications.type == 'addClub' %}
         <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
-            <a href="{{ path('show_club', { 'id' : notif.notifications.notificateur.id }) }}">
+            <a href="{{ path('show_club',{'id':notif.notifications.club.id} )}}">
 
                 {% if notif.notifications.notificateur.path == null %}
                     {% if notif.notifications.notificateur.sexe == 'H' %}
@@ -312,7 +324,133 @@
                 {% endif %}
             <div class="pulse border-grey"></div>
             <div class="notify pull-left">
-                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a quitté votre club {{ notif.notifications.club.nom }} </div>
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a quitté le club {{ notif.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'AccDemClub' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_profil', { 'id' : notif.notifications.entraineur.id }) }}">
+
+                {% if notif.notifications.notificateur.path == null %}
+                    {% if notif.notifications.notificateur.sexe == 'H' %}
+                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                    {% else %}
+                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                    {% endif %}
+                {% else %}
+                    <img class="avatar pull-left"  src="{{ asset(notif.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a rejoindre club {{ notif.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'DeleteMemClub' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_profil', { 'id' : notif.notifications.entraineur.id }) }}">
+
+                {% if notif.notifications.notificateur.path == null %}
+                    {% if notif.notifications.notificateur.sexe == 'H' %}
+                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                    {% else %}
+                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                    {% endif %}
+                {% else %}
+                    <img class="avatar pull-left"  src="{{ asset(notif.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a exclué {{ notif.notifications.entraineur.prenom }} {{ notif.notifications.entraineur.nom }} de club {{ notif.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'modifClub' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_club',{'id':notif.notifications.club.id} )}}">
+
+                {% if notif.notifications.notificateur.path == null %}
+                    {% if notif.notifications.notificateur.sexe == 'H' %}
+                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                    {% else %}
+                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                    {% endif %}
+                {% else %}
+                    <img class="avatar pull-left"  src="{{ asset(notif.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a modifié le club {{ notif.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'suppClub' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="#">
+
+                {% if notif.notifications.notificateur.path == null %}
+                    {% if notif.notifications.notificateur.sexe == 'H' %}
+                        <img class="avatar pull-left"  src="{{ asset('men.png') }}">
+                    {% else %}
+                        <img class="avatar pull-left"  src="{{ asset('women.png') }}">
+                    {% endif %}
+                {% else %}
+                    <img class="avatar pull-left"  src="{{ asset(notif.notifications.notificateur.WebPath)}}" alt="avatar" ></a>
+                {% endif %}
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a supprimé le club {{ notif.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'addProgram' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_club',{'id':notif.notifications.club.id} )}}">
+
+            <img class="avatar pull-left"  src="{{ asset('logoclub.png') }}">
+                  
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a ajouté un programme dans le club {{ notif.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'modifProgram' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_club',{'id':notif.notifications.club.id} )}}">
+
+            <img class="avatar pull-left"  src="{{ asset('logoclub.png') }}">
+                  
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a modifié un programme dans le club {{ notif.notifications.club.nom }} </div>
+                <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
+            </div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+    {% elseif notif.notifications.type == 'suppProgram' %}
+        <li id='notifParticipe{{notif.id}}' {% if notif.vu == 0 %}style="background: #EFEFEF;"{% endif %}>
+            <a href="{{ path('show_club',{'id':notif.notifications.club.id} )}}">
+
+            <img class="avatar pull-left"  src="{{ asset('logoclub.png') }}">
+                  
+            <div class="pulse border-grey"></div>
+            <div class="notify pull-left">
+                <div class="notifyName">{{ notif.notifications.notificateur.prenom }} {{ notif.notifications.notificateur.nom }} a supprimé un programme dans le club {{ notif.notifications.club.nom }} </div>
                 <div class="notifyTime">{{ notif.notifications.getDuréeNotification() }}</div>
             </div>
             <div class="clearfix"></div>
@@ -320,7 +458,7 @@
     </li>
 {% endif %}
 
-{% endfor %}*{{count|length + resCompjour|length + resjour|length}}*<script>{% set notifications = getNotifications(app.user) %}
+{% endfor %}*{{count|length + resCompjour|length + resjour|length + resProgramJour|length}}*<script>{% set notifications = getNotifications(app.user) %}
     {% for notification in notifications  %}
         $('body').on('click', '#notifParticipe{{notification.id}}', function ()
         {
@@ -413,27 +551,69 @@
             });
         {% elseif resultat.type == "rejClub" %}
             toastr8.googlePlus({
-                message: '<a href="#">veut rejoindre votre club </a>',
+                message: '<a href="{{ path('show_profil', { 'id' : resultat.notificateur.id }) }}">veut rejoindre votre club </a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
         {% elseif resultat.type == "RefDemClub" %}
             toastr8.googlePlus({
-                message: '<a href="#">refuse votre demande de rejoindre le club</a>',
+                message: '<a href="{{ path('show_profil', { 'id' : resultat.notificateur.id }) }}">refuse votre demande de rejoindre le club</a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/event.png']
             });
         {% elseif resultat.type == "addClub" %}
             toastr8.googlePlus({
-                message: '<a href="#">a ajouté un nouveau club</a>',
+                message: '<a href="{{ path('show_club',{'id':resultat.club.id} )}}">a ajouté un nouveau club {{ resultat.club.nom }}</a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
                 imgURI: ['http://www.optimus-beta.com/web/logoclub.png']
             });
         {% elseif resultat.type == "quiteClub" %}
             toastr8.googlePlus({
-                message: '<a href="#">a quitté votre club </a>',
+                message: '<a href="{{ path('show_club',{'id':resultat.club.id} )}}">a quitté le club {{ resultat.club.nom }}</a>',
                 title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
-                imgURI: ['http://www.optimus-beta.com/web/event.png']
+                imgURI: ['http://www.optimus-beta.com/web/logoclub.png']
+            });
+               {% elseif resultat.type == "AccDemClub" %}
+            toastr8.googlePlus({
+                message: '<a href="{{ path('show_profil', { 'id' : resultat.notificateur.id }) }}">a rejoindre le club {{ resultat.club.nom }}</a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/logoclub.png']
+            });
+               {% elseif resultat.type == "DeleteMemClub" %}
+            toastr8.googlePlus({
+                message: '<a href="{{ path('show_club',{'id':resultat.club.id} )}}">a exclué {{ resultat.entraineur.nom }} du club {{ resultat.club.nom }}</a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/logoclub.png']
+            });
+               {% elseif resultat.type == "modifClub" %}
+            toastr8.googlePlus({
+                message: '<a href="{{ path('show_club',{'id':resultat.club.id} )}}">a modifié le club {{ resultat.club.nom }}</a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/logoclub.png']
+            });
+               {% elseif resultat.type == "suppClub" %}
+            toastr8.googlePlus({
+                message: '<a href="#">a supprimé le club {{ resultat.club.nom }}</a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/logoclub.png']
+            });
+            {% elseif resultat.type == "addProgram" %}
+            toastr8.googlePlus({
+                message: '<a href="#">a ajouté un programme dans le club {{ resultat.club.nom }}</a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/logoclub.png']
+            });
+            {% elseif resultat.type == "modifProgram" %}
+            toastr8.googlePlus({
+                message: '<a href="#">a modifié un programme dans le club {{ resultat.club.nom }}</a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/logoclub.png']
+            });
+            {% elseif resultat.type == "suppProgram" %}
+            toastr8.googlePlus({
+                message: '<a href="#">a supprimé un programme dans le club {{ resultat.club.nom }}</a>',
+                title: '{{ resultat.notificateur.prenom }} {{ resultat.notificateur.nom }}',
+                imgURI: ['http://www.optimus-beta.com/web/logoclub.png']
             });
         {% endif %}
     {% endfor %}
