@@ -52,7 +52,6 @@ height: 150px;
   position: relative;
   bottom: 0;
   width: 50%;
- 
   left:0;
   background-color:rgba(255, 255, 255, 0.6);
   height: 40%;
@@ -150,15 +149,14 @@ width:100%
 /*publicité opimus */
 
 .puboptimus{
-  display: ; 
-  top:70%;
+    
+  display: block;
   position: relative;
-  bottom: 0;
-  width: 50%;
- 
-  left:0;
-  background-color:rgba(255, 255, 255, 0.5);
-  height: 30%;
+  bottom: 19%;
+  padding:0px;
+  left: 0;
+  position: relative;
+  height: 19%;
 
 }
 
@@ -236,10 +234,10 @@ width: 110%;
 
 .banoptimus{
 
-    top: 20%;
-    position: absolute;
-    width: 90%;
-    margin-left: -95%;
+     top: 20%;
+  position: relative;
+  width: 90%;
+  margin-left: 5%;
 
 }
 .search-optimuss{

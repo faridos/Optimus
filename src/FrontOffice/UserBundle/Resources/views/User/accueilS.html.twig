@@ -1,11 +1,11 @@
 {% extends "FrontOfficeOptimusBundle::layout.html.twig" %}
 {% block body %}
     <div id="wrapper">
-     <input style="width: 50%;" type="text" class="form-control" id="pac-input2" placeholder="Entrer ici votre région" autocomplete="on" size="60">
+     <input style="width: 50%; visibility: hidden;" type="text" class="form-control" id="pac-input2" placeholder="Entrer ici votre région" autocomplete="on" size="60">
 
-        <div id="mapView" class="mob-min"><div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span> Loading map...</div> </div>
+       
         <div id="content" class="mob-max" style="height: 356px;">
-            <div id="content2" class="col-lg-12"><div class="row mb20">
+            <div id="content2" class="col-lg-12" style="z-index: 2;"><div class="row mb20">
                 </div>
 
                 <div class="col-lg-12">
@@ -164,9 +164,17 @@
                 </div>
                 <!-- <div class="loader"> <img src="{{asset('template/images/ajax-loader(2).gif') }}"></div> -->
             </div>
+            <div id="map-event" style="height: 100%" class="mob-min"></div>
             <!--- baniere publicitaire ****************************************************  -->
             <div class="puboptimus">
-                <img src="{{ asset('template/images/banniere-pub.jpg') }}" class="banoptimus">
+                  <div id="rotating-item-wrapper" >
+<a href="#" target="_blank"><img src="{{ asset('template/images/greenpeople.jpg') }}" alt="a person entering a building" class="rotating-item" style="width:100%;height:100%" /></a>
+<a href="#" target="_blank"><img src="{{ asset('template/images/entrance.jpg') }}" alt="photo of building across from our office" class="rotating-item" style="width:100%;height:100%" /></a>
+<a href="#" target="_blank"><img src="{{ asset('template/images/bluepeople.jpg') }}" alt="building entrance with neon backlit walls" class="rotating-item"  style="width:100%;height:100%"/></a>
+<a href="#" target="_blank"><img src="{{ asset('template/images/reflection3.jpg') }}" alt="building lobby window reflections" class="rotating-item" style="width:100%;height:100%" /></a>
+<a href="#" target="_blank"><img src="{{ asset('template/images/reflection2.jpg') }}" alt="reflection on building windows" class="rotating-item" style="width:100%;height:100%" /></a>
+<a href="#" target="_blank"><img src="{{ asset('template/images/manequine.jpg') }}" alt="two manequines in window" class="rotating-item" style="width:100%;height:100%" /></a>
+</div>
             </div>
             <!--- fin baniere publicitaire ****************************************************  --> 
             <div class="clearfix"></div>
@@ -176,16 +184,426 @@
         {% endblock %} 
             {% block javascriptfils %}
                 <script>
-                    (function($) {
+                    "use strict";
+                        
+                        function initialize() {
+                            
+                            var markers = [];
+                            var infobox = new InfoBox({
+                                            disableAutoPan: false,
+                                                    maxWidth: 202,
+                                                    pixelOffset: new google.maps.Size( - 101, - 285),
+                                                    zIndex: null,
+                                                    boxStyle: {
+                                                    background: "url('http://www.optimus-beta.com/web/template/images/infobox-bg.png') no-repeat",
+                                                            opacity: 1,
+                                                            width: "202px",
+                                                            height: "245px"
+                                                    },
+                                                    closeBoxMargin: "10px 10px 0px 0px",
+                                                    closeBoxURL: "",
+                                                    infoBoxClearance: new google.maps.Size(1, 1),
+                                                    pane: "floatPane",
+                                                    enableEventPropagation: false
+                                            });
+                                            
+                        var options = {
+                            center: { lat: -34.397, lng: 150.644},
+                        zoom : 15,
+                                mapTypeId: google.maps.MapTypeId.HYBRID
+                        };
+                                var map = new google.maps.Map(document.getElementById('map-event'), options);
+                                
+                                                      var markerevent;
+        var geocoder;
+        geocoder = new google.maps.Geocoder();
+        google.maps.event.addListener(map, 'click', function(event) {
+
+
+         
+            var latlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+            //latlng = event.latLng;
+
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                       
+                        placeMarker(event.latLng);
+                    } else {
+                        alert('No results found');
+                    }
+                } else {
+                    alert('Geocoder failed due to: ' + status);
+                }
+
+            });
+
+        });
+                                
+                                if (navigator.geolocation) {
+
+                        navigator.geolocation.getCurrentPosition(function (position) {
+
+                        var pos = new google.maps.LatLng(position.coords.latitude,
+                                position.coords.longitude);
+                                var newMarker = new google.maps.Marker({
+
+                                position: pos,
+                                        map: map,
+                                        icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
+                                        draggable: false,
+                                        animation: google.maps.Animation.DROP
+
+                                });
+                               map.setCenter(pos);
+                        }, function () {
+                        handleNoGeolocation(true);
+                        });
+                        } else {
+                        handleNoGeolocation(false);
+                        }
+                        
+                        {% for event in eventsMap %}
+
+                                                var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
+                                                        var marker_{{ event.id}} = new google.maps.Marker({
+                                                        position: myLatLng,
+                                                                map: map,
+                                                                {% if date(event.dateDebut)< date() %}
+                                                                icon: new google.maps.MarkerImage('http://localhost/Optimus/web/gggggggg.png'),
+                                                                {% else %}
+                                                                icon: new google.maps.MarkerImage('http://localhost/Optimus/web/FFF.png'),
+                                                                {% endif %}
+                                                                draggable: false,
+                                                                animation: google.maps.Animation.DROP,
+                                                                title: "Cliquez pour voir aperçu"
+                                                        });
+                                                        var image ={% if event.path == null %}
+                                                        "{{ asset('event.png') }}"
+                                    {% else %}
+                                                        "{{ asset(event.WebPath)}}"
+                                        {% endif %}
+                                                            var contenuInfoBulle_{{ event.id}} =  '<div class="infoW">' +
+                                                            '<div class="propImg">' +
+                                                            '<img class="closeInfo" src="' + image + '">' +
+                                                            '<div class="propBg closeInfo">' +
+                                                            {% if event.frais %}
+                                                            '<div class="propPrice">{{event.frais}} &euro;</div>' +
+                                                            {% endif %}
+                                                            '<div class="propType">{{event.type}}</div>' +
+                                                            '</div>' +
+                                                            '</div>' +
+                                                            '<div class="paWrapper closeInfo" >' +
+                                                            '<div class="propTitle">{{event.titre}}</div>' +
+                                                            '<div class="propAddress">{{event.lieu}}</div>' +
+                                                            '</div>' +
+                                                            '<div class="propRating">' +
+                                                            '{% include 'DCSRatingBundle:Rating:rating.html.twig' with {'id' : "E"~event.id} %}' +
+                                                            '</div>' +
+                                                            '<div class="clearfix"></div>' +
+                                                            '<div class="infoButtons">' +{% set participantOuNon=ParticipantOuNon(event,user) %}{% if participantOuNon == 0 and date(event.dateFin)>= date() %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#"  id="exit_eventm{{event.id}}">' +
+                                                            '<span id="eve_map{{event.id}}" class="requestEvent{{event.id}}"></span>' +
+                                                            '</a>' +
+                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% elseif date(event.dateFin)>= date() %}{% if  event.createur.id != user.id %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#" id="exit_eventm{{event.id}}">' +
+                                                            '<span id="eve_mapp{{event.id}}" class="exitEventm{{event.id}}"></span>' +
+                                                            '</a>' +
+                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% endif %}{% endif %}
+                                                            '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
+                                                            '</div>' +
+                                                            '</div>';
+                                                                   
+                                                            google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
+                                                                $.ajax({
+                                                        url: Routing.generate('marquerEvent', {'id': {{event.id}}}),
+                                                                success: function(data) {
+                                                                    console.log(data.msgmap);
+                                                                    $("#eve_map{{event.id}}").html(data.msgmap);
+                                                              $("#eve_mapp{{event.id}}").html(data.msgmap);
+                                                           
+                                                                }
+                                                        });
+                                                            infobox.setContent(contenuInfoBulle_{{ event.id}});
+                                                                    infobox.open(map, marker_{{ event.id}});
+                                                            });
+                                                            $(document).on('click', '.closeInfo', function() {
+                                                    infobox.open(null, null);
+                                                    });
+                                                            $(document).on('click', '#exit_eventm{{event.id}}', function() {
+                                                        $("#exit_event{{event.id}}").empty();
+                                                    
+                                                        $("#exit_eventm{{event.id}}").empty();
+                                                        $('#loaderPartm_{{event.id}}').show();
+                                                        
+                                                        $("#exit_event{{event.id}}").empty();
+                                                        $('#loaderPart_{{event.id}}').show();
+                                                        $.ajax({
+                                                        url: Routing.generate('exit_event', {'id': {{event.id}}}),
+                                                                success: function(data) {
+                                                                    $("#exit_eventm{{event.id}}").html(data.msgmap);
+                                                                        $("#exit_event{{event.id}}").html(data.msg);
+                                                                        var test = data.etat;
+                                                                        if (test == 0){
+                                                                            $('#loaderPartm_{{event.id}}').hide();
+                                                                $('#appendshare{{event.id}}').hide();
+                                                                $('#loaderPart_{{event.id}}').hide();
+                                                                } else{
+                                                                $('#loaderPartm_{{event.id}}').hide();
+                                                                $('#appendshare{{event.id}}').show();
+                                                                $('#loaderPart_{{event.id}}').hide();
+                                                                }
+                                                                }
+                                                        });
+                                                    });
+                                                       {% endfor %}
+                                           var input = (document.getElementById('pac-input2'));
+                                                       map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+                                                        var searchBox = new google.maps.places.SearchBox((input));
+                                                        google.maps.event.addListener(searchBox, 'places_changed', function () {
+                                                        var places = searchBox.getPlaces();
+                                                                if (places.length == 0) {
+                                                        return;
+                                                        }
+
+                                                        markers = [];
+                                                                var bounds = new google.maps.LatLngBounds();
+                                                                for (var i = 0, place; place = places[i]; i++) {
+                                                        var image = {
+                                                        url: place.icon,
+                                                                size: new google.maps.Size(71, 71),
+                                                                origin: new google.maps.Point(0, 0),
+                                                                anchor: new google.maps.Point(17, 34),
+                                                                scaledSize: new google.maps.Size(25, 25)
+                                                        };
+                                                                bounds.extend(place.geometry.location);
+                                                        }
+
+                                                        map.fitBounds(bounds);
+                                                                map.setZoom(15);
+                                                        });
+                                                        google.maps.event.addListener(map, 'bounds_changed', function () {
+                                                        var bounds = map.getBounds();
+                                                                searchBox.setBounds(bounds);
+                                                        });
+                        }
+                google.maps.event.addDomListener(window, 'load', initialize);
+                    {# (function($) {
                     "use strict";
                             var map;
                             var pos;
                             var options = {
+                            center: { lat: -34.397, lng: 150.644},
                             zoom : 15,
                             mapTypeId: google.maps.MapTypeId.HYBRID
-
                             };
-                            $("#btnmsg_{{event.id}}").on('click', function () {
+                        var markers = [];                        
+                    
+                                            var infobox = new InfoBox({
+                                            disableAutoPan: false,
+                                                    maxWidth: 202,
+                                                    pixelOffset: new google.maps.Size( - 101, - 285),
+                                                    zIndex: null,
+                                                    boxStyle: {
+                                                    background: "url('http://www.optimus-beta.com/web/template/images/infobox-bg.png') no-repeat",
+                                                            opacity: 1,
+                                                            width: "202px",
+                                                            height: "245px"
+                                                    },
+                                                    closeBoxMargin: "10px 10px 0px 0px",
+                                                    closeBoxURL: "",
+                                                    infoBoxClearance: new google.maps.Size(1, 1),
+                                                    pane: "floatPane",
+                                                    enableEventPropagation: false
+                                            });
+                                            setTimeout(function() {
+
+
+                                            map = new google.maps.Map(document.getElementById('mapView'), options);
+                                                    map.setZoom(15);
+                                                    
+                                                    var markerevent;
+        var geocoder;
+        geocoder = new google.maps.Geocoder();
+        google.maps.event.addListener(map, 'click', function(event) {
+
+
+         
+            var latlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+            //latlng = event.latLng;
+
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                       
+                        placeMarker(event.latLng);
+                    } else {
+                        alert('No results found');
+                    }
+                } else {
+                    alert('Geocoder failed due to: ' + status);
+                }
+
+            });
+
+        });
+        
+                                                    
+                                                    if (navigator.geolocation) {
+                                            navigator.geolocation.getCurrentPosition(function (position) {
+                                            pos = new google.maps.LatLng(position.coords.latitude,
+                                                    position.coords.longitude);
+                                                    var newMarker = new google.maps.Marker({
+                                                    position: pos,
+                                                            map: map,
+                                                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
+                                                            draggable: false,
+                                                            animation: google.maps.Animation.DROP,
+                                                    });
+                                                    map.setCenter(pos);
+
+                                                    
+                                            }, function () {
+                                            handleNoGeolocation(true);
+                                            });
+                                            } else {
+                                            handleNoGeolocation(false);
+                                            }
+
+
+                                    {% for event in eventsMap %}
+
+                                                var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
+                                                        var marker_{{ event.id}} = new google.maps.Marker({
+                                                        position: myLatLng,
+                                                                map: map,
+                                                                {% if date(event.dateDebut)< date() %}
+                                                                icon: new google.maps.MarkerImage('http://localhost/Optimus/web/gggggggg.png'),
+                                                                {% else %}
+                                                                icon: new google.maps.MarkerImage('http://localhost/Optimus/web/FFF.png'),
+                                                                {% endif %}
+                                                                draggable: false,
+                                                                animation: google.maps.Animation.DROP,
+                                                                title: "Cliquez pour voir aperçu"
+                                                        });
+                                                        var image ={% if event.path == null %}
+                                                        "{{ asset('event.png') }}"
+                                    {% else %}
+                                                        "{{ asset(event.WebPath)}}"
+                                        {% endif %}
+                                                            var contenuInfoBulle_{{ event.id}} =  '<div class="infoW">' +
+                                                            '<div class="propImg">' +
+                                                            '<img class="closeInfo" src="' + image + '">' +
+                                                            '<div class="propBg closeInfo">' +
+                                                            {% if event.frais %}
+                                                            '<div class="propPrice">{{event.frais}} &euro;</div>' +
+                                                            {% endif %}
+                                                            '<div class="propType">{{event.type}}</div>' +
+                                                            '</div>' +
+                                                            '</div>' +
+                                                            '<div class="paWrapper closeInfo" >' +
+                                                            '<div class="propTitle">{{event.titre}}</div>' +
+                                                            '<div class="propAddress">{{event.lieu}}</div>' +
+                                                            '</div>' +
+                                                            '<div class="propRating">' +
+                                                            '{% include 'DCSRatingBundle:Rating:rating.html.twig' with {'id' : "E"~event.id} %}' +
+                                                            '</div>' +
+                                                            '<div class="clearfix"></div>' +
+                                                            '<div class="infoButtons">' +{% set participantOuNon=ParticipantOuNon(event,user) %}{% if participantOuNon == 0 and date(event.dateFin)>= date() %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#"  id="exit_eventm{{event.id}}">' +
+                                                            '<span id="eve_map{{event.id}}" class="requestEvent{{event.id}}"></span>' +
+                                                            '</a>' +
+                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% elseif date(event.dateFin)>= date() %}{% if  event.createur.id != user.id %}
+                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#" id="exit_eventm{{event.id}}">' +
+                                                            '<span id="eve_mapp{{event.id}}" class="exitEventm{{event.id}}"></span>' +
+                                                            '</a>' +
+                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% endif %}{% endif %}
+                                                            '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
+                                                            '</div>' +
+                                                            '</div>';
+                                                                   
+                                                            google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
+                                                                $.ajax({
+                                                        url: Routing.generate('marquerEvent', {'id': {{event.id}}}),
+                                                                success: function(data) {
+                                                                    console.log(data.msgmap);
+                                                                    $("#eve_map{{event.id}}").html(data.msgmap);
+                                                              $("#eve_mapp{{event.id}}").html(data.msgmap);
+                                                           
+                                                                }
+                                                        });
+                                                            infobox.setContent(contenuInfoBulle_{{ event.id}});
+                                                                    infobox.open(map, marker_{{ event.id}});
+                                                            });
+                                                            $(document).on('click', '.closeInfo', function() {
+                                                    infobox.open(null, null);
+                                                    });
+                                                            $(document).on('click', '#exit_eventm{{event.id}}', function() {
+                                                        $("#exit_event{{event.id}}").empty();
+                                                    
+                                                        $("#exit_eventm{{event.id}}").empty();
+                                                        $('#loaderPartm_{{event.id}}').show();
+                                                        
+                                                        $("#exit_event{{event.id}}").empty();
+                                                        $('#loaderPart_{{event.id}}').show();
+                                                        $.ajax({
+                                                        url: Routing.generate('exit_event', {'id': {{event.id}}}),
+                                                                success: function(data) {
+                                                                    $("#exit_eventm{{event.id}}").html(data.msgmap);
+                                                                        $("#exit_event{{event.id}}").html(data.msg);
+                                                                        var test = data.etat;
+                                                                        if (test == 0){
+                                                                            $('#loaderPartm_{{event.id}}').hide();
+                                                                $('#appendshare{{event.id}}').hide();
+                                                                $('#loaderPart_{{event.id}}').hide();
+                                                                } else{
+                                                                $('#loaderPartm_{{event.id}}').hide();
+                                                                $('#appendshare{{event.id}}').show();
+                                                                $('#loaderPart_{{event.id}}').hide();
+                                                                }
+                                                                }
+                                                        });
+                                                    });
+                                                       {% endfor %}
+                                           
+                                                       var input = (document.getElementById('pac-input2'));
+                                                       map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+                                                        var searchBox = new google.maps.places.SearchBox((input));
+                                                        google.maps.event.addListener(searchBox, 'places_changed', function () {
+                                                        var places = searchBox.getPlaces();
+                                                                if (places.length == 0) {
+                                                        return;
+                                                        }
+
+                                                        markers = [];
+                                                                var bounds = new google.maps.LatLngBounds();
+                                                                for (var i = 0, place; place = places[i]; i++) {
+                                                        var image = {
+                                                        url: place.icon,
+                                                                size: new google.maps.Size(71, 71),
+                                                                origin: new google.maps.Point(0, 0),
+                                                                anchor: new google.maps.Point(17, 34),
+                                                                scaledSize: new google.maps.Size(25, 25)
+                                                        };
+                                                                bounds.extend(place.geometry.location);
+                                                        }
+
+                                                        map.fitBounds(bounds);
+                                                                map.setZoom(15);
+                                                        });
+                                                        google.maps.event.addListener(map, 'bounds_changed', function () {
+                                                        var bounds = map.getBounds();
+                                                                searchBox.setBounds(bounds);
+                                                        });
+                                                    }, 300);
+                                            })(jQuery);   #}                                                                                    
+                                        </script>
+                                        <script>
+                                            $("#btnmsg_{{event.id}}").on('click', function () {
                     $("#btnmsg_{{event.id}}").hide();
                             $('#btnlod_{{event.id}}').show();
                             var comment = $("#input_{{event.id}}").val();
@@ -286,203 +704,8 @@
                                             });
                                     }
                                     });
-                                            var infobox = new InfoBox({
-                                            disableAutoPan: false,
-                                                    maxWidth: 202,
-                                                    pixelOffset: new google.maps.Size( - 101, - 285),
-                                                    zIndex: null,
-                                                    boxStyle: {
-                                                    background: "url('http://www.optimus-beta.com/web/template/images/infobox-bg.png') no-repeat",
-                                                            opacity: 1,
-                                                            width: "202px",
-                                                            height: "245px"
-                                                    },
-                                                    closeBoxMargin: "10px 10px 0px 0px",
-                                                    closeBoxURL: "",
-                                                    infoBoxClearance: new google.maps.Size(1, 1),
-                                                    pane: "floatPane",
-                                                    enableEventPropagation: false
-                                            });
-                                            setTimeout(function() {
-
-
-                                            map = new google.maps.Map(document.getElementById('mapView'), options);
-                                                    map.setZoom(15);
-                                                    
-                                                    var markerevent;
-        var geocoder;
-        geocoder = new google.maps.Geocoder();
-        google.maps.event.addListener(map, 'click', function(event) {
-
-
-         
-            var latlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-            //latlng = event.latLng;
-
-            geocoder.geocode({
-                'latLng': latlng
-            }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                       
-                        placeMarker(event.latLng);
-                    } else {
-                        alert('No results found');
-                    }
-                } else {
-                    alert('Geocoder failed due to: ' + status);
-                }
-
-            });
-
-        });
-        
-                                                    
-                                                    if (navigator.geolocation) {
-                                            navigator.geolocation.getCurrentPosition(function (position) {
-                                            pos = new google.maps.LatLng(position.coords.latitude,
-                                                    position.coords.longitude);
-                                                    var newMarker = new google.maps.Marker({
-                                                    position: pos,
-                                                            map: map,
-                                                            icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-position.png'),
-                                                            draggable: false,
-                                                            animation: google.maps.Animation.DROP,
-                                                    });
-                                                    map.setCenter(pos);
-
-                                                    
-                                            }, function () {
-                                            handleNoGeolocation(true);
-                                            });
-                                            } else {
-                                            handleNoGeolocation(false);
-                                            }
-
-
-                                    {% for event in eventsMap %}
-
-                                                var myLatLng = new google.maps.LatLng({{event.lat}}, {{event.lng}});
-                                                        var marker_{{ event.id}} = new google.maps.Marker({
-                                                        position: myLatLng,
-                                                                map: map,
-                                                                icon: new google.maps.MarkerImage('http://www.optimus-beta.com/web/template/images/marker-green.png'),
-                                                                draggable: false,
-                                                                animation: google.maps.Animation.DROP,
-                                                                title: "Cliquez pour voir aperçu"
-                                                        });
-                                                        var image ={% if event.path == null %}
-                                                        "{{ asset('event.png') }}"
-                                    {% else %}
-                                                        "{{ asset(event.WebPath)}}"
-                                        {% endif %}
-                                                            var contenuInfoBulle_{{ event.id}} =  '<div class="infoW">' +
-                                                            '<div class="propImg">' +
-                                                            '<img class="closeInfo" src="' + image + '">' +
-                                                            '<div class="propBg closeInfo">' +
-                                                            {% if event.frais %}
-                                                            '<div class="propPrice">{{event.frais}} &euro;</div>' +
-                                                            {% endif %}
-                                                            '<div class="propType">{{event.type}}</div>' +
-                                                            '</div>' +
-                                                            '</div>' +
-                                                            '<div class="paWrapper closeInfo" >' +
-                                                            '<div class="propTitle">{{event.titre}}</div>' +
-                                                            '<div class="propAddress">{{event.lieu}}</div>' +
-                                                            '</div>' +
-                                                            '<div class="propRating">' +
-                                                            '{% include 'DCSRatingBundle:Rating:rating.html.twig' with {'id' : "E"~event.id} %}' +
-                                                            '</div>' +
-                                                            '<div class="clearfix"></div>' +
-                                                            '<div class="infoButtons">' +{% set participantOuNon=ParticipantOuNon(event,user) %}{% if participantOuNon == 0 and date(event.dateFin)>= date() %}
-                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#"  id="exit_eventm{{event.id}}">' +
-                                                            '<span id="eve_map{{event.id}}" class="requestEvent{{event.id}}"></span>' +
-                                                            '</a>' +
-                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% elseif date(event.dateFin)>= date() %}{% if  event.createur.id != user.id %}
-                                                            '<a class="btn btn-sm btn-round btn-gray btn-o" href="#" id="exit_eventm{{event.id}}">' +
-                                                            '<span id="eve_mapp{{event.id}}" class="exitEventm{{event.id}}"></span>' +
-                                                            '</a>' +
-                                                            '<a class="loader" id="loaderPartm_{{event.id}}"> <img src="{{asset('template/images/ajax-loader-comment.gif') }}"></a>' +{% endif %}{% endif %}
-                                                            '<a href="{{ path('show_event',{'id':event.id} )}}" class="btn btn-sm btn-round btn-green viewInfo">Voir</a>' +
-                                                            '</div>' +
-                                                            '</div>';
-                                                                   
-                                                            google.maps.event.addListener(marker_{{ event.id}}, 'click', function() {
-                                                                $.ajax({
-                                                        url: Routing.generate('marquerEvent', {'id': {{event.id}}}),
-                                                                success: function(data) {
-                                                                    console.log(data.msgmap);
-                                                                    $("#eve_map{{event.id}}").html(data.msgmap);
-                                                              $("#eve_mapp{{event.id}}").html(data.msgmap);
-                                                           
-                                                                }
-                                                        });
-                                                            infobox.setContent(contenuInfoBulle_{{ event.id}});
-                                                                    infobox.open(map, marker_{{ event.id}});
-                                                            });
-                                                            $(document).on('click', '.closeInfo', function() {
-                                                    infobox.open(null, null);
-                                                    });
-                                                            $(document).on('click', '#exit_eventm{{event.id}}', function() {
-                                                        $("#exit_event{{event.id}}").empty();
-                                                    
-                                                        $("#exit_eventm{{event.id}}").empty();
-                                                        $('#loaderPartm_{{event.id}}').show();
-                                                        
-                                                        $("#exit_event{{event.id}}").empty();
-                                                        $('#loaderPart_{{event.id}}').show();
-                                                        $.ajax({
-                                                        url: Routing.generate('exit_event', {'id': {{event.id}}}),
-                                                                success: function(data) {
-                                                                    $("#exit_eventm{{event.id}}").html(data.msgmap);
-                                                                        $("#exit_event{{event.id}}").html(data.msg);
-                                                                        var test = data.etat;
-                                                                        if (test == 0){
-                                                                            $('#loaderPartm_{{event.id}}').hide();
-                                                                $('#appendshare{{event.id}}').hide();
-                                                                $('#loaderPart_{{event.id}}').hide();
-                                                                } else{
-                                                                $('#loaderPartm_{{event.id}}').hide();
-                                                                $('#appendshare{{event.id}}').show();
-                                                                $('#loaderPart_{{event.id}}').hide();
-                                                                }
-                                                                }
-                                                        });
-                                                    });
-                                                                                                        {% endfor %}
-                                                                                            
-                                                     var input = (document.getElementById('pac-input2'));
-                                                       map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-                                                        var searchBox = new google.maps.places.SearchBox((input));
-                                                        google.maps.event.addListener(searchBox, 'places_changed', function () {
-                                                        var places = searchBox.getPlaces();
-                                                                if (places.length == 0) {
-                                                        return;
-                                                        }
-
-                                                        var markers = [];
-                                                                var bounds = new google.maps.LatLngBounds();
-                                                                for (var i = 0, place; place = places[i]; i++) {
-                                                        var image = {
-                                                        url: place.icon,
-                                                                size: new google.maps.Size(71, 71),
-                                                                origin: new google.maps.Point(0, 0),
-                                                                anchor: new google.maps.Point(17, 34),
-                                                                scaledSize: new google.maps.Size(25, 25)
-                                                        };
-                                                                bounds.extend(place.geometry.location);
-                                                        }
-
-                                                        map.fitBounds(bounds);
-                                                                map.setZoom(15);
-                                                        });
-                                                        google.maps.event.addListener(map, 'bounds_changed', function () {
-                                                        var bounds = map.getBounds();
-                                                                searchBox.setBounds(bounds);
-                                                        });
-                                                    }, 300);
-                                            })(jQuery);                                                                                       
-                                                        $('#exit_event{{event.id}}').click(function() {
+                                    
+                                     $('#exit_event{{event.id}}').click(function() {
                                                         $("#exit_eventm{{event.id}}").empty();
                                                         $('#loaderPartm_{{event.id}}').show();
                                                         
@@ -511,11 +734,5 @@
                                                                 }
                                                         });
                                                 });
-
-
-
-
-
-
-                                        </script>
+                                            </script>
                                         {% endblock %}
