@@ -528,7 +528,7 @@
             <div class="dropdown-menu pull-right notifyMenu" role="menu">
                 <div class="notifyHeader">
                     <span>Messages </span>
-                    <a href="#" class="notifySettings icon-settings"></a>
+                    {#<a href="#" class="notifySettings icon-settings"></a>#}
                     <div class="clearfix"></div>
                 </div>
                 <ul id="id_message" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
@@ -591,7 +591,7 @@
 
                 <div class="notifyHeader">
                     <span>Demandes d'ajout</span>
-                    <a href="#" class="notifySettings icon-settings"></a>
+                    {#<a href="#" class="notifySettings icon-settings"></a>#}
                     <div class="clearfix"></div>
                 </div>
                 <ul id="id_invitation" class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 250px;background-color:#fff;">
@@ -640,7 +640,7 @@
                 <span class="searchIcon icon-magnifier"></span>
                 <input type="text" placeholder="Recherche Optimus...">
             </div>
-            <ul><li class="hasSub">
+            <ul>{#<li class="hasSub">
                     <a href="#"><span class="navIcon fa fa-comment"></span><span class="navLabel">Tchat</span><span class="fa fa-angle-left arrowRight"></span></a>
                     <ul class="dropdown-menu scrollbar" role="menu" >
                         {% set friends = getFriends(app.user.id) %}
@@ -668,7 +668,7 @@
                         <li class="divider"></li>
 
                     </ul>
-                </li>
+                </li>#}
 
 
                 <li><a href="{{ path('accueil') }}"><span class="navIcon fa fa-calendar-o"></span><span class="navLabel">Évènement</span></a></li>
