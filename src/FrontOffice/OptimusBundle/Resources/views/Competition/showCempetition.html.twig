@@ -151,12 +151,19 @@ Cette compétition est depassé
 {% if competition.club.createur != app.user and date(competition.dateFin)> date() %}
 <div class="pc-about osLight" id="append">
     {% if app.user.profil == 'Entraineur' %}
+        {% set i = 0 %}
+        {% for particip in competition.particips %}
+            {% for club in app.user.clubs %}
+                {% if club == particip.club %}
+                    {% set i = i+1 %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            {% if i == 0 %}
 <a class="btn btn-green btn-round " href="{{ path('participerCompetition',{'id' : competition.id}) }}"  id="exit_event">
 <span class="fa fa-plus-circle" data-toggle="tooltip" data-tooltip-class="green" data-placement="top" title="" data-original-title="Participer"></span> <span >Participer</span>                                          
 </a>
-<a class="loader" id="loaderPart">
-    <img src="{{asset('template/images/ajax-loader-comment.gif') }}">
-</a>
+{% endif %}
 {% endif %}
 </div>
 {% endif %}
@@ -281,11 +288,11 @@ Cette compétition est depassé
 </ul>
 <ul class="tab-pane fade  scrollbar" id="photos" >
 <div class="row" >
-{% if competition.imagesCompetition|length ==0 %}
+{% if competition.imagesCompetition|length == 0 %}
 <div  id="photopriveeA" class="alert alert-danger alert-dismissible fade in" role="alert">
 <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
 <button type="button" class="close" data-dismiss="alert"></button>
-<strong>cette catégorie reservée pour les participants</strong> 
+<strong>Aucune photo a afficher</strong> 
 </div>
 {% endif %}
 <div id="listephotoA" >
@@ -381,19 +388,15 @@ Cette compétition est depassé
 <ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
 <div class="col-md-12">
 
-{% for member in competition.club.adherents %}
+{% for member in particip.club.adherents %}
 {%set i = 0 %}
-{% if member.member != competition.club.createur %}
-{% for participation in competition.particips %}
-{%if participation.club == competition.club %}
-{% for participant in  participation.partclubcomp %}
-{%if participant.participant == member %}
-{%set i = 1 %}
-{%endif %}
-{%endfor %}
-{%endif %}
-{%endfor %}
-{% if i == 1 %}                                                     
+{% if member.member != particip.club.createur %}
+    {% for partc in particip.partclubcomp %}
+        {% if partc.participant == member %}
+            {% set i = 1 %}
+            {% endif %}
+        {% endfor %}
+        {% if i == 1 %}
 <div id="memberclubA{{member.id}}">
 <a href="{{ path('show_profil',{'id': member.member.id}) }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{member.member.username}}">
 {% if member.member.path == null %}
@@ -408,7 +411,7 @@ Cette compétition est depassé
 </a>
 <span style="margin-left:10%;">Pseudo: {{member.member.username}}</span>
 <span style="margin-left:10%;">Date d'adhésion: {{member.dateconfirm|date('d/m/Y H:i:s')}}</span>
-{% if app.user == club.createur and app.user != member.member %}<a style="margin-left: 5%;" href="#memberparticipdelete{{member.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>{% endif %}
+{% if app.user == particip.club.createur and app.user != member.member %}<a style="margin-left: 5%;" href="#memberparticipdelete{{member.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="supprimer"><span class="icon-trash"></span></a>{% endif %}
 <div style="margin-top: 2%;"></div>
 </div>
 {% endif %}
@@ -419,23 +422,22 @@ Cette compétition est depassé
 </div>
 <div class="modal-footer supp-album">
 <button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+{% if app.user == particip.club.createur %}
+<a id="afficher" href="{{path('participerCompetition',{'id' : competition.id})}}" class="btn btn-round btn-green">Gérer</a>
+{% endif %}
 </div>
 </div>
 </div>
 </div>
-{% for member in competition.club.adherents %}
+{% for member in particip.club.adherents %}
 {%set i = 0 %}
-{% if member.member != competition.club.createur %}
-{% for participation in competition.particips %}
-{%if participation.club == competition.club %}
-{% for participant in  participation.partclubcomp %}
-{%if participant.participant == member %}
-{%set i = 1 %}
-{%endif %}
-{%endfor %}
-{%endif %}
-{%endfor %}
-{% if i == 1 %}                                                 
+{% if member.member != particip.club.createur %}
+    {% for partc in particip.partclubcomp %}
+        {% if partc.participant == member %}
+            {% set i = 1 %}
+            {% endif %}
+        {% endfor %}
+        {% if i == 1 %}                                              
 <div class="modal" id="memberparticipdelete{{member.id}}"   >
 <div class="modal-dialog">
 <div class="modal-content bordusbottomus">
@@ -685,19 +687,15 @@ $("#compteur").val(tab[3]);
 
 <script>
 {% for particip in competition.particips %}
-{% for member in competition.club.adherents %}
+{% for member in particip.club.adherents %}
 {%set i = 0 %}
-{% if member.member != competition.club.createur %}
-{% for participation in competition.particips %}
-{%if participation.club == competition.club %}
-{% for participant in  participation.partclubcomp %}
-{%if participant.participant == member %}
-{%set i = 1 %}
-{%endif %}
-{%endfor %}
-{%endif %}
-{%endfor %}
-{% if i == 1 %}
+{% if member.member != particip.club.createur %}
+    {% for partc in particip.partclubcomp %}
+        {% if partc.participant == member %}
+            {% set i = 1 %}
+            {% endif %}
+        {% endfor %}
+        {% if i == 1 %}   
 $("#supprimermember{{member.id}}").click(function(){
 $("#supprimermember{{member.id}}").hide();
 $("#loadersupmember{{member.id}}").show();
