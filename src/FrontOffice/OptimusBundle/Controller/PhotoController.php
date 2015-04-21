@@ -172,7 +172,6 @@ class PhotoController extends Controller
         $photo = $em->getRepository('FrontOfficeOptimusBundle:Photo')->find($id);
         $em->remove($photo);
         $em->flush();
-         $request->getSession()->getFlashBag()->add('SuppPohoto', "Pohoto a été supprimée.");
 
         $response = new Response($id);
          return $response;
