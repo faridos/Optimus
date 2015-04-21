@@ -451,22 +451,35 @@ class CompetitionController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $request = $this->get('request');
        
-     //  $name = Array();
+    
+      
      
             $name = $request->get("name");
-            
             $id =  $request->get("idcompetition");
             $idclub =  $request->get("club");
             $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
              $club = $em->getRepository('FrontOfficeOptimusBundle:Club')->find($idclub);
+                $sender = $club->getCreateur();
+                  $message = new Message();
               $participComp = $em->getRepository('FrontOfficeOptimusBundle:ParticipCompetition')->findOneBy(array('competition' => $competition, 'club' => $club));
-             if (!$participComp) {
+         $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($sender);
+                
+            if($participComp != null){
+                
+                $em->remove($participComp);
+                $em->flush();
+            }  
             $participation = new ParticipCompetition();
             $participation->setCompetition($competition);
             $participation->setClub($club);
             $participation->setDatePaticipation(new DateTime());
             $em->persist($participation);
             $em->flush();
+              $part = new PartClubCompetition();
+               $part->setParticips($participation);
+                    $part->setParticipant($member);
+                    $em->persist($part);
+                    $em->flush();
             if ($name != null) {
                 foreach ($name as $member) {
                     $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($member);
@@ -475,45 +488,26 @@ class CompetitionController extends Controller {
                     $part->setParticipant($member);
                     $em->persist($part);
                     $em->flush();
-                    return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
-                }
-            } else {
-                $request->getSession()->getFlashBag()->add('SelectionMember', "Il faurt selectionéé des members.");
-            }
-        } else {
-            if ($name != null) {
-                foreach ($name as $member) {
-                    $member = $em->getRepository('FrontOfficeOptimusBundle:Member')->find($member);
-                    $part = new PartClubCompetition();
-                    $part->setParticips($participComp);
-                    $part->setParticipant($member);
-                    $em->persist($part);
-                    $em->flush();
-                    return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
-                }
-            } else {
-                $request->getSession()->getFlashBag()->add('SelectionMember', "Il faurt selectionéé des members.");
-            }
-        }
-              $sender = $club->getCreateur();
-          
-            foreach ($name as $iduder) {
-                 $message = new Message();
-                $userinvit = $em->getRepository('FrontOfficeUserBundle:User')->find($iduder);
+                      $userinvit = $em->getRepository('FrontOfficeUserBundle:User')->find($member->getMember()->getId());
                 $content= 'Bonjour '. $userinvit->getNom() .' '. $userinvit->getPrenom() .' vous ete participe a la  Competition '. $competition->getTitre();
-              
-                $message->setReciever($iduder);
+             
+                $message->setReciever($userinvit->getId());
                 $message->setSender($sender);
                 $message->setMsgTime(new \DateTime());
                 $message->setContent($content);
                 $message->setCompetition($id);
                 $em->persist($message);
-                $em->flush();
+                $em->flush(); 
                   
+                }
+                
+              } else {
+                $request->getSession()->getFlashBag()->add('SelectionMember', "Il faurt selectionéé des members.");
             }
-            return new Response($message); 
-        
        
-    }
-
+     
+    return new Response('rr'); 
+        
 }
+
+            }
