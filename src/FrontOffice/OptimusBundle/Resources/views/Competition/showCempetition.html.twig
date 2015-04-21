@@ -287,6 +287,10 @@ Cette compétition est depassé
 <div class="clearfix"></div>
 </ul>
 <ul class="tab-pane fade  scrollbar" id="photos" >
+    <div id="supprimer-ph" style="display: none;" class="alert alert-danger">
+<a class="close" data-dismiss="alert">×</a>
+Photo Supprimer
+</div>
 <div class="row" >
 {% if competition.imagesCompetition|length == 0 %}
 <div  id="photopriveeA" class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -296,7 +300,17 @@ Cette compétition est depassé
 </div>
 {% endif %}
 <div id="listephotoA" >
-{% if competition.club.createur == app.user %}
+    {% set i =0%}
+{% for particip in competition.particips %}
+    {% for member in particip.club.adherents %}
+    {% for partc in particip.partclubcomp %}
+        {% if partc.participant.member == app.user %}
+            {% set i = 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    {% endfor %}
+    {% if i == 1 %}
 <div class="buttonsWrapper col-xs-12">
 <a class="btn btn-round btn-default btn-sm rightus" href="#uploadphoto" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Upload</span></a><br>
 </div>
@@ -304,6 +318,7 @@ Cette compétition est depassé
 
 <div class="buttonsWrapper col-xs-12">
 {% for photo in competition.imagesCompetition %}
+    
 <div class="col-sm-4" id="{{ photo.id }}">
 <div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
 <div class="fig " id="main">
@@ -321,6 +336,28 @@ Cette compétition est depassé
 </div>
 </div>
 </div>
+<div class="modal fade" id="suppritus{{photo.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content bordusbottomus">
+                                                                <div class="modal-header bordustopus">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                                                                </div>
+                                                                <form class="contactForm">
+                                                                    <div class="modal-body">
+                                                                        <p>Souhaitez vous vraiment supprimer cette photo ?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                                                                        <a id="supprimerPhoto{{photo.id}}" href="#" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
+                                                                    <a class="loader" id="loaderSuppPhoto{{photo.id}}" >
+<img src="{{asset('template/images/ajax-loader-comment.gif') }}">
+</a>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 {% endfor %}
 
 </div>
@@ -725,6 +762,7 @@ success: function(data) {
 $('#' + data).hide();
 $('#suppritus{{photo.id}}').toggle();
 $('.modal-backdrop').hide();
+$("#supprimer-ph").show();
 }
 });
 });
