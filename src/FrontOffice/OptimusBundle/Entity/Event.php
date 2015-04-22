@@ -149,6 +149,10 @@ class Event {
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Notification", mappedBy="event", cascade={"persist","remove"})
      */
     protected $notification_event;
+    /**
+     * @ORM\OneToMany(targetEntity="Sponsor", mappedBy="event", cascade={"persist","remove"})
+     */
+    protected $sponsere;
     
     /**
      * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Comment", mappedBy="event" )
@@ -760,5 +764,38 @@ class Event {
     public function getNbrvu()
     {
         return $this->nbrvu;
+    }
+
+    /**
+     * Add sponsere
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $sponsere
+     * @return Event
+     */
+    public function addSponsere(\FrontOffice\OptimusBundle\Entity\Notification $sponsere)
+    {
+        $this->sponsere[] = $sponsere;
+    
+        return $this;
+    }
+
+    /**
+     * Remove sponsere
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\Notification $sponsere
+     */
+    public function removeSponsere(\FrontOffice\OptimusBundle\Entity\Notification $sponsere)
+    {
+        $this->sponsere->removeElement($sponsere);
+    }
+
+    /**
+     * Get sponsere
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSponsere()
+    {
+        return $this->sponsere;
     }
 }

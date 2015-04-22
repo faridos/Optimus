@@ -21,7 +21,7 @@ class PartClubCompetition {
      /**
      *
      * @ORM\ManyToOne(targetEntity="FrontOffice\OptimusBundle\Entity\ParticipCompetition", inversedBy="partclubcomp")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true,onDelete="CASCADE")
      */
     private $particips;
          

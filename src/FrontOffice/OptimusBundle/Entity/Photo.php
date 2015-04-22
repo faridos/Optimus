@@ -54,6 +54,7 @@ class Photo
      **/
    
    protected $competition;
+   
     public function __construct()
     {
         

@@ -9,7 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FrontOffice\OptimusBundle\Entity\Event;
 use FrontOffice\OptimusBundle\Entity\Notification;
 use FrontOffice\OptimusBundle\Entity\Message;
+use FrontOffice\OptimusBundle\Entity\Sponsor;
 use FrontOffice\OptimusBundle\Form\EventType;
+use FrontOffice\OptimusBundle\Form\SponsorType;
 use FrontOffice\OptimusBundle\Form\EventPhotoType;
 use FrontOffice\OptimusBundle\Entity\Participation;
 use FrontOffice\OptimusBundle\Entity\HistoryEvent;
@@ -496,6 +498,42 @@ class EventController extends Controller {
        $nvmessages = $em->getRepository('FrontOfficeOptimusBundle:Message')->getnvmsg($user->getId() ,$lastid );
        $nvnonmessages = $em->getRepository('FrontOfficeOptimusBundle:Message')->findBy(array('reciever'=>$user->getId() , 'vu'=> $vu ));
           return $this->render('FrontOfficeOptimusBundle:Message:MessageMenu.html.twig', array('messages' => $messages , 'nvmessages'=>$nvmessages ,'lastid' =>$i  , 'nvnonmessages'=>$nvnonmessages));
+    }
+   
+      /**
+     * Creates a new Photo entity.
+     *
+     * @Route("evenement={id}/sponsor/ajouter", name="sponsorEvent_create")
+     * @Method("GET|POST")
+     * @Template("FrontOfficeOptimusBundle:Sponsor:new.html.twig")
+     */
+    public function createSponsorEventAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $event = $em->getRepository('FrontOfficeOptimusBundle:Event')->find($id);
+        $sponsor = new Sponsor();
+        $form = $this->createForm(new SponsorType(), $sponsor);
+        $form->handleRequest($request);
+        $sponsor->setEvent($event);
+      
+    
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($sponsor);
+            $em->flush();
+                        
+            $request->getSession()->getFlashBag()->add('AjouterSponsor', "Sponsor a été ajouter avec success.");
+            return $this->redirect($this->generateUrl('show_event', array('id' => $id)));
+        }
+        
+        return array(
+            
+            'sponsor' => $sponsor,
+            'id' => $event->getId(),
+            'event' => $event,
+            'form'   => $form->createView(),
+        );
     }
 }
 

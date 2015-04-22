@@ -150,6 +150,10 @@ class Competition {
     * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\ParticipCompetition", mappedBy="competition")
     **/
     protected $particips;
+     /**
+    * @ORM\OneToMany(targetEntity="FrontOffice\OptimusBundle\Entity\Sponsor", mappedBy="competition")
+    **/
+    protected $sponserc;
 
     
     public function __construct() {
@@ -633,5 +637,38 @@ class Competition {
     public function getParticips()
     {
         return $this->particips;
+    }
+
+    /**
+     * Add sponserc
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\ParticipCompetition $sponserc
+     * @return Competition
+     */
+    public function addSponserc(\FrontOffice\OptimusBundle\Entity\ParticipCompetition $sponserc)
+    {
+        $this->sponserc[] = $sponserc;
+    
+        return $this;
+    }
+
+    /**
+     * Remove sponserc
+     *
+     * @param \FrontOffice\OptimusBundle\Entity\ParticipCompetition $sponserc
+     */
+    public function removeSponserc(\FrontOffice\OptimusBundle\Entity\ParticipCompetition $sponserc)
+    {
+        $this->sponserc->removeElement($sponserc);
+    }
+
+    /**
+     * Get sponserc
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSponserc()
+    {
+        return $this->sponserc;
     }
 }

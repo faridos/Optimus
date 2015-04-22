@@ -11,6 +11,13 @@
 
 <div class="col-lg-12"><div class="row mb20">
 </div>
+    {% for flashMessage in app.session.flashbag.get('AjouterSponsor') %}
+
+                <div class="alert alert-success">
+                    <a class="close" data-dismiss="alert">×</a>
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
 {% for flashMessage in app.session.flashbag.get('AjoutCompetition') %}
 <br/>
 <div class="alert alert-success">
@@ -200,6 +207,7 @@ Cette compétition est depassé
 <li class=""><a href="#clubs" role="tab" data-toggle="tab"><span class="navIcon fa fa-users"></span> Clubs</a></li>
 <li class=""><a href="#photos" role="tab" data-toggle="tab"><span class="icon-doc"></span> Photos</a></li>
 <li class=""><a href="#videos" role="tab" data-toggle="tab"><span class="icon-film"></span> Vidéos</a></li>
+<li class=""><a href="#sponsor" role="tab" data-toggle="tab"><span class="icon-film"></span> Sponsor</a></li>
 </ul>
 <div class="tab-content">
 
@@ -401,6 +409,74 @@ Photo Supprimer
 </div>
 <div class="clearfix"></div>
 </ul>
+<ul class="tab-pane fade scrollbar" id="sponsor"  >
+ <div class="row">
+                                       {% if app.user == competition.club.createur %}
+<div class="buttonsWrapper col-xs-12">
+<a class="btn btn-round btn-default btn-sm rightus" href="#ajoutersponsor" data-toggle="modal"><span class="fa icon-plus state"></span> <span class="state">Ajouter Sponsor</span></a><br>
+</div>
+{% endif %}
+<br>
+                                    {% if competition.sponserc|length != null %}
+                                  
+ <div id="listephotoA" >
+                                           
+                                            <div class="buttonsWrapper col-xs-12">
+                                                {% for sponsor in competition.sponserc %}
+                                                    <div class="col-sm-4" id="{{ sponsor.id }}">
+                                                        <div  data-linkto="" class="propWidget-1 tooltipsContainer  ">
+                                                            <div class="fig " id="main">
+                                                                <a href="{{ asset(sponsor.WebPath) }}" data-lightbox-title="Titre du photo" data-lightbox-gallery="gallery">
+                                                                    <img src="{{ asset(sponsor.WebPath) }}" />
+                                                                </a>
+                                                                {% if app.user == competition.club.createur %}
+                                                                    <div class="priceCap paddus">
+                                                                        <button href="#supprimsponsor{{sponsor.id}}" data-toggle="modal" data-placement="left" class="btn btn-icon btn-round btn-green btn-md rightus" title="supprimer"><span class="icon-trash"></span></button>
+                                                                    </div>
+                                                                {% endif %}
+                                                                <div class="figCap">
+                                                                    <div class="address">Cliquez pour agrandir l'image</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="supprimsponsor{{sponsor.id}}" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content bordusbottomus">
+                                                                <div class="modal-header bordustopus">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                    <h4 class="modal-title" id="contactLabel">Suppression </h4>
+                                                                </div>
+                                                                <form class="contactForm">
+                                                                    <div class="modal-body">
+                                                                        <p>Souhaitez vous vraiment supprimer Sponsor ?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+                                                                        <a id="supprimerSponsor{{sponsor.id}}" href="#" type="submit" value="Submit" class="btn btn-round btn-green">Confirmer</a>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                            
+                                        </div>
+                                      
+                                    {% else %}
+                                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                            <div class="icon"><span class="fa fa-spin fa-spinner"></span></div>
+                                            <button type="button" class="close" data-dismiss="alert"></button>
+                                            <strong>cette catégorie reservée pour les participants</strong> 
+                                        </div>
+                                    {% endif %}
+                                 
+                                       
+                                        
+                                </div>
+<div class="clearfix"></div>
+</ul>
 </div>
 <div class="clearfix"></div>
 
@@ -573,6 +649,11 @@ Pseudo: {{entraineur.username}}
 </div>
 
 <!--------------------------inviter Entraineur-------------------->
+  <div class="modal fade" id="ajoutersponsor" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    {{ render (controller('FrontOfficeOptimusBundle:Competition:createSponsorCompetition',  {'id': competition.id })) }}
+                                                </div>
+                                            </div>
 <!------------------- modal supprission------------------->
 <div class="modal fade" id="supprimussCompe" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 <div class="modal-dialog">

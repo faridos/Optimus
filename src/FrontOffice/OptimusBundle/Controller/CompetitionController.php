@@ -9,9 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FrontOffice\OptimusBundle\Entity\Competition;
+use FrontOffice\OptimusBundle\Entity\Sponsor;
 use FrontOffice\OptimusBundle\Entity\ParticipCompetition;
 use FrontOffice\OptimusBundle\Entity\PartClubCompetition;
 use FrontOffice\OptimusBundle\Form\CompetitionType;
+use FrontOffice\OptimusBundle\Form\SponsorType;
 use FrontOffice\OptimusBundle\Form\CompetitionPhotoType;
 use FrontOffice\OptimusBundle\Event\ParticipationCompetitionEvent;
 use FrontOffice\OptimusBundle\FrontOfficeOptimusEvent;
@@ -509,5 +511,40 @@ class CompetitionController extends Controller {
     return new Response('rr'); 
         
 }
+  /**
+     * Creates a new Photo entity.
+     *
+     * @Route("/{id}/sponsor/ajouter", name="sponsorCompetition_create")
+     * @Method("GET|POST")
+     * @Template("FrontOfficeOptimusBundle:Sponsor:newC.html.twig")
+     */
+    public function createSponsorCompetitionAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $competition = $em->getRepository('FrontOfficeOptimusBundle:Competition')->find($id);
+        $sponsor = new Sponsor();
+        $form = $this->createForm(new SponsorType(), $sponsor);
+        $form->handleRequest($request);
+        $sponsor->setCompetition($competition);
+      
+    
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($sponsor);
+            $em->flush();
+                        
+            $request->getSession()->getFlashBag()->add('AjouterSponsor', "Sponsor a été ajouter avec success.");
+            return $this->redirect($this->generateUrl('competition_show', array('id' => $id)));
+        }
+        
+        return array(
+            
+            'sponsor' => $sponsor,
+            'id' => $competition->getId(),
+            'competition' => $competition,
+            'form'   => $form->createView(),
+        );
+    }
 
             }

@@ -26,10 +26,7 @@ class Pays {
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
-     /**
-    * @ORM\OneToMany(targetEntity="Region", mappedBy="pays", cascade={"persist","remove"})
-    **/
-    protected $regions;
+   
      public function __construct()
     {
         
@@ -68,36 +65,5 @@ class Pays {
         return $this->nom;
     }
 
-    /**
-     * Add regions
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Region $regions
-     * @return Pays
-     */
-    public function addRegion(\FrontOffice\OptimusBundle\Entity\Region $regions)
-    {
-        $this->regions[] = $regions;
     
-        return $this;
-    }
-
-    /**
-     * Remove regions
-     *
-     * @param \FrontOffice\OptimusBundle\Entity\Region $regions
-     */
-    public function removeRegion(\FrontOffice\OptimusBundle\Entity\Region $regions)
-    {
-        $this->regions->removeElement($regions);
-    }
-
-    /**
-     * Get regions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRegions()
-    {
-        return $this->regions;
-    }
 }

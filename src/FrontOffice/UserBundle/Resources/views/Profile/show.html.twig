@@ -320,11 +320,136 @@ Club Supprimer
 
 {% else %}
     {% if user.profil == 'Entraineur' %}
-       
+       {% for club in user.clubs %}
+          
+                   {% for competition in club.competitions|reverse %}
+                       {% if competition.active == 1 %}
+<div {% if date(competition.dateFin)<= date() %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-xs-12 {{competition.id}}" >
+<div class="tooltipsContainer avatar imagus col-md-4">
+<a href="{{path('competition_show',{'id':competition.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{competition.titre}}">
+{% if competition.path == null %}
+<img src="{{ asset('logoCompetition.png')}}" alt="avatar" ></a>
+{% else %}
+<img src="{{ asset(competition.WebPath)}}" alt="avatar" ></a>
+{% endif %}</div>
+<div class="col-md-6">
+<div class="info" style="max-width: 100% !important">
+<div ><a href="{{path('competition_show',{'id':competition.id})}}" class="name">{{competition.titre}}</a></div>
+<div class="title"><span class="address"> Du {{ competition.dateDebut|date('d-m-Y H:i:s') ~' À '~competition.dateFin|date('d-m-Y H:i:s') }}</span></div>
+<div class="title">Lieu : <span class="address">{{competition.lieu}}</span></div>
+</div></div>
+<div style="margin-top: 1%" align="right">
+<a href="#plusInfoCompetition{{competition.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des participant"><span class="icon-users"></span></a>
+
+</div>
+{% if date(competition.dateFin)<= date() %}
+<div class="label label-danger" style="margin-left: 40%; font-size: 12px; background-color: #c02100 !important;">
+Cette compétition est depassé
+</div>
+{% endif %}
+<div class="clearfix"></div>
+</div>
+                        {% endif %}
+                       {% endfor %}
+               
+           {% endfor %}
+           {% for club in tousClubs %}
+                {% set i =0%}
+               {% if club.active ==1 and club.createur != user %}
+                   {% for competition in club.competitions|reverse %}
+                        {% if competition.active == 1 %}
+                               {% for particip in competition.particips %}
+                                    {% for member in particip.club.adherents %}
+    {% for partc in particip.partclubcomp %}
+        {% if partc.participant.member == app.user %}
+            {% set i = 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+                                   {% endfor %}
+                                   {% if i == 1%}
+                                       <div {% if date(competition.dateFin)<= date() %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-xs-12 {{competition.id}}" >
+<div class="tooltipsContainer avatar imagus col-md-4">
+<a href="{{path('competition_show',{'id':competition.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{competition.titre}}">
+{% if competition.path == null %}
+<img src="{{ asset('logoCompetition.png')}}" alt="avatar" ></a>
+{% else %}
+<img src="{{ asset(competition.WebPath)}}" alt="avatar" ></a>
+{% endif %}</div>
+<div class="col-md-6">
+<div class="info" style="max-width: 100% !important">
+<div ><a href="{{path('competition_show',{'id':competition.id})}}" class="name">{{competition.titre}}</a></div>
+<div class="title"><span class="address"> Du {{ competition.dateDebut|date('d-m-Y H:i:s') ~' À '~competition.dateFin|date('d-m-Y H:i:s') }}</span></div>
+<div class="title">Lieu : <span class="address">{{competition.lieu}}</span></div>
+</div></div>
+<div style="margin-top: 1%" align="right">
+<a href="#plusInfoCompetition{{competition.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des participant"><span class="icon-users"></span></a>
+
+</div>
+{% if date(competition.dateFin)<= date() %}
+<div class="label label-danger" style="margin-left: 40%; font-size: 12px; background-color: #c02100 !important;">
+Cette compétition est depassé
+</div>
+{% endif %}
+<div class="clearfix"></div>
+</div>
+                                       
+                              {% endif %}
+                                {% endif %}
+                       {% endfor %}
+                   {% endif %}
+               {% endfor %}
     {% else %}
+         {% for club in tousClubs %}
+                {% set i =0%}
+               {% if club.active ==1 and club.createur != user %}
+                   {% for competition in club.competitions|reverse %}
+                        {% if competition.active == 1 %}
+                               {% for particip in competition.particips %}
+                                    {% for member in particip.club.adherents %}
+    {% for partc in particip.partclubcomp %}
+        {% if partc.participant.member == app.user %}
+            {% set i = 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+                                   {% endfor %}
+                                   {% if i == 1%}
+                                       <div {% if date(competition.dateFin)<= date() %}style="background-color: #ddd"{% endif %} class="userWidget-2 tooltipsContainer col-xs-12 {{competition.id}}" >
+<div class="tooltipsContainer avatar imagus col-md-4">
+<a href="{{path('competition_show',{'id':competition.id})}}" class="btn btn-round avatar clubos" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{competition.titre}}">
+{% if competition.path == null %}
+<img src="{{ asset('logoCompetition.png')}}" alt="avatar" ></a>
+{% else %}
+<img src="{{ asset(competition.WebPath)}}" alt="avatar" ></a>
+{% endif %}</div>
+<div class="col-md-6">
+<div class="info" style="max-width: 100% !important">
+<div ><a href="{{path('competition_show',{'id':competition.id})}}" class="name">{{competition.titre}}</a></div>
+<div class="title"><span class="address"> Du {{ competition.dateDebut|date('d-m-Y H:i:s') ~' À '~competition.dateFin|date('d-m-Y H:i:s') }}</span></div>
+<div class="title">Lieu : <span class="address">{{competition.lieu}}</span></div>
+</div></div>
+<div style="margin-top: 1%" align="right">
+<a href="#plusInfoCompetition{{competition.id}}" data-toggle="modal" class="btn btn-icon btn-round btn-green btn-xs" title="Liste des participant"><span class="icon-users"></span></a>
+
+</div>
+{% if date(competition.dateFin)<= date() %}
+<div class="label label-danger" style="margin-left: 40%; font-size: 12px; background-color: #c02100 !important;">
+Cette compétition est depassé
+</div>
+{% endif %}
+<div class="clearfix"></div>
+</div>
+                                       
+                              {% endif %}
+                                {% endif %}
+                       {% endfor %}
+                   {% endif %}
+               {% endfor %}
          {% endif %}
     {% endif %}
     </ul>
+    
 <ul class="tab-pane fade scrollbar" id="palmares" >
 <div id="supprimer-p" style="display: none;" class="alert alert-danger">
 <a class="close" data-dismiss="alert">×</a>
@@ -875,6 +1000,62 @@ tous vos  amis sont particip
 </div>
 </div>
 <!--------------- fin upload album ------------------>
+<!----------------------Modal Competition------------->
+{% for club in tousClubs %}
+   
+    {% for competition in club.competitions %}
+        
+                                        
+<div class="modal" id="plusInfoCompetition{{competition.id}}"   >
+<div class="modal-dialog">
+<div class="modal-content bordusbottomus">
+<div class="modal-header bordustopus">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="contactLabel">Liste des members </h4>
+</div>
+<div class="modal-body">
+     <ul id='blockInvit' class="notifyList scrollbar" style=" overflow-x: hidden; overflow-y: auto; overflow-wrap: break-word; max-height: 200px;background-color:#fff;">
+ <div class="col-md-12">
+{% for particip in competition.particips %}
+     
+                                         {% for  part in  particip.partclubcomp %}
+                                             
+                                            
+{% if app.user != part.participant.member %}
+<div id="memberclubA{{part.participant.id}}" class="col-md-12">
+    <div  style="margin-top: 3%;" class="col-md-2"><a href="{{ path('show_profil',{'id': part.participant.member.id}) }}" data-toggle="tooltip" data-tooltip-class="red" data-placement="right" title="{{part.participant.member.username}}">
+{#<img src="{{ asset('event.jpg')}}" alt="avatar" ></a>#}
+{% if part.participant.member.path == null %}
+{% if part.participant.member.sexe == 'H' %}
+<img style="width: 70%;" src="{{ asset('men.png') }}">
+{% else %}
+<img style="width: 70%;" src="{{ asset('women.png') }}">
+{% endif %}
+{% else %}
+<img style="width: 70%;"  src="{{ asset(part.participant.member.WebPath)}}" alt="avatar" >
+{% endif %}
+</a></div>
+<div  style="padding-top: 5%"  class="col-md-4"><span >Pseudo: {{part.participant.member.username}}</span></div>
+<div   style="padding-top: 5%"  class="col-md-6"><span >Date Participation: {{particip.datePaticipation|date('d/m/Y H:i:s')}}</span></div>
+
+</div>
+  {% endif %}
+{% endfor %}
+{% endfor %}
+
+</div>
+     </ul>
+</div>
+<div class="modal-footer supp-album">
+<button id="close" type="reset" data-dismiss="modal" value="Reset" class="btn btn-round btn-o btn-gray">Annuler</button>
+</div>
+</div>
+</div>
+</div>
+
+{% endfor %}
+{% endfor %}
+<!----------------------fin modal competition---------->
 <!--------------- upload palmares ------------------>
 <div class="modal fade" id="uploadpalmares" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
 <div class="modal-dialog">

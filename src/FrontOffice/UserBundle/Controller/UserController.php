@@ -412,8 +412,8 @@ class UserController extends Controller {
                 $dispatcher->dispatch(FrontOfficeOptimusEvent::NOTIFICATION_SEEN_USER, $notifevent);
             }
         }
-
-        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1, 'participations' => $participation));
+        $tousClubs =  $em->getRepository('FrontOfficeOptimusBundle:Club')->findAll();
+        return $this->render('FrontOfficeUserBundle:Profile:show.html.twig', array('user' => $user, 'user1' => $user1, 'participations' => $participation,'tousClubs' => $tousClubs));
     }
 
     /**
