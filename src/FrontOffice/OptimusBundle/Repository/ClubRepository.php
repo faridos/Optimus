@@ -43,12 +43,12 @@ class ClubRepository extends EntityRepository {
         $clubs=Null;
         
         $condition = "WHERE 1=1";
-        $condition = $condition . " AND c.active='1' ";
+        $condition = $condition . " AND c.active='1' AND c.isPayant= '1' ";
         $parameters = array();
 
         if ($sport != null) {
             $condition = $condition . " AND UPPER(c.discpline) LIKE :sport";
-            $parameters[':sport'] = strtoupper($sport) . "%";
+            $parameters[':sport'] = "%". strtoupper($sport) . "%";
         }
 
         if ($adresse != null) {
@@ -75,7 +75,7 @@ class ClubRepository extends EntityRepository {
 
         foreach ($friends  as $friend)  {
             $condition = "WHERE 1=1";
-            $condition = $condition . " AND c.active='1' ";
+            $condition = $condition . " AND c.active='1' AND c.isPayant= '1' ";
             $parameters = array();
 
 
@@ -86,7 +86,7 @@ class ClubRepository extends EntityRepository {
 
             if ($sport != null) {
                 $condition = $condition . " AND UPPER(c.discpline) LIKE :sport";
-                $parameters[':sport'] = strtoupper($sport) . "%";
+                $parameters[':sport'] = "%". strtoupper($sport) . "%";
             }
 
             if ($adresse != null) {
@@ -114,7 +114,7 @@ class ClubRepository extends EntityRepository {
 
         foreach ($users as $user) {
             $condition = "WHERE 1=1";
-            $condition = $condition . " AND c.active='1' ";
+            $condition = $condition . " AND c.active='1' AND c.isPayant= '1' ";
             $parameters = array();
 
             if ($user != null) {
@@ -124,7 +124,7 @@ class ClubRepository extends EntityRepository {
 
             if ($sport != null) {
                 $condition = $condition . " AND UPPER(c.discpline) LIKE :sport";
-                $parameters[':sport'] = strtoupper($sport) . "%";
+                $parameters[':sport'] = "%". strtoupper($sport) . "%";
             }
 
             if ($adresse != null) {
@@ -148,7 +148,8 @@ class ClubRepository extends EntityRepository {
       $qb=$this->getEntityManager()->createQueryBuilder();
       $clubs=$qb->select('c')
                      ->from("FrontOfficeOptimusBundle:Club", 'c')
-                     ->where("UPPER(c.nom) LIKE :key")
+                     ->where("c.active = 1 and c.isPayant= 1")
+                     ->andWhere("UPPER(c.nom) LIKE :key")
                      ->setParameter('key', '%'.strtoupper($nom).'%')
                      ->getQuery()->getResult();
      return $clubs;

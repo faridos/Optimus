@@ -139,8 +139,8 @@ class EventRepository extends EntityRepository {
         $parameters = array();
 
         if ($type != null) {
-            $condition = $condition . " AND e.type = :type";
-            $parameters[':type'] = $type;
+            $condition = $condition . " AND UPPER(e.type) LIKE :type";
+            $parameters[':type'] = "%". strtoupper($type) . "%";
         }
 
         if ($lieu != null) {
@@ -200,8 +200,8 @@ class EventRepository extends EntityRepository {
             }
 
             if ($type != null) {
-                $condition = $condition . " AND e.type = :type";
-                $parameters[':type'] = $type;
+                $condition = $condition . " AND UPPER(e.type) LIKE :type";
+                $parameters[':type'] = "%". strtoupper($type) . "%";
             }
 
             if ($lieu != null) {
@@ -263,8 +263,8 @@ class EventRepository extends EntityRepository {
             }
 
             if ($type != null) {
-                $condition = $condition . " AND e.type = :type";
-                $parameters[':type'] = $type;
+                $condition = $condition . " AND UPPER(e.type) LIKE :type";
+                $parameters[':type'] = "%". strtoupper($type) . "%";
             }
 
             if ($lieu != null) {
@@ -310,8 +310,9 @@ class EventRepository extends EntityRepository {
       $qb=$this->getEntityManager()->createQueryBuilder();
       $events=$qb->select('e')
                      ->from("FrontOfficeOptimusBundle:Event", 'e')
-                     ->where("UPPER(e.titre) LIKE :key")
-                     ->setParameter('key', strtoupper($titre).'%')
+                     ->where("e.active = 1")
+                     ->andWhere("UPPER(e.titre) LIKE :key")
+                     ->setParameter('key', '%'.strtoupper($titre).'%')
                      ->getQuery()->getResult();
      return $events;
     }

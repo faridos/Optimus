@@ -78,9 +78,6 @@
                                     <div class="notificationsWidget">
                                         <h5><span class="badge">{{ res.nbr_events}}</span> Evenements</h5>
                                         {% for event in res.events %}
-
-
-
                                             <div class="notification">
                                                 <div class="row ">
                                                     <div class="time green">
@@ -92,19 +89,19 @@
                                                     <a href='{{path('show_event',{id:event.id})}}'>
                                                         <div class="notifyContent">
                                                             <div class="notifyBody">
-                                                                <div class="notifyRound notifyRound-red navIcon fa fa-trophy"></div>
-                                                                <div class="col-md-3 pb20"> <div class=" pull-left">
-                                                                        <div class="message"><span class=" navIcon fa fa-map-marker"></span> Lieu : {{event.lieu}}<span class="label label-green visible-xs">{{event.titre}}</span></div>
-                                                                        <div class="message"><span class=" navIcon icon-users"></span> Nombre de places : {{event.nbrPlaces}}</div>
+                                                                {% if event.path == null %}
+                                                                <img class="avatar pull-left" src="{{asset('event.png')}}" alt="avatar">
+                                                                {% else %}
+                                                                    <img class="avatar pull-left" src="{{asset(event.WebPath)}}" alt="avatar">
+                                                                    {% endif %}
+                                                                <div class="col-md-5 pb20" style="margin-top: 10px;"> <div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-map-marker"></span> Lieu : {{event.lieu}}<span class="label label-green visible-xs">{{event.titre}}</span></div>
                                                                     </div></div>
-                                                                <div class="col-md-3 pb20"><div class=" pull-left">
-                                                                        <div class="message"><span class=" navIcon icon-clock"></span> Date début: {{event.dateDebut|date("d/m/Y h:i")}}</div>
-                                                                        <div class="message"><span class=" navIcon icon-clock"></span> Date fin: {{event.dateFin|date("d/m/Y h:i")}}</div>
+                                                                <div class="col-md-3 pb20" style="margin-top: 10px;"><div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-clock-o"></span> Date début: {{event.dateDebut|date("d/m/Y h:i")}}</div>
                                                                     </div></div>
-
-                                                                <div class="col-md-3 pb20"><div class=" pull-left">
-                                                                        <div class="message"><span class=" navIcon fa fa-money"></span> Frais: {{event.frais}} &euro;</div>
-
+                                                                <div class="col-md-3 pb20" style="margin-top: 10px;"><div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-clock-o"></span> Date fin: {{event.dateFin|date("d/m/Y h:i")}}</div>
                                                                     </div></div>
                                                                 <div class="clearfix"></div>
                                                             </div>

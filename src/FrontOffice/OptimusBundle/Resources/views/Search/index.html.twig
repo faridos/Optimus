@@ -50,18 +50,11 @@
                                                                     {% else %}
                                                                 <img class="avatar pull-left" src="{{asset(user.WebPath)}}" alt="avatar">
                                                              {% endif %}
-                                                                <div class="col-md-3 pb20"> <div class=" pull-left">
-                                                                        <div class="name">Nom et Prénom<span class="label label-green visible-xs">Sportif/ Entraineur</span></div>
-                                                                        <div class="message">{{user.prenom}} {{user.nom}}</div>
+                                                                <div class="col-md-5 pb20" style="margin-top: 10px;"> <div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-user"></span> Nom et Prénom: {{user.nom}} {{user.prenom}}</div>
                                                                     </div></div>
-                                                                <div class="col-md-3 pb20"><div class=" pull-left">
-                                                                        <div class="name">Adresse</div>
-                                                                        <div class="message">{{user.adresse}}</div>
-                                                                    </div></div>
-
-                                                                <div class="col-md-3 pb20"><div class=" pull-left">
-                                                                        <div class="name">Téléphone</div>
-                                                                        <div class="message">{{user.tel}}</div>
+                                                                <div class="col-md-5 pb20" style="margin-top: 10px;"><div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-map-marker"></span> Adresse: {{user.adresse}}</div>                                                                    
                                                                     </div></div>
                                                                 <div class="clearfix"></div>
                                                             </div>
@@ -79,7 +72,7 @@
                             <div class="tab-content ">
                                 <ul class="tab-pane fade active in  scrollbar" id="events">
                                     <div class="notificationsWidget">
-                                        <h5><span class="badge">{{ res.events|length}}</span> Evenements</h5>
+                                        <h5><span class="badge">{{ res.events|length}}</span> Evènements</h5>
                                         {% for event in res.events %}
                                             <div class="notification">
                                                 <div class="row ">
@@ -92,19 +85,19 @@
                                                     <a href='{{path('show_event',{id:event.id})}}'>
                                                         <div class="notifyContent">
                                                             <div class="notifyBody">
-                                                                <div class="notifyRound notifyRound-red navIcon fa fa-trophy"></div>
-                                                                <div class="col-md-3 pb20"> <div class=" pull-left">
+                                                                {% if event.path == null %}
+                                                                <img class="avatar pull-left" src="{{asset('event.png')}}" alt="avatar">
+                                                                {% else %}
+                                                                    <img class="avatar pull-left" src="{{asset(event.WebPath)}}" alt="avatar">
+                                                                    {% endif %}
+                                                                <div class="col-md-5 pb20" style="margin-top: 10px;"> <div class=" pull-left">
                                                                         <div class="name"><span class=" navIcon fa fa-map-marker"></span> Lieu : {{event.lieu}}<span class="label label-green visible-xs">{{event.titre}}</span></div>
-                                                                        <div class="name"><span class=" navIcon icon-users"></span> Nombre de places : {{event.nbrPlaces}}</div>
                                                                     </div></div>
-                                                                <div class="col-md-3 pb20"><div class=" pull-left">
-                                                                        <div class="name"><span class=" navIcon icon-clock"></span> Date début: {{event.dateDebut|date("d/m/Y h:i")}}</div>
-                                                                        <div class="name"><span class=" navIcon icon-clock"></span> Date fin: {{event.dateFin|date("d/m/Y h:i")}}</div>
+                                                                <div class="col-md-3 pb20" style="margin-top: 10px;"><div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-clock-o"></span> Date début: {{event.dateDebut|date("d/m/Y h:i")}}</div>
                                                                     </div></div>
-
-                                                                <div class="col-md-3 pb20"><div class=" pull-left">
-                                                                        <div class="name"><span class=" navIcon fa fa-money"></span> Frais: {{event.frais}} &euro;</div>
-
+                                                                <div class="col-md-3 pb20" style="margin-top: 10px;"><div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-clock-o"></span> Date fin: {{event.dateFin|date("d/m/Y h:i")}}</div>
                                                                     </div></div>
                                                                 <div class="clearfix"></div>
                                                             </div>
@@ -137,19 +130,19 @@
                                                     <a href='{{path('show_club',{id:club.id})}}'>
                                                         <div class="notifyContent">
                                                             <div class="notifyBody">
-                                                                <img class="avatar pull-left" src="{{asset(club.webPath)}}" alt="avatar">
-                                                                <div class="col-md-3 pb20"> <div class=" pull-left">
-                                                                        <div class="name">Dicipline<span class="label label-green visible-xs">Club</span></div>
-                                                                        <div class="message">{{club.discpline}}</div>
+                                                                {% if club.path == null %}
+                                                                <img class="avatar pull-left" src="{{asset('logoclub.png')}}" alt="avatar">
+                                                                {% else %}
+                                                                    <img class="avatar pull-left" src="{{asset(club.WebPath)}}" alt="avatar">
+                                                                    {% endif %}
+                                                                <div class="col-md-3 pb20" style="margin-top: 10px;"> <div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-newspaper-o"></span> Dicipline: {{club.discpline}}</div>
                                                                     </div></div>
-                                                                <div class="col-md-3 pb20"><div class=" pull-left">
-                                                                        <div class="name">Créateur</div>
-                                                                        <div class="message">{{club.createur.prenom}} {{club.createur.nom}}</div>
+                                                                <div class="col-md-4 pb20" style="margin-top: 10px;"><div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-user"></span> Créateur: {{club.createur.nom}} {{club.createur.prenom}}</div>
                                                                     </div></div>
-
-                                                                <div class="col-md-3 pb20"><div class=" pull-left">
-                                                                        <div class="name">Date Création</div>
-                                                                        <div class="message">{{club.dateCreation|date('d/m/Y')}}</div>
+                                                                <div class="col-md-3 pb20" style="margin-top: 10px;"><div class=" pull-left">
+                                                                        <div class="name"><span class=" navIcon fa fa-clock-o"></span> Date Création: {{club.dateCreation|date('d/m/Y')}}</div>
                                                                     </div></div>
                                                                 <div class="clearfix"></div>
                                                             </div>

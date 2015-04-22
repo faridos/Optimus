@@ -52,7 +52,7 @@ class SearchController extends Controller {
         }
         if ($nom != null) {
         $condition = $condition . " AND (UPPER(u.nom) LIKE :nom OR UPPER(u.prenom) LIKE :nom) ";
-        $parameters[':nom'] = strtoupper($nom) . "%";
+        $parameters[':nom'] = "%". strtoupper($nom) . "%";
         }
         
         $em = $this->getDoctrine()->getEntityManager();

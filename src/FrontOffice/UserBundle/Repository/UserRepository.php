@@ -123,7 +123,7 @@ class UserRepository extends EntityRepository {
                      ->from("FrontOfficeUserBundle:User", 'u')
                      ->where("UPPER(u.nom) LIKE :nomPrenom")
                      ->orWhere("UPPER(u.prenom) LIKE :nomPrenom")
-                     ->setParameter('nomPrenom', strtoupper($nomOuPrenom).'%')
+                     ->setParameter('nomPrenom', '%'.strtoupper($nomOuPrenom).'%')
                      ->getQuery()->getResult();
      return $user;
     }
