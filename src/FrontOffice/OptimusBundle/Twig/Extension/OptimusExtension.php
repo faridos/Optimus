@@ -35,7 +35,19 @@ class OptimusExtension extends \Twig_Extension {
             new \Twig_SimpleFunction('isAmi', array($this, 'isAmi')),
             new \Twig_SimpleFunction('adherents', array($this, 'adherents')),
             new \Twig_SimpleFunction('getVote', array($this, 'getVote')),
+            new \Twig_SimpleFunction('getRechercheUsers', array($this, 'getRechercheUsers')),
+            new \Twig_SimpleFunction('getRechercheEvents', array($this, 'getRechercheEvents')),
+            new \Twig_SimpleFunction('getRechercheClubs', array($this, 'getRechercheClubs')),
         );
+    }
+    public function  getRechercheUsers(){
+        return $this->em->getRepository('FrontOfficeUserBundle:User')->findAll();
+    }
+    public function  getRechercheEvents(){
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Event')->findBy(array('active'=> 1));
+    }
+    public function  getRechercheClubs(){
+        return $this->em->getRepository('FrontOfficeOptimusBundle:Club')->findBy(array('active'=> 1, 'isPayant'=> 1));
     }
      public function  memberclub($id){
        $club = $this->em->getRepository('FrontOfficeOptimusBundle:Club')->find($id);

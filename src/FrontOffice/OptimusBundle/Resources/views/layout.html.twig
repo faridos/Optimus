@@ -8,7 +8,7 @@
 
             <form action="{{ path('search_index') }}" class="search-form" name="formsearch">
                 <input type="hidden" name="kwtype" value="0">
-                <input class="search-optimus" name="key" type="text" id="search-text" placeholder="Recherche Optimus..." style="
+                <input class="search-optimus" name="key" type="text" id="autocomplete" placeholder="Recherche Optimus..." style="
                        text-indent:20px;
                        border-radius: 25px;      
                        height: 37px;      
@@ -1075,6 +1075,40 @@
                             });
                             }, 10000);
             </script>
+            <script>
+                {% set getRechercheUsers = getRechercheUsers() %}
+                {% set getRechercheEvents = getRechercheEvents() %}
+                {% set getRechercheClubs = getRechercheClubs() %}
+                $('#autocomplete').autocomplete({
+
+        source: [
+            {% for getRechercheUser in getRechercheUsers %}
+            "{{getRechercheUser.nom}} {{getRechercheUser.prenom}}",
+            {% endfor %}
+            {% for getRechercheEvent in getRechercheEvents %}
+            "{{getRechercheEvent.titre}}",
+            {% endfor %}
+            {% for getRechercheClub in getRechercheClubs %}
+            "{{getRechercheClub.nom}}",
+            {% endfor %}
+        ],
+
+        focus: function (event, ui) {
+           var label = ui.item.label;
+          var value = ui.item.value;
+
+          var me = $(this);
+
+            setTimeout(function() {
+
+                me.val(value);
+
+            }, 1);
+
+        }
+
+    });
+                </script>
 
 
             {% block javascriptfils %}

@@ -121,8 +121,8 @@ class UserRepository extends EntityRepository {
       $qb=$this->getEntityManager()->createQueryBuilder();
       $user=$qb->select('u')
                      ->from("FrontOfficeUserBundle:User", 'u')
-                     ->where("UPPER(u.nom) LIKE :nomPrenom")
-                     ->orWhere("UPPER(u.prenom) LIKE :nomPrenom")
+                     ->where(" CONCAT(CONCAT(UPPER(u.nom),' '),UPPER(u.prenom)) LIKE :nomPrenom")
+                     ->orWhere(" CONCAT(CONCAT(UPPER(u.prenom),' '),UPPER(u.nom)) LIKE :nomPrenom")
                      ->setParameter('nomPrenom', '%'.strtoupper($nomOuPrenom).'%')
                      ->getQuery()->getResult();
      return $user;

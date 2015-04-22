@@ -847,27 +847,27 @@
 
 
 
-    $('#autocomplete').autocomplete({
-
-        source: ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"],
-
-        focus: function (event, ui) {
-
-            var label = ui.item.label;
-
-            var value = ui.item.value;
-
-            var me = $(this);
-
-            setTimeout(function() {
-
-                me.val(value);
-
-            }, 1);
-
-        }
-
-    });
+//    $('#autocomplete').autocomplete({
+//
+//        source: ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"],
+//
+//        focus: function (event, ui) {
+//
+//            var label = ui.item.label;
+//
+//            var value = ui.item.value;
+//
+//            var me = $(this);
+//
+//            setTimeout(function() {
+//
+//                me.val(value);
+//
+//            }, 1);
+//
+//        }
+//
+//    });
 
 
 
